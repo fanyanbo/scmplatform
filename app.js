@@ -31,7 +31,6 @@ if(req.method=="OPTIONS") res.sendStatus(200);
 else  next();
 });
 
-
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
 // app.set('view engine', 'ejs');
@@ -55,7 +54,7 @@ app.use(session({
     secret: "123",
     key: 'sid',
     store: new MongoStore({
-        url: 'mongodb://172.20.132.225/session',
+        url: 'mongodb://172.20.5.239/session',
     }),
     cookie: {maxAge: 1000 * 60 * 60 * 24 * 30},//30 days
     resave: true,
