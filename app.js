@@ -16,8 +16,7 @@ var mongoose = require('mongoose');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
-//var api = require('./routes/api');
-//var fybv2_api = require('./routes/fybv2_api');
+var api = require('./routes/apiv3');
 
 var app = express();
 
@@ -82,12 +81,9 @@ app.use(session({
 
 
 
-
-
 app.use('/', index);
 app.use('/users', users);
-////app.use('/api', api);
-////app.use('/fybv2_api',fybv2_api);
+app.use('/api', api);
 
 
 // catch 404 and forward to error handler
