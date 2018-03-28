@@ -1,0 +1,9 @@
+.cov
+coverage
+node_modules
+.naeindex
+coverage.html
+.monitor
+
+*.log
+*.swp

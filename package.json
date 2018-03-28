@@ -1,0 +1,27 @@
+{
+  "name": "Scmplatform",
+  "version": "3.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "description": "General modules, Settings, and properties configuration & management for Coocaa OS integration.",
+  "repository": "https://github.com/fanyanbo/scmplatform.git",
+  "author": "fanyanbo <16187525@qq.com|fanyanbo@skyworth.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
+    "debug": "~2.6.9",
+    "eventproxy": "^1.0.0",
+    "express": "~4.15.5",
+    "jade": "~1.11.0",
+    "log4js": "^2.5.3",
+    "morgan": "~1.9.0",
+    "node-uuid": "^1.4.8",
+    "serve-favicon": "~2.4.5",
+    "utility": "^1.13.1",
+    "validator": "^9.4.1"
+  }
+}
