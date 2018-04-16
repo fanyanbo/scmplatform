@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>配置信息管理平台</title>
+
+		<link rel="stylesheet" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" href="../css/bootstrap-select.css">
+		<link rel="stylesheet" href="../css/bootstrap.addtabs.css" type="text/css" media="screen" />
+		<link rel="stylesheet" type="text/css" href="../css/index.css">
+		
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<script src="../js/bootstrap-treeview.min.js"></script>
+		<script type="text/javascript" src="../js/bootstrap.addtabs.js"></script>
+		<script type="text/javascript" src="../js/head.js"></script>
+		<script type="text/javascript" src="../js/index.js"></script>
+		
+	</head>
+
+	<body id="homePage"><!--onload="forsession()"-->
+		<nav class="navbar navbar-default containerp" role="navigation">
+			<a class="navbar-brand">
+				<span style="font-size:30px">配置信息管理平台</span>
+			</a>
+			<a class="navbar-brand" style="float:right">
+				<span id="indexUserName"></span><span style="font-size:15px">,你好！</span>
+				<button id="index_exit">退出</button>
+			</a>
+		</nav>
+		<div class="containerp">
+			<div class="row">
+				<!--左侧-->
+				<div id="index_leftdiv" class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
+					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+						<div class="panel">
+							<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+								<ul class="leftUl list-group text-left">
+									<li class="everyList">
+										<div class="everyButton">
+											<img class="lefticon" src="../images/menu.png"></img>
+											<a href="#home" aria-controls="home" role="tab" data-toggle="tab" class=""  data-addtab="userMenu1"><b>首页</b></a>
+										</div>
+									</li>
+									<li class="everyList">
+										<div class="everyButton">
+											<img class="lefticon" src="../images/menu.png"></img>
+											<span class="centertxt"><b>配置文件管理</b></span>
+										</div>
+										<div class="everyDiv" style="display: none;">
+											<ul>
+												<li>
+													<a href="javascript:void(0);" data-addtab="userMenu2" url="page2.html">配置文件管理</a>
+												</li>
+												<li>
+													<a href="javascript:void(0);" data-addtab="userMenu3" url="page3.html">目标设备管理</a>
+												</li>
+											</ul>
+										</div>
+									</li>
+									<li class="everyList">
+										<div class="everyButton">
+											<img class="lefticon" src="../images/menu.png"></img>
+											<span class="centertxt"><b>审核文件管理</b></span>
+										</div>
+										<div class="everyDiv" style="display: none;">
+											<ul>
+												<li>
+													<a href="javascript:void(0);" data-addtab="userMenu4" url="page4.html">待审核文件</a>
+												</li>
+												<li>
+													<a href="javascript:void(0);" data-addtab="userMenu5" url="page5.html">审核未通过文件</a>
+												</li>
+											</ul>
+										</div>
+									</li>
+									<li class="everyList">
+										<div class="everyButton">
+											<img class="lefticon" src="../images/menu.png"></img>
+											<span class="centertxt"><b>配置内容管理</b></span>
+										</div>
+										<div class="everyDiv" style="display: none;">
+											<ul>
+												<li>
+													<a href="javascript:void(0);" data-addtab="userMenu6" url="page6.html">设备管理</a>
+												</li>
+												<li>
+													<a href="javascript:void(0);" data-addtab="userMenu7" url="page7.html">配置内容管理</a>
+												</li>
+												<li>
+													<a href="javascript:void(0);" data-addtab="userMenu8" url="page8.html">分类排序管理</a>
+												</li>
+											</ul>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--右侧-->
+				<div class="col-lg-10 col-sm-10 col-md-10 col-xs-10">
+					<div class="main row">
+						<div id="tabs">
+							<ul class="nav nav-tabs" role="tablist">
+								<li role="presentation" class="active">
+								</li>
+							</ul>
+							<div class="tab-content" id="main">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

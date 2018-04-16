@@ -1,0 +1,1167 @@
+<!--内容列表-->
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>配置文件管理</title>
+
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/page2.css">
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+		<!--<script src="../js/tableexport.js"></script>-->
+
+	</head>
+
+	<body>
+		<div id="page2">
+			<fieldset class="inputandselectwidth">
+				<legend>配置文件查询</legend>
+				<div class="row text-right">
+					<div class="col-xs-4 form-group">
+						<label for="page2_chip" class="control-label col-xs-5 text-right">机芯:</label>
+						<input type="text" value="" id="page2_chip" class="col-xs-6 inputstyle">
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_model" class="control-label col-xs-5 text-right">机型:</label>
+						<input type="text" value="" id="page2_model" class="col-xs-6 inputstyle">
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_targetProduct" class="control-label col-xs-5 text-right">targetProduct:</label>
+						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="请输入a或b模拟效果">
+						<div class="auto_hidden" id="page2_auto"></div>
+					</div>
+				</div>
+				<div class="row text-right">
+					<div class="col-xs-4 form-group">
+						<label for="page2_coocaaVersion" class="control-label col-xs-5 text-right">酷开版本:</label>
+						<select id="page2_coocaaVersion" class="col-xs-6 inputstyle">
+							<option value=""></option>
+							<option value="Coocaa1.0">Coocaa1.0</option>
+							<option value="Coocaa2.0">Coocaa2.0</option>
+							<option value="Coocaa3.0">Coocaa3.0</option>
+							<option value="Coocaa4.0">Coocaa4.0</option>
+							<option value="Coocaa5.0">Coocaa5.0</option>
+							<option value="Coocaa6.0">Coocaa6.0</option>
+						</select>
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_androidVersion" class="control-label col-xs-5 text-right">安卓版本:</label>
+						<select id="page2_androidVersion" class="col-xs-6 inputstyle">
+							<option value=""></option>
+							<option value="Android4.2">Android4.2</option>
+							<option value="Android4.3">Android4.3</option>
+							<option value="Android4.4">Android4.4</option>
+							<option value="Android5.0">Android5.0</option>
+							<option value="Android5.1">Android5.1</option>
+							<option value="Android6.0">Android6.0</option>
+						</select>
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_chipid" class="control-label col-xs-5 text-right">芯片型号:</label>
+						<select id="page2_chipid" class="col-xs-6 inputstyle">
+							<option value=""></option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</div>
+				</div>
+				<div class="row text-right">
+					<div class="col-xs-4 form-group">
+						<label for="page2_EMMC" class="control-label col-xs-5 text-right">EMMC:</label>
+						<select id="page2_EMMC" class="col-xs-6 inputstyle">
+							<option value=""></option>
+							<option value="1">1</option>
+							<option value="2">2</option>
+							<option value="3">3</option>
+							<option value="4">4</option>
+							<option value="5">5</option>
+							<option value="6">6</option>
+							<option value="7">7</option>
+							<option value="8">8</option>
+							<option value="9">9</option>
+							<option value="10">10</option>
+						</select>
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_memory" class="control-label col-xs-5 text-right">内存:</label>
+						<select id="page2_memory" class="col-xs-6 inputstyle">
+							<option value=""></option>
+							<option value="256MB">256MB</option>
+							<option value="512MB">512MB</option>
+							<option value="768MB">768MB</option>
+							<option value="1GB">1GB</option>
+							<option value="1.5GB">1.5GB</option>
+							<option value="2GB">2GB</option>
+							<option value="2.5GB">2.5GB</option>
+							<option value="3GB">3GB</option>
+							<option value="3.5GB">3.5GB</option>
+							<option value="4GB">4GB</option>
+						</select>
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_keyword" class="control-label col-xs-5 text-right">关键字查询:</label>
+						<input type="text" value="" id="page2_keyword" class="col-xs-6 inputstyle">
+					</div>
+				</div>
+				<div class="row text-right">
+					<div class="col-xs-4 form-group">
+						<label for="page2_gitbranch" class="control-label col-xs-5 text-right">git分支:</label>
+						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" placeholder="请输入a或b模拟效果">
+						<div class="auto_hidden" id="page2_auto2"></div>
+					</div>
+				</div>
+				<div class="form-group text-center">
+					<div class="col-sm-offset- col-sm-4"></div>
+					<div class="col-sm-offset- col-sm-2">
+						<button type="submit" class="btn btn-default btn-success" id="page2_searchInfo">查询</button>
+					</div>
+					<div class="col-sm-offset- col-sm-2">
+						<button type="reset" class="btn btn-default btn-success" id="page2_reset">重置</button>
+					</div>
+					<div class="col-sm-offset- col-sm-4"></div>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>内容列表</legend>
+				<div class="buttonboxes">
+					<button class="mybuttons" id="page2_add">新增</button>
+					<button class="mybuttons" id="page2_editMore">批量修改</button>
+					<button class="mybuttons" id="page2_deleteMore">批量删除</button>
+					<button class="mybuttons" id="page2_export">导出</button>
+					<button class="mybuttons" id="page2_fresh">刷新</button>
+				</div>
+
+				<!-- 表格开始 -->
+				<div id="page2_table"></div>
+				<a id="dlink" style="display:none;"></a>
+				<!-- 表格结束 -->
+
+				<!--点击新增、编辑、复制、预览弹出的modal-->
+				<div class="modal fade" id="page2Modal1" tabindex="-1" role="dialog" aria-labelledby="page2Modal1Label">
+					<div class="modalwidth" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="btn btn-default" aria-label="Close" id="page2Modal1Close" style="float: right;"><span aria-hidden="true">关闭</span></button>
+								<button type="button" class="btn btn-default" id="page2Modal1Submit" style="float: right;"><span aria-hidden="true">提交</span></button>
+								<h4 class="modal-title" id="page2Modal1Label">新增</h4>
+								<h4 id="page2Modal1ErrorInfo" class=""></h4>
+							</div>
+							<div class="modal-body">
+								<table class="table table-bordered " id="page2Modal1Table">
+									<tr>
+										<td>
+											<div class="col-xs-4 text-left">
+												<label for="lable1Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
+												<input type="text" value="" id="lable1Chip" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+											</div>
+											<div class="col-xs-4 text-left">
+												<label for="lable1Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
+												<input type="text" value="" id="lable1Model" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+											</div>
+											<div class="col-xs-4 text-left">
+												<label for="lable1TargetProduct" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TARGET_PRODUCT:</label>
+												<input type="text" value="" id="lable1TargetProduct" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<div class="col-xs-4 text-left inputdiv">
+												<label for="lable1CoocaaVersion" class="control-label text-right" title="CoocaaVersion" style="width: 41.67%;float: left;">酷开版本&nbsp;:</label>
+												<select id="lable1CoocaaVersion" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+													<option value="Coocaa1.0">Coocaa1.0</option>
+													<option value="Coocaa1.0">Coocaa2.0</option>
+													<option value="Coocaa1.0">Coocaa3.0</option>
+													<option value="Coocaa1.0">Coocaa4.0</option>
+													<option value="Coocaa1.0">Coocaa5.0</option>
+													<option value="Coocaa1.0">Coocaa6.0</option>
+												</select>
+											</div>
+											<div class="col-xs-4 text-left">
+												<label for="lable1AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
+												<select id="lable1AndroidVersion" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+													<option value="Android4.2">Android4.2</option>
+													<option value="Android4.3">Android4.3</option>
+													<option value="Android4.4">Android4.4</option>
+													<option value="Android5.0">Android5.0</option>
+													<option value="Android5.1">Android5.1</option>
+													<option value="Android6.0">Android6.0</option>
+												</select>
+											</div>
+											<div class="col-xs-4 text-left">
+												<label for="lable1ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
+												<select id="lable1ChipMode" class="col-xs-5 col-xs-push-1 inputstyle text-left"></select>
+											</div>
+											<div class="col-xs-4 text-left">
+												<label for="newAddEmmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
+												<select id="newAddEmmc" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+													<option value="EMMC1">EMMC1</option>
+													<option value="EMMC2">EMMC2</option>
+													<option value="EMMC3">EMMC3</option>
+													<option value="EMMC4">EMMC4</option>
+													<option value="EMMC5">EMMC5</option>
+													<option value="EMMC6">EMMC6</option>
+													<option value="EMMC7">EMMC7</option>
+													<option value="EMMC8">EMMC8</option>
+													<option value="EMMC9">EMMC9</option>
+												</select>
+											</div>
+											<div class="col-xs-4 text-left">
+												<label for="lable1Memory" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">内存&nbsp;:</label>
+												<select id="lable1Memory" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+													<option value="256MB">256MB</option>
+													<option value="512MB">512MB</option>
+													<option value="768MB">768MB</option>
+													<option value="1GB">1GB</option>
+													<option value="1.5GB">1.5GB</option>
+													<option value="2GB">2GB</option>
+													<option value="2.5GB">2.5GB</option>
+													<option value="3GB">3GB</option>
+													<option value="3.5GB">3.5GB</option>
+													<option value="4GB">4GB</option>
+												</select>
+											</div>
+											<div class="col-xs-4 text-left">
+												<label for="lable1GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
+												<input type="text" value="" id="lable1GitBranch" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+											</div>
+										</td>
+									</tr>
+									<tr>
+										<td style="padding: 0;">
+											<div class="btn-group">
+												<button class="page2_tabs">config文件</button>
+												<button class="page2_tabs">系统设置</button>
+												<button class="page2_tabs">信号源工具箱</button>
+												<button class="page2_tabs">SKYTV</button>
+												<button class="page2_tabs">卖场演示</button>
+												<button class="page2_tabs">中间件</button>
+												<button class="page2_tabs">MK</button>
+												<button class="page2_tabs">PROP</button>
+											</div>
+											<div class="col-xs-12 page2_boxes">
+												<table class="table table-bordered">
+													<tbody id="lable1ConfigTableTbody">
+														<tr>
+															<td id="lable1ConfigTableTdBase">
+																<div title="base">基础功能：</div>
+																<div class="col-xs-6"><span title="屏幕属性，分辨率“4K/FHD/SD” | 是否支持3D“3D”| 屏幕类型“LCD/OLED”，以|分隔" name="PANEL" cnname="屏幕属性" configkey="PANEL">屏幕属性 :</span><input type="text" id="58b9266b0df5170a75f31e87" name="string" value="4K|OLED" title="4K|OLED"></div>
+																<div class="col-xs-6"><span title="当前电视支持的网络类型，ETHERNET支持有线网络，WIFI支持无线网络，同时支持中间用 | 符号区隔" name="NETWORK_SUPPORT_DEVICES" cnname="网络类型" configkey="NETWORK_SUPPORT_DEVICES">网络类型 :</span><input type="text" id="58b9266b0df5170a75f31e88" name="string" value="ETHERNET|WIFI" title="ETHERNET|WIFI"></div>
+																<div class="col-xs-6"><span title="机器内置TV通道配置，每个通道中间用 | 符号区隔" name="CONFIG_SOURCE_LIST" cnname="通道配置" configkey="CONFIG_SOURCE_LIST">通道配置 :</span><input type="text" id="58b9266b0df5170a75f31e89" name="string" value="ATV|DTMB|AV|HDMI@0|HDMI@1|HDMI@2" title="ATV|DTMB|AV|HDMI@0|HDMI@1|HDMI@2"></div>
+																<div class="col-xs-6"><span title="该机器是否标配蓝牙遥控器，true-出厂标配，false-出厂不标配" name="SUPPORT_BLE_REMOTE" cnname="蓝牙遥控器" configkey="SUPPORT_BLE_REMOTE">蓝牙遥控器 :</span>
+																	<select id="58b9266b0df5170a75f31e8a" name="enum" oldvalue="true" value="true" configkey="SUPPORT_BLE_REMOTE">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="该机器是否支持H.265解码" name="SUPPORT_H265" cnname="H.265解码" configkey="SUPPORT_H265">H.265解码 :</span>
+																	<select id="58b9266c0df5170a75f31e8b" name="enum" oldvalue="true" value="true" configkey="SUPPORT_H265">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="酷开系统log日志输出哪个等级的日志, 其中value对应为各个log等级, 分别为 debug , info , warning , error , none, 默认为error" name="LOG_APPENDER" cnname="LOG等级" configkey="LOG_APPENDER">LOG等级 :</span>
+																	<select id="58b9266c0df5170a75f31e8c" name="enum" oldvalue="error" value="error" configkey="LOG_APPENDER">
+																		<option value="debug">debug</option>
+																		<option value="info">info</option>
+																		<option value="warning">warning</option>
+																		<option value="error" selected="">error</option>
+																		<option value="none">none</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="存储升级包的路径" name="OTA_PATH" cnname="升级包路径" configkey="OTA_PATH">升级包路径 :</span><input type="text" id="58b9266c0df5170a75f31e8d" name="string" value="/skyota" title="/skyota"></div>
+																<div class="col-xs-6"><span title="底层是否支持新的开机启动流程，旧启动流程是底层开机启动TV画面，新的开机流程底层开机不启动TV画面" name="NEW_BOOT_FLOW" cnname="新开机流程" configkey="NEW_BOOT_FLOW">新开机流程 :</span>
+																	<select id="58b9266c0df5170a75f31e8e" name="enum" oldvalue="true" value="true" configkey="NEW_BOOT_FLOW">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="主页配置（酷开主页、简易主页等），格式： 包名/类名" name="DEFAULT_HOMEPAGE" cnname="主页配置" configkey="DEFAULT_HOMEPAGE">主页配置 :</span><input type="text" id="58b9266c0df5170a75f31e8f" name="string" value="com.tianci.movieplatform/com.coocaa.homepage.vast.HomePageActivity" title="com.tianci.movieplatform/com.coocaa.homepage.vast.HomePageActivity"></div>
+																<div class="col-xs-6"><span title="当前平台是否需要屏保功能" name="SUPPORT_SCREENSAVER" cnname="屏保开关" configkey="SUPPORT_SCREENSAVER">屏保开关 :</span>
+																	<select id="58b9266c0df5170a75f31e90" name="enum" oldvalue="true" value="true" configkey="SUPPORT_SCREENSAVER">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="SUPPORT_CHILDMODE：当前机型是否打开儿童模式，使用6.0首页后此条目实际已无效，默认都有儿童模式" name="SUPPORT_CHILDMODE" cnname="儿童模式" configkey="SUPPORT_CHILDMODE">儿童模式 :</span>
+																	<select id="58b9266c0df5170a75f31e91" name="enum" oldvalue="true" value="true" configkey="SUPPORT_CHILDMODE">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="是否支持Dolby DD+认证，true-支持，false-不支持" name="DOLBY_DD_SUPPORT" cnname="DolbyDD+认证" configkey="DOLBY_DD_SUPPORT">DolbyDD+认证 :</span>
+																	<select id="58b9266d0df5170a75f31e92" name="enum" oldvalue="true" value="true" configkey="DOLBY_DD_SUPPORT">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="SUPPORT_DOLBY_VISION用来配置平台是否在本机信息里面有描述支持Dolby Vision，如果有描述支持Dolby Vision为true，没有描述支持Dolby Vision为false" name="SUPPORT_DOLBY_VISION" cnname="支持Dolby Vision" configkey="SUPPORT_DOLBY_VISION">支持Dolby Vision :</span>
+																	<select id="59b8897ff32612223fe016f8" name="enum" oldvalue="false" value="false" configkey="SUPPORT_DOLBY_VISION">
+																		<option value="false" selected="">false</option>
+																		<option value="true">true</option>
+																	</select>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td id="lable1ConfigTableTdServerip">
+																<div title="serverip">服务器IP配置：</div>
+																<div class="col-xs-6"><span title="基础服务地址" name="CURRENT_SERVER" cnname="基础服务器" configkey="CURRENT_SERVER">基础服务器 :</span><input type="text" id="58b9266d0df5170a75f31e93" name="string" value="sky.tvos.skysrt.com" title="sky.tvos.skysrt.com"></div>
+																<div class="col-xs-6"><span title="TC服务器，主要是历史收藏、帐号" name="CURRENT_TC_SERVER" cnname="TC服务器" configkey="CURRENT_TC_SERVER">TC服务器 :</span><input type="text" id="58b9266d0df5170a75f31e94" name="string" value="tc.skysrt.com" title="tc.skysrt.com"></div>
+																<div class="col-xs-6"><span title="push的服务地址" name="CURRENT_PUSH_SERVER" cnname="push的服务器" configkey="CURRENT_PUSH_SERVER">push的服务器 :</span><input type="text" id="58b9266d0df5170a75f31e95" name="string" value="push.skysrt.com" title="push.skysrt.com"></div>
+																<div class="col-xs-6"><span title="支付中心服务器地址" name="CURRENT_PAY_SERVER" cnname="支付服务器" configkey="CURRENT_PAY_SERVER">支付服务器 :</span><input type="text" id="58b9266d0df5170a75f31e96" name="string" value="pay.coocaa.com" title="pay.coocaa.com"></div>
+																<div class="col-xs-6"><span title="账号的服务地址" name="CURRENT_PASSPORT_SERVER" cnname="账号服务器" configkey="CURRENT_PASSPORT_SERVER">账号服务器 :</span><input type="text" id="58b9266d0df5170a75f31e97" name="string" value="passport.coocaa.com" title="passport.coocaa.com"></div>
+																<div class="col-xs-6"><span title="当前酷开系统日志采集提交的服务地址" name="CURRENT_LOGGER_SERVER" cnname="数据采集服务器" configkey="CURRENT_LOGGER_SERVER">数据采集服务器 :</span><input type="text" id="58b9266d0df5170a75f31e98" name="string" value="log.skysrt.com" title="log.skysrt.com"></div>
+																<div class="col-xs-6"><span title="影视服务器地址, 爱奇艺和优朋源配置为  movie.tc.skysrt.com    腾讯源配置为  sky.t003.ottcn.com" name="CURRENT_MOVIE_SERVER" cnname="影视服务器" configkey="CURRENT_MOVIE_SERVER">影视服务器 :</span><input type="text" id="58b9266d0df5170a75f31e99" name="string" value="movie.tc.skysrt.com" title="movie.tc.skysrt.com"></div>
+																<div class="col-xs-6"><span title="该域名用于在酷开系统中部分应用当中嵌入html运营页面，增加运营的灵活性" name="CURRENT_WEBAPP_SERVER" cnname="WebApp服务器" configkey="CURRENT_WEBAPP_SERVER">WebApp服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9a" name="string" value="webapp.skysrt.com" title="webapp.skysrt.com"></div>
+																<div class="col-xs-6"><span title="设备服务器地址,内销参数api.device.skysrt.com，外销参数api.device.hw.skysrt.com" name="CURRENT_DEVICE_SERVER" cnname="设备服务器" configkey="CURRENT_DEVICE_SERVER">设备服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9b" name="string" value="api.device.skysrt.com" title="api.device.skysrt.com"></div>
+																<div class="col-xs-6"><span title="广告服务器地址，内销参数hoisin.coocaatv.com，外销参数api.hoisin.hw.coocaatv.com" name="CURRENT_AD_SERVER" cnname="广告服务器" configkey="CURRENT_AD_SERVER">广告服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9c" name="string" value="hoisin.coocaatv.com" title="hoisin.coocaatv.com"></div>
+																<div class="col-xs-6"><span title="Web版本机信息服务器地址" name="CURRENT_TVINFO_SERVER" cnname="本机信息服务器" configkey="CURRENT_TVINFO_SERVER">本机信息服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9d" name="string" value="api.tvinfo.skysrt.com" title="api.tvinfo.skysrt.com"></div>
+																<div class="col-xs-6"><span title="会员中心后台请求数据服务地址，6.0版本开始增加" name="CURRENT_API_MEMBER_SERVER" cnname="会员中心服务器" configkey="CURRENT_API_MEMBER_SERVER">会员中心服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9e" name="string" value="member.coocaa.com" title="member.coocaa.com"></div>
+																<div class="col-xs-6"><span title="开机引导获取影视活动地址" name="GUIDE_MOVIE_INFO_SERVER" cnname="开机引导活动地址" configkey="GUIDE_MOVIE_INFO_SERVER">开机引导活动地址 :</span><input type="text" id="58b9266e0df5170a75f31e9f" name="string" value="active.tc.skysrt.com" title="active.tc.skysrt.com"></div>
+																<div class="col-xs-6"><span title="系统在线升级服务地址" name="CURRENT_UPGRADE_SERVER" cnname="系统升级地址" configkey="CURRENT_UPGRADE_SERVER">系统升级地址 :</span><input type="text" id="58b9266e0df5170a75f31ea0" name="string" value="api.upgrade.skysrt.com/tv" title="api.upgrade.skysrt.com/tv"></div>
+																<div class="col-xs-6"><span title="内销定制机：api.home.cc0808.com 外销定制机：api.home.hw.skysrt.com" name="CURRENT_HOME_SERVER" cnname="定制机首页服务器" configkey="CURRENT_HOME_SERVER">定制机首页服务器 :</span><input type="text" id="59ae7341a538ca687cb90d27" name="string" value="api.home.cc0808.com" title="api.home.cc0808.com"></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="lable1ConfigTableTdAd">
+																<div title="ad"> 广告配置：</div>
+																<div class="col-xs-6"><span title="是否支持开机广告" name="BOOT_AD" cnname="开机广告" configkey="BOOT_AD">开机广告 :</span>
+																	<select id="58b9266e0df5170a75f31ea1" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="是否支持关机广告，value 值为true或者false，“true”代表支持关机广告，“false”代表不支持关机广告。6.0版本开始增加" name="SUPPORT_POWER_OFF_AD" cnname="关机广告" configkey="SUPPORT_POWER_OFF_AD">关机广告 :</span>
+																	<select id="58b9266f0df5170a75f31ea2" name="enum">
+																		<option value="true">true</option>
+																		<option value="false" selected="">false</option>
+																	</select>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td id="lable1ConfigTableTdChannel">
+																<div title="channel">TV通道：</div>
+																<div class="col-xs-6"><span title="切换通道或者切换频道后，延迟出“无信号”提示的时间，单位为毫秒" name="START_SINGAL_CHECK_DELAY" cnname="无信号延时" configkey="START_SINGAL_CHECK_DELAY">无信号延时 :</span><input type="text" id="58b9266f0df5170a75f31ea3" name="string" value="2500" title="2500"></div>
+																<div class="col-xs-6"><span title="切换到HDMI通道后，延迟出“无信号”提示的时间，单位为毫秒" name="START_HDMISINGAL_CHECK_DELAY" cnname="HDMI延时" configkey="START_HDMISINGAL_CHECK_DELAY">HDMI延时 :</span><input type="text" id="58b9266f0df5170a75f31ea4" name="string" value="2500" title="2500"></div>
+																<div class="col-xs-6"><span title="不使用信号源插拔自动切换通道功能。 默认true" name="PLUGSTATE_CHANGE_DISABLE" cnname="信源自切换" configkey="PLUGSTATE_CHANGE_DISABLE">信源自切换 :</span>
+																	<select id="58b9266f0df5170a75f31ea5" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="DTV通道没有字幕功能。默认false" name="DTV_SUBTITLE_DISABLE" cnname="DTV字幕功能" configkey="DTV_SUBTITLE_DISABLE">DTV字幕功能 :</span>
+																	<select id="58b9266f0df5170a75f31ea6" name="enum">
+																		<option value="true">true</option>
+																		<option value="false" selected="">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="DTV Surfaceview使用tianci4方式，E690,E710用。默认false" name="DTV_VIEW_SETDISPLAY" cnname="DTV场景实现" configkey="DTV_VIEW_SETDISPLAY">DTV场景实现 :</span>
+																	<select id="58b9266f0df5170a75f31ea7" name="enum">
+																		<option value="true">true</option>
+																		<option value="false" selected="">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="酷开系统新TV中EPG内容配置，其中value对应EPG内容展现形式，分别为none（无），local（本地EPG），net （网络EPG）默认为none " name="NEW_TV_EPG_MODEL" cnname="新TV" configkey="NEW_TV_EPG_MODEL">新TV :</span>
+																	<select id="5a94b31616bd575c5a1deff6" name="enum">
+																		<option value="none" selected="">none</option>
+																		<option value="local">local</option>
+																		<option value="net">net</option>
+																	</select>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td id="lable1ConfigTableTdLocalmedia">
+																<div title="localmedia">本地媒体：</div>
+																<div class="col-xs-6"><span title="配置支持的音频播放格式" name="AUDIO_SUFFIX" cnname="音频格式" configkey="AUDIO_SUFFIX">音频格式 :</span><input type="text" id="58b9266f0df5170a75f31ea8" name="string" value="mp3|wav|midi|AAC|m4a|flac|ogg" title="mp3|wav|midi|AAC|m4a|flac|ogg"></div>
+																<div class="col-xs-6"><span title="配置支持的图片播放格式" name="PICTURE_SUFFIX" cnname="图片格式" configkey="PICTURE_SUFFIX">图片格式 :</span><input type="text" id="58b9266f0df5170a75f31ea9" name="string" value="jpg|jpeg|png|bmp|gif" title="jpg|jpeg|png|bmp|gif"></div>
+																<div class="col-xs-6"><span title="配置支持的视频播放格式" name="VIDEO_SUFFIX" cnname="视频格式" configkey="VIDEO_SUFFIX">视频格式 :</span><input type="text" id="58b926700df5170a75f31eaa" name="string" value="avi|dat|mpeg|mpe|mpg|vob|m2ts|mp4|mov|mkv|ts|tp|mts|m4v|f4v|flv|wm|rmvb|rm|asf|3gp" title="avi|dat|mpeg|mpe|mpg|vob|m2ts|mp4|mov|mkv|ts|tp|mts|m4v|f4v|flv|wm|rmvb|rm|asf|3gp"></div>
+																<div class="col-xs-6"><span title="配置图片解码能够支持的最大图片占用空间" name="BITMAP_DECODE_MAX_SIZE" cnname="图片解码空间" configkey="BITMAP_DECODE_MAX_SIZE">图片解码空间 :</span><input type="text" id="58b926700df5170a75f31eab" name="string" value="40000000" title="40000000"></div>
+																<div class="col-xs-6"><span title="配置底层是否支持新字幕标准要求功能" name="SUPPORT_NEW_SUBTITLE" cnname="新字幕标准" configkey="SUPPORT_NEW_SUBTITLE">新字幕标准 :</span>
+																	<select id="58b926700df5170a75f31eac" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="配置是否打开samba功能" name="SUPPORT_SAMBA" cnname="Samba功能" configkey="SUPPORT_SAMBA">Samba功能 :</span>
+																	<select id="58b926700df5170a75f31ead" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="配置是否打开媒体的图片缩略图预览" name="SUPPORT_PIC_PREVIEW" cnname="图片缩略图" configkey="SUPPORT_PIC_PREVIEW">图片缩略图 :</span>
+																	<select id="58b926700df5170a75f31eae" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="配置是否打开媒体的视频缩略图预览" name="SUPPORT_VIDEO_PREVIEW" cnname="视频缩略图" configkey="SUPPORT_VIDEO_PREVIEW">视频缩略图 :</span>
+																	<select id="58b926700df5170a75f31eaf" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="配置是否打开本地媒体分类功能(512M内存 和 768M内存 机器上默认配置关闭，高于768M内存 机器默认配置打开)" name="SUPPORT_SORT_FUNCTION" cnname="本地媒体分类" configkey="SUPPORT_SORT_FUNCTION">本地媒体分类 :</span>
+																	<select id="58b926700df5170a75f31eb0" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="配置是否打开获取音乐总时间功能" name="SUPPORT_MUSIC_DUARTION" cnname="计算音乐时长" configkey="SUPPORT_MUSIC_DUARTION">计算音乐时长 :</span>
+																	<select id="58b926700df5170a75f31eb1" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="配置是否打开家庭网络功能（客户要求定制）" name="SUPPORT_HOME_NETWORK_FUNCTION" cnname="家庭网络" configkey="SUPPORT_HOME_NETWORK_FUNCTION">家庭网络 :</span>
+																	<select id="58b926710df5170a75f31eb2" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td id="lable1ConfigTableTdOther">
+																<div title="other">其它功能：</div>
+																<div class="col-xs-6 videoAChange"><span title="采用哪个播放器，platform 为方案商，mediaplayer 为标准android播放器，bj_decoder 为 jni版北京播放器" name="PLAYER_KERNEL" cnname="播放器内核" configkey="PLAYER_KERNEL">播放器内核 :</span>
+																	<select id="58b926710df5170a75f31eb3" name="enum">
+																		<option value="platform">platform</option>
+																		<option value="mediaplayer" selected="">mediaplayer</option>
+																		<option value="bj_decoder">bj_decoder</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="浏览器首页, 即浏览器打开后访问的用于运营/展示的html地址" name="BROWSER_HOMEPAGE" cnname="浏览器首页" configkey="BROWSER_HOMEPAGE">浏览器首页 :</span><input type="text" id="58b926710df5170a75f31eb4" name="string" value="http://www.bing.com" title="http://www.bing.com"></div>
+																<div class="col-xs-6"><span title="浏览器可以打开的标签数量" name="BROWSER_LABEL_COUNT" cnname="浏览器标签数" configkey="BROWSER_LABEL_COUNT">浏览器标签数 :</span><input type="text" id="58b926710df5170a75f31eb5" name="string" value="3" title="3"></div>
+																<div class="col-xs-6 videoAChange"><span title="是否开启airmirror镜像推送功能（已弃用）" name="SUPPORT_AIRMIRROR" cnname="AirMirror服务" configkey="SUPPORT_AIRMIRROR">AirMirror服务 :</span>
+																	<select id="58b926710df5170a75f31eb7" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6 videoAChange"><span title="是否开启应用自由安装功能" name="APP_SELF_INSTALL" cnname="应用自由安装" configkey="APP_SELF_INSTALL">应用自由安装 :</span>
+																	<select id="58b926710df5170a75f31eb8" name="enum">
+																		<option value="true">true</option>
+																		<option value="false" selected="">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="当前电视键控板的物理按键数，value 值为按键数量，“5”代表五键，“3”代表3键，当前按键数支持5键和3键两种，默认为5键（兼容之前各种5&amp;7键老的键控）。由外销需求引入，6.0版本开始增加 只有新的三键才需单独配置为3" name="KEYPAD_NUMBER" cnname="键控板按键数" configkey="KEYPAD_NUMBER">键控板按键数 :</span><input type="text" id="58b926710df5170a75f31eb9" name="string" value="5" title="5"></div>
+																<div class="col-xs-6 videoAChange"><span title="取决于是否支持防蓝光认证，支持则为true，是否开机提示防蓝光图片" name="SUPPORT_DBL" cnname="防蓝光图片" configkey="SUPPORT_DBL">防蓝光图片 :</span>
+																	<select id="58f86dc73efb88fdc89b982f" name="enum">
+																		<option value="true">true</option>
+																		<option value="false" selected="">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="以49吋，机型G7200，机芯8H87 做说明，general_config.xml 配置如下：49G7200 (8H87) ：<config name=&quot;TVTYPE_FORMAT&quot; value=&quot;%PANEL_SIZE%%TV_TYPE%%TV_MODEL%&quot; />（默认模式，可缺省不做配置）；49G7200：<config name=&quot;TVTYPE_FORMAT&quot; value=&quot;%PANEL_SIZE%%TV_TYPE%&quot; /> ；G7200 (8H87)：<config name=&quot;TVTYPE_FORMAT&quot; value=&quot;%TV_TYPE%%TV_MODEL%&quot; /> ；G7200：<config name=&quot;TVTYPE_FORMAT&quot; value=&quot;%TV_TYPE%&quot; /> KX49(8H61)；KX55(8H64)，所以 general_config.xml 里，给他们一个配置说明：<config name=&quot;TVTYPE_FORMAT&quot; value = &quot;%TV_TYPE%%PANEL_SIZE%%TV_MODEL%&quot;/>特殊格式的说明如下：1、这里会对14A43这种包含尺寸在机型里的机器做判断处理，去掉panel size的显示，将格式默认成：&quot;%TV_TYPE%%TV_MODEL%&quot;2、对于代系产品的转换 G6A——>G6-I，配置为：&quot;%PANEL_SIZE%%TV_TYPE%%SERIES%%TV_MODEL%&quot;3、对于尺寸超过2位数的，如100G7200 (8H87)，配置为：&quot;100%TV_TYPE%%TV_MODEL%&quot;" name="TVTYPE_FORMAT" cnname="关于本机下显示尺寸、机型、机芯格式" configkey="TVTYPE_FORMAT">关于本机下显示尺寸、机型、机芯格式 :</span><input type="text" id="59279d345dcd030770218898" name="string" value="%PANEL_SIZE%%TV_TYPE%%TV_MODEL%" title="%PANEL_SIZE%%TV_TYPE%%TV_MODEL%"></div>
+																<div class="col-xs-6 videoAChange"><span title="SUPPORT_POWER_OFF_SCENE 是否支持待机业务功能，包含：待机广告、待机升级； value 值为boolean型，“false”代表不支持，待机走老的待机流程；“true”代表支持，则待机走新的待机流程，默认为“false”；6.0版本开始体现" name="SUPPORT_POWER_OFF_SCENE" cnname="待机业务" configkey="SUPPORT_POWER_OFF_SCENE">待机业务 :</span>
+																	<select id="595dd60b1d3e3152a98dd69c" name="enum">
+																		<option value="false" selected="">false</option>
+																		<option value="true">true</option>
+																	</select>
+																</div>
+																<div class="col-xs-6 videoAChange"><span title="创维机器默认都在左侧显示，可以不做配置或者配置为false；各别外销或定制机需要显示在右侧，配置此项为 true 即可" name="KEYPAD_LOCATION_ONRIGHT" cnname="键控板显示位置在屏幕右下角" configkey="KEYPAD_LOCATION_ONRIGHT">键控板显示位置在屏幕右下角 :</span>
+																	<select id="5996b5d2a2f6977273ff5e2b" name="enum">
+																		<option value="false" selected="">false</option>
+																		<option value="true">true</option>
+																	</select>
+																</div>
+																<div class="col-xs-6 videoAChange"><span title="是否支持爱投屏功能，true-支持，false-不支持" name="DE_SKYCAST_SWITCH" cnname="爱投屏" configkey="DE_SKYCAST_SWITCH">爱投屏 :</span>
+																	<select id="5a546f7240243f1214db8778" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+																<div class="col-xs-6 videoAChange"><span title="是否启用Airplay服务（已弃用）" name="SUPPORT_AIRPLAY" cnname="Airplay服务" configkey="SUPPORT_AIRPLAY">Airplay服务 :</span>
+																	<select id="58b926710df5170a75f31eb6" name="enum">
+																		<option value="true" selected="">true</option>
+																		<option value="false">false</option>
+																	</select>
+																</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="col-xs-12 page2_boxes">
+												<table class="table table-bordered">
+													<!--mytable-->
+													<tbody id="lable1SystemTableTbody">
+														<tr>
+															<td id="lable1SystemTableBoot">
+																<div title="Boot">开机引导:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4f" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie" name="SkyMovie" title="除Andorid6.0的机器使用此版本">网络连接</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">激活电视</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e52" value=""><span category="App" gitpath="SkyworthApp/App/SkyCCMall" name="SkyCCMall" title="酷开商城功能，一般默认集成">默认配置</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e54" value=""><span category="App" gitpath="SkyworthApp/App/SkyUser" name="SkyUser" title="酷开用户体系服务，一般默认集成">酷开会员</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e55" value=""><span category="App" gitpath="SkyworthApp/App/SkyWeather" name="SkyWeather" title="天气app，6.2版本以下一般默认集成（注意需删除设置中的城市设置）">蓝牙配对</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="lable1SystemTableSetPortal">
+																<div title="SetPortal">设置入口页:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">网络与连接</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5d" value=""><span category="Service" gitpath="SkyworthApp/Service/SkySystemService" name="SkySystemService" title="一般默认集成">图像与声音</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">通用设置</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">账户与支付</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">升级</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">关于本机</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="lable1SystemTableNet">
+																<div title="Net">网络与连接:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e49" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore" name="AppStore" title="应用圈">无线网络</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4a" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_OEM" name="SkyAppStore_OEM" title="应用圈OEM版">有线网络</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4b" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_Oversea" name="SkyAppStore_Oversea" title="应用圈海外版">热点</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4c" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_PE" name="SkyAppStore_PE" title="应用圈外包版">内置蓝牙模块</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4d" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyHall" name="SkyHall" title="6.X及以上不需要集成">内置蓝牙dongle</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="lable1SystemTableHomePage">
+																<div title="HomePage">音画设置:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e40" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage" name="SimpleHomepage" title="常规低内存（1G及以下）产品使用">图像模式</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e41" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyOverseaHomepage" name="SkyOverseaHomepage" title="海外产品专用首页">恢复默认</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e42" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyPanasonicHome" name="SkyPanasonicHome" title="松下项目专用首页">亮度</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e43" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage_OEM" name="SimpleHomepage_OEM" title="特殊产品，单独确认才使用">对比度</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e44" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHome5.0" name="SimpleHome4" title="特殊产品，单独确认才使用">饱和度</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e45" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyHomeShell" name="SkyHomeShell" title="常规非低内存（1G以上）产品使用">清晰度</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e40" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage" name="SimpleHomepage" title="常规低内存（1G及以下）产品使用">背光调节</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e41" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyOverseaHomepage" name="SkyOverseaHomepage" title="海外产品专用首页">护眼模式</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e42" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyPanasonicHome" name="SkyPanasonicHome" title="松下项目专用首页">矩阵背光</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e43" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage_OEM" name="SimpleHomepage_OEM" title="特殊产品，单独确认才使用">动态对比度</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e44" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHome5.0" name="SimpleHome4" title="特殊产品，单独确认才使用">黑色增强</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e45" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyHomeShell" name="SkyHomeShell" title="常规非低内存（1G以上）产品使用">区域对比提升</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e42" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyPanasonicHome" name="SkyPanasonicHome" title="松下项目专用首页">屏变</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e43" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage_OEM" name="SimpleHomepage_OEM" title="特殊产品，单独确认才使用">色温</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e44" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHome5.0" name="SimpleHome4" title="特殊产品，单独确认才使用">红色增益</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e45" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyHomeShell" name="SkyHomeShell" title="常规非低内存（1G以上）产品使用">绿色增益</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e43" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage_OEM" name="SimpleHomepage_OEM" title="特殊产品，单独确认才使用">蓝色增益</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e44" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHome5.0" name="SimpleHome4" title="特殊产品，单独确认才使用">蓝电屏延伸</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e45" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyHomeShell" name="SkyHomeShell" title="常规非低内存（1G以上）产品使用">超解像</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e42" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyPanasonicHome" name="SkyPanasonicHome" title="松下项目专用首页">降噪</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e43" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage_OEM" name="SimpleHomepage_OEM" title="特殊产品，单独确认才使用">精密平滑处理</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e44" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHome5.0" name="SimpleHome4" title="特殊产品，单独确认才使用">MPEG降噪</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e45" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyHomeShell" name="SkyHomeShell" title="常规非低内存（1G以上）产品使用">动态图像校正MEMC</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableIME">
+																<div title="IME">通用设置:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e46" value=""><span category="IME" gitpath="SkyworthApp/IME/SogouIME" name="SogouIME" title="1G以上产品使用，单独确认，与酷开系统输入法互斥，只集成1个">睡眠时间</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e47" value=""><span category="IME" gitpath="SkyworthApp/IME/SkyTianciIME" name="SkyTianciIME" title="1G及以下部分产品使用，单独确认,与搜狗互斥，只集成1个">屏保时间</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e48" value=""><span category="IME" gitpath="SkyworthApp/IME/AndroidKeyboard" name="AndroidKeyboard" title="海外项目专用输入法">本机名称</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a20c2f71fbc212cdc51631e" value=""><span category="IME" gitpath="SkyworthApp/IME/CangjieIME" name="CangjieIME" title="仓颉输入法，6.2以上版本的香港机使用">一键直达</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e46" value=""><span category="IME" gitpath="SkyworthApp/IME/SogouIME" name="SogouIME" title="1G以上产品使用，单独确认，与酷开系统输入法互斥，只集成1个">语言设置</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e47" value=""><span category="IME" gitpath="SkyworthApp/IME/SkyTianciIME" name="SkyTianciIME" title="1G及以下部分产品使用，单独确认,与搜狗互斥，只集成1个">输入法</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e48" value=""><span category="IME" gitpath="SkyworthApp/IME/AndroidKeyboard" name="AndroidKeyboard" title="海外项目专用输入法">开机启动页</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a20c2f71fbc212cdc51631e" value=""><span category="IME" gitpath="SkyworthApp/IME/CangjieIME" name="CangjieIME" title="仓颉输入法，6.2以上版本的香港机使用">开机通道</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e46" value=""><span category="IME" gitpath="SkyworthApp/IME/SogouIME" name="SogouIME" title="1G以上产品使用，单独确认，与酷开系统输入法互斥，只集成1个">互动开关</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e47" value=""><span category="IME" gitpath="SkyworthApp/IME/SkyTianciIME" name="SkyTianciIME" title="1G及以下部分产品使用，单独确认,与搜狗互斥，只集成1个">EDID开关</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e48" value=""><span category="IME" gitpath="SkyworthApp/IME/AndroidKeyboard" name="AndroidKeyboard" title="海外项目专用输入法">指示灯勿扰开关</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a20c2f71fbc212cdc51631e" value=""><span category="IME" gitpath="SkyworthApp/IME/CangjieIME" name="CangjieIME" title="仓颉输入法，6.2以上版本的香港机使用">城市设置</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e46" value=""><span category="IME" gitpath="SkyworthApp/IME/SogouIME" name="SogouIME" title="1G以上产品使用，单独确认，与酷开系统输入法互斥，只集成1个">应用默认安装位置</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e47" value=""><span category="IME" gitpath="SkyworthApp/IME/SkyTianciIME" name="SkyTianciIME" title="1G及以下部分产品使用，单独确认,与搜狗互斥，只集成1个">未知来源</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e48" value=""><span category="IME" gitpath="SkyworthApp/IME/AndroidKeyboard" name="AndroidKeyboard" title="海外项目专用输入法">恢复出厂设置</span></div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="col-xs-12 page2_boxes">
+												<table class="table table-bordered">
+													<!--mytable-->
+													<tbody id="myAddModalMkTableTbody">
+														<tr>
+															<td id="myAddModalMkTableApp">
+																<div title="App">快捷功能:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4f" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie" name="SkyMovie" title="除Andorid6.0的机器使用此版本">我的应用</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">本地媒体</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e52" value=""><span category="App" gitpath="SkyworthApp/App/SkyCCMall" name="SkyCCMall" title="酷开商城功能，一般默认集成">任务管理</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e54" value=""><span category="App" gitpath="SkyworthApp/App/SkyUser" name="SkyUser" title="酷开用户体系服务，一般默认集成">一键加速</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e55" value=""><span category="App" gitpath="SkyworthApp/App/SkyWeather" name="SkyWeather" title="天气app，6.2版本以下一般默认集成（注意需删除设置中的城市设置）">单独听</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableService">
+																<div title="Service">常用设置:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">背光</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5d" value=""><span category="Service" gitpath="SkyworthApp/Service/SkySystemService" name="SkySystemService" title="一般默认集成">图像模式</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">声音模式</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">定时关机</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">音画设置</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">网络</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">体育模式</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">升级</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">护眼模式</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">指引灯开</span></div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="col-xs-12 page2_boxes">
+												<h2>SKYTV</h2>
+											</div>
+											<div class="col-xs-12 page2_boxes">
+												<table class="table table-bordered">
+													<!--mytable-->
+													<tbody id="myAddModalMkTableTbody">
+														<tr>
+															<td id="myAddModalMkTableApp">
+																<div title="App">声音演示:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4f" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie" name="SkyMovie" title="除Andorid6.0的机器使用此版本">音响系统</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">魔音技术</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e52" value=""><span category="App" gitpath="SkyworthApp/App/SkyCCMall" name="SkyCCMall" title="酷开商城功能，一般默认集成">魔音技术+</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e54" value=""><span category="App" gitpath="SkyworthApp/App/SkyUser" name="SkyUser" title="酷开用户体系服务，一般默认集成">DSP智能修正</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e55" value=""><span category="App" gitpath="SkyworthApp/App/SkyWeather" name="SkyWeather" title="天气app，6.2版本以下一般默认集成（注意需删除设置中的城市设置）">音量突变保护</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e52" value=""><span category="App" gitpath="SkyworthApp/App/SkyCCMall" name="SkyCCMall" title="酷开商城功能，一般默认集成">精准声场定位</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e54" value=""><span category="App" gitpath="SkyworthApp/App/SkyUser" name="SkyUser" title="酷开用户体系服务，一般默认集成">ATMOS音效</span></div>
+
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableService">
+																<div title="Service">图像演示:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">像素控光</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5d" value=""><span category="Service" gitpath="SkyworthApp/Service/SkySystemService" name="SkySystemService" title="一般默认集成">像素控光-极限对比</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">像素控光-极速响应</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">像素控光-HDR Boost</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">超级清晰度</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">精准色控</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">精密平滑处理</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">超清在线解析</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">SquareNr</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">降噪大师</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">4K极清重塑</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5d" value=""><span category="Service" gitpath="SkyworthApp/Service/SkySystemService" name="SkySystemService" title="一般默认集成">区域对比提升</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">4K四轴防抖plus</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">精睿控光</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">无毒广色域</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">HDR-10</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">光学防蓝光</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">护眼模式</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">动态目标重塑</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">精准色相控制</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">纯色技术</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5d" value=""><span category="Service" gitpath="SkyworthApp/Service/SkySystemService" name="SkySystemService" title="一般默认集成">LAP高色域</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">4K MEMC+</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">Local Dimming</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">Dobly Vision</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">低反射</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableService">
+																<div title="Service">功能配置选项:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">高对比度</span></div>
+																<div class="col-xs-3"><span category="Service" gitpath="SkyworthApp/Service/SkySystemService" name="SkySystemService" title="一般默认集成">无毒广色域：</span><input type="text" id="58b8d0f40df5170a75f31e5d" value=""></div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="col-xs-12 page2_boxes">
+												<table class="table table-bordered">
+													<!--mytable-->
+													<tbody id="myAddModalMkTableTbody">
+														<tr>
+															<td id="myAddModalMkTableApp">
+																<div title="App">输入信号源:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">ATVRF</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4f" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie" name="SkyMovie" title="除Andorid6.0的机器使用此版本">DVBC</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">DTMB</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4f" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie" name="SkyMovie" title="除Andorid6.0的机器使用此版本">CVBS1</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">CVBS2</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4f" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie" name="SkyMovie" title="除Andorid6.0的机器使用此版本">CVBS3</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">VGA</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4f" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie" name="SkyMovie" title="除Andorid6.0的机器使用此版本">YPBPR1</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">YPBPR2</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e52" value=""><span category="App" gitpath="SkyworthApp/App/SkyCCMall" name="SkyCCMall" title="酷开商城功能，一般默认集成">HDMI1</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e54" value=""><span category="App" gitpath="SkyworthApp/App/SkyUser" name="SkyUser" title="酷开用户体系服务，一般默认集成">HDMI2</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e55" value=""><span category="App" gitpath="SkyworthApp/App/SkyWeather" name="SkyWeather" title="天气app，6.2版本以下一般默认集成（注意需删除设置中的城市设置）">HDMI3</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e52" value=""><span category="App" gitpath="SkyworthApp/App/SkyCCMall" name="SkyCCMall" title="酷开商城功能，一般默认集成">HDMI4</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e54" value=""><span category="App" gitpath="SkyworthApp/App/SkyUser" name="SkyUser" title="酷开用户体系服务，一般默认集成">MEDIA</span></div>
+
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableService">
+																<div title="Service">支持纵横比:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">16to9</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">4To3</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">Full</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">PToP</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5d" value=""><span category="Service" gitpath="SkyworthApp/Service/SkySystemService" name="SkySystemService" title="一般默认集成">Auto</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">Zoom</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">Subtitle</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">Cinema</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">Panorama</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableService">
+																<div title="Service">与config关联生成项:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">高对比度</span></div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="col-xs-12 page2_boxes">
+												<table class="table table-bordered">
+													<!--mytable-->
+													<tbody id="myAddModalMkTableTbody">
+														<tr>
+															<td id="myAddModalMkTablePlayerLibrary">
+																<div title="PlayerLibrary">PlayerLibrary:</div>
+																<div class="col-xs-3"><input type="radio" name="PlayerLibrary" id="58b8d0f10df5170a75f31e3c" value="" checked=""><span category="PlayerLibrary" gitpath="intact" name="jni_bjplayer" title="集成北京播放器库JNI版本 - intact">JNI版本</span></div>
+																<div class="col-xs-3"><input type="radio" name="PlayerLibrary" id="58b8d0f10df5170a75f31e3d" value=""><span category="PlayerLibrary" gitpath="mix" name="mix_bjplayer" title="集成北京播放器库mix版本 - mix">mix版本</span></div>
+																<div class="col-xs-3"><input type="radio" name="PlayerLibrary" id="58b8d0f10df5170a75f31e3e" value=""><span category="PlayerLibrary" gitpath="null" name="no_bjplayer" title="不集成北京播放器库 - null">不集成</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableApp">
+																<div title="App">App:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4f" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie" name="SkyMovie" title="除Andorid6.0的机器使用此版本">影视中心5</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">影视中心6</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e52" value=""><span category="App" gitpath="SkyworthApp/App/SkyCCMall" name="SkyCCMall" title="酷开商城功能，一般默认集成">酷开商城</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e54" value=""><span category="App" gitpath="SkyworthApp/App/SkyUser" name="SkyUser" title="酷开用户体系服务，一般默认集成">酷开用户</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e55" value=""><span category="App" gitpath="SkyworthApp/App/SkyWeather" name="SkyWeather" title="天气app，6.2版本以下一般默认集成（注意需删除设置中的城市设置）">天气</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e56" value=""><span category="App" gitpath="SkyworthApp/App/SkyTVQQ" name="SkyTVQQ" title="聊天功能，512M内存产品不集成，其余默认集成，特殊产品，oem、商务产品单独确认">亲友圈</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e57" value=""><span category="App" gitpath="SkyworthApp/App/SkyTVAgent" name="SkyTVAgent" title="远程售后服务，一般默认集成但无入口">远程服务</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e58" value=""><span category="App" gitpath="SkyworthApp/App/SmartHome" name="SmartHome" title="集团智慧家庭，创维&amp;酷开品牌产品默认集成">智慧家庭</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e59" value=""><span category="App" gitpath="SkyworthApp/App/SkyVoice" name="SkyVoice" title="原名为酷开精灵，需要语音功能的产品使用，新产品需单独确认，老产品暂时沿用讯飞（南京团队）">搜狗语音</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5b" value=""><span category="App" gitpath="SkyworthApp/App/SkyManual" name="SkyManual" title="电子说明书，只有海外产品使用">电子说明书</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e51" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie-voole" name="SkyMovie-voole" title="影视中心，优朋源的机器使用此版本，另需注意Andorid6.0的机器要同时勾选影视中心6，Andorid6.0以下的机器同时勾选影视中心5">影视中心(优朋)</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59ad1141a538ca687cb90d1d" value=""><span category="App" gitpath="SkyworthApp/App/SkyEPOPDemo" name="SkyEPOPDemo" title="电子卡牌演示，OLED机器全部导入，其余机器不导入">EPOP演示</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59c3157729d2de31607cb452" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie-MLY" name="SkyMovie-MLY" title="仅用于码流仪的项目演示，不能用于生产和用户升级">影视中心（码流仪）</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e53" value=""><span category="App" gitpath="SkyworthApp/App/SkyEDU" name="SkyEDU" title="酷开教育中心，6.1以上版本不集成（已经合并到影视），6.1以下版本目前一般默认集成">教育中心</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a712b01e7b6501f6ee08770" value=""><span category="App" gitpath="SkyworthApp/App/SkyTVPi" name="SkyTVPi" title="电视派TV端，酷开系统6.2版本以上集成">电视派TV端</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a75928cfbd05f7ff9490e87" value=""><span category="App" gitpath="SkyworthApp/App/CoocaaGuide" name="CoocaaGuide" title="6.2以上版本酷开系统开机向导（独立应用apk集成）">新开机引导</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableService">
+																<div title="Service">Service:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">通讯服务</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5d" value=""><span category="Service" gitpath="SkyworthApp/Service/SkySystemService" name="SkySystemService" title="一般默认集成">系统服务</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">推送服务</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5f" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDataService" name="SkyDataService" title="一般默认集成">数据采集服务</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e60" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyDEService" name="SkyDEService" title="一般默认集成（包了爱投屏功能支持airplay&amp;mircast）">爱投屏</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e61" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyADService" name="SkyADService" title="一般默认集成">广告服务</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e62" value=""><span category="Service" gitpath="SkyworthApp/Service/SkySSService" name="SkySSService" title="根据产品定义，一般不集成，个别酷开品牌产品要求">智慧启动</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableAppStore">
+																<div title="AppStore">AppStore:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e49" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore" name="AppStore" title="应用圈">应用圈</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4a" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_OEM" name="SkyAppStore_OEM" title="应用圈OEM版">应用圈OEM版</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4b" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_Oversea" name="SkyAppStore_Oversea" title="应用圈海外版">应用圈海外版</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4c" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_PE" name="SkyAppStore_PE" title="应用圈外包版">应用圈外包版</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4d" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyHall" name="SkyHall" title="6.X及以上不需要集成">运营大厅</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4e" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/OperaStore" name="OperaStore" title="Opera，仅海外产品使用">Opera</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59b63a7338de530f39465e22" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_Cosmos" name="SkyAppStore_Cosmos" title="Cosmos渠道外发版本（应用圈单独外发版本，和整机软件无关，整机不用关心此版本）">应用圈Cosmos版</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59b63aaf38de530f39465e23" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_CommonNou" name="SkyAppStore_CommonNou" title="去掉U盘功能的Common版（某些需要去掉U盘安装功能的定制机）">应用圈CommonNou版</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59b63afa38de530f39465e24" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyHall_SP" name="SkyHall_SP" title="5.x早期系统的旅游，品牌，音乐，商城等通用大厅(酷开5.x早期系统集成，现在已经不用集成了)">运营大厅外包版</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableHomePage">
+																<div title="HomePage">HomePage:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e40" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage" name="SimpleHomepage" title="常规低内存（1G及以下）产品使用">简易首页5.x</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e41" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyOverseaHomepage" name="SkyOverseaHomepage" title="海外产品专用首页">海外首页</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e42" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyPanasonicHome" name="SkyPanasonicHome" title="松下项目专用首页">松下首页</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e43" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage_OEM" name="SimpleHomepage_OEM" title="特殊产品，单独确认才使用">简易首页OEM</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e44" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHome5.0" name="SimpleHome4" title="特殊产品，单独确认才使用">简易首页4.4</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e45" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyHomeShell" name="SkyHomeShell" title="常规非低内存（1G以上）产品使用">常规首页5.x</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableIME">
+																<div title="IME">IME:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e46" value=""><span category="IME" gitpath="SkyworthApp/IME/SogouIME" name="SogouIME" title="1G以上产品使用，单独确认，与酷开系统输入法互斥，只集成1个">搜狗输入法</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e47" value=""><span category="IME" gitpath="SkyworthApp/IME/SkyTianciIME" name="SkyTianciIME" title="1G及以下部分产品使用，单独确认,与搜狗互斥，只集成1个">酷开输入法</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e48" value=""><span category="IME" gitpath="SkyworthApp/IME/AndroidKeyboard" name="AndroidKeyboard" title="海外项目专用输入法">Android输入法</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a20c2f71fbc212cdc51631e" value=""><span category="IME" gitpath="SkyworthApp/IME/CangjieIME" name="CangjieIME" title="仓颉输入法，6.2以上版本的香港机使用">仓颉输入法</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableSysApp">
+																<div title="SysApp">SysApp:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e67" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyTaskManager" name="SkyTaskManager" title="一般默认集成">任务管理器</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e68" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkySetting" name="SkySetting" title="一般默认集成">设置</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e69" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyPayCenter" name="SkyPayCenter" title="一般默认集成">支付中心</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e6a" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyPackageInstaller" name="SkyPackageInstaller" title="一般默认集成">应用安装器</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e6b" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyLocalMedia" name="SkyLocalMedia" title="一般默认集成">本地媒体</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e6c" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyAutoInstaller" name="SkyAutoInstaller" title="一般默认集成">自动安装器</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e6d" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyCommonFactory" name="SkyCommonFactory" title="通用工厂，提供所有非driverbase机型使用">通用工厂</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e6e" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyBrowser" name="SkyBrowser" title="键盘快捷键可启动，一般默认集成,暂无入口">酷开浏览器</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e6f" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyAutoTest" name="SkyAutoTest" title="一般默认集成">自动化测试</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e70" value="" disabled=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyMirrorPlayer" name="SkyMirrorPlayer" title="支持酷开传屏功能的产品才集成（airplay&amp;mircast）">Mirror播放器</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59a91b1da538ca687cb90d19" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyMarketShow" name="SkyMarketShow" title="商场演示">商场演示</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a0e97c5f03573061ab8e4d3" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyCommonFactory_db" name="SkyCommonFactory_db" title="driverbase2.0通用工厂，提供所有driverbase2.0机型使用；在Novatek和江苏有线方案上切入，后续需要上driverbase2.0机器的，需要同步导入。（集成后还需要修改driverbase2.0 xml配置代码拉取和编译规则做区分，已提交wikihttp://wiki.skyoss.com/pages/viewpage.action?pageId=12683593）">driverbase2.0通用工厂</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableTV">
+																<div title="TV">TV:</div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e63" value=""><span category="TV" gitpath="SkyworthApp/TV/SkyTV" name="SkyTV" title="内销TV功能，一般默认集成">TV内销</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e64" value=""><span category="TV" gitpath="SkyworthApp/TV/SkyTV_OverSea" name="SkyTV_OverSea" title="海外TV功能，只有外销产品才集成">TV海外版</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e65" value=""><span category="TV" gitpath="SkyworthApp/TV/SkyDigitalDTV" name="SkyDigitalDTV" title="内销TV，有数字公司通道的集成（同时集成数字部分的iSwitchDtvService.apk）； 没有DTV 或者DTV是方案商通道的不需要。注意：driverbase 2.0 对应的DTV通道不需要集成。">数字外挂DTV</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a0c1e5c6189e84674bcb5d3" value=""><span category="TV" gitpath="SkyworthApp/TV/SkyTVUI" name="SkyTVUI" title="TV应用的显示部分，暂只有江苏机顶盒项目集成，预计划是在酷开6.5系统上才导入所有机型，而且发布酷开6.5系统后，这个应用会独立发布和单独在线推送给用户，属于独立运营应用">TV独立应用</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a0c1e976189e84674bcb5d4" value=""><span category="TV" gitpath="SkyworthApp/TV/SkyTVProvider" name="SkyTVProvider" title="TV应用的功能部分，暂只有江苏机顶盒项目集成，预计划是在酷开6.5系统上才导入所有机型，只会随系统一起发布">TV功能</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e66" value=""><span category="TV" gitpath="SkyworthApp/TV/SkyTVCaUI" name="SkyTVCaUI" title="内销TV，6.2 版本以及以上不需要集成（已合并到TV模块）；6.2 版本以下的，有数字公司通道的集成， 没有DTV 或者DTV是方案商通道的不需要。">TV_CA界面</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a323af9b249b61b1f04555c" value=""><span category="TV" gitpath="SkyworthApp/TV/SkyTV_Quality" name="SkyTV_Quality" title="内销TV功能，6.1  和6.1 分支品质化产品（8H52-G3、8H20-G2A、8S47-E2A、9R60-S8）用">TV内销_品质化</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a4451d4545f1a53b4d118ea" value=""><span category="TV" gitpath="SkyworthApp/TV/VodBrowser" name="VodBrowser" title="点播浏览器，6.2及以后版本，广电机顶盒使用">点播浏览器</span></div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalMkTableOther">
+																<div title="Other">Other:</div>
+																<div class="col-xs-3"><input type="checkbox" id="598a644cd0e5e116f32a902a" value=""><span category="Other" gitpath="ThirdPartyApp/Tantan" name="Tantan" title="弹弹体育,原名：屏Plus，创维机器配置">弹弹体育(skyworth)</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a1771bf1d9f3b3efed73481" value=""><span category="Other" gitpath="Framework/Etc/theme_stb_jscn" name="JSCN-Theme-Stb" title="江苏有线机顶盒机器使用【49HC2910（GHD08）】">江苏有线机顶盒主题</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e71" value=""><span category="Other" gitpath="ThirdPartyApp/Beiwa" name="Beiwa" title="新产品立项后，知会软件院和酷开确认预装应用需求">贝瓦儿童乐园</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e72" value=""><span category="Other" gitpath="ThirdPartyApp/GouZheng_low" name="GouZheng_low" title="新产品立项后，知会软件院和酷开确认预装应用需求">勾正</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e73" value=""><span category="Other" gitpath="ThirdPartyApp/Huanqiu" name="Huanqiu" title="新产品立项后，知会软件院和酷开确认预装应用需求">环球购物</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e74" value=""><span category="Other" gitpath="ThirdPartyApp/kuwan" name="kuwan" title="新产品立项后，知会软件院和酷开确认预装应用需求">酷玩健身馆</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e75" value=""><span category="Other" gitpath="ThirdPartyApp/kuyun" name="kuyun" title="新产品立项后，知会软件院和酷开确认预装应用需求">酷云</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e76" value=""><span category="Other" gitpath="ThirdPartyApp/Lvke" name="Lvke" title="新产品立项后，知会软件院和酷开确认预装应用需求">旅刻</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e77" value=""><span category="Other" gitpath="ThirdPartyApp/sohu" name="sohu" title="新产品立项后，知会软件院和酷开确认预装应用需求">搜狐影院</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e78" value=""><span category="Other" gitpath="ThirdPartyApp/Tianlai" name="Tianlai" title="新产品立项后，知会软件院和酷开确认预装应用需求">天籁K歌</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e79" value=""><span category="Other" gitpath="ThirdPartyApp/tvkou" name="tvkou" title="新产品立项后，知会软件院和酷开确认预装应用需求">电视扣</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e7a" value=""><span category="Other" gitpath="ThirdPartyApp/Yibangyi" name="Yibangyi" title="新产品立项后，知会软件院和酷开确认预装应用需求">健康医帮一</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e7b" value=""><span category="Other" gitpath="ThirdPartyApp/ChinaNetTV" name="ChinaNetTV" title="原名为TV极光，新产品立项后，知会软件院和酷开确认预装应用需求">中国互联网电视</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f70df5170a75f31e7c" value=""><span category="Other" gitpath="ThirdPartyApp/CIBNSportTV" name="CIBNSportTV" title="新产品立项后，知会软件院和酷开确认预装应用需求">CIBN聚体育</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f70df5170a75f31e7d" value=""><span category="Other" gitpath="ThirdPartyApp/CIBNJvjingcai" name="CIBNJvjingcai" title="新产品立项后，知会软件院和酷开确认预装应用需求">CIBN聚精彩</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f70df5170a75f31e7e" value=""><span category="Other" gitpath="ThirdPartyApp/Wuliquankai" name="Wuliquankai" title="新产品立项后，知会软件院和酷开确认预装应用需求">舞力全开</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f70df5170a75f31e7f" value=""><span category="Other" gitpath="ThirdPartyApp/ifly" name="ifly" title="之前使用语音的产品继续使用，新产品需单独确认是否使用搜狗语音">讯飞语音</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f70df5170a75f31e80" value=""><span category="Other" gitpath="ThirdPartyApp/iwangding" name="iwangding" title="Native层程序-网丁CDN检测工具">网丁CDN工具</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58b8d0f70df5170a75f31e81" value=""><span category="Other" gitpath="ThirdPartyApp/SkyCommonDemo" name="SkyCommonDemo" title="仅供参考一般不集成">演示demo</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58f8724c2f9e686b04926d4b" value=""><span category="Other" gitpath="ThirdPartyApp/CIBN-VST" name="CIBN-VST" title="CIBN微视听">CIBN微视听</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58f872552f9e686b04926d4c" value=""><span category="Other" gitpath="ThirdPartyApp/QiYiGuo" name="QiYiGuo" title="奇艺果">奇艺果</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="58f872692f9e686b04926d4e" value=""><span category="Other" gitpath="ThirdPartyApp/ShuJvMao" name="ShuJvMao" title="数据猫">数据猫</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="593e4d96ae684e7442c183c2" value=""><span category="Other" gitpath="ThirdPartyApp/Karaoke" name="Karaoke" title="第三方预装应用">全民K歌</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="594b3c5b1d3e3152a98dd673" value=""><span category="Other" gitpath="Framework/Etc/screensavers" name="screensavers" title="产品需要在原基础上新增屏保数量的可选取此模块，将增加10张本地屏保。 一般OLED产品使用，其它产品按需。">本地屏保</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="598421c7cfb33e364c5e9dc4" value=""><span category="Other" gitpath="Framework/Etc/wallpaper" name="wallpaper" title="预置wallpaper本地屏保图片, 默认不预置, 只针对wallpaper系列机型使用">wallpaper本地屏保图片</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="598a64a6d0e5e116f32a902b" value=""><span category="Other" gitpath="ThirdPartyApp/Tantan_philips" name="Tantan_philips" title="弹弹体育,原名：屏Plus，飞利浦机器配置">弹弹体育(philips)</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5993e3dca2f6977273ff5e2a" value=""><span category="Other" gitpath="ThirdPartyApp/JJ" name="JJ" title="JJ斗地主">JJ斗地主</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59a77811e41b2d5ad812f6d0" value=""><span category="Other" gitpath="ThirdPartyApp/XiongMaoYun" name="XiongMaoYun" title="熊猫云（熊猫机器定制专用）">熊猫云</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59c0cbf256a1df16535c2567" value=""><span category="Other" gitpath="Framework/Etc/oled_theme_standard" name="OLED-Theme-Standard" title="S8、S9机器使用">黑金主题标准版</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59c0cc2c56a1df16535c2568" value=""><span category="Other" gitpath="Framework/Etc/oled_theme_advance" name="OLED-Theme-Advance" title="多了特殊字体,W8、W9机器使用">黑金主题高级版</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59ddbaa62e31c95eb032bdac" value=""><span category="Other" gitpath="Framework/Etc/bootanimation/Skyworth" name="Skyworth bootanimation" title="当前TARGET_PRODUCT可兼容当前品牌即勾选此项">创维开机动画</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59ddbad42e31c95eb032bdad" value=""><span category="Other" gitpath="Framework/Etc/bootanimation/Coocaa" name="Coocaa bootanimation" title="当前TARGET_PRODUCT可兼容当前品牌即勾选此项">酷开开机动画</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59ddbaf82e31c95eb032bdae" value=""><span category="Other" gitpath="Framework/Etc/bootanimation/Philips" name="Philips bootanimation" title="当前TARGET_PRODUCT可兼容当前品牌即勾选此项">飞利浦开机动画</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59dec2d72e31c95eb032bdaf" value=""><span category="Other" gitpath="ThirdPartyApp/SuNingSmartHomeTv" name="SuNingSmartHomeTv" title="苏宁定制机专用app">苏宁智能</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59dec32c2e31c95eb032bdb0" value=""><span category="Other" gitpath="ThirdPartyApp/EBuyTv" name="EBuyTv" title="苏宁定制机专用app">苏宁易购</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="59e4201b4a2d741274233353" value=""><span category="Other" gitpath="ThirdPartyApp/SkyCopyFile" name="SkyCopyFile" title="码流仪定制机专用app">酷拷贝</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a03bbe4a0229b6cb0570f5d" value=""><span category="Other" gitpath="ThirdPartyApp/CIBN-VST-Custom" name="CIBN-VST-Custom" title="用于酷开与微视听联合品牌定制的电视机（32K5H、43K5H、55K5H）">CIBN微视听(定制）</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a1297726b3ba21599d55b66" value=""><span category="Other" gitpath="ThirdPartyApp/TianTianJianShen" name="TianTianJianShen" title="天天健身">天天健身</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a163dce1d9f3b3efed73480" value=""><span category="Other" gitpath="ThirdPartyApp/MangGuoTV" name="MangGuoTV" title="芒果TV">芒果TV</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a420d8ed60df93bf2ac9357" value=""><span category="Other" gitpath="ThirdPartyApp/KuMiao" name="KuMiao" title="酷喵优酷视频app">酷喵</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a4dedf24193197e8753941b" value=""><span category="Other" gitpath="ThirdPartyApp/Tianlai_Panda" name="Tianlai_Panda" title="此天籁只用于视伟通熊猫机器65D6U">天籁_熊猫</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a5874f1580c15376aa6132d" value=""><span category="Other" gitpath="ThirdPartyApp/WebViewJS" name="WebViewJS" title="显示账户信息">web页面</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a658d19f44c957b995de3a5" value=""><span category="Other" gitpath="Framework/Etc/home_default" name="6.x HomePage default data" title="6.x主页默认数据，用于6.2以上酷开版本，主页在没有取到网络数据时，加载的默认数据">酷开主页(6.x主页)默认数据</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a68563b9f03757e25ac8b8f" value=""><span category="Other" gitpath="ThirdPartyApp/ZuiMeiWeather" name="ZuiMeiWeather" title="6.2版本以上默认集成（与酷开系统的天气冲突默认只集成一个）">最美天气</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a69a6cce7b6501f6ee0876c" value=""><span category="Other" gitpath="Framework/Etc/bootanimation/SkyworthNew" name="Skyworth bootanimation (new)" title="Coocaa6.5及更高的版本时使用,Q4A，Q5A，Q6A，Q7A  大Q6系列勾选导入">创维开机动画(新)</span></div>
+																<div class="col-xs-3"><input type="checkbox" id="5a98ada716bd575c5a1deff7" value=""><span category="Other" gitpath="Framework/Etc/theme/theme_30th_anniversary" name="30th_anniversary" title="30周年纪念主题，可供部分机器使用作为系统默认主题，与黑金主题、广电主题等其他系统预置主题不能兼容，只能勾选一个，如果勾选了多个，就会存在一个把另一个覆盖掉，引起不确定性。目前只有Q4A需要。">30周年纪念主题</span></div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="col-xs-12 page2_boxes">
+												<table class="table table-bordered">
+													<!--mytable-->
+													<tbody id="myAddModalConfigTableTbody">
+														<tr>
+															<td id="myAddModalConfigTableTdBase">
+																<div title="base">设置：</div>
+																<div class="col-xs-6"><span title="该机器是否标配蓝牙遥控器，true-出厂标配，false-出厂不标配" name="SUPPORT_BLE_REMOTE" cnname="蓝牙遥控器" configkey="SUPPORT_BLE_REMOTE">third.get.quickplay :</span>
+																	<select id="58b9266b0df5170a75f31e8a" name="enum" oldvalue="true" value="true" configkey="SUPPORT_BLE_REMOTE">
+																		<option value="0">0</option>
+																		<option value="1">1</option>
+																	</select>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalConfigTableTdServerip">
+																<div title="serverip">语音：</div>
+																<div class="col-xs-6"><span title="该机器是否标配蓝牙遥控器，true-出厂标配，false-出厂不标配" name="SUPPORT_BLE_REMOTE" cnname="蓝牙遥控器" configkey="SUPPORT_BLE_REMOTE">lafite.tts.close :</span>
+																	<select id="58b9266b0df5170a75f31e8a" name="enum" oldvalue="true" value="true" configkey="SUPPORT_BLE_REMOTE">
+																		<option value="0">0</option>
+																		<option value="1">1</option>
+																	</select>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalConfigTableTdAd">
+																<div title="ad"> Coocaa SDK：</div>
+																<div class="col-xs-6"><span title="是否支持开机广告" name="BOOT_AD" cnname="开机广告" configkey="BOOT_AD">ro.build.skyform :</span>
+																	<select id="58b9266e0df5170a75f31ea1" name="enum">
+																		<option value="0">0</option>
+																		<option value="1">1</option>
+																	</select>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalConfigTableTdChannel">
+																<div title="channel">在线影视：</div>
+																<div class="col-xs-6"><span title="不使用信号源插拔自动切换通道功能。 默认true" name="PLUGSTATE_CHANGE_DISABLE" cnname="信源自切换" configkey="PLUGSTATE_CHANGE_DISABLE">third.get.4k :</span>
+																	<select id="58b9266f0df5170a75f31ea5" name="enum">
+																		<option value="0">0</option>
+																		<option value="1">1</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="DTV通道没有字幕功能。默认false" name="DTV_SUBTITLE_DISABLE" cnname="DTV字幕功能" configkey="DTV_SUBTITLE_DISABLE">third.get.h265 :</span>
+																	<select id="58b9266f0df5170a75f31ea6" name="enum">
+																		<option value="0">0</option>
+																		<option value="1">1</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="DTV Surfaceview使用tianci4方式，E690,E710用。默认false" name="DTV_VIEW_SETDISPLAY" cnname="DTV场景实现" configkey="DTV_VIEW_SETDISPLAY">third.get.ms.dolby :</span>
+																	<select id="58b9266f0df5170a75f31ea7" name="enum">
+																		<option value="0">0</option>
+																		<option value="1">1</option>
+																	</select>
+																</div>
+																<div class="col-xs-6"><span title="酷开系统新TV中EPG内容配置，其中value对应EPG内容展现形式，分别为none（无），local（本地EPG），net （网络EPG）默认为none " name="NEW_TV_EPG_MODEL" cnname="新TV" configkey="NEW_TV_EPG_MODEL">third.get.hdr.enable :</span>
+																	<select id="5a94b31616bd575c5a1deff6" name="enum">
+																		<option value="0">0</option>
+																		<option value="1">1</option>
+																	</select>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td id="myAddModalConfigTableTdLocalmedia">
+																<div title="localmedia">与config关联生成项：</div>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="modal-footer myfooter">
+								<button type="button" class="btn btn-default" id="lable1SubmitTwo">提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 点击关闭按钮 -->
+				<div class="modal fade col-xs-8" id="myAddCloseDiv" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myEditEnsureModalLabel">
+					<div class="" role="document">
+						<div class="modal-content">
+							<!--modal-content-->
+							<div class="modal-header">
+								<button type="button" class="close" aria-label="Close" id="myEnsureX"><span aria-hidden="true">×</span></button>
+								<h4 class="modal-title text-left" id="myDeleteModalLabel">关闭</h4>
+							</div>
+							<div class="modal-body">
+								<p id="infoEdit" style="font-size: 24px;text-align: center;">确认要关闭吗？</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal" id="myEditEnsureModalEnsure">确定</button>
+								<button type="button" class="btn btn-default" id="myEnsureCancle">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--点击批量修改弹出批量修改的modal-->
+				<div class="modal fade" id="myMoreEditModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myMoreEditModalLabel">
+					<div class="" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" aria-label="Close" id="myMoreEditModalClose"><span aria-hidden="true">关闭</span></button>
+								<button type="button" class="close" id="myMoreEditModalSubmit"><span aria-hidden="true">提交</span></button>
+								<h4 class="modal-title" id="myMoreEditModalLabel">批量修改</h4>
+								<span id="myMEModalErrorInfo" class="myModalErrorInfo"></span>
+							</div>
+							<div class="modal-body">
+								<table class="table table-bordered" id="myMoreEditModalTable">
+									<tr>
+										<td style="padding: 0;">
+											<div class="btn-group">
+												<button type="button" class="btn btn-default" id="myMoreEditModalMkButton" disabled title="mk暂不支持批量修改">批量编辑MK文件</button>
+												<button type="button" class="btn btn-default" id="myMoreEditModalConfigButton">批量编辑config文件</button>
+											</div>
+											<div class="col-xs-12 inputstyle" id="myMoreEditModalMkTable">
+												<table class="table table-bordered " style="display:none">
+													<tbody id="myMoreEditModalMkTableTbody">
+														<tr>
+															<td id="myMoreEditModalMkTableApp"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalMkTableService"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalMkTableAppStore"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalMkTableHomePage"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalMkTableIME"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalMkTableSysApp"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalMkTableTV"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalMkTableEtc"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalMkTableOther"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+											<div class="col-xs-12 inputstyle" id="myMoreEditModalConfigTable">
+												<table class="table table-bordered fontsize ">
+													<tbody id="myMoreEditModalConfigTableTbody">
+														<tr>
+															<td id="myMoreEditModalConfigTableTdBase"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalConfigTableTdServerip"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalConfigTableTdAd"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalConfigTableTdChannel"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalConfigTableTdLocalmedia"></td>
+														</tr>
+														<tr>
+															<td id="myMoreEditModalConfigTableTdOther"></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="modal-footer myfooter">
+								<button type="button" class="btn btn-default" id="myMoreEditModalSubmitTwo">提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--点击批量删除弹出批量删除的modal-->
+				<div class="modal fade col-xs-8" id="myMoreDeleteModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myMoreDeleteModalLabel">
+					<div class="" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+								<h4 class="modal-title" id="myMoreDeleteModalLabel">系统提示：</h4>
+								<span id="myMDModalErrorInfo" class="myModalErrorInfo"></span>
+							</div>
+							<div class="modal-body">
+								<p style="font-size: 24px;text-align: center;">确认删除吗？确认后可在待审核文件查询。</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" id="myMoreDeleteModalEnsure">确定</button>
+								<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--点击删除弹出删除的modal-->
+				<div class="modal fade col-xs-8" id="myDeleteModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel">
+					<div class="modal-delete" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+								<h4 class="modal-title" id="myDeleteModalLabel">删除</h4>
+								<h4 id="myDeleteModalErrorInfo" class="myModalErrorInfo"></h4>
+							</div>
+							<div class="modal-body">
+								<p style="font-size: 24px;text-align: center;">确认要删除吗？</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" id="myDeleteModalEnsure">确定</button>
+								<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--批量修改-保存-确认框-->
+				<div class="modal fade col-xs-8 text-left" id="myMoreEditSubmitModal" style="padding-right: 0; top: 7%;" tabindex="-1" role="dialog" aria-labelledby="myMoreEditSubmitModalLabel">
+					<div class="modalwidth" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" aria-label="Close" id="MoreEditX"><span aria-hidden="true">×</span></button>
+								<h4 class="modal-title text-left" id="myMoreEditSubmitModalLabel">批量修改确认框</h4>
+							</div>
+							<div class="modal-body">
+								<p class="moreEditDetail">是否确认保存修改？</p>
+								<p class="moreEditDetail">针对：<span id="AimAtChipAndModel" style="color: skyblue;"></span>型号的机器做了如下修改。</p>
+								<p class="moreEditDetail">新增模块：<span id="addmodules" style="color: skyblue;"></span></p>
+								<p class="moreEditDetail">删除模块：<span id="deletemodules" style="color: skyblue;"></span></p>
+								<p class="moreEditDetail">配置项：<span id="setmodules" style="color: skyblue;"></span></p>
+								<p class="moreEditDetail">您未做任何操作。</p>
+							</div>
+							<div class="modal-footer">
+								<button type="submit" class="btn btn-primary" id="MoreEditSaveSubmit">确定</button>
+								<button type="reset" class="btn btn-default" id="MoreEditBack">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--请先勾选要删除的项-->
+				<div class="modal fade col-xs-8" id="myDeleteDialogModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myDeleteDialogModalLabel">
+					<div class="modal-delete" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+								<h4 class="modal-title" id="myDeleteModalLabel">系统提示：</h4>
+							</div>
+							<div class="modal-body">
+								<p style="font-size: 24px;text-align: center;">请先选择要修改或删除的项。</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+								<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--<div id="noList">当前没有符合查询条件的文件！！</div>-->
+			</fieldset>
+		</div>
+
+		<!--loading环-->
+		<!--<div id="loading"><span id="loadingImg">wenjian</span><span id="loadingText">数据加载中...</span></div>-->
+		<script src="../js/jquery.dataTables.min.js" type="text/javascript" charset="utf8"></script>
+		<script src="../js/front-endPage.js"></script>
+		<script src="../js/page2.js"></script>
+	</body>
+
+</html>

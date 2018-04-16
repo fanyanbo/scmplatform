@@ -1,0 +1,68 @@
+/*公共部分*/
+*{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+}
+html,body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+}
+p {
+	margin: 0px;
+}
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+button{
+	border: 0;
+	margin: 0;
+}
+body{
+    width: 100%;
+}
+
+fieldset{padding:.35em .625em .75em;margin:0 2px;border:1px solid silver;}
+
+legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
+
+td{
+	align:center;
+}
+
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+::-webkit-scrollbar-button {
+	display: none;
+}
+::-webkit-scrollbar-track {
+	/*background: url("../imagesne.jpg") center;*/
+}
+::-webkit-scrollbar-thumb {
+	padding-left: 2px;
+	border-radius: 6px;
+	border: solid 2px #A6A6A6;
+	background-color: rgba(255, 255, 255, 1);
+}
+
+/*当前页部分*/
+
+#page7{
+	min-width: 900px;
+}
+.page7_boxes {
+	display: none;
+}
+
+.page7_tabs:nth-child(1) {
+	background-color: red;
+}
