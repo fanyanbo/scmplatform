@@ -1,0 +1,37 @@
+<html>
+
+	<head>
+		<title>Login Form</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link href="../css/login.css" rel="stylesheet" type="text/css">
+	</head>
+
+	<body onkeydown="keyLogin();">
+		<div class="main">
+			<div class="login">
+				<h1>配置信息管理平台</h1>
+				<div class="inset">
+					<form role="form">
+						<div>
+							<h2>Welcome</h2>
+							<span><label>用户名</label></span>
+							<span><input type="text" class="textbox" id="username" name="username" placeholder="请输入用户名" required autocomplete="off"/></span>
+						</div>
+						<div>
+							<span><label>密码</label></span>
+							<span><input type="password" class="password" id="password" name="password" placeholder="请输入密码" required/></span>
+						</div>
+						<div id="logintxt" style="color: red;"></div>
+						<div class="sign">
+							<input id="loginbutton" value="登录" class="submit btn btn-default btn-success text-center" onclick="loginfun()">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" src="../js/login.js"></script>
+	</body>
+
+</html>
