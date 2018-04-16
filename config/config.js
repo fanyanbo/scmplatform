@@ -1,5 +1,5 @@
 /**
- * config
+ * config.js
  * author : fanyanbo@skyworth.com
  */
 
@@ -11,18 +11,29 @@ var config = {
 
   get mini_assets() { return !this.debug; }, // 是否启用静态文件的合并压缩，详见视图中的Loader
 
-  name: 'Scmplatform', // 平台名字
-  description: '酷开系统配置管理平台', // 平台的描述
+  name: '软件配置管理平台', // 平台名字
+  description: '基于酷开系统的自动化软件产品配置管理平台', // 平台的描述
   keywords: 'nodejs, node, express, connect, socket.io',
 
   // 域名
   host: 'localhost',
 
   // mongodb 配置
-  db: 'mongodb://127.0.0.1/node_club_test',
+  mongodb: 'mongodb://127.0.0.1/scmplatform',
 
-  session_secret: 'scmplatform_secret', // 务必修改
-  auth_cookie_name: 'scmplatform',
+  mysql: {
+    user: 'root', // 用户名
+    password: 'root', // 密码
+    database: 'scmplatform', // 数据库
+    host: '127.0.0.1', // host
+    port: 3306, // 端口
+    checkExpirationInterval: 300*1000, // How frequently expired sessions will be cleared; milliseconds
+    connectionLimit: 1, // 连接池的连接个数，默认为 1
+    prefix: 'scm_', // 数据表前缀，如果一个数据库里有多个项目，那项目之间的数据表可以通过前缀来区分
+  },
+
+  session_secret: 'scmp_ladygaga', // 务必修改
+  cookie_name: 'scmp_sid',
 
   // 程序运行的端口
   port: 3018,
@@ -37,13 +48,15 @@ var config = {
 
   // 邮箱配置
   mail_opts: {
-    host: 'smtp.126.com',
-    port: 25,
+    host: 'mail.skyworth.com',
+    port: 465,
     auth: {
-      user: 'club@126.com',
-      pass: 'club'
+      user: 'fanyanbo@skyworth.com',
+      pass: 'fyb.1117'
     },
-    ignoreTLS: true,
+    tls: {rejectUnauthorized: false},
+    debug:true
+    //ignoreTLS: true,
   },
 
   // oneapm 是个用来监控网站性能的服务
@@ -54,7 +67,7 @@ var config = {
 };
 
 if (process.env.NODE_ENV === 'test') {
-  config.db = 'mongodb://127.0.0.1/node_club_test';
+  config.db = 'mongodb://127.0.0.1/scmplatform';
 }
 
 module.exports = config;
