@@ -878,8 +878,5 @@ function buttonInit(){
 		$('#page1_examine').modal();
 		$(".modal-backdrop").addClass("new-backdrop");
 	});
-	$("#page1_close2").click(function(){
-		
-		
-	});
+	
 }

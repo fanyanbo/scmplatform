@@ -11,7 +11,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/13",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G6200",
@@ -24,7 +24,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/12",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G9300",
@@ -37,7 +37,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/11",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "E6000",
@@ -50,7 +50,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/10",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "E6200",
@@ -63,7 +63,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/9",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G8200",
@@ -76,7 +76,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/8",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "E510",
@@ -89,7 +89,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/7",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "X6",
@@ -102,7 +102,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/6",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G6A",
@@ -115,7 +115,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/5",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G6",
@@ -128,7 +128,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/4",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "M9",
@@ -141,7 +141,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/2",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -154,7 +154,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/3",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -167,7 +167,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/1",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -180,7 +180,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/2/27",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -193,7 +193,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/2/26",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -206,7 +206,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -219,7 +219,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -232,7 +232,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -245,7 +245,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -258,7 +258,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -271,7 +271,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -284,7 +284,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -297,7 +297,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -310,7 +310,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -323,7 +323,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -336,7 +336,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -349,7 +349,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -362,7 +362,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -375,7 +375,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -388,7 +388,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -401,7 +401,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -414,7 +414,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -427,7 +427,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -440,7 +440,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -453,7 +453,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -466,7 +466,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -479,7 +479,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -492,7 +492,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -505,7 +505,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -518,7 +518,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -531,7 +531,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -544,7 +544,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -557,7 +557,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -570,7 +570,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -583,7 +583,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -596,7 +596,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -609,7 +609,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -622,7 +622,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -635,7 +635,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -648,7 +648,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -661,7 +661,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/27",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -674,7 +674,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/26",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -687,7 +687,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/25",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -700,7 +700,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/24",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -713,7 +713,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/23",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -726,7 +726,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/22",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -739,7 +739,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/21",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -752,7 +752,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/20",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -765,7 +765,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/19",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -778,7 +778,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/18",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -791,7 +791,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/17",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -804,7 +804,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/16",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='bbg'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -817,7 +817,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/15",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='cce'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='cce'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='cce'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='cce'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='cce'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='cce'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='cce'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='cce'><span class='glyphicon glyphicon-search'></span></a>"
 }, {
 	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 	"model": "G7200",
@@ -830,7 +830,7 @@ var data = [{
 	"EMMC": "1",
 	"author": "林心旺",
 	"time": "2018/3/14",
-	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='cce'>编辑</a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='cce'>删除</a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='cce'>复制</a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='cce'>预览</a>"
+	"operate": "<a class='eachedit' href='#' chip='8H81' model='G7200' target_product='cce'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#' chip='8H81' model='G7200' target_product='cce'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#' chip='8H81' model='G7200' target_product='cce'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#' chip='8H81' model='G7200' target_product='cce'><span class='glyphicon glyphicon-search'></span></a>"
 }];
 var autoComplete = "";
 var autoComplete2 = "";

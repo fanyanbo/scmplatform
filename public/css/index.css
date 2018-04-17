@@ -51,24 +51,36 @@ td{
 }
 
 /*当前页部分*/
-
+body{
+	background-color: #DDDDDF;
+}
+.navbar{
+	margin-bottom: 0;
+	background-color: #0FB3D6;
+}
 .containerp {
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
     margin-left: auto;
 }
+.row{
+	background-color: #DDDDDF;
+}
 #index_leftdiv{
-	height: 760px;
+	height: 826px;
 }
 #accordion{
 	position: absolute;
-	height: 740px;
+	height: 826px;
 	width: 100%;
 }
 #homePage a{
 	color: black;
 	text-decoration: none;
+}
+#homePage .navbar a{
+	color: white;
 }
 #homePage a:hover{
 	color: black;
@@ -79,11 +91,24 @@ td{
 }
 .everyList{
 	font-size: 20px;
+	padding-bottom: 5px;
 }
-.everyDiv ul li{
-	margin-left: 20%;
+.everyDiv li{
+	margin-left: 30px;
+	margin-top: 3px;
 	font-size: 18px;
+}
+.everyDiv li span{
+	margin-right: 5px;
+	color: #0FB3D6;
+}
+.everyDiv li a{
+	display: inline-table;
 }
 #tabs ul li{
 	margin-bottom: 0px;
+}
+.everyButton span:nth-child(1){
+	margin-right: 5px;
+	color: #0FB3D6;
 }

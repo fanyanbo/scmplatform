@@ -188,7 +188,7 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
 }
 
 .mybuttons {
-	margin-right: 15px;
+	/*margin-right: 15px;*/
 	margin-bottom: 10px;
 	height: 30px;
 	padding-left: 7px;
@@ -279,4 +279,10 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
 	display: block;
 	width: 10%;
 	margin: 0 auto;
+}
+#myDeleteModal.col-xs-push-2{
+	left: 16.66666667%;
+}
+#page2_table2 .new_productBox .operate span{
+	margin-right: 5px;
 }

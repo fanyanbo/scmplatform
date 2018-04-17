@@ -13,7 +13,6 @@ function sendHTTPRequest(url, data, func) {
         xmlhttp.open("POST", url, true);
         // xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded;charset=utf-8");
         xmlhttp.setRequestHeader("Content-type", "application/json ;charset=utf-8");
-
         xmlhttp.send(data);
     }
     else {
