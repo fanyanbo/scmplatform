@@ -14,6 +14,7 @@ var targetproduct = require('../controllers/targetproduct');
 var modules = require('../controllers/modules');
 var configs = require('../controllers/configs');
 var record = require('../controllers/record');
+var home = require('../controllers/home');
 
 var router = express.Router();
 
@@ -59,7 +60,6 @@ router.get('/', function(req, res, next) {
 // });
 
 router.get('/session', function(req, res, next) {
-
   if (req.session.sign) {
       console.log(req.session);
       res.send('welecome <strong>' + req.session.name + '</strong>,xixixi');
@@ -106,6 +106,10 @@ router.post('/record/add', record.add);
 router.post('/record/delete', record.delete);
 router.post('/record/query', record.query);
 router.post('/record/update', record.update);
+
+// 开始对接
+router.post('/home/getSummary', home.getSummary);
+
 
 //用于插件预研
 // var jwt = require('../study/jsonwebtokenModule');
