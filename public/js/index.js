@@ -6,38 +6,36 @@ var loginEmail = null;   //当前用户的邮箱地址
 
 $(function() {
 	forsession();
-	
+	homePageInfo();
+	buttonInit();
+});
+
+function buttonInit(){
 	var _focusIndex = "";
 	$(".everyButton").click(function() {
 		_focusIndex = $(".everyButton").index($(this));
 		console.log(_focusIndex);
 		if(_focusIndex != 0) {
-			if($(".everyDiv")[_focusIndex - 1].style.display == "block") {
-//				for(var k = 0; k < $(".everyDiv").length; k++) {
-//					$(".everyDiv")[k].style.display = "none";
-//				}
-				$(".everyDiv")[_focusIndex - 1].style.display = "none";
-			} else {
-//				for(var k = 0; k < $(".everyDiv").length; k++) {
-//					$(".everyDiv")[k].style.display = "none";
-//				}
-				$(".everyDiv")[_focusIndex - 1].style.display = "block";
+			if($(".everyDiv")[_focusIndex - 1].style.display == "none") {
+				$(".everyDiv").slideUp();
+				$(".everyDiv:eq("+(_focusIndex - 1)+")").slideToggle();
 			}
 		} else {
-			for(var k = 0; k < $(".everyDiv").length; k++) {
-				$(".everyDiv")[k].style.display = "none";
-			}
+			$(".everyDiv").slideUp();
 		}
 	});
 	$("#index_exit").click(function() {
 		document.location.href = "login.html";
 	});
-});
-
+}
 //访问session接口
 function forsession(){
     wrongData();
     //sendHTTPRequest("/fybv2_api/session", '{"data":""}', sessionresult);
+}
+
+function homePageInfo(){
+	sendHTTPRequest("/api/v1/home/getSummary", '{"data":""}', homePageInfoResult);    
 }
 
 //session返回数据
@@ -46,7 +44,7 @@ function sessionresult(){
     if (this.readyState == 4) {
         console.log("this.status = " + this.status);
         console.log("this.responseText = " + this.responseText);
-        if (this.status == 200) //TODO
+        if (this.status == 200)
         {
             var data = JSON.parse(this.responseText);
             if (data.msg == "success") {
@@ -90,9 +88,6 @@ function userInfoResult(){
                 loginEmail = data.data[0].email;
                 // console.log("邮箱地址："+loginEmail);
             }
-            else{
-                
-            }            
         }
     }
 }
@@ -108,10 +103,24 @@ function wrongData(){
     });
     loginusername = "linxinwang";
     document.getElementById("indexUserName").innerHTML = loginusername;
-    adminFlag = "1";
-  	if (adminFlag == "1") {
-      	adminFlag = 1;   //非管理员标志位   
-  	}else if (adminFlag == "0") {
+    adminFlag = "0";
+    if (adminFlag == "1") {
+      	adminFlag = 1;   //非管理员标志位
+    	document.getElementById("adminVisible").style.display = "none";
+    }else if (adminFlag == "0") {
       	adminFlag = 0;
-  	}
+    }
+}
+
+function homePageInfoResult(){
+	if (this.readyState == 4) {
+        if (this.status == 200)
+        {
+            var data = JSON.parse(this.responseText);
+            console.log(data);
+            if (data.msg == "success") {
+                // console.log(data);
+            }
+        }
+    }
 }

@@ -20,7 +20,7 @@
 	</head>
 
 	<body id="homePage"><!--onload="forsession()"-->
-		<nav class="navbar navbar-default containerp" role="navigation">
+		<nav class="navbar containerp" role="navigation">
 			<a class="navbar-brand">
 				<span style="font-size:30px">配置信息管理平台</span>
 			</a>
@@ -34,62 +34,62 @@
 				<!--左侧-->
 				<div id="index_leftdiv" class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
 					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-						<div class="panel">
+						<div class="">
 							<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 								<ul class="leftUl list-group text-left">
 									<li class="everyList">
 										<div class="everyButton">
-											<img class="lefticon" src="../images/menu.png"></img>
-											<a href="#home" aria-controls="home" role="tab" data-toggle="tab" class=""  data-addtab="userMenu1"><b>首页</b></a>
+											<span class="glyphicon glyphicon-home"></span>
+											<a href="#home" aria-controls="home" role="tab" data-toggle="tab" class=""  data-addtab="userMenu1">首页</a>
 										</div>
 									</li>
 									<li class="everyList">
 										<div class="everyButton">
-											<img class="lefticon" src="../images/menu.png"></img>
-											<span class="centertxt"><b>配置文件管理</b></span>
+											<span class="glyphicon glyphicon-file"></span>
+											<span class="centertxt">配置文件管理</span>
 										</div>
-										<div class="everyDiv" style="display: none;">
-											<ul>
+										<div>
+											<ul class="everyDiv" style="display: none;">
 												<li>
-													<a href="javascript:void(0);" data-addtab="userMenu2" url="page2.html">配置文件管理</a>
+													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" data-addtab="userMenu2" url="page2.html">配置文件管理</a>
 												</li>
 												<li>
-													<a href="javascript:void(0);" data-addtab="userMenu3" url="page3.html">目标设备管理</a>
+													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" data-addtab="userMenu3" url="page3.html">目标设备管理</a>
 												</li>
 											</ul>
 										</div>
 									</li>
 									<li class="everyList">
 										<div class="everyButton">
-											<img class="lefticon" src="../images/menu.png"></img>
-											<span class="centertxt"><b>审核文件管理</b></span>
+											<span class="glyphicon glyphicon-file"></span>
+											<span class="centertxt">审核文件管理</span>
 										</div>
-										<div class="everyDiv" style="display: none;">
-											<ul>
+										<div>
+											<ul class="everyDiv" style="display: none;">
 												<li>
-													<a href="javascript:void(0);" data-addtab="userMenu4" url="page4.html">待审核文件</a>
+													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" data-addtab="userMenu4" url="page4.html">待审核文件</a>
 												</li>
 												<li>
-													<a href="javascript:void(0);" data-addtab="userMenu5" url="page5.html">审核未通过文件</a>
+													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" data-addtab="userMenu5" url="page5.html">审核未通过文件</a>
 												</li>
 											</ul>
 										</div>
 									</li>
-									<li class="everyList">
+									<li class="everyList" id="adminVisible">
 										<div class="everyButton">
-											<img class="lefticon" src="../images/menu.png"></img>
-											<span class="centertxt"><b>配置内容管理</b></span>
+											<span class="glyphicon glyphicon-file"></span>
+											<span class="centertxt">配置内容管理</span>
 										</div>
-										<div class="everyDiv" style="display: none;">
-											<ul>
+										<div>
+											<ul class="everyDiv" style="display: none;">
 												<li>
-													<a href="javascript:void(0);" data-addtab="userMenu6" url="page6.html">设备管理</a>
+													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" data-addtab="userMenu6" url="page6.html">设备管理</a>
 												</li>
 												<li>
-													<a href="javascript:void(0);" data-addtab="userMenu7" url="page7.html">配置内容管理</a>
+													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" data-addtab="userMenu7" url="page7.html">配置内容管理</a>
 												</li>
 												<li>
-													<a href="javascript:void(0);" data-addtab="userMenu8" url="page8.html">分类排序管理</a>
+													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" data-addtab="userMenu8" url="page8.html">分类排序管理</a>
 												</li>
 											</ul>
 										</div>
