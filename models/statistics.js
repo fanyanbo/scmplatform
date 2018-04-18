@@ -31,7 +31,7 @@ Statistics.prototype.getSummaryByQuery = function(username, callback) {
       // 所有查询的内容都存在list数组中
       let listObject = [];
       for(let i in list){
-        console.log(list[i][0]);
+        //console.log(list[i][0]);
         listObject.push(list[i][0].count);
       }
       callback(null,listObject);

@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "assert": "^1.4.1",
-    "mongodb": "^3.0.5"
+    "mongodb": "^3.0.5",
+    "supervisor": "^0.12.0"
   }
 }

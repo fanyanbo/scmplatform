@@ -1,7 +1,7 @@
 
 // 转换mongodb数据为SQL
-var dbname = "scmplatform";
-var url = 'mongodb://127.0.0.1:27017/';
+var dbname = "fybv3";
+var url = 'mongodb://172.20.132.225:27017/';
 var sqlname = "a.sql";
 
 var fs = require('fs');
