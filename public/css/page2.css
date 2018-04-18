@@ -2,6 +2,9 @@
 body, h1, p, h2, h3, h4, h5, h6 {
     margin: 0;
 }
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
+	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
@@ -68,7 +71,6 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
 }
 
 /*当前页部分*/
-
 .CJJ-Table .clearfix {
     clear: both;
 }
@@ -188,7 +190,6 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
 }
 
 .mybuttons {
-	/*margin-right: 15px;*/
 	margin-bottom: 10px;
 	height: 30px;
 	padding-left: 7px;
@@ -223,6 +224,7 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
 	/* 设置对象的层叠顺序 */
 	display: block;
 	max-height: 100px;
+	background-color: #94A6B0;
 	overflow: auto;
 }
 
@@ -242,10 +244,13 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
 }
 
 .inputstyle{
-	background-color: #94A6B0;
+	background-color: #e9f5f0;
+	height: 30px;
 	padding-left: 5px;
 }
-
+.inputdiv{
+	margin-bottom: 10px;
+}
 .page2_boxes {
 	display: none;
 }

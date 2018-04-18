@@ -2,7 +2,9 @@
 body, h1, p, h2, h3, h4, h5, h6 {
     margin: 0;
 }
-
+body,button, input, select, textarea,h1 ,h2, h3, h4, h5, h6 {
+	font-family: Microsoft YaHei,'宋体' , Tahoma, Helvetica, Arial, "\5b8b\4f53", sans-serif;
+}
 h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
 }
@@ -67,6 +69,12 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
 	background-color: rgba(255, 255, 255, 1);
 }
 
+.inputstyle{
+	/*background-color: #94A6B0;*/
+	background-color: #e9f5f0;
+	height: 30px;
+	padding-left: 5px;
+}
 /*当前页部分*/
 .CJJ-Table .clearfix {
     clear: both;
@@ -125,7 +133,7 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
     width: 60px;
     height: 25px;
     border: 1px solid #d9d9d9;
-    color: #333;
+    color: #FFFFFF;
     margin-left: 10px;
     cursor: pointer;
 }
@@ -170,6 +178,14 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
     border: 1px solid #d9d9d9;
     color: #333;
 }
+.mybuttons {
+	margin-bottom: 10px;
+	height: 30px;
+	padding-left: 7px;
+	padding-right: 7px;
+	border-radius: 5px;
+	text-align: center;
+}
 .new_productBox{
 	height: 35px;
 }
@@ -187,7 +203,7 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
 	background-color: red;
 }
 .infoitems{
-	height: 25px;
+	height: 30px;
 	line-height: 25px;
 	font-size: 16px;
 }
@@ -228,4 +244,10 @@ legend{padding:.5em;border:0;width:auto;margin-bottom: 1px;}
 #contenttable thead th{
 	background:#ccc;
 	text-align: center;
+}
+#page1_close2{
+	position: relative;
+    display: block;
+    width: 10%;
+    margin: 0 auto;
 }

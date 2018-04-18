@@ -74,7 +74,7 @@
 				"<td  colspan='" + _this.options.title.length + "'>" +
 				"<div style='float:right;margin-left:10px;' class='tfootRight'>" +
 				"<input  placeholder='输入页码' type='text'>" +
-				"<button>确定</button>" +
+				"<button class='mybuttons btn-success'>确定</button>"+
 				"</div>" +
 				"<div style='float:right'>" +
 				"<span class='firstPage' style='margin-right:10px;cursor: pointer;float:left;display: none;margin-left:10px;'>首页</span>" +
