@@ -5,14 +5,11 @@ var level = 0;//等级权限，0为管理员，1为一般用户
 function loginfun() {
 	var loginmsg = document.getElementById("logintxt");
     loginmsg.innerHTML = "　";
-    
     var username = document.getElementById('username').value;
     var pwd = document.getElementById('password').value;
-    
-    var node = '{"data":{"loginname":"' + username + '","password":"' + pwd + '"}}';
+    var node = '{"loginname":"' + username + '","password":"' + pwd + '"}';
     console.log(node);
     if (username != "" && pwd != "") {
-    	//document.location.href="index.html";
         sendHTTPRequest("/login", node, loginresult);
     }
     else if(username == ""){
@@ -30,11 +27,11 @@ function loginresult() {
         {
             var data = JSON.parse(this.responseText);
             console.log(JSON.stringify(data));
-            if (data.msg == "success") {
+            if (data.resultCode == "0") {
                 document.location.href="index.html";
             }
-            else if (data.msg == "failure") {
-                if (data.code == "-1") {
+            else{
+                if (data.resultCode == "-1") {
                 	console.log("请输入正确用户名或密码");
         	    	var loginmsg = document.getElementById("logintxt");
                     loginmsg.innerText = "请输入正确用户名或密码！";

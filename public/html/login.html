@@ -15,7 +15,7 @@
 				<div class="inset">
 					<form role="form">
 						<div>
-							<h2>Welcome</h2>
+							<canvas id="myCanvas"></canvas>
 							<span><label>用户名</label></span>
 							<span><input type="text" class="textbox" id="username" name="username" placeholder="请输入用户名" required autocomplete="off"/></span>
 						</div>
@@ -33,6 +33,19 @@
 		</div>
 		<script type="text/javascript" src="../js/login.js"></script>
 		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript">
+			var c = document.getElementById("myCanvas");
+			var cxt = c.getContext("2d");//创建 context 对象
+			cxt.font="60px Verdana";
+			var gradient=cxt.createLinearGradient(0,0,310,0);
+			gradient.addColorStop("0","magenta");
+			gradient.addColorStop("0.5","blue");
+			gradient.addColorStop("1.0","red");
+			cxt.strokeStyle=gradient;
+			cxt.strokeText("Skyworth",10,80);
+			cxt.closePath();
+			
+		</script>
 	</body>
 
 </html>

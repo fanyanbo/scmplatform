@@ -114,8 +114,7 @@
 			});
 			$(_this.$element.selector + ' .endPage').unbind('click').click(function() {
 				_this.endPage(_this, maxpagenumberBox, json);
-				var mmm = _this.options;
-				gotoEndPage(mmm);
+				gotoEndPage(_this.options);
 			});
 			$(_this.$element.selector + ' .nextPage').unbind('click').click(function() {
 				_this.nextPage(_this, maxpagenumberBox, json);
@@ -123,7 +122,6 @@
 			});
 			$(_this.$element.selector + ' table tfoot ul li').unbind('click').click(function() {
 				_this.nextTableLi(_this, maxpagenumberBox, json, $(this));
-				gotoDesignPage($(this)[0].innerHTML,_this.options);
 			});
 			$(_this.$element.selector + ' .lastPage').unbind('click').click(function() {
 				_this.lastPage(_this, maxpagenumberBox, json);
@@ -156,14 +154,12 @@
 		},
 		firstPage: function(e, maxpagenumberBox, json) {
 			$(e.$element.selector + " .typeNumber").val(1);
-			console.log(JSON.stringify(e));
+//			console.log(JSON.stringify(e));
 			e.page($(e.$element.selector + " .typeNumber").val(), 10, maxpagenumberBox, json, e.$element, e);
 		},
 		endPage: function(e, maxpagenumberBox, json) {
-			
 			$(e.$element.selector + " .typeNumber").val(Math.ceil(e.options.pageLength / 10));
 			e.page($(e.$element.selector + " .typeNumber").val(), 10, maxpagenumberBox, json, e.$element, e);
-			
 		},
 		nextPage: function(e, maxpagenumberBox, json) {
 			var number = $(e.$element.selector + " .typeNumber").val();
@@ -172,12 +168,13 @@
 		},
 		nextTableLi: function(e, maxpagenumberBox, json, that) {
 			var val = that.html();
+			console.log(val);
 			$(e.$element.selector + " .typeNumber").val(val);
 			e.page($(e.$element.selector + " .typeNumber").val(), 10, maxpagenumberBox, json, e.$element, e);
+			gotoDesignPage(val,e.options);
 		},
 		lastPage: function(e, maxpagenumberBox, json) {
 			var number = $(e.$element.selector + " .typeNumber").val();
-			console.log("------------"+number+"------------");
 			if(number > 1) {
 				$(e.$element.selector + " .typeNumber").val(number * 1 - 1);
 				e.page($(e.$element.selector + " .typeNumber").val(), 10, maxpagenumberBox, json, e.$element, e);
@@ -194,20 +191,17 @@
 			var histroy_DD = "";
 			pageNUmber = 10;
 			$(that.selector + " table tbody").html(histroy_DD);
-			console.log("------------"+Pagenumber+"------------");
-			console.log("------------"+e.options.pageLength+"------------");
-			console.log("------------"+pageNUmber+"------------");
-			console.log("------------"+Math.ceil(e.options.pageLength / pageNUmber)+"------------");
-			
-			
+//			console.log("------------"+Pagenumber+"------------");
+//			console.log("------------"+e.options.pageLength+"------------");
+//			console.log("------------"+pageNUmber+"------------");
+//			console.log("------------"+Math.ceil(e.options.pageLength / pageNUmber)+"------------");
 			var lastPage = Pagenumber < Math.ceil(e.options.pageLength / pageNUmber) ? Pagenumber * pageNUmber : e.options.pageLength;
-			console.log("------------"+lastPage+"------------");
-			
+//			console.log("------------"+lastPage+"------------");
 			
 			for(var i = (Pagenumber - 1) * pageNUmber; i < lastPage; i++) {
 				var bodyBigBox = "";
 				var bodyBox = "";
-				console.log(e.options.body.length);
+//				console.log(e.options.body.length);
 				for(var x = 0; x < e.options.body.length; x++) {
 					var type = e.options.body[x];
 					var display = "table-cell";
@@ -292,7 +286,6 @@
 			}
 			$(that.selector + ' table tfoot ul li').unbind('click').click(function() {
 				e.nextTableLi(e, maxpagenumberBox, json, $(this));
-				gotoDesignPage($(this)[0].innerHTML,e.options);
 			});
 			$(that.selector + ' tbody tr').unbind('dblclick').dblclick(function() {
 				e.options.dbTrclick($(this));
@@ -306,53 +299,3 @@
 	}
 })(jQuery, window, document);
 
-function gotoDesignPage(number,obj) {
-	var re = /^[0-9]+.?[0-9]*/;
-	if(!re.test(number)) {
-		console.log("输入框的值为空");　
-	} else {
-//		console.log("点击了指定页,即第" + number + "页");
-		//console.log("表格数据:"+JSON.stringify(obj));
-//		if (number == 10) {
-//			gotoEndPage(obj)
-//		}
-	}
-}
-function gotoFirstPage(obj){
-	getdata = [{"number": "1","model": "G6200","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"}, {"number": "2","model": "G7200","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "3","model": "G9300","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "4","model": "X6","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "5","model": "M9","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "6","model": "Q8","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "7","model": "M9","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "8","model": "M8","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "9","model": "M3","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "10","model": "A2","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"}];
-	insetTable(getdata,obj);
-}
-function gotoEndPage(obj){
-//	console.log(obj);
-	var endnumber = Math.ceil(obj.pageLength/obj.pageNUmber);
-//	console.log("点击了尾页,即第"+endnumber+"页");
-	getdata = [{"number": "1","model": "G6200","chip": "8H81","target_product": "a2","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"}, {"number": "2","model": "G7200","chip": "8H81","target_product": "a2","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "3","model": "G9300","chip": "8H81","target_product": "a2","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "4","model": "X6","chip": "8H81","target_product": "a2","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "5","model": "M9","chip": "8H81","target_product": "a2","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "6","model": "Q8","chip": "8H81","target_product": "a2","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "7","model": "M9","chip": "8H81","target_product": "a2","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "8","model": "M8","chip": "8H81","target_product": "a2","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"}];
-	insetTable(getdata,obj);
-}
-function gotoNextPage(nextnumber,obj){
-	console.log("点击了下一页,即第"+nextnumber+"页");
-	getdata = [{"number": "2","model": "G7200","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "3","model": "G9300","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "4","model": "X6","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "5","model": "M9","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "6","model": "Q8","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "7","model": "M9","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "8","model": "M8","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "9","model": "M3","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"},{"number": "10","model": "A2","chip": "8H81","target_product": "a1","modification": "2","reason": "11111","state": "6.0","author": "林心旺","time": "2018/3/12","history": "<a class='examine' href='#'>查看</a>"}];
-//	insetTable(getdata,obj);
-}
-function gotoLastPage(lastnumber,obj){
-	console.log("点击了下一页,即第"+lastnumber+"页");
-}
-
-
-function insetTable(data,obj){
-	var _curLength = "";
-	var _curValue = "";
-	if (obj.pageNUmber=data.length) {
-		_curLength = obj.pageNUmber;
-	} else{
-		_curLength = data.length;
-	}
-//	console.log(data);
-//	console.log(_curLength);
-	for (var i=0; i<obj.body.length; i++) {
-		_curValue = obj.body[i];
-		for (var j=0; j<_curLength; j++) {
-			$('.'+_curValue)[j].innerHTML = data[j][_curValue];
-		}
-	}
-}
