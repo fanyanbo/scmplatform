@@ -12,7 +12,7 @@ function loginfun() {
     console.log(node);
     if (username != "" && pwd != "") {
     	//document.location.href="index.html";
-        sendHTTPRequest("/fybv2_api/login", node, loginresult);
+        sendHTTPRequest("/api/v1/home/login", node, loginresult);
     }
     else if(username == ""){
         loginmsg.innerHTML += "请输入用户名！";
