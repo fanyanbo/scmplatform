@@ -1,9 +1,11 @@
 var config = require('../config/config');
 var logger = require('../common/logger');
 var Statistics = require('../models/statistics');
+var Syslog = require('../models/syslog');
 var output = require('../common/output');
 
 var statistics = new Statistics();
+var syslog = new Syslog();
 
 /**
  * @param {HttpRequest} req
@@ -14,7 +16,7 @@ exports.getSummary = function (req, res, next) {
 
     statistics.getSummaryByQuery(null, function(err,results) {
       if(err) {
-        return output.error(req,res);
+        return output.error(req,res,err);
       }
       let resultData = {};
       resultData.productTotalNum = results[0];
@@ -26,6 +28,41 @@ exports.getSummary = function (req, res, next) {
       resultData.amlogicTotalNum = results[6];
       resultData.novaTotalNum = results[7];
 
-      output.success(req,res,resultData);
+      return output.success(req,res,resultData);
+    });
+};
+
+exports.querySyslog = function (req, res, next) {
+
+    let offset = +req.body.offset;
+    let rows = +req.body.rows;
+    syslog.queryByPage(offset, rows, function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"querySyslog查询成功",results);
+    });
+};
+
+exports.querySyslogTotalNum = function (req, res, next) {
+
+    syslog.queryTotalNum(function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"查询系统日志项总数成功",results);
+    });
+};
+
+exports.addSyslog = function (req, res, next) {
+
+    let userName = req.body.userName;
+    let action = req.body.action;
+    let detail = req.body.detail;
+    syslog.newAndSave(userName, action, detail, function(err,results) {
+      if(err) {
+        return output.error(req,res,"addSyslog执行失败!");
+      }
+      return output.success(req,res,"addSyslog执行成功!");
     });
 };

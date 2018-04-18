@@ -9,10 +9,9 @@ User.prototype.query = function (id, callback) {
   var sql = "select * from users";
   db.conn.query(sql,[],function(err,rows,fields){
     if (err) {
-        callback(true);
-        return;
+        return callback(err);
     }
-    callback(false, rows);
+    callback(null, rows);
   });
 }
 
@@ -22,10 +21,9 @@ User.prototype.getUserByQuery = function(username, callback) {
   let sql_params = [username];
   db.conn.query(sql,sql_params,function(err,rows,fields) {
       if(err) {
-        callback(true);
-        return;
+        return callback(err);
       }
-      callback(false,rows);
+      callback(null,rows);
   });
 }
 
@@ -35,12 +33,10 @@ User.prototype.newAndSave = function(username, hashpass, callback) {
   let sql_params = [username,hashpass];
   db.conn.query(sql,sql_params,function(err,result) {
       if(err) {
-        logger.debug(err);
-        callback(true);
-        return;
+        return callback(err);
       }
       logger.debug("newAndSave result = " + result);
-      callback(false);
+      callback(null);
   });
 }
 

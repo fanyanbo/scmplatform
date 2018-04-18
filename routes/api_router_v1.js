@@ -10,7 +10,7 @@ var logger = require('../common/logger');
 var sign = require('../controllers/sign');
 var chip = require('../controllers/chip');
 var model = require('../controllers/model');
-var targetproduct = require('../controllers/targetproduct');
+var product = require('../controllers/product');
 var modules = require('../controllers/modules');
 var configs = require('../controllers/configs');
 var record = require('../controllers/record');
@@ -88,10 +88,10 @@ router.post('/model/delete', model.delete);
 router.post('/model/query', model.query);
 router.post('/model/update', model.update);
 // target_product管理，一个target_product对应唯一MK文件
-router.post('/targetproduct/add', targetproduct.add);
-router.post('/targetproduct/delete', targetproduct.delete);
-router.post('/targetproduct/query', targetproduct.query);
-router.post('/targetproduct/update', targetproduct.update);
+// router.post('/targetproduct/add', targetproduct.add);
+// router.post('/targetproduct/delete', targetproduct.delete);
+// router.post('/targetproduct/query', targetproduct.query);
+// router.post('/targetproduct/update', targetproduct.update);
 // 模块管理
 router.post('/modules/add', modules.add);
 router.post('/modules/delete', modules.delete);
@@ -109,8 +109,15 @@ router.post('/record/query', record.query);
 router.post('/record/update', record.update);
 
 // 开始对接
-router.post('/home/getSummary', home.getSummary);
+router.post('/home/getSummary', home.getSummary);                //查询总览信息
+router.post('/syslog/queryByPage', home.querySyslog);            //查询系统操作日志
+router.post('/syslog/add', home.addSyslog);                      //新增系统操作日志
 
+router.post('/product/add', product.add);                        //新增产品项
+router.post('/product/update', product.update);                  //更新产品信息
+router.post('/product/queryByPage', product.queryByPage);        //分页查询产品信息
+router.post('/product/queryByRegEx', product.queryByRegEx);      //模糊查询产品信息
+router.post('/product/queryHistory', product.queryHistory);      //查询某产品的历史修改记录
 
 //用于插件预研
 // var jwt = require('../study/jsonwebtokenModule');
