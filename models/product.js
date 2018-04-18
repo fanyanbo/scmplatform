@@ -17,7 +17,9 @@ productModel.prototype.queryByPage = function (offset, rows, callback) {
 
 productModel.prototype.queryByRegEx = function (chip, model, version, memory, soc, callback) {
 
-    let _chip;
+    if(chip != undefined){
+      
+    }
     var sql = "SELECT * FROM products WHERE email like '%feng%' or email like '%bo%";
     let sql_params = [offset,rows];
     db.conn.query(sql,sql_params,function(err,rows,fields){

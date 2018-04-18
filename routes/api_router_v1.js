@@ -111,7 +111,7 @@ router.post('/record/update', record.update);
 // 开始对接
 router.post('/home/getSummary', home.getSummary);                //查询总览信息
 router.post('/syslog/queryByPage', home.querySyslog);            //查询系统操作日志
-router.post('/syslog/queryTotalNum', home.queryTotalNum);        //查询系统操作日志
+router.post('/syslog/queryTotalNum', home.querySyslogTotalNum);        //查询系统操作日志
 router.post('/syslog/add', home.addSyslog);                      //新增系统操作日志
 
 router.post('/product/add', product.add);                        //新增产品项
