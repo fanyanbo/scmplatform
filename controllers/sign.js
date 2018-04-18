@@ -32,12 +32,13 @@ exports.login = function (req, res, next) {
        if(result.length == 0) {
          output.error(req,res,"用户不存在!");
        }
-       logger.debug("result = " + result);
+       logger.debug("result = " + result[0]);
        if(result.length == 1) {
          let passStored = result[0].password;
          if(passStored == pass){
            req.session.username = loginname;
            req.session.logined = true;
+           req.session.level = result[0].adminFlag;
            output.success(req,res,"登录成功!");
          }else{
            output.error(req,res,"密码有误!");
@@ -50,7 +51,11 @@ exports.verify = function (req, res, next) {
   logger.debug(req.session.username);
   logger.debug(req.session.logined);
   if(req.session.username && req.session.logined) {
-    output.success(req,res,"验证成功!");
+    let resultData = {};
+    resultData.username = req.session.username;
+    resultData.logined = req.session.logined;
+    resultData.level = req.session.level;
+    output.success(req,res,"验证成功!",resultData);
   }else{
     output.error(req,res,"验证失败!");
   }
