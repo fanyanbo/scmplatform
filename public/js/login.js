@@ -11,8 +11,8 @@ function loginfun() {
     var node = '{"data":{"username":"' + username + '","password":"' + pwd + '"}}';
     console.log(node);
     if (username != "" && pwd != "") {
-    	document.location.href="index.html";
-        //sendHTTPRequest("/fybv2_api/login", node, loginresult);
+    	//document.location.href="index.html";
+        sendHTTPRequest("/fybv2_api/login", node, loginresult);
     }
     else if(username == ""){
         loginmsg.innerHTML += "请输入用户名！";
@@ -28,6 +28,7 @@ function loginresult() {
         if (this.status == 200)
         {
             var data = JSON.parse(this.responseText);
+            console.log(JSON.stringify(data));
             if (data.msg == "success") {
                 document.location.href="index.html";
             }
@@ -50,3 +51,4 @@ function keyLogin(){
     if (event.keyCode==13)   //回车键的键值为13
      document.getElementById("loginbutton").click();  //调用登录按钮的登录事件
 }
+

@@ -7,57 +7,57 @@ $(function() {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "1",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "2",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "3",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "4",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "5",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "6",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "7",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "8",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "9",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "10",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}, {
 		"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 		"number": "11",
 		"target_product": "123123",
-		"operate": "<a href='#'>编辑</a><a href='#'>删除</a><a href='#'>复制</a><a href='#'>预览</a>"
+		"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
 	}];
 	
 	pageTableInit();

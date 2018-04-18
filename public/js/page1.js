@@ -834,7 +834,6 @@ function pageTableInit(){
 		'pageLength': data2.length, //选填
 		'url': data2, //数据源 必填
 		dbTrclick: function(e) { //双击tr事件
-			alert(e.find('.taskCode').html())
 		}
 	});
 }
@@ -876,7 +875,12 @@ function buttonInit(){
 		$("#page1_check_model").html($(".new_productBox .model")[_cIndex].innerHTML);
 		$("#page1_check_targetProduct").html($(".new_productBox .target_product")[_cIndex].innerHTML);
 		$('#page1_examine').modal();
-		$(".modal-backdrop").addClass("new-backdrop");
+	});
+	$("#page1_close1").click(function(){
+		$("#page1_examine").modal('hide');
+	});
+	$("#page1_close2").click(function(){
+		$("#page1_examine").modal('hide');
 	});
 	
 }
