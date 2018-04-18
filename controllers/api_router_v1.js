@@ -88,10 +88,10 @@ router.post('/model/delete', model.delete);
 router.post('/model/query', model.query);
 router.post('/model/update', model.update);
 // target_product管理，一个target_product对应唯一MK文件
-// router.post('/targetproduct/add', targetproduct.add);
-// router.post('/targetproduct/delete', targetproduct.delete);
-// router.post('/targetproduct/query', targetproduct.query);
-// router.post('/targetproduct/update', targetproduct.update);
+router.post('/targetproduct/add', targetproduct.add);
+router.post('/targetproduct/delete', targetproduct.delete);
+router.post('/targetproduct/query', targetproduct.query);
+router.post('/targetproduct/update', targetproduct.update);
 // 模块管理
 router.post('/modules/add', modules.add);
 router.post('/modules/delete', modules.delete);
@@ -111,7 +111,6 @@ router.post('/record/update', record.update);
 // 开始对接
 router.post('/home/getSummary', home.getSummary);                //查询总览信息
 router.post('/syslog/queryByPage', home.querySyslog);            //查询系统操作日志
-router.post('/syslog/queryTotalNum', home.queryTotalNum);        //查询系统操作日志
 router.post('/syslog/add', home.addSyslog);                      //新增系统操作日志
 
 router.post('/product/add', product.add);                        //新增产品项
