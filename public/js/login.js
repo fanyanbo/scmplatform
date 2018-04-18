@@ -9,7 +9,7 @@ function loginfun() {
     var username = document.getElementById('username').value;
     var pwd = document.getElementById('password').value;
     
-    var node = '{"data":{"username":"' + username + '","password":"' + pwd + '"}}';
+    var node = '{"data":{"loginname":"' + username + '","password":"' + pwd + '"}}';
     console.log(node);
     if (username != "" && pwd != "") {
     	//document.location.href="index.html";

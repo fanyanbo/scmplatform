@@ -3,6 +3,7 @@ document.write("<script language=javascript src='../js/bootstrap.addtabs.js' cha
 var adminFlag = null; //访问session之后存取管理员标志位
 var loginusername = null; //访问session之后存取登录用户名
 var loginEmail = null; //当前用户的邮箱地址
+var currentUrl = "/api/home";
 
 $(function() {
 	forsession();
@@ -36,7 +37,7 @@ function forsession() {
 }
 
 function homePageInfo() {
-	//sendHTTPRequest("/api/v1/home/getSummary", '{"data":""}', homePageInfoResult);    
+	//sendHTTPRequest("/api/home/getSummary", '{"data":""}', homePageInfoResult);    
 }
 
 //session返回数据
