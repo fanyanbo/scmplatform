@@ -22,12 +22,12 @@ var config = {
   mongodb: 'mongodb://127.0.0.1/scmplatform',
 
   mysql: {
-    user: 'root', // 用户名
-    password: 'root', // 密码
-    database: 'scmplatform', // 数据库
-    host: '127.0.0.1', // host
+    user: 'scmplatform', // 用户名
+    password: 'scmplatform', // 密码
+    database: 'scm', // 数据库
+    host: '172.20.5.239', // host
     port: 3306, // 端口
-    checkExpirationInterval: 300*1000, // How frequently expired sessions will be cleared; milliseconds
+    checkExpirationInterval: 180*1000, // How frequently expired sessions will be cleared; milliseconds
     connectionLimit: 1, // 连接池的连接个数，默认为 1
     prefix: 'scm_', // 数据表前缀，如果一个数据库里有多个项目，那项目之间的数据表可以通过前缀来区分
   },
@@ -43,8 +43,8 @@ var config = {
   // 设置log输出路径等级:trace,debug,info,warn,error
   log_file_level: 'error',
   log_console_level: 'trace',
-  //设置当前输出路径：log_file,log_console,default
-  log_cur: 'log_console',
+  //设置当前输出路径：file,console,default
+  log_cur: 'console',
 
   // 邮箱配置
   mail_opts: {

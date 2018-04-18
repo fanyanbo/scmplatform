@@ -6,7 +6,7 @@ var User = function() {};
 
 User.prototype.query = function (id, callback) {
   logger.debug("User.prototype.query id = " + id);
-  var sql = "select * from user";
+  var sql = "select * from users";
   db.conn.query(sql,[],function(err,rows,fields){
     if (err) {
         callback(true);
@@ -18,7 +18,7 @@ User.prototype.query = function (id, callback) {
 
 User.prototype.getUserByQuery = function(username, callback) {
   logger.debug("User.prototype.getUserByQuery username = " + username);
-  let sql = "select * from user where name = ?";
+  let sql = "select * from users where userName = ?";
   let sql_params = [username];
   db.conn.query(sql,sql_params,function(err,rows,fields) {
       if(err) {

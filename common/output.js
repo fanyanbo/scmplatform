@@ -1,6 +1,6 @@
 
 
-var sendSuccessToFront = function (req, res, resultData, resultDesc) {
+var sendSuccessToFront = function (req, res, resultDesc, resultData) {
 
   let url = req.url;
   let desc = (resultDesc !== undefined) ? resultDesc : `${url} [Call Succeed]`;
@@ -11,7 +11,7 @@ var sendSuccessToFront = function (req, res, resultData, resultDesc) {
   });
 };
 
-var sendErrorToFront = function (req, res, errorCode, errorDesc) {
+var sendErrorToFront = function (req, res, errorDesc, errorCode) {
 
   let url = req.url;
   let code = (errorCode !== undefined) ? errorCode : -1;

@@ -71,6 +71,7 @@ router.get('/session', function(req, res, next) {
 });
 
 router.post('/login', sign.login);
+router.post('/verify', sign.verify);
 router.post('/logout', sign.logout);
 // router.post('/signout', sign.signout);  // 登出
 // router.get('/signin', sign.showLogin);  // 进入登录页面

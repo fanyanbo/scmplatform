@@ -11,8 +11,8 @@ log4js.configure({
       console: { type: 'console' }
     },
     categories: {
-       log_file: { appenders: ['fileLogs'], level: config.log_file_level },
-       log_console: { appenders: ['console'], level: config.log_console_level },
+       file: { appenders: ['fileLogs'], level: config.log_file_level },
+       console: { appenders: ['console'], level: config.log_console_level },
        default: { appenders: ['console', 'fileLogs'], level: 'trace' }
    }
 });

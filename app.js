@@ -59,7 +59,7 @@ app.use(session({
 // app.use('/users', users);
 // app.use('/api/v1', cors(), apiRouterV1);
 
-app.use('/api/v1', apiRouterV1);
+app.use('/', apiRouterV1);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
