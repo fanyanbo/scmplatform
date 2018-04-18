@@ -17,8 +17,9 @@ var user = new User();
  */
 exports.login = function (req, res, next) {
 
+    logger.debug("enter login");
     var loginname = validator.trim(req.body.loginname).toLowerCase();
-    var pass      = validator.trim(req.body.password);
+    var pass = validator.trim(req.body.password);
 
     if (!loginname || !pass) {
       output.error(req,res,"用户信息不完整!");
@@ -56,6 +57,10 @@ exports.verify = function (req, res, next) {
 }
 
 exports.logout = function (req, res, next) {
-    req.session.logined = false;
-    output.success(req,res,"登出成功!");
+    if(req.session.username == undefined){
+      output.error(req,res,"当前已是登出状态!");
+    }else{
+      req.session.logined = false;
+      output.success(req,res,"登出成功!");
+    }
 };
