@@ -15,6 +15,7 @@ var modules = require('../controllers/modules');
 var configs = require('../controllers/configs');
 var record = require('../controllers/record');
 var home = require('../controllers/home');
+var device = require('../controllers/deviceManager');
 var output = require('../common/output');
 
 var router = express.Router();
@@ -33,20 +34,21 @@ router.post('/logout', sign.logout);
 router.use('/', isAuthenticated); //api访问控制。除了登录，session校验，登出接口外，其余接口访问需要进行验证
 
 //机芯管理
-router.post('/chip/add', chip.add);
-router.post('/chip/delete', chip.delete);
-router.post('/chip/query', chip.query);
-router.post('/chip/update', chip.update);
+router.post('/chip/add', device.addChip);
+router.post('/chip/query', device.queryChip);
+router.post('/chip/update', device.updateChip);
 // 机型管理
-router.post('/model/add', model.add);
-router.post('/model/delete', model.delete);
-router.post('/model/query', model.query);
-router.post('/model/update', model.update);
+router.post('/model/add', device.addModel);
+router.post('/model/query', device.queryModel);
+router.post('/model/update', device.updateModel);
 // target_product管理，一个target_product对应唯一MK文件
-// router.post('/targetproduct/add', targetproduct.add);
-// router.post('/targetproduct/delete', targetproduct.delete);
-// router.post('/targetproduct/query', targetproduct.query);
-// router.post('/targetproduct/update', targetproduct.update);
+router.post('/targetproduct/add', device.addTargetProduct);
+router.post('/targetproduct/query', device.queryTargetProduct);
+router.post('/targetproduct/update', device.updateTargetProduct);
+//机芯型号(soc)管理
+router.post('/soc/add', device.addSoc);
+router.post('/soc/query', device.querySoc);
+router.post('/soc/update', device.updateSoc);
 // 模块管理
 router.post('/modules/add', modules.add);
 router.post('/modules/delete', modules.delete);

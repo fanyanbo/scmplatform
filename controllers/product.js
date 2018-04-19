@@ -56,6 +56,16 @@ exports.queryHistory = function (req, res, next) {
     });
 };
 
+exports.queryTargetProduct = function (req, res, next) {
+
+    productModel.queryHistory(_chip,_model,function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"查询产品修改历史表成功",results);
+    });
+};
+
 exports.update = function (req, res, next) {
 
 };

@@ -1,37 +1,38 @@
-var passport = require('passport');
-var logger  = require('../common/logger');
-var localStrategy = require('passport-local').Strategy;
 
-passport.serializeUser(function(user, done) {
-    done(null, user);
-});
-
-passport.deserializeUser(function(user, done) {
-    done(null, user);
-});
-
-passport.use(new localStrategy({
-        usernameField:'loginname',
-        passwordField:'password'
-    },function(username,password,done){
-
-    var user = {
-        id: "1",
-        username: "admin",
-        password: "pass"
-    };
-    console.log("param username = " + username);
-    console.log("local username = " + user.username);
-
-    if (username !== user.username) {
-        return done(null, false, { message: 'Incorrect username.' });
-    }
-    if (password !== user.password) {
-        return done(null, false, { message: 'Incorrect password.' });
-    }
-
-    return done(null,user);
-}));
+// var passport = require('passport');
+// var logger  = require('../common/logger');
+// var localStrategy = require('passport-local').Strategy;
+//
+// passport.serializeUser(function(user, done) {
+//     done(null, user);
+// });
+//
+// passport.deserializeUser(function(user, done) {
+//     done(null, user);
+// });
+//
+// passport.use(new localStrategy({
+//         usernameField:'loginname',
+//         passwordField:'password'
+//     },function(username,password,done){
+//
+//     var user = {
+//         id: "1",
+//         username: "admin",
+//         password: "pass"
+//     };
+//     console.log("param username = " + username);
+//     console.log("local username = " + user.username);
+//
+//     if (username !== user.username) {
+//         return done(null, false, { message: 'Incorrect username.' });
+//     }
+//     if (password !== user.password) {
+//         return done(null, false, { message: 'Incorrect password.' });
+//     }
+//
+//     return done(null,user);
+// }));
 
 // require('./study/passportModule');
 //
