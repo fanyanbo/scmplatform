@@ -4,6 +4,7 @@ var sendSuccessToFront = function (req, res, resultDesc, resultData) {
 
   let url = req.url;
   let desc = (resultDesc !== undefined) ? resultDesc : `${url} [Call Succeed]`;
+  res.status(200);
   res.send({
     resultCode: 0,
     resultDesc: desc,

@@ -32,6 +32,11 @@ exports.queryByPage = function (req, res, next) {
 exports.queryByRegEx = function (req, res, next) {
 
     let _chip = req.body.chip;
+    let _model = req.body.model;
+    let _version = req.body.version;
+    let _soc = req.body.soc;
+    let _memory = req.body.memory;
+
     productModel.queryByRegEx(_chip, null,null,null,null,function(err,results) {
       if(err) {
         return output.error(req,res,err);
