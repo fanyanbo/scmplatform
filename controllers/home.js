@@ -63,6 +63,6 @@ exports.addSyslog = function (req, res, next) {
       if(err) {
         return output.error(req,res,"addSyslog执行失败!");
       }
-      return output.success(req,res,"addSyslog执行成功!");
+      output.success(req,res,"addSyslog执行成功!");
     });
 };

@@ -3,9 +3,7 @@ var eventproxy = require('eventproxy');
 var config = require('../config/config');
 var logger = require('../common/logger');
 var output = require('../common/output');
-var ProductModel = require('../models/product');
-
-var productModel = new ProductModel();
+var productModel = require('../models/product');
 
 /**
  * @param {HttpRequest} req
@@ -33,6 +31,13 @@ exports.queryByPage = function (req, res, next) {
 
 exports.queryByRegEx = function (req, res, next) {
 
+    let _chip = req.body.chip;
+    productModel.queryByRegEx(_chip, null,null,null,null,function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"模糊查询产品表成功",results);
+    });
 };
 
 exports.queryHistory = function (req, res, next) {

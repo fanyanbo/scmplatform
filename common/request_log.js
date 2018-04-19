@@ -8,9 +8,8 @@ exports = module.exports = function (req, res, next) {
     next();
     return;
   }
-
   var t = new Date();
-  logger.info('\n\nStarted', t.toISOString(), req.method, req.url, req.ip);
+  logger.info('\nStarted', t.toISOString(), req.method, req.url, req.ip);
 
   res.on('finish', function () {
     var duration = ((new Date()) - t);
