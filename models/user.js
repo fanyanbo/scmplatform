@@ -2,9 +2,9 @@ var db = require('./db');
 var config = require('../config/config');
 var logger = require('../common/logger');
 
-var User = function() {};
+var UserModel = function() {};
 
-User.prototype.query = function (id, callback) {
+UserModel.prototype.query = function (id, callback) {
   logger.debug("User.prototype.query id = " + id);
   var sql = "select * from users";
   db.conn.query(sql,[],function(err,rows,fields){
@@ -15,7 +15,7 @@ User.prototype.query = function (id, callback) {
   });
 }
 
-User.prototype.getUserByQuery = function(username, callback) {
+UserModel.prototype.getUserByQuery = function(username, callback) {
   logger.debug("User.prototype.getUserByQuery username = " + username);
   let sql = "select * from users where userName = ?";
   let sql_params = [username];
@@ -27,7 +27,7 @@ User.prototype.getUserByQuery = function(username, callback) {
   });
 }
 
-User.prototype.newAndSave = function(username, hashpass, callback) {
+UserModel.prototype.newAndSave = function(username, hashpass, callback) {
   logger.debug("User.prototype.newAndSave username = " + username + ",hashpass = " + hashpass);
   let sql = "insert into user(name, password) values (?,?)";
   let sql_params = [username,hashpass];
@@ -40,7 +40,6 @@ User.prototype.newAndSave = function(username, hashpass, callback) {
   });
 }
 
+var userModel = new UserModel();
 
-
-
-module.exports = User;
+module.exports = userModel;

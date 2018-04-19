@@ -36,7 +36,7 @@ ProductModel.prototype.queryByRegEx = function (chip, model, version, memory, so
     console.log(_memory);
     console.log(_soc);
 
-    var sql = `SELECT * FROM products WHERE ${_chip} AND ${_model} AND ${_verison} AND ${_memory} AND ${_soc}`;
+    var sql = `SELECT * FROM products WHERE ${_chip} AND ${_model} AND ${_verison} AND ${_memory} AND ${_soc}  order by operateTime desc`;
     console.log(sql);
     let sql_params = [];
     db.conn.query(sql,sql_params,function(err,rows,fields){
@@ -47,9 +47,9 @@ ProductModel.prototype.queryByRegEx = function (chip, model, version, memory, so
     });
 }
 
-ProductModel.prototype.queryHistory = function (offset, rows, callback) {
-  var sql = "select * from products limit ?,?";
-  let sql_params = [offset,rows];
+ProductModel.prototype.queryHistory = function (chip, model, callback) {
+  var sql = "SELECT * FROM modifyhistory WHRER chip = ？ AND model ?";
+  let sql_params = [chip,model];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
         return callback(err);

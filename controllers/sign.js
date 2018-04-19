@@ -5,8 +5,8 @@ var utility = require('utility');
 var output = require('../common/output');
 var logger = require('../common/logger');
 
-var User = require('../models/user');
-var user = new User();
+var userModel = require('../models/user');
+//var user = new User();
 
 /**
  * Handle user login.
@@ -25,9 +25,9 @@ exports.login = function (req, res, next) {
       return output.error(req,res,"用户信息不完整!");
     }
 
-    user.getUserByQuery(loginname, function(err,result) {
+    userModel.getUserByQuery(loginname, function(err,result) {
        if(err){
-         return output.error(req,res,"调用接口报错!");
+         return output.error(req,res,err);
        }
        if(result.length == 0) {
          return output.error(req,res,"用户不存在!");
