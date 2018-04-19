@@ -1,6 +1,7 @@
 var db = require('./db');
 var eventproxy = require('eventproxy');
 
+//mysql的基本用法知识点
 var sql = "SELECT `userName`,`email` FROM users WHERE LOCATE('skyworth',`email`) > 0";  //使用LOCATE进行模糊查询
 var sql = "SELECT `userName`,`email` FROM users WHERE email like '%feng%'";  //使用like进行模糊查询
 var sql = "SELECT `userName`,`email` FROM users WHERE email like binary '%feng%'";  //使用like进行模糊查询，区分大小写
@@ -8,6 +9,16 @@ var sql = "SELECT `userName`,`email` FROM users WHERE email like '%fan%' and ema
 var sql = "SELECT `userName`,`email` FROM users WHERE email like '%feng%' or email like '%bo%'";  //使用like进行or模糊查询
 var sql = "SELECT * FROM products limit 0,1";  //第几行,行数,用于分页查询
 var sql = "SELECT count(*) AS count FROM chips WHERE name like '%S%'";  //注意AS的用法，查询MSTAR机芯的个数
+
+//具体业务场景
+//查询某个机芯机型的所有模块表
+var sql = SELECT a.engName, b.* FROM mkdata a, modules b WHERE a.engName=b.engName AND a.targetProduct=(SELECT targetProduct FROM products WHERE chip="5S02" AND model="15U");
+//查询某个机芯机型的配置项的值
+var sql = SELECT * FROM configdata WHERE chip="5S02" AND model="15U";
+//查询配置项为某值的所有机芯机型
+var sql = SELECT chip,model FROM configdata WHERE engName="SUPPORT_H265" AND curValue="false";
+//查询模块为某值的所有机芯机型
+var sql = SELECT chip,model FROM products WHERE targetProduct in (SELECT targetProduct FROM mkdata WHERE engName="iwangding");
 
 var x1 = function() {
 
