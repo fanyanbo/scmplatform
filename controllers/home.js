@@ -1,10 +1,10 @@
 var config = require('../config/config');
 var logger = require('../common/logger');
-var Statistics = require('../models/statistics');
+var statisticsModel = require('../models/statistics');
 var syslogModel = require('../models/syslog');
 var output = require('../common/output');
 
-var statistics = new Statistics();
+//var statistics = new Statistics();
 //var syslog = new Syslog();
 
 /**
@@ -14,7 +14,7 @@ var statistics = new Statistics();
  */
 exports.getSummary = function (req, res, next) {
 
-    statistics.getSummaryByQuery(null, function(err,results) {
+    statisticsModel.getSummaryByQuery(null, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }

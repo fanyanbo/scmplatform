@@ -3,9 +3,9 @@ var eventproxy = require('eventproxy');
 var config = require('../config/config');
 var logger = require('../common/logger');
 
-var Statistics = function() {};
+var StatisticsModel = function() {};
 
-Statistics.prototype.getSummaryByQuery = function(username, callback) {
+StatisticsModel.prototype.getSummaryByQuery = function(username, callback) {
 
   let ep = new eventproxy();
   let sql_list = [
@@ -53,6 +53,6 @@ Statistics.prototype.getSummaryByQuery = function(username, callback) {
   }
 }
 
+let statisticsModel = new StatisticsModel();
 
-
-module.exports = Statistics;
+module.exports = statisticsModel;
