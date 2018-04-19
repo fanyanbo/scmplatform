@@ -3,9 +3,9 @@ var eventproxy = require('eventproxy');
 var config = require('../config/config');
 var logger = require('../common/logger');
 
-var Syslog = function() {};
+var SyslogModel = function() {};
 
-Syslog.prototype.queryByPage = function (offset, rows, callback) {
+SyslogModel.prototype.queryByPage = function (offset, rows, callback) {
   var sql = "select * from syslog order by time desc limit ?,?";
   let sql_params = [offset,rows];
   db.conn.query(sql,sql_params,function(err,rows,fields){
@@ -16,7 +16,7 @@ Syslog.prototype.queryByPage = function (offset, rows, callback) {
   });
 }
 
-Syslog.prototype.queryTotalNum = function (callback) {
+SyslogModel.prototype.queryTotalNum = function (callback) {
   var sql = "SELECT count(*) AS count FROM syslog";
   let sql_params = [];
   db.conn.query(sql,sql_params,function(err,rows,fields){
@@ -27,7 +27,7 @@ Syslog.prototype.queryTotalNum = function (callback) {
   });
 }
 
-Syslog.prototype.newAndSave = function(userName, action, detail, callback) {
+SyslogModel.prototype.newAndSave = function(userName, action, detail, callback) {
   let sql = "insert into syslog(userName, action, detail) values (?,?,?)";
   let sql_params = [userName,action,detail];
   db.conn.query(sql,sql_params,function(err,rows,fields) {
@@ -38,4 +38,6 @@ Syslog.prototype.newAndSave = function(userName, action, detail, callback) {
   });
 }
 
-module.exports = Syslog;
+let syslogModel = new SyslogModel();
+
+module.exports = syslogModel;

@@ -1,11 +1,11 @@
 var config = require('../config/config');
 var logger = require('../common/logger');
 var Statistics = require('../models/statistics');
-var Syslog = require('../models/syslog');
+var syslogModel = require('../models/syslog');
 var output = require('../common/output');
 
 var statistics = new Statistics();
-var syslog = new Syslog();
+//var syslog = new Syslog();
 
 /**
  * @param {HttpRequest} req
@@ -36,7 +36,7 @@ exports.querySyslog = function (req, res, next) {
 
     let offset = +req.body.offset;
     let rows = +req.body.rows;
-    syslog.queryByPage(offset, rows, function(err,results) {
+    syslogModel.queryByPage(offset, rows, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
@@ -46,7 +46,7 @@ exports.querySyslog = function (req, res, next) {
 
 exports.querySyslogTotalNum = function (req, res, next) {
 
-    syslog.queryTotalNum(function(err,results) {
+    syslogModel.queryTotalNum(function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
@@ -59,7 +59,7 @@ exports.addSyslog = function (req, res, next) {
     let userName = req.body.userName;
     let action = req.body.action;
     let detail = req.body.detail;
-    syslog.newAndSave(userName, action, detail, function(err,results) {
+    syslogModel.newAndSave(userName, action, detail, function(err,results) {
       if(err) {
         return output.error(req,res,"addSyslog执行失败!");
       }

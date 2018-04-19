@@ -22,15 +22,15 @@ exports.login = function (req, res, next) {
     var pass = validator.trim(req.body.password);
 
     if (!loginname || !pass) {
-      output.error(req,res,"用户信息不完整!");
+      return output.error(req,res,"用户信息不完整!");
     }
 
-     user.getUserByQuery(loginname, function(err,result){
+    user.getUserByQuery(loginname, function(err,result) {
        if(err){
-         output.error(req,res,"调用接口报错!");
+         return output.error(req,res,"调用接口报错!");
        }
        if(result.length == 0) {
-         output.error(req,res,"用户不存在!");
+         return output.error(req,res,"用户不存在!");
        }
        logger.debug("result = " + result[0]);
        if(result.length == 1) {

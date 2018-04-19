@@ -37,7 +37,7 @@ exports.queryByRegEx = function (req, res, next) {
     let _soc = req.body.soc;
     let _memory = req.body.memory;
 
-    productModel.queryByRegEx(_chip, null,null,null,null,function(err,results) {
+    productModel.queryByRegEx(_chip,_model,_version,_memory,_soc,function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
