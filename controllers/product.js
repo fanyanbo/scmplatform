@@ -45,6 +45,18 @@ exports.queryByRegEx = function (req, res, next) {
     });
 };
 
+exports.queryByModule = function (req, res, next) {
+
+    let _name = req.body.name;
+
+    productModel.queryByModule(_name, function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"按模块查询产品表成功",results);
+    });
+};
+
 exports.queryHistory = function (req, res, next) {
     let _chip = req.body.chip;
     let _model = req.body.model;

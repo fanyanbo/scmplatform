@@ -58,6 +58,16 @@ ProductModel.prototype.queryHistory = function (chip, model, callback) {
   });
 }
 
+ProductModel.prototype.queryByModule = function (name, callback) {
+  var sql = "SELECT * FROM products WHERE targetProduct in (SELECT targetProduct FROM mkdata WHERE engName=?)";
+  let sql_params = [name];
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
 
 ProductModel.prototype.newAndSave = function(userName, action, detail, callback) {
   let sql = "insert into syslog(userName, action, detail) values (?,?,?)";

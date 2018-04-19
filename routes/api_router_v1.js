@@ -81,6 +81,7 @@ router.post('/product/update', product.update);                  //更新产品�
 router.post('/product/queryByPage', product.queryByPage);        //分页查询产品信息
 router.post('/product/queryByRegEx', product.queryByRegEx);      //模糊查询产品信息
 router.post('/product/queryHistory', product.queryHistory);      //查询某产品的历史修改记录
+router.post('/product/queryByModule', product.queryByModule);    //查询配置有某个模块的所有产品
 
 //用于插件预研
 // var jwt = require('../study/jsonwebtokenModule');
