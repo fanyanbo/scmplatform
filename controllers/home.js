@@ -1,7 +1,7 @@
 var config = require('../config/config');
 var logger = require('../common/logger');
-var statisticsModel = require('../models/statistics');
-var syslogModel = require('../models/syslog');
+var statisticsModel = require('../models/statisticsModel');
+var syslogModel = require('../models/syslogModel');
 var output = require('../common/output');
 
 //var statistics = new Statistics();

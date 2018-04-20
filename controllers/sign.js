@@ -5,7 +5,7 @@ var utility = require('utility');
 var output = require('../common/output');
 var logger = require('../common/logger');
 
-var userModel = require('../models/user');
+var userModel = require('../models/userModel');
 //var user = new User();
 
 /**

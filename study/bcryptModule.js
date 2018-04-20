@@ -3,7 +3,7 @@ var validator = require('validator');
 var bcrypt = require('bcryptjs');//是对原有bcrypt的优化，优点是不需要安装任何依赖
 var config  = require('../config/config');
 var logger  = require('../common/logger');
-var User = require('../models/user');
+var User = require('../models/userModel');
 //var user = new User();
 
 /**

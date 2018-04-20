@@ -8,17 +8,29 @@ var express = require('express');
 var config = require('../config/config');
 var logger = require('../common/logger');
 var sign = require('../controllers/sign');
-var chip = require('../controllers/chip');
-var model = require('../controllers/model');
+var content = require('../controllers/contentManager');
 var product = require('../controllers/product');
-var modules = require('../controllers/modules');
-var configs = require('../controllers/configs');
 var record = require('../controllers/record');
 var home = require('../controllers/home');
 var device = require('../controllers/deviceManager');
 var output = require('../common/output');
 
 var router = express.Router();
+
+// router.get('/setcookie', function(req, res, next) {
+//   let userInfo = {
+//     "name":"fanyanbo",
+//     "age":31
+//   };
+//   res.cookie('user',JSON.stringify(userInfo),{maxAge:50*1000});
+//   res.send('<h1>Set-Cookie<h1>');
+// });
+//
+// router.get('/getcookie', function(req, res, next) {
+//   var cookies = req.cookies;
+//   var text = JSON.stringify(cookies);
+//   res.send('<h1>Show-Cookie: ' + text + '</h1>');
+// });
 
 let isAuthenticated = function(req, res, next) {
   if(req.session.username == undefined || !req.session.logined) {
@@ -50,15 +62,19 @@ router.post('/soc/add', device.addSoc);
 router.post('/soc/query', device.querySoc);
 router.post('/soc/update', device.updateSoc);
 // 模块管理
-router.post('/modules/add', modules.add);
-router.post('/modules/delete', modules.delete);
-router.post('/modules/query', modules.query);
-router.post('/modules/update', modules.update);
+//router.post('/module/add', content.add);
+//router.post('/module/delete', content.delete);
+router.post('/module/query', content.queryModuleData);
+//router.post('/module/update', content.update);
 // config配置项管理
-router.post('/configs/add', configs.add);
-router.post('/configs/delete', configs.delete);
-router.post('/configs/query', configs.query);
-router.post('/configs/update', configs.update);
+//router.post('/config/add', content.add);
+//router.post('/config/delete', content.delete);
+router.post('/config/query', content.queryConfigData);
+//router.post('/config/update', content.update);
+// Settings项管理
+//router.post('/settings/add', content.add);
+router.post('/settings/query', content.querySettingsData);
+//router.post('/settings/update', content.update);
 // 操作记录管理
 router.post('/record/add', record.add);
 router.post('/record/delete', record.delete);
@@ -67,7 +83,7 @@ router.post('/record/update', record.update);
 
 // 开始对接
 router.post('/home/getSummary',function(req,res,next){
-  console.log("aaaaaa");
+  console.log("test");
   console.log(req.session.username);
   console.log(req.session.logined);
   next();

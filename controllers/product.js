@@ -3,7 +3,7 @@ var eventproxy = require('eventproxy');
 var config = require('../config/config');
 var logger = require('../common/logger');
 var output = require('../common/output');
-var productModel = require('../models/product');
+var productModel = require('../models/productModel');
 
 /**
  * @param {HttpRequest} req
