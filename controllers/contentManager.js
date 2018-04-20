@@ -1,6 +1,6 @@
 var logger = require('../common/logger');
 var contentModel = require('../models/contentModel');
-
+var output = require('../common/output');
 /**
  * @param {HttpRequest} req
  * @param {HttpResponse} res
