@@ -104,3 +104,52 @@
 #page6{
 	min-width: 900px;
 }
+.page6_tab{
+    border-radius: 6px;
+}
+
+.page6AddBtns{
+	margin-bottom: 2px;
+}
+#page6ModalDiv{
+	height:250px;
+	background-color: #bcbcbc;
+}
+#lableText{
+	margin-left: 20%;
+	margin-bottom: 20px;
+	margin-top: 3%;
+	font-size: 24px;
+	color: #FFFFFF;
+}
+#page6Container{
+	display: block;
+	width: 60%;
+	height: 35px;
+	margin:auto;
+	font-size: 22px;
+	margin-bottom: 20px;
+}
+#page6ModeClose{
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 15%;
+	width: 10%;
+}
+#chipMangInfo{
+	text-align: center;
+	color: red;
+	margin-top: 2%;
+	font-size: 20px;
+}
+#page6Submit{
+	display: block;
+	width: 100px;
+	font-size: 20px;
+	margin:auto;
+}
+.divitems{
+	padding-bottom: 5px;
+}

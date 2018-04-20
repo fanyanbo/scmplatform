@@ -29,7 +29,7 @@
 						<input type="text" value="" id="page2_model" class="col-xs-6 inputstyle">
 					</div>
 					<div class="col-xs-4 form-group">
-						<label for="page2_targetProduct" class="control-label col-xs-5 text-right">targetProduct:</label>
+						<label for="page2_targetProduct" class="control-label col-xs-5 text-right">TP:</label>
 						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="模糊查询">
 						<div class="auto_hidden" id="page2_auto"></div>
 					</div>
@@ -110,7 +110,7 @@
 						</select>
 					</div>
 					<div class="col-xs-4 form-group">
-						<label for="page2_keyword" class="control-label col-xs-5 text-right">关键字查询:</label>
+						<label for="page2_keyword" class="control-label col-xs-5 text-right">模块查询:</label>
 						<input type="text" value="" id="page2_keyword" class="col-xs-6 inputstyle">
 					</div>
 				</div>
@@ -163,24 +163,24 @@
 									<tr>
 										<td>
 											<div class="col-xs-4 text-left">
-												<label for="lable1Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
-												<input type="text" value="" id="lable1Chip" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+												<label for="lable2Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
+												<input type="text" value="" id="lable2Chip" class="col-xs-5 col-xs-push-1 inputstyle text-left">
 											</div>
 											<div class="col-xs-4 text-left">
-												<label for="lable1Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
-												<input type="text" value="" id="lable1Model" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+												<label for="lable2Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
+												<input type="text" value="" id="lable2Model" class="col-xs-5 col-xs-push-1 inputstyle text-left">
 											</div>
 											<div class="col-xs-4 text-left">
-												<label for="lable1TargetProduct" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TARGET_PRODUCT:</label>
-												<input type="text" value="" id="lable1TargetProduct" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+												<label for="lable2TargetProduct" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TARGET_PRODUCT:</label>
+												<input type="text" value="" id="lable2TargetProduct" class="col-xs-5 col-xs-push-1 inputstyle text-left">
 											</div>
 										</td>
 									</tr>
 									<tr>
 										<td>
 											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable1CoocaaVersion" class="control-label text-right" title="CoocaaVersion" style="width: 41.67%;float: left;">酷开版本&nbsp;:</label>
-												<select id="lable1CoocaaVersion" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+												<label for="lable2CoocaaVersion" class="control-label text-right" title="CoocaaVersion" style="width: 41.67%;float: left;">酷开版本&nbsp;:</label>
+												<select id="lable2CoocaaVersion" class="col-xs-5 col-xs-push-1 inputstyle text-left">
 													<option value="Coocaa1.0">Coocaa1.0</option>
 													<option value="Coocaa1.0">Coocaa2.0</option>
 													<option value="Coocaa1.0">Coocaa3.0</option>
@@ -190,8 +190,8 @@
 												</select>
 											</div>
 											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable1AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
-												<select id="lable1AndroidVersion" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+												<label for="lable2AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
+												<select id="lable2AndroidVersion" class="col-xs-5 col-xs-push-1 inputstyle text-left">
 													<option value="Android4.2">Android4.2</option>
 													<option value="Android4.3">Android4.3</option>
 													<option value="Android4.4">Android4.4</option>
@@ -201,12 +201,22 @@
 												</select>
 											</div>
 											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable1ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
-												<select id="lable1ChipMode" class="col-xs-5 col-xs-push-1 inputstyle text-left"></select>
+												<label for="lable2ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
+												<select id="lable2ChipMode" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+													<option value="8">8</option>
+													<option value="9">9</option>
+												</select>
 											</div>
 											<div class="col-xs-4 text-left inputdiv">
-												<label for="newAddEmmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
-												<select id="newAddEmmc" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+												<label for="lable2Emmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
+												<select id="lable2Emmc" class="col-xs-5 col-xs-push-1 inputstyle text-left">
 													<option value="EMMC1">EMMC1</option>
 													<option value="EMMC2">EMMC2</option>
 													<option value="EMMC3">EMMC3</option>
@@ -219,8 +229,8 @@
 												</select>
 											</div>
 											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable1Memory" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">内存&nbsp;:</label>
-												<select id="lable1Memory" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+												<label for="lable2Memory" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">内存&nbsp;:</label>
+												<select id="lable2Memory" class="col-xs-5 col-xs-push-1 inputstyle text-left">
 													<option value="256MB">256MB</option>
 													<option value="512MB">512MB</option>
 													<option value="768MB">768MB</option>
@@ -234,8 +244,8 @@
 												</select>
 											</div>
 											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable1GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
-												<input type="text" value="" id="lable1GitBranch" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+												<label for="lable2GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
+												<input type="text" value="" id="lable2GitBranch" class="col-xs-5 col-xs-push-1 inputstyle text-left">
 											</div>
 										</td>
 									</tr>
@@ -245,7 +255,6 @@
 												<button class="page2_tabs">config文件</button>
 												<button class="page2_tabs">系统设置</button>
 												<button class="page2_tabs">信号源工具箱</button>
-												<button class="page2_tabs">SKYTV</button>
 												<button class="page2_tabs">卖场演示</button>
 												<button class="page2_tabs">中间件</button>
 												<button class="page2_tabs">MK</button>
@@ -256,7 +265,7 @@
 													<tbody id="lable1ConfigTableTbody">
 														<tr>
 															<td id="lable1ConfigTableTdBase">
-																<div title="base">基础功能：</div>
+																<!--<div title="base">基础功能：</div>
 																<div class="col-xs-6"><span title="屏幕属性，分辨率“4K/FHD/SD” | 是否支持3D“3D”| 屏幕类型“LCD/OLED”，以|分隔" name="PANEL" cnname="屏幕属性" configkey="PANEL">屏幕属性 :</span><input type="text" id="58b9266b0df5170a75f31e87" name="string" value="4K|OLED" title="4K|OLED"></div>
 																<div class="col-xs-6"><span title="当前电视支持的网络类型，ETHERNET支持有线网络，WIFI支持无线网络，同时支持中间用 | 符号区隔" name="NETWORK_SUPPORT_DEVICES" cnname="网络类型" configkey="NETWORK_SUPPORT_DEVICES">网络类型 :</span><input type="text" id="58b9266b0df5170a75f31e88" name="string" value="ETHERNET|WIFI" title="ETHERNET|WIFI"></div>
 																<div class="col-xs-6"><span title="机器内置TV通道配置，每个通道中间用 | 符号区隔" name="CONFIG_SOURCE_LIST" cnname="通道配置" configkey="CONFIG_SOURCE_LIST">通道配置 :</span><input type="text" id="58b9266b0df5170a75f31e89" name="string" value="ATV|DTMB|AV|HDMI@0|HDMI@1|HDMI@2" title="ATV|DTMB|AV|HDMI@0|HDMI@1|HDMI@2"></div>
@@ -312,12 +321,12 @@
 																		<option value="false" selected="">false</option>
 																		<option value="true">true</option>
 																	</select>
-																</div>
+																</div>-->
 															</td>
 														</tr>
 														<tr>
 															<td id="lable1ConfigTableTdServerip">
-																<div title="serverip">服务器IP配置：</div>
+																<!--<div title="serverip">服务器IP配置：</div>
 																<div class="col-xs-6"><span title="基础服务地址" name="CURRENT_SERVER" cnname="基础服务器" configkey="CURRENT_SERVER">基础服务器 :</span><input type="text" id="58b9266d0df5170a75f31e93" name="string" value="sky.tvos.skysrt.com" title="sky.tvos.skysrt.com"></div>
 																<div class="col-xs-6"><span title="TC服务器，主要是历史收藏、帐号" name="CURRENT_TC_SERVER" cnname="TC服务器" configkey="CURRENT_TC_SERVER">TC服务器 :</span><input type="text" id="58b9266d0df5170a75f31e94" name="string" value="tc.skysrt.com" title="tc.skysrt.com"></div>
 																<div class="col-xs-6"><span title="push的服务地址" name="CURRENT_PUSH_SERVER" cnname="push的服务器" configkey="CURRENT_PUSH_SERVER">push的服务器 :</span><input type="text" id="58b9266d0df5170a75f31e95" name="string" value="push.skysrt.com" title="push.skysrt.com"></div>
@@ -332,12 +341,12 @@
 																<div class="col-xs-6"><span title="会员中心后台请求数据服务地址，6.0版本开始增加" name="CURRENT_API_MEMBER_SERVER" cnname="会员中心服务器" configkey="CURRENT_API_MEMBER_SERVER">会员中心服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9e" name="string" value="member.coocaa.com" title="member.coocaa.com"></div>
 																<div class="col-xs-6"><span title="开机引导获取影视活动地址" name="GUIDE_MOVIE_INFO_SERVER" cnname="开机引导活动地址" configkey="GUIDE_MOVIE_INFO_SERVER">开机引导活动地址 :</span><input type="text" id="58b9266e0df5170a75f31e9f" name="string" value="active.tc.skysrt.com" title="active.tc.skysrt.com"></div>
 																<div class="col-xs-6"><span title="系统在线升级服务地址" name="CURRENT_UPGRADE_SERVER" cnname="系统升级地址" configkey="CURRENT_UPGRADE_SERVER">系统升级地址 :</span><input type="text" id="58b9266e0df5170a75f31ea0" name="string" value="api.upgrade.skysrt.com/tv" title="api.upgrade.skysrt.com/tv"></div>
-																<div class="col-xs-6"><span title="内销定制机：api.home.cc0808.com 外销定制机：api.home.hw.skysrt.com" name="CURRENT_HOME_SERVER" cnname="定制机首页服务器" configkey="CURRENT_HOME_SERVER">定制机首页服务器 :</span><input type="text" id="59ae7341a538ca687cb90d27" name="string" value="api.home.cc0808.com" title="api.home.cc0808.com"></div>
+																<div class="col-xs-6"><span title="内销定制机：api.home.cc0808.com 外销定制机：api.home.hw.skysrt.com" name="CURRENT_HOME_SERVER" cnname="定制机首页服务器" configkey="CURRENT_HOME_SERVER">定制机首页服务器 :</span><input type="text" id="59ae7341a538ca687cb90d27" name="string" value="api.home.cc0808.com" title="api.home.cc0808.com"></div>-->
 															</td>
 														</tr>
 														<tr>
 															<td id="lable1ConfigTableTdAd">
-																<div title="ad"> 广告配置：</div>
+																<!--<div title="ad"> 广告配置：</div>
 																<div class="col-xs-6"><span title="是否支持开机广告" name="BOOT_AD" cnname="开机广告" configkey="BOOT_AD">开机广告 :</span>
 																	<select id="58b9266e0df5170a75f31ea1" name="enum">
 																		<option value="true" selected="">true</option>
@@ -349,12 +358,12 @@
 																		<option value="true">true</option>
 																		<option value="false" selected="">false</option>
 																	</select>
-																</div>
+																</div>-->
 															</td>
 														</tr>
 														<tr>
 															<td id="lable1ConfigTableTdChannel">
-																<div title="channel">TV通道：</div>
+																<!--<div title="channel">TV通道：</div>
 																<div class="col-xs-6"><span title="切换通道或者切换频道后，延迟出“无信号”提示的时间，单位为毫秒" name="START_SINGAL_CHECK_DELAY" cnname="无信号延时" configkey="START_SINGAL_CHECK_DELAY">无信号延时 :</span><input type="text" id="58b9266f0df5170a75f31ea3" name="string" value="2500" title="2500"></div>
 																<div class="col-xs-6"><span title="切换到HDMI通道后，延迟出“无信号”提示的时间，单位为毫秒" name="START_HDMISINGAL_CHECK_DELAY" cnname="HDMI延时" configkey="START_HDMISINGAL_CHECK_DELAY">HDMI延时 :</span><input type="text" id="58b9266f0df5170a75f31ea4" name="string" value="2500" title="2500"></div>
 																<div class="col-xs-6"><span title="不使用信号源插拔自动切换通道功能。 默认true" name="PLUGSTATE_CHANGE_DISABLE" cnname="信源自切换" configkey="PLUGSTATE_CHANGE_DISABLE">信源自切换 :</span>
@@ -381,12 +390,12 @@
 																		<option value="local">local</option>
 																		<option value="net">net</option>
 																	</select>
-																</div>
+																</div>-->
 															</td>
 														</tr>
 														<tr>
 															<td id="lable1ConfigTableTdLocalmedia">
-																<div title="localmedia">本地媒体：</div>
+																<!--<div title="localmedia">本地媒体：</div>
 																<div class="col-xs-6"><span title="配置支持的音频播放格式" name="AUDIO_SUFFIX" cnname="音频格式" configkey="AUDIO_SUFFIX">音频格式 :</span><input type="text" id="58b9266f0df5170a75f31ea8" name="string" value="mp3|wav|midi|AAC|m4a|flac|ogg" title="mp3|wav|midi|AAC|m4a|flac|ogg"></div>
 																<div class="col-xs-6"><span title="配置支持的图片播放格式" name="PICTURE_SUFFIX" cnname="图片格式" configkey="PICTURE_SUFFIX">图片格式 :</span><input type="text" id="58b9266f0df5170a75f31ea9" name="string" value="jpg|jpeg|png|bmp|gif" title="jpg|jpeg|png|bmp|gif"></div>
 																<div class="col-xs-6"><span title="配置支持的视频播放格式" name="VIDEO_SUFFIX" cnname="视频格式" configkey="VIDEO_SUFFIX">视频格式 :</span><input type="text" id="58b926700df5170a75f31eaa" name="string" value="avi|dat|mpeg|mpe|mpg|vob|m2ts|mp4|mov|mkv|ts|tp|mts|m4v|f4v|flv|wm|rmvb|rm|asf|3gp" title="avi|dat|mpeg|mpe|mpg|vob|m2ts|mp4|mov|mkv|ts|tp|mts|m4v|f4v|flv|wm|rmvb|rm|asf|3gp"></div>
@@ -432,12 +441,12 @@
 																		<option value="true" selected="">true</option>
 																		<option value="false">false</option>
 																	</select>
-																</div>
+																</div>-->
 															</td>
 														</tr>
 														<tr>
 															<td id="lable1ConfigTableTdOther">
-																<div title="other">其它功能：</div>
+																<!--<div title="other">其它功能：</div>
 																<div class="col-xs-6 videoAChange"><span title="采用哪个播放器，platform 为方案商，mediaplayer 为标准android播放器，bj_decoder 为 jni版北京播放器" name="PLAYER_KERNEL" cnname="播放器内核" configkey="PLAYER_KERNEL">播放器内核 :</span>
 																	<select id="58b926710df5170a75f31eb3" name="enum">
 																		<option value="platform">platform</option>
@@ -490,7 +499,7 @@
 																		<option value="true" selected="">true</option>
 																		<option value="false">false</option>
 																	</select>
-																</div>
+																</div>-->
 															</td>
 														</tr>
 													</tbody>
@@ -498,7 +507,6 @@
 											</div>
 											<div class="col-xs-12 page2_boxes">
 												<table class="table table-bordered">
-													<!--mytable-->
 													<tbody id="lable1SystemTableTbody">
 														<tr>
 															<td id="lable1SystemTableBoot">
@@ -613,9 +621,6 @@
 														</tr>
 													</tbody>
 												</table>
-											</div>
-											<div class="col-xs-12 page2_boxes">
-												<h2>SKYTV</h2>
 											</div>
 											<div class="col-xs-12 page2_boxes">
 												<table class="table table-bordered">
@@ -1153,7 +1158,47 @@
 						</div>
 					</div>
 				</div>
-
+				
+				<!-- 点击查看 -->
+				<div class="modal fade col-xs-12" id="page1_examine" tabindex="-1" role="dialog" aria-labelledby="page1_examineLabel">
+					<div class="" role="document">
+						<div class="modal-content">
+							<!--modal-content-->
+							<div class="modal-header">
+								<span type="button" class="close glyphicon glyphicon-remove" aria-label="Close" id="page1_close1"></span>
+								<h4 class="modal-title text-left right" id="page1_examineLabel">
+									<span><b>机芯：</b></span><span id="page1_check_chip"></span>
+									<span><b>机型：</b></span><span id="page1_check_model"></span>
+									<span><b>target_product：</b></span><span id="page1_check_targetProduct"></span>
+								</h4>
+							</div>
+							<div class="modal-body">
+								<table class="table table-striped table-bordered table-hover" id="contenttable">
+									<thead>
+										<tr><th>修改内容</th><th>修改原因</th><th>状态</th><th>提交者</th><th>提交时间</th></tr>
+									</thead>
+									<tbody>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+									</tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" id="page1_close2">关闭</button>
+							</div>
+						</div>
+					</div>
+				</div>
 				<!--<div id="noList">当前没有符合查询条件的文件！！</div>-->
 			</fieldset>
 		</div>

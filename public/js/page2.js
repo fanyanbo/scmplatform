@@ -1,852 +1,79 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
-var data = [{
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "a1",
-	"chipmodel": "1",
-	"coocaaVersion": "Coocaa1.0",
-	"AndroidVersion": "6.0",
-	"memory": "1G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/13",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G6200",
-	"chip": "8H81",
-	"target_product": "a2",
-	"chipmodel": "2",
-	"coocaaVersion": "Coocaa2.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/12",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G9300",
-	"chip": "8H81",
-	"target_product": "a3",
-	"chipmodel": "3",
-	"coocaaVersion": "Coocaa3.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/11",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "E6000",
-	"chip": "8H81",
-	"target_product": "a4",
-	"chipmodel": "4",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/10",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "E6200",
-	"chip": "8H81",
-	"target_product": "a5",
-	"chipmodel": "5",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "3G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/9",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G8200",
-	"chip": "8H81",
-	"target_product": "a6",
-	"chipmodel": "6",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "3.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/8",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "E510",
-	"chip": "8H81",
-	"target_product": "a7",
-	"chipmodel": "7",
-	"coocaaVersion": "Coocaa7.0",
-	"AndroidVersion": "6.0",
-	"memory": "4G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/7",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "X6",
-	"chip": "8H81",
-	"target_product": "b1",
-	"chipmodel": "8",
-	"coocaaVersion": "Coocaa1.0",
-	"AndroidVersion": "6.0",
-	"memory": "4.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/6",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G6A",
-	"chip": "8H81",
-	"target_product": "b2",
-	"chipmodel": "9",
-	"coocaaVersion": "Coocaa2.0",
-	"AndroidVersion": "6.0",
-	"memory": "1G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/5",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G6",
-	"chip": "8H81",
-	"target_product": "b3",
-	"chipmodel": "11",
-	"coocaaVersion": "Coocaa3.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/4",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "M9",
-	"chip": "8H81",
-	"target_product": "b4",
-	"chipmodel": "22",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/2",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "b5",
-	"chipmodel": "33",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "2.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/3",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8S20",
-	"target_product": "c1",
-	"chipmodel": "44",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "3G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/1",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8S02",
-	"target_product": "c2",
-	"chipmodel": "55",
-	"coocaaVersion": "Coocaa1.0",
-	"AndroidVersion": "6.0",
-	"memory": "3.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/2/27",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "a",
-	"chipmodel": "66",
-	"coocaaVersion": "Coocaa2.0",
-	"AndroidVersion": "6.0",
-	"memory": "4G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/2/26",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "b",
-	"chipmodel": "77",
-	"coocaaVersion": "Coocaa3.0",
-	"AndroidVersion": "6.0",
-	"memory": "4.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "c",
-	"chipmodel": "88",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "d",
-	"chipmodel": "99",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "e",
-	"chipmodel": "111",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "f",
-	"chipmodel": "222",
-	"coocaaVersion": "Coocaa1.0",
-	"AndroidVersion": "6.0",
-	"memory": "2.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "123123",
-	"chipmodel": "333",
-	"coocaaVersion": "Coocaa2.0",
-	"AndroidVersion": "6.0",
-	"memory": "3.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "g",
-	"chipmodel": "444",
-	"coocaaVersion": "Coocaa3.0",
-	"AndroidVersion": "6.0",
-	"memory": "4.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "aa",
-	"chipmodel": "555",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "5.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bb",
-	"chipmodel": "666",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "cc",
-	"chipmodel": "777",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "4G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "dd",
-	"chipmodel": "888",
-	"coocaaVersion": "Coocaa1.0",
-	"AndroidVersion": "6.0",
-	"memory": "3G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ee",
-	"chipmodel": "999",
-	"coocaaVersion": "Coocaa1.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ff",
-	"chipmodel": "110",
-	"coocaaVersion": "Coocaa1.0",
-	"AndroidVersion": "6.0",
-	"memory": "1G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "gg",
-	"chipmodel": "112",
-	"coocaaVersion": "Coocaa1.0",
-	"AndroidVersion": "6.0",
-	"memory": "256k",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ab",
-	"chipmodel": "113",
-	"coocaaVersion": "Coocaa2.0",
-	"AndroidVersion": "6.0",
-	"memory": "1G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ac",
-	"chipmodel": "114",
-	"coocaaVersion": "Coocaa2.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ad",
-	"chipmodel": "115",
-	"coocaaVersion": "Coocaa2.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ae",
-	"chipmodel": "116",
-	"coocaaVersion": "Coocaa2.0",
-	"AndroidVersion": "6.0",
-	"memory": "2.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "af",
-	"chipmodel": "117",
-	"coocaaVersion": "Coocaa3.0",
-	"AndroidVersion": "6.0",
-	"memory": "3.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ag",
-	"chipmodel": "118",
-	"coocaaVersion": "Coocaa3.0",
-	"AndroidVersion": "6.0",
-	"memory": "3G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bc",
-	"chipmodel": "119",
-	"coocaaVersion": "Coocaa3.0",
-	"AndroidVersion": "6.0",
-	"memory": "3G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bd",
-	"chipmodel": "120",
-	"coocaaVersion": "Coocaa3.0",
-	"AndroidVersion": "6.0",
-	"memory": "4G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "be",
-	"chipmodel": "121",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "4.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bf",
-	"chipmodel": "122",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bg",
-	"chipmodel": "123",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "cd",
-	"chipmodel": "124",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ce",
-	"chipmodel": "125",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "cf",
-	"chipmodel": "126",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "cg",
-	"chipmodel": "127",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "aaa",
-	"chipmodel": "128",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bbb",
-	"chipmodel": "129",
-	"coocaaVersion": "Coocaa4.0",
-	"AndroidVersion": "6.0",
-	"memory": "2G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ccc",
-	"chipmodel": "130",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "4G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ddd",
-	"chipmodel": "131",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "3G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "eee",
-	"chipmodel": "132",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "4G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "fff",
-	"chipmodel": "133",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "3G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "ggg",
-	"chipmodel": "134",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "4G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/27",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "aab",
-	"chipmodel": "135",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/26",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "aac",
-	"chipmodel": "136",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/25",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "aad",
-	"chipmodel": "137",
-	"coocaaVersion": "Coocaa5.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/24",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "aae",
-	"chipmodel": "138",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/23",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "aaf",
-	"chipmodel": "139",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/22",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "aag",
-	"chipmodel": "140",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/21",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bba",
-	"chipmodel": "141",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/20",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bbc",
-	"chipmodel": "142",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/19",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bbd",
-	"chipmodel": "143",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/18",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bbe",
-	"chipmodel": "144",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/17",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bbf",
-	"chipmodel": "145",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/16",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "bbg",
-	"chipmodel": "146",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/15",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}, {
-	"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
-	"model": "G7200",
-	"chip": "8H81",
-	"target_product": "cce",
-	"chipmodel": "147",
-	"coocaaVersion": "Coocaa6.0",
-	"AndroidVersion": "6.0",
-	"memory": "1.5G",
-	"EMMC": "1",
-	"author": "林心旺",
-	"time": "2018/3/14",
-	"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
-}];
+
 var autoComplete = "";
 var autoComplete2 = "";
 var closePageName = "";
+var autoDataArray2 = ["a","b","c","bb","cb","bvv","ca","bsd","cfg","bd","adfc","bas","asc"];
+
 $(function() {
-	pageTableInit(data);
-	instantQuery();
+	getTableData();
 	buttonInit();
 	editPageButtonsOnclick();
 });
 
+function getTableData() {
+	var node = '{"offset":"-1","rows":"10"}';
+	sendHTTPRequest("/product/queryByPage", node, productQuery);
+}
+
+function productQuery() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				handleTableData(data);
+			}
+		}
+		var node4 = '{}';
+		sendHTTPRequest("/targetproduct/query", node4, targetproductQueryResult);
+	}
+}
+function targetproductQueryResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			var autoDataArray = new Array();
+			if(data.resultCode == "0") {
+				for (var i=0; i<data.resultData.length; i++) {
+					autoDataArray.push(data.resultData[i].name)
+				}
+				instantQuery(autoDataArray,autoDataArray2);
+			}
+		}
+	}
+}
+
+function handleTableData(data) {
+	var getdataArray2 = new Array();
+	var _resultData = data.resultData;
+	for(var i = 0; i < _resultData.length; i++) {
+		var eachItem2 = {
+			"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
+			"model": _resultData[i].model,
+			"chip": _resultData[i].chip,
+			"target_product": _resultData[i].targetProduct,
+			"coocaaVersion": _resultData[i].coocaaVersion,
+			"AndroidVersion": _resultData[i].androidVersion,
+			"chipmodel": _resultData[i].soc,
+			"EMMC": _resultData[i].EMMC,
+			"memory": _resultData[i].memorySize,
+			"gitbranch": _resultData[i].gitBranch,
+			"history": "<a class='eachcheck' href='#'>查看</a>",
+			"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
+		};
+		getdataArray2.push(eachItem2);
+	}
+	console.log(getdataArray2);
+	pageTableInit(getdataArray2);
+}
+
 function pageTableInit(data1) {
 	//前台分页的样子
 	$('#page2_table').CJJTable({
-		'title': ["单选框", "机型", "机芯", "TARGET_PRODUCT", "芯片型号", "酷开版本", "安卓版本", "内存", "EMMC", "提交者", "提交时间", "操作"], //thead中的标题 必填
-		'body': ["checkout", "model", "chip", "target_product", "chipmodel", "coocaaVersion", "AndroidVersion", "memory", "EMMC", "author", "time", "operate"], //tbody td 取值的字段 必填
+		'title': ["单选框", "机型", "机芯", "TP", "酷开版本", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
+		'body': ["checkout", "model", "chip", "target_product", "coocaaVersion", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
 		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
@@ -854,10 +81,11 @@ function pageTableInit(data1) {
 		dbTrclick: function(e) { //双击tr事件
 		}
 	});
-	
+	buttonInitAfter();
 }
 
-function instantQuery() {
+
+function instantQuery(array1,array2) {
 	var _$ = function(id) {
 		return "string" == typeof id ? document.getElementById(id) : id;
 	}
@@ -989,8 +217,11 @@ function instantQuery() {
 			});
 		}
 	}
-	autoComplete = new AutoComplete('page2_targetProduct', 'page2_auto', ['b0', 'b12', 'b22', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b2', 'abd', 'ab', 'acd', 'accd', 'b1', 'cd', 'ccd', 'cbcv', 'cxf', 'abd', 'ab1', 'acd2', 'accd3']);
-	autoComplete2 = new AutoComplete('page2_gitbranch', 'page2_auto2', ['b0', 'b12', 'b22', 'b3', 'b4', 'b5', 'b6', 'b7', 'b8', 'b2', 'abd', 'ab', 'acd', 'accd', 'b1', 'cd', 'ccd', 'cbcv', 'cxf', 'abd', 'ab1', 'acd2', 'accd3']);
+	
+	console.log(array1);
+	console.log(array2);
+	autoComplete = new AutoComplete('page2_targetProduct', 'page2_auto', array1);
+	autoComplete2 = new AutoComplete('page2_gitbranch', 'page2_auto2', array2);
 
 	/* 点击空白出隐藏临时div */
 	_$(document).onclick = function(e) {
@@ -1008,6 +239,7 @@ function instantQuery() {
 }
 
 function buttonInit() {
+
 	document.getElementById("page2_searchInfo").onclick = page2Select;
 	document.getElementById("page2_reset").onclick = page2Reset;
 	document.getElementById("page2_editMore").onclick = page2EditMore;
@@ -1022,9 +254,9 @@ function buttonInit() {
 		closePage2Model("myAddCloseDiv");
 	}
 	document.getElementById("page2_add").onclick = function() {
-		page2Add("1","-1");
+		page2Add("1", "-1");
 	};
-	
+
 	/*单项编辑*/
 	var oClassButtonEdit = new Array();
 	oClassButtonEdit = document.getElementsByClassName("eachedit");
@@ -1032,7 +264,7 @@ function buttonInit() {
 		oClassButtonEdit[i].index = i;
 		oClassButtonEdit[i].onclick = function() {
 			var thisIndex = this.index;
-			page2Add("2",thisIndex);
+			page2Add("2", thisIndex);
 			//document.getElementById("loading").style.display = "block";
 		}
 	}
@@ -1063,7 +295,7 @@ function buttonInit() {
 		oClassButtonCopy[i].index = i;
 		oClassButtonCopy[i].onclick = function() {
 			var thisIndex = this.index;
-			page2Add("3",thisIndex);
+			page2Add("3", thisIndex);
 			//document.getElementById("loading").style.display = "block";
 		}
 	}
@@ -1074,7 +306,7 @@ function buttonInit() {
 		oClassButtonPreview[i].index = i;
 		oClassButtonPreview[i].onclick = function() {
 			var thisIndex = this.index;
-			page2Add("4",thisIndex);
+			page2Add("4", thisIndex);
 			//document.getElementById("loading").style.display = "block";
 		}
 	}
@@ -1097,10 +329,27 @@ function buttonInit() {
 	});
 }
 
+function buttonInitAfter() {
+	$(".eachcheck").click(function() {
+		var _cIndex = $(".eachcheck").index($(this));
+		console.log("点击的是第" + _cIndex + "个 eachcheck class");
+		$("#page1_check_chip").html($(".new_productBox .chip")[_cIndex].innerHTML);
+		$("#page1_check_model").html($(".new_productBox .model")[_cIndex].innerHTML);
+		$("#page1_check_targetProduct").html($(".new_productBox .target_product")[_cIndex].innerHTML);
+		$('#page1_examine').modal();
+	});
+	$("#page1_close1").click(function() {
+		$("#page1_examine").modal('hide');
+	});
+	$("#page1_close2").click(function() {
+		$("#page1_examine").modal('hide');
+	});
+}
+
 //查询功能
 function page2Select() {
 	var oChip = document.getElementById('page2_chip').value;
-	var oMode = document.getElementById('page2_model').value;
+	var oModel = document.getElementById('page2_model').value;
 	var oTargetProduct = document.getElementById('page2_targetProduct').value;
 	var oCoocaaVersion = document.getElementById('page2_coocaaVersion').value;
 	var oAndroid = document.getElementById('page2_androidVersion').value;
@@ -1109,53 +358,33 @@ function page2Select() {
 	var oMemory = document.getElementById('page2_memory').value;
 	var oKeyWord = document.getElementById('page2_keyword').value;
 	var oGitBranch = document.getElementById('page2_gitbranch').value;
-
-	var node = null;
-	var myNeedObj = {};
-
-	console.log(oChip + "--" + oMode + "--" + oTargetProduct + "--" + oCoocaaVersion + "--" + oAndroid);
-	console.log(oChipid + "--" + oEmmc + "--" + oMemory + "--" + oKeyWord + "--" + oGitBranch);
-
-	if(oChip == "" && oMode == "" && oTargetProduct == "" && oCoocaaVersion == "" && oAndroid == "" && oChipid == "" && oEmmc == "" && oMemory == "" && oKeyWord == "" && oGitBranch == "") {
-		node = '{"data":{"condition":{},"option":{"chip":1,"model":1,"androidVersion":1,"memorySize":1,"chipModel":1,"operateType":1,"gerritState":1,"operateTime":1,"targetProduct":1},"sort":{"operateTime":1 }}}';
-	} else {
-		if(oChip != "") {
-			myNeedObj['chip'] = oChip;
-		}
-		if(oMode != "") {
-			myNeedObj['model'] = oMode;
-		}
-		if(oTargetProduct != "") {
-			myNeedObj['targetProduct'] = oTargetProduct;
-		}
-		if(oCoocaaVersion != "") {
-			myNeedObj['CoocaaVersion'] = oCoocaaVersion;
-		}
-		if(oAndroid != "") {
-			myNeedObj['androidVersion'] = oAndroid;
-		}
-		if(oChipid != "") {
-			myNeedObj['chipModel'] = oChipid;
-		}
-		if(oEmmc != "") {
-			myNeedObj['Emmc'] = oEmmc;
-		}
-		if(oMemory != "") {
-			myNeedObj['memorySize'] = oMemory;
-		}
-		if(oKeyWord != "") {
-			myNeedObj['keyword'] = oKeyWord;
-		}
-		if(oGitBranch != "") {
-			myNeedObj['gitBranch'] = oGitBranch;
-		}
-		//console.log("lxw --->" + JSON.stringify(myNeedObj));
-		var myNeedString = JSON.stringify(myNeedObj);
-		node = '{"data":{"condition":' + myNeedString + ',"option":{"chip":1,"model":1,"androidVersion":1,"memorySize":1,"chipModel":1,"operateType":1,"gerritState":1,"operateTime":1,"targetProduct":1},"sort":{"operateTime":1  }}}';
+	
+	var node = "";
+	if (oKeyWord==null||oKeyWord=="") {
+		node = '{"chip":"' + oChip + '","model":"' + oModel + '","version":"' + oCoocaaVersion + '","soc":"' + oChipid + '","memory":"' + oMemory + '"}';
+		console.log(node);
+		sendHTTPRequest("/product/queryByRegEx", node, searchResource);
+	} else{
+		node = '{"name":"' + oKeyWord + '"}';
+		console.log(node);
+		sendHTTPRequest("/product/queryByModule", node, searchResource);
 	}
-	console.log("查询条件为：" + node);
-	//sendHTTPRequest("/fybv2_api/productRegexQuery", node, searchResource);
 }
+
+function searchResource() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log(data.resultData);
+				$("#page2_table").innerHTML = "";
+				handleTableData(data);
+			}
+		}
+	}
+}
+
 //重置功能
 function page2Reset() {
 	document.getElementById("page2_chip").value = "";
@@ -1171,11 +400,11 @@ function page2Reset() {
 	//	page2Select(); //重置时是否需要重新查询，这个需要分析
 }
 //新增、编辑、复制、预览 功能
-function page2Add(type,number) {
+function page2Add(type, number) {
 	$("#page2Modal1").modal();
 	$(".modal-backdrop").addClass("new-backdrop");
 	$(".page2_boxes")[0].style.display = "block";
-	
+
 	var _chip, _model, _target = "";
 	if(type == 1) {
 		console.log("点击了新增");
@@ -1200,16 +429,20 @@ function page2Add(type,number) {
 		_target = document.getElementsByClassName("eachpreview")[number].getAttribute("targetProduct");
 		//sendHTTPRequest("/fybv2_api/preview", '{"data":{"targetProduct":"'+TwiceTransferTargetProduct+'","chip":"'+TwiceTransferChip+'","model":"'+TwiceTransferModel+'"}}', getPreviewInfo);
 	}
-	
+
 }
 //点击新增时清空数据
-function clearPageInfo(){
-	document.getElementById("newAddChip").value = "";
-	document.getElementById("newAddModel").value = "";
-	document.getElementById("newAddDevice").value = "";
-	document.getElementById("NewAddAndroidVersion").value = "";
-	document.getElementById("newAddChipMode").value = "";
-	document.getElementById("newAddMemory").value = "";
+function clearPageInfo() {
+	document.getElementById("lable2Chip").value = "";
+	document.getElementById("lable2Model").value = "";
+	document.getElementById("lable2TargetProduct").value = "";
+	document.getElementById("lable2CoocaaVersion").value = "";
+	document.getElementById("lable2AndroidVersion").value = "";
+	document.getElementById("lable2ChipMode").value = "";
+	document.getElementById("lable2AndroidVersion").value = "";
+	document.getElementById("lable2ChipMode").value = "";
+	document.getElementById("lable2Memory").value = "";
+
 	document.getElementById("myAddModalMkTableApp").innerHTML = "";
 	document.getElementById("myAddModalMkTableService").innerHTML = "";
 	document.getElementById("myAddModalMkTableAppStore").innerHTML = "";

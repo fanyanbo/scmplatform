@@ -4,7 +4,36 @@
 .page7_boxes {
 	display: none;
 }
-
+.page7_tabs{
+	border-radius: 6px;
+    background-color: buttonface;
+}
 .page7_tabs:nth-child(1) {
 	background-color: red;
 }
+.page7_boxes{
+	
+}
+#page7_config_add{
+	font-size: 16px;
+}
+
+.subitem{
+	/*text-align: center;*/
+	font-size: 18px;
+}
+.subitem2{
+	/*text-align: center;*/
+	font-size: 18px;
+}
+.subitem2 span{
+	margin-left: 5px;
+}
+.grouptitle{
+	font-size: 20px;
+}
+#page7 input[type=checkbox], input[type=radio]{
+	height: 15px;
+	width: 15px;
+}
+

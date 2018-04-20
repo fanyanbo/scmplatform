@@ -1,9 +1,23 @@
 #page8{
 	min-width: 900px;
 }
+.page8_tables{
+	margin-top: 10px;
+	text-align: center;
+}
 .page8_boxes{
 	display: none;
+	max-height: 425px;
+	overflow: auto;
 }
+.page8_tabs{
+    border-radius: 6px;
+    background-color: buttonface;
+}
+/*.page8_tabs:focus{
+	border: 2px solid red;
+	background-color: red;
+}*/
 .page8_tabs:nth-child(1){
 	background-color: red;
 }
@@ -20,9 +34,7 @@
 	
     text-align: center;
 }
-.page8_tables{
-	width: 100%;
-}
+
 #paged8_tableSort{
 	width: 100%;
 	margin-top: 35px;

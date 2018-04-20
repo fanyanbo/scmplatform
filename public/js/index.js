@@ -3,9 +3,10 @@ document.write("<script language=javascript src='../js/bootstrap.addtabs.js' cha
 var adminFlag = null; //访问session之后存取管理员标志位
 var loginusername = null; //访问session之后存取登录用户名
 var loginEmail = null; //当前用户的邮箱地址
+var loginStatus = null;
 
 $(function() {
-	sendHTTPRequest("/verify", '{}', loginInResult);
+	sendHTTPRequest("/verify", '{}', loginResult);
 	buttonInit();
 });
 
@@ -24,15 +25,17 @@ function buttonInit() {
 		}
 	});
 	$("#index_exit").click(function() {
-		sendHTTPRequest("/logout", '{}', loginOutResult);
+		sendHTTPRequest("/logout", '{}', logOutResult);
 	});
 }
 
-function loginInResult() {
+function loginResult() {
 	if(this.readyState == 4) {
+		console.log("this.responseText = " + this.responseText);
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
+			loginStatus = data.resultCode;
 			if(data.resultCode == "0") {
 				document.getElementById('homePage').style.display = "block";
 				Addtabs.add({
@@ -56,18 +59,59 @@ function loginInResult() {
 				document.location.href = "login.html";
 			}
 		}
+		if(loginStatus == 0){
+			var node2 = '{"userName":"' + loginusername + '","action":"登录","detail":"1"}';
+        	sendHTTPRequest("/syslog/add", node2, loginLogresult);
+		}
 	}
 }
 
-function loginOutResult(){
+function logOutResult(){
 	if(this.readyState == 4) {
 		if(this.status == 200)
 		{
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				document.location.href = "login.html";
+				loginStatus = 1;
 			}
 		}
+		if(loginStatus == 1){
+			var node2 = '{"userName":"' + loginusername + '","action":"退出","detail":"0"}';
+        	sendHTTPRequest("/syslog/add", node2, logoutLogresult);
+		}
 	}
+}
+function logoutLogresult(){
+	if (this.readyState == 4) {
+        console.log("this.responseText = " + this.responseText);
+        if (this.status == 200)
+        {
+            var data = JSON.parse(this.responseText);
+            console.log(JSON.stringify(data));
+            if (data.resultCode == "0") {
+            	console.log("push 222 success.");
+            	document.location.href="login.html";
+            }
+            else{
+                console.log("push 222 failure.");
+	    	};
+        }
+    }
+}
+function loginLogresult(){
+	if (this.readyState == 4) {
+        console.log("this.responseText = " + this.responseText);
+        if (this.status == 200)
+        {
+            var data = JSON.parse(this.responseText);
+            console.log(JSON.stringify(data));
+            if (data.resultCode == "0") {
+            	console.log("push 111 success.");
+            }
+            else{
+                console.log("push 111 failure.");
+	    	};
+        }
+    }
 }

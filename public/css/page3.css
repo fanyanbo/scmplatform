@@ -67,7 +67,7 @@
     border: none !important;
 }
 .CJJ-Table {
-    width: 90%;
+    width: 95%;
     margin-left: 20px;
     margin-bottom: 20px;
 }
@@ -100,7 +100,12 @@
     border: 1px solid #d9d9d9;
     color: #333;
 }
-
+.CJJ-Table tfoot td{
+	padding-top: 10px;
+}
+.new_productBox{
+	height: 35px;
+}
 #page3{
 	min-width: 900px;
 }
