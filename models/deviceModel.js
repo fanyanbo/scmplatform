@@ -29,7 +29,7 @@ DeviceModel.prototype.addChip = function (chip, callback) {
 }
 
 DeviceModel.prototype.updateChip = function (newValue, oldValue, callback) {
-  var sql = "UPDATE chips set name = ? WHERE name = ？";
+  var sql = "UPDATE chips set name = ? WHERE name = ?";
   let sql_params = [newValue,oldValue];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -64,7 +64,7 @@ DeviceModel.prototype.addModel = function (value, callback) {
 }
 
 DeviceModel.prototype.updateModel = function (newValue, oldValue, callback) {
-  var sql = "UPDATE models set name = ? WHERE name = ？";
+  var sql = "UPDATE models set name = ? WHERE name = ?";
   let sql_params = [newValue,oldValue];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -99,7 +99,7 @@ DeviceModel.prototype.addTargetProduct = function (value, callback) {
 }
 
 DeviceModel.prototype.updateTargetProduct = function (newValue, oldValue, callback) {
-  var sql = "UPDATE targetProducts set name = ? WHERE name = ？";
+  var sql = "UPDATE targetProducts set name = ? WHERE name = ?";
   let sql_params = [newValue,oldValue];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -134,7 +134,7 @@ DeviceModel.prototype.addSoc = function (value, callback) {
 }
 
 DeviceModel.prototype.updateSoc = function (newValue, oldValue, callback) {
-  var sql = "UPDATE soc set name = ? WHERE name = ？";
+  var sql = "UPDATE soc set name = ? WHERE name = ?";
   let sql_params = [newValue,oldValue];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
