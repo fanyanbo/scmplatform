@@ -107,7 +107,8 @@ function settingQueryResult(){
 				var _rowMarketShowSound = document.getElementById("MarketShowSound");
 				var _rowMarketShowPicture = document.getElementById("MarketShowPicture");
 				
-				
+				var _rowMiddleware1 = document.getElementById("Middleware1");
+				var _rowMiddleware2 = document.getElementById("Middleware2");
 				
 				
 				
@@ -162,7 +163,15 @@ function settingQueryResult(){
 						}
 					}
 					else if(data.resultData[i].uiGroup1 == "中间件"){
-						
+						if (data.resultData[i].uiGroup2 == "输入信号源") {
+							kk = i;
+							pullDataS11 = JSON.stringify(data.resultData[kk]);
+							_rowMiddleware1.innerHTML += "<div class='col-xs-4 subitem'><a hidedata='"+ pullDataS11 +"' title='"+data.resultData[kk].engName+"' name='"+data.resultData[kk].engName+"'>" + data.resultData[kk].cnName + "</a></div>";
+						}else if(data.resultData[i].uiGroup2 == "支持纵横比"){
+							kk = i;
+							pullDataS12 = JSON.stringify(data.resultData[kk]);
+							_rowMiddleware2.innerHTML += "<div class='col-xs-4 subitem'><a hidedata='"+ pullDataS12 +"' title='"+data.resultData[kk].engName+"' name='"+data.resultData[kk].engName+"'>" + data.resultData[kk].cnName + "</a></div>";
+						}
 					}
 				}
 			}

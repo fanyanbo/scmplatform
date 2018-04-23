@@ -276,10 +276,6 @@ function buttonInit() {
 		oClassButtonDelete[i].onclick = function() {
 			console.log("in delete");
 			console.log(this.index); //点击的是第几个
-			//var thisIndex = this.index;
-			//TwiceTransferChip = oClassButtonDelete[thisIndex].getAttribute("chip");
-			//TwiceTransferModel = oClassButtonDelete[thisIndex].getAttribute("model");
-			//TwiceTransferTargetProduct = oClassButtonDelete[thisIndex].getAttribute("targetProduct");
 			//校验机芯机型
 			//sendHTTPRequest("/fybv2_api/chipQuery", '{"data":""}', checkChipInfoInDel);
 			$("#myDeleteModalLabel").text("单项删除");
