@@ -135,16 +135,16 @@
 					</div>
 					<div class="page7_boxes">
 						<button type="button" class="btn btn-default" id="page7_Middleware_add">新增</button>
-						<div class="col-xs-12" id="myMiddlewareTable" style="display: block;">
-							<table class="table table-bordered">
+						<div class="col-xs-12">
+							<table class="table table-bordered" id="myMiddlewareTable">
 								<tr>
 									<td id="Middleware1">
-										<div title="Middleware1">输入信号源:</div>
+										<div class="grouptitle" title="Middleware1">输入信号源:</div>
 									</td>
 								</tr>
 								<tr>
 									<td id="Middleware2">
-										<div title="Middleware2">支持纵横比:</div>
+										<div class="grouptitle" title="Middleware2">支持纵横比:</div>
 									</td>
 								</tr>
 							</table>
@@ -152,252 +152,48 @@
 					</div>
 					<div class="page7_boxes">
 						<button type="button" class="btn btn-default" id="page7_Mk_add">新增</button>
-						<div class="col-xs-12" id="myMkTable" style="display: block;">
-							<table class="table table-bordered">
-								<tr>
-									<td id="myMkTablePlayerLibrary">
-										<div title="PlayerLibrary">PlayerLibrary:</div>
-										<div class="col-xs-3"><input type="radio" name="PlayerLibrary" id="58b8d0f10df5170a75f31e3c" value="" checked=""><span category="PlayerLibrary" gitpath="intact" name="jni_bjplayer" title="集成北京播放器库JNI版本 - intact">JNI版本</span></div>
-										<div class="col-xs-3"><input type="radio" name="PlayerLibrary" id="58b8d0f10df5170a75f31e3d" value=""><span category="PlayerLibrary" gitpath="mix" name="mix_bjplayer" title="集成北京播放器库mix版本 - mix">mix版本</span></div>
-										<div class="col-xs-3"><input type="radio" name="PlayerLibrary" id="58b8d0f10df5170a75f31e3e" value=""><span category="PlayerLibrary" gitpath="null" name="no_bjplayer" title="不集成北京播放器库 - null">不集成</span></div>
-									</td>
-								</tr>
-								<tr>
-									<td id="myMkTableApp">
-										<div title="App">App:</div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4f" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie" name="SkyMovie" title="除优朋源或者Andorid6.0的机器使用此版本">影视中心5</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e50" value=""><span category="App" gitpath="SkyworthApp/App/SkyMovie/SkyMovie6" name="SkyMovie6" title="影视中心，Android6.0的平台使用此版本">影视中心6</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f30df5170a75f31e52" value=""><span category="App" gitpath="SkyworthApp/App/SkyCCMall" name="SkyCCMall" title="酷开商城功能，一般默认集成">酷开商城</span></div>
-									</td>
-								</tr>
-								<tr>
-									<td id="myMkTableService">
-										<div title="Service">Service:</div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5c" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyIPCService" name="SkyIPCService" title="一般默认集成">通讯服务</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5d" value=""><span category="Service" gitpath="SkyworthApp/Service/SkySystemService" name="SkySystemService" title="一般默认集成">系统服务</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e5e" value=""><span category="Service" gitpath="SkyworthApp/Service/SkyPushService" name="SkyPushService" title="一般默认集成">推送服务</span></div>
-									</td>
-								</tr>
-								<tr>
-									<td id="myMkTableAppStore">
-										<div title="AppStore">AppStore:</div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e49" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore" name="AppStore" title="应用圈">应用圈</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4a" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_OEM" name="SkyAppStore_OEM" title="应用圈OEM版">应用圈OEM版</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e4b" value=""><span category="AppStore" gitpath="SkyworthApp/AppStore/SkyAppStore_Oversea" name="SkyAppStore_Oversea" title="应用圈海外版">应用圈海外版</span></div>
-									</td>
-								</tr>
-								<tr>
-									<td id="myMkTableHomePage">
-										<div title="HomePage">HomePage:</div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e41" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SkyOverseaHomepage" name="SkyOverseaHomepage" title="海外产品专用首页">海外首页</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e43" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHomepage_OEM" name="SimpleHomepage_OEM" title="特殊产品，单独确认才使用">简易首页OEM</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f10df5170a75f31e44" value=""><span category="HomePage" gitpath="SkyworthApp/HomePage/SimpleHome5.0" name="SimpleHome4" title="特殊产品，单独确认才使用">简易首页4.4</span></div>
-									</td>
-								</tr>
-								<tr>
-									<td id="myMkTableIME">
-										<div title="IME">IME:</div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e46" value=""><span category="IME" gitpath="SkyworthApp/IME/SogouIME" name="SogouIME" title="1G以上产品使用，单独确认，与酷开系统输入法互斥，只集成1个">搜狗输入法</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f20df5170a75f31e47" value=""><span category="IME" gitpath="SkyworthApp/IME/SkyTianciIME" name="SkyTianciIME" title="1G及以下部分产品使用，单独确认,与搜狗互斥，只集成1个">酷开输入法</span></div>
-									</td>
-								</tr>
-								<tr>
-									<td id="myMkTableSysApp">
-										<div title="SysApp">SysApp:</div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e67" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkyTaskManager" name="SkyTaskManager" title="一般默认集成">任务管理器</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f50df5170a75f31e68" value=""><span category="SysApp" gitpath="SkyworthApp/SysApp/SkySetting" name="SkySetting" title="一般默认集成">设置</span></div>
-									</td>
-								</tr>
-								<tr>
-									<td id="myMkTableTV">
-										<div title="TV">TV:</div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e63" value=""><span category="TV" gitpath="SkyworthApp/TV/SkyTV" name="SkyTV" title="内销TV功能，一般默认集成">TV内销</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f40df5170a75f31e64" value=""><span category="TV" gitpath="SkyworthApp/TV/SkyTV_OverSea" name="SkyTV_OverSea" title="海外TV功能，只有外销产品才集成">TV海外版</span></div>
-									</td>
-								</tr>
-								<tr>
-									<td id="myMkTableEtc"></td>
-								</tr>
-								<tr>
-									<td id="myMkTableOther">
-										<div title="Other">Other:</div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e71" value=""><span category="Other" gitpath="ThirdPartyApp/Beiwa" name="Beiwa" title="新产品立项后，知会软件院和酷开确认预装应用需求">贝瓦儿童乐园</span></div>
-										<div class="col-xs-3"><input type="checkbox" id="58b8d0f60df5170a75f31e72" value=""><span category="Other" gitpath="ThirdPartyApp/GouZheng_low" name="GouZheng_low" title="新产品立项后，知会软件院和酷开确认预装应用需求">勾正</span></div>
-									</td>
-								</tr>
+						<div class="col-xs-12">
+							<table class="table table-bordered" id="myMkTable">
+								<tr><td id="myMkTablePlayerLibrary"></td></tr>
+								<tr><td id="myMkTableApp"></td></tr>
+								<tr><td id="myMkTableService"></td></tr>
+								<tr><td id="myMkTableAppStore"></td></tr>
+								<tr><td id="myMkTableHomePage"></td></tr>
+								<tr><td id="myMkTableIME"></td></tr>
+								<tr><td id="myMkTableSysApp"></td></tr>
+								<tr><td id="myMkTableTV"></td></tr>
+								<tr><td id="myMkTableOther"></td></tr>
 							</table>
 						</div>
 					</div>
 					<div class="page7_boxes">
-						<div class="col-xs-12" id="myAddModalConfigTable" style="display: block;">
-							<table class="table table-bordered">
-								<!--mytable-->
-								<tbody id="myAddModalConfigTableTbody">
+						<button type="button" class="btn btn-default" id="page7_Prop_add">新增</button>
+						<div class="col-xs-12">
+							<table class="table table-bordered" id="myPropTable">
+								<tbody>
 									<tr>
 										<td id="myAddModalConfigTableTdBase">
 											<div title="base">基础功能：</div>
-											<div class="col-xs-6"><span title="屏幕属性，分辨率“4K/FHD/SD” | 是否支持3D“3D”| 屏幕类型“LCD/OLED”，以|分隔" name="PANEL" cnname="屏幕属性" configkey="PANEL">屏幕属性 :</span><input type="text" id="58b9266b0df5170a75f31e87" name="string" value="4K|OLED" title="4K|OLED"></div>
-											<div class="col-xs-6"><span title="当前电视支持的网络类型，ETHERNET支持有线网络，WIFI支持无线网络，同时支持中间用 | 符号区隔" name="NETWORK_SUPPORT_DEVICES" cnname="网络类型" configkey="NETWORK_SUPPORT_DEVICES">网络类型 :</span><input type="text" id="58b9266b0df5170a75f31e88" name="string" value="ETHERNET|WIFI" title="ETHERNET|WIFI"></div>
-											<div class="col-xs-6"><span title="机器内置TV通道配置，每个通道中间用 | 符号区隔" name="CONFIG_SOURCE_LIST" cnname="通道配置" configkey="CONFIG_SOURCE_LIST">通道配置 :</span><input type="text" id="58b9266b0df5170a75f31e89" name="string" value="ATV|DTMB|AV|HDMI@0|HDMI@1|HDMI@2" title="ATV|DTMB|AV|HDMI@0|HDMI@1|HDMI@2"></div>
-											<div class="col-xs-6"><span title="该机器是否支持H.265解码" name="SUPPORT_H265" cnname="H.265解码" configkey="SUPPORT_H265">H.265解码 :</span>
-												<select id="58b9266c0df5170a75f31e8b" name="enum" oldvalue="true" value="true" configkey="SUPPORT_H265">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="酷开系统log日志输出哪个等级的日志, 其中value对应为各个log等级, 分别为 debug , info , warning , error , none, 默认为error" name="LOG_APPENDER" cnname="LOG等级" configkey="LOG_APPENDER">LOG等级 :</span>
-												<select id="58b9266c0df5170a75f31e8c" name="enum" oldvalue="error" value="error" configkey="LOG_APPENDER">
-													<option value="debug">debug</option>
-													<option value="info">info</option>
-													<option value="warning">warning</option>
-													<option value="error" selected="">error</option>
-													<option value="none">none</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="存储升级包的路径" name="OTA_PATH" cnname="升级包路径" configkey="OTA_PATH">升级包路径 :</span><input type="text" id="58b9266c0df5170a75f31e8d" name="string" value="/skyota" title="/skyota"></div>
-											<div class="col-xs-6"><span title="底层是否支持新的开机启动流程，旧启动流程是底层开机启动TV画面，新的开机流程底层开机不启动TV画面" name="NEW_BOOT_FLOW" cnname="新开机流程" configkey="NEW_BOOT_FLOW">新开机流程 :</span>
-												<select id="58b9266c0df5170a75f31e8e" name="enum" oldvalue="true" value="true" configkey="NEW_BOOT_FLOW">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="主页配置（酷开主页、简易主页等），格式： 包名/类名" name="DEFAULT_HOMEPAGE" cnname="主页配置" configkey="DEFAULT_HOMEPAGE">主页配置 :</span><input type="text" id="58b9266c0df5170a75f31e8f" name="string" value="com.tianci.movieplatform/com.coocaa.homepage.vast.HomePageActivity" title="com.tianci.movieplatform/com.coocaa.homepage.vast.HomePageActivity"></div>
-											<div class="col-xs-6"><span title="当前平台是否需要屏保功能" name="SUPPORT_SCREENSAVER" cnname="屏保开关" configkey="SUPPORT_SCREENSAVER">屏保开关 :</span>
-												<select id="58b9266c0df5170a75f31e90" name="enum" oldvalue="true" value="true" configkey="SUPPORT_SCREENSAVER">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="SUPPORT_CHILDMODE：当前机型是否打开儿童模式，使用6.0首页后此条目实际已无效，默认都有儿童模式" name="SUPPORT_CHILDMODE" cnname="儿童模式" configkey="SUPPORT_CHILDMODE">儿童模式 :</span>
-												<select id="58b9266c0df5170a75f31e91" name="enum" oldvalue="true" value="true" configkey="SUPPORT_CHILDMODE">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="是否支持Dolby DD+认证，true-支持，false-不支持" name="DOLBY_DD_SUPPORT" cnname="DolbyDD+认证" configkey="DOLBY_DD_SUPPORT">DolbyDD+认证 :</span>
-												<select id="58b9266d0df5170a75f31e92" name="enum" oldvalue="true" value="true" configkey="DOLBY_DD_SUPPORT">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="该机器是否标配蓝牙遥控器，true-出厂标配，false-出厂不标配,test by fanyanbo" name="SUPPORT_BLE_REMOTE" cnname="蓝牙遥控器" configkey="SUPPORT_BLE_REMOTE">蓝牙遥控器 :</span>
-												<select id="58b9266b0df5170a75f31e8a" name="enum" oldvalue="true" value="true" configkey="SUPPORT_BLE_REMOTE">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
 										</td>
 									</tr>
 									<tr>
 										<td id="myAddModalConfigTableTdServerip">
 											<div title="serverip">服务器IP配置：</div>
-											<div class="col-xs-6"><span title="基础服务地址" name="CURRENT_SERVER" cnname="基础服务器" configkey="CURRENT_SERVER">基础服务器 :</span><input type="text" id="58b9266d0df5170a75f31e93" name="string" value="sky.tvos.skysrt.com" title="sky.tvos.skysrt.com"></div>
-											<div class="col-xs-6"><span title="TC服务器，主要是历史收藏、帐号" name="CURRENT_TC_SERVER" cnname="TC服务器" configkey="CURRENT_TC_SERVER">TC服务器 :</span><input type="text" id="58b9266d0df5170a75f31e94" name="string" value="tc.skysrt.com" title="tc.skysrt.com"></div>
-											<div class="col-xs-6"><span title="push的服务地址" name="CURRENT_PUSH_SERVER" cnname="push的服务器" configkey="CURRENT_PUSH_SERVER">push的服务器 :</span><input type="text" id="58b9266d0df5170a75f31e95" name="string" value="push.skysrt.com" title="push.skysrt.com"></div>
-											<div class="col-xs-6"><span title="支付中心服务器地址" name="CURRENT_PAY_SERVER" cnname="支付服务器" configkey="CURRENT_PAY_SERVER">支付服务器 :</span><input type="text" id="58b9266d0df5170a75f31e96" name="string" value="pay.coocaa.com" title="pay.coocaa.com"></div>
-											<div class="col-xs-6"><span title="账号的服务地址" name="CURRENT_PASSPORT_SERVER" cnname="账号服务器" configkey="CURRENT_PASSPORT_SERVER">账号服务器 :</span><input type="text" id="58b9266d0df5170a75f31e97" name="string" value="passport.coocaa.com" title="passport.coocaa.com"></div>
-											<div class="col-xs-6"><span title="当前酷开系统日志采集提交的服务地址" name="CURRENT_LOGGER_SERVER" cnname="数据采集服务器" configkey="CURRENT_LOGGER_SERVER">数据采集服务器 :</span><input type="text" id="58b9266d0df5170a75f31e98" name="string" value="log.skysrt.com" title="log.skysrt.com"></div>
-											<div class="col-xs-6"><span title="影视服务器地址, 爱奇艺和优朋源配置为  movie.tc.skysrt.com    腾讯源配置为  sky.t003.ottcn.com" name="CURRENT_MOVIE_SERVER" cnname="影视服务器" configkey="CURRENT_MOVIE_SERVER">影视服务器 :</span><input type="text" id="58b9266d0df5170a75f31e99" name="string" value="movie.tc.skysrt.com" title="movie.tc.skysrt.com"></div>
-											<div class="col-xs-6"><span title="该域名用于在酷开系统中部分应用当中嵌入html运营页面，增加运营的灵活性" name="CURRENT_WEBAPP_SERVER" cnname="WebApp服务器" configkey="CURRENT_WEBAPP_SERVER">WebApp服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9a" name="string" value="webapp.skysrt.com" title="webapp.skysrt.com"></div>
-											<div class="col-xs-6"><span title="设备服务器地址,内销参数api.device.skysrt.com，外销参数api.device.hw.skysrt.com" name="CURRENT_DEVICE_SERVER" cnname="设备服务器" configkey="CURRENT_DEVICE_SERVER">设备服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9b" name="string" value="api.device.skysrt.com" title="api.device.skysrt.com"></div>
-											<div class="col-xs-6"><span title="广告服务器地址，内销参数hoisin.coocaatv.com，外销参数api.hoisin.hw.coocaatv.com" name="CURRENT_AD_SERVER" cnname="广告服务器" configkey="CURRENT_AD_SERVER">广告服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9c" name="string" value="hoisin.coocaatv.com" title="hoisin.coocaatv.com"></div>
-											<div class="col-xs-6"><span title="Web版本机信息服务器地址" name="CURRENT_TVINFO_SERVER" cnname="本机信息服务器" configkey="CURRENT_TVINFO_SERVER">本机信息服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9d" name="string" value="api.tvinfo.skysrt.com" title="api.tvinfo.skysrt.com"></div>
-											<div class="col-xs-6"><span title="会员中心后台请求数据服务地址，6.0版本开始增加" name="CURRENT_API_MEMBER_SERVER" cnname="会员中心服务器" configkey="CURRENT_API_MEMBER_SERVER">会员中心服务器 :</span><input type="text" id="58b9266e0df5170a75f31e9e" name="string" value="member.coocaa.com" title="member.coocaa.com"></div>
-											<div class="col-xs-6"><span title="开机引导获取影视活动地址" name="GUIDE_MOVIE_INFO_SERVER" cnname="开机引导活动地址" configkey="GUIDE_MOVIE_INFO_SERVER">开机引导活动地址 :</span><input type="text" id="58b9266e0df5170a75f31e9f" name="string" value="active.tc.skysrt.com" title="active.tc.skysrt.com"></div>
-											<div class="col-xs-6"><span title="系统在线升级服务地址" name="CURRENT_UPGRADE_SERVER" cnname="系统升级地址" configkey="CURRENT_UPGRADE_SERVER">系统升级地址 :</span><input type="text" id="58b9266e0df5170a75f31ea0" name="string" value="api.upgrade.skysrt.com/tv" title="api.upgrade.skysrt.com/tv"></div>
 										</td>
 									</tr>
 									<tr>
 										<td id="myAddModalConfigTableTdAd">
 											<div title="ad"> 广告配置：</div>
-											<div class="col-xs-6"><span title="是否支持开机广告" name="BOOT_AD" cnname="开机广告" configkey="BOOT_AD">开机广告 :</span>
-												<select id="58b9266e0df5170a75f31ea1" name="enum">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="是否支持关机广告，value 值为true或者false，“true”代表支持关机广告，“false”代表不支持关机广告。6.0版本开始增加" name="SUPPORT_POWER_OFF_AD" cnname="关机广告" configkey="SUPPORT_POWER_OFF_AD">关机广告 :</span>
-												<select id="58b9266f0df5170a75f31ea2" name="enum">
-													<option value="true">true</option>
-													<option value="false" selected="">false</option>
-												</select>
-											</div>
 										</td>
 									</tr>
 									<tr>
 										<td id="myAddModalConfigTableTdChannel">
 											<div title="channel">TV通道：</div>
-											<div class="col-xs-6"><span title="切换通道或者切换频道后，延迟出“无信号”提示的时间，单位为毫秒" name="START_SINGAL_CHECK_DELAY" cnname="无信号延时" configkey="START_SINGAL_CHECK_DELAY">无信号延时 :</span><input type="text" id="58b9266f0df5170a75f31ea3" name="string" value="2500" title="2500"></div>
-											<div class="col-xs-6"><span title="切换到HDMI通道后，延迟出“无信号”提示的时间，单位为毫秒" name="START_HDMISINGAL_CHECK_DELAY" cnname="HDMI延时" configkey="START_HDMISINGAL_CHECK_DELAY">HDMI延时 :</span><input type="text" id="58b9266f0df5170a75f31ea4" name="string" value="2500" title="2500"></div>
-											<div class="col-xs-6"><span title="不使用信号源插拔自动切换通道功能。 默认true" name="PLUGSTATE_CHANGE_DISABLE" cnname="信源自切换" configkey="PLUGSTATE_CHANGE_DISABLE">信源自切换 :</span>
-												<select id="58b9266f0df5170a75f31ea5" name="enum">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="DTV通道没有字幕功能。默认false" name="DTV_SUBTITLE_DISABLE" cnname="DTV字幕功能" configkey="DTV_SUBTITLE_DISABLE">DTV字幕功能 :</span>
-												<select id="58b9266f0df5170a75f31ea6" name="enum">
-													<option value="true">true</option>
-													<option value="false" selected="">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="DTV Surfaceview使用tianci4方式，E690,E710用。默认false" name="DTV_VIEW_SETDISPLAY" cnname="DTV场景实现" configkey="DTV_VIEW_SETDISPLAY">DTV场景实现 :</span>
-												<select id="58b9266f0df5170a75f31ea7" name="enum">
-													<option value="true">true</option>
-													<option value="false" selected="">false</option>
-												</select>
-											</div>
 										</td>
 									</tr>
 									<tr>
 										<td id="myAddModalConfigTableTdLocalmedia">
 											<div title="localmedia">本地媒体：</div>
-											<div class="col-xs-6"><span title="配置支持的音频播放格式" name="AUDIO_SUFFIX" cnname="音频格式" configkey="AUDIO_SUFFIX">音频格式 :</span><input type="text" id="58b9266f0df5170a75f31ea8" name="string" value="mp3|wav|midi|AAC|m4a|flac|ogg" title="mp3|wav|midi|AAC|m4a|flac|ogg"></div>
-											<div class="col-xs-6"><span title="配置支持的图片播放格式" name="PICTURE_SUFFIX" cnname="图片格式" configkey="PICTURE_SUFFIX">图片格式 :</span><input type="text" id="58b9266f0df5170a75f31ea9" name="string" value="jpg|jpeg|png|bmp|gif" title="jpg|jpeg|png|bmp|gif"></div>
-											<div class="col-xs-6"><span title="配置支持的视频播放格式" name="VIDEO_SUFFIX" cnname="视频格式" configkey="VIDEO_SUFFIX">视频格式 :</span><input type="text" id="58b926700df5170a75f31eaa" name="string" value="avi|dat|mpeg|mpe|mpg|vob|m2ts|mp4|mov|mkv|ts|tp|mts|m4v|f4v|flv|wm|rmvb|rm|asf|3gp" title="avi|dat|mpeg|mpe|mpg|vob|m2ts|mp4|mov|mkv|ts|tp|mts|m4v|f4v|flv|wm|rmvb|rm|asf|3gp"></div>
-											<div class="col-xs-6"><span title="配置图片解码能够支持的最大图片占用空间" name="BITMAP_DECODE_MAX_SIZE" cnname="图片解码空间" configkey="BITMAP_DECODE_MAX_SIZE">图片解码空间 :</span><input type="text" id="58b926700df5170a75f31eab" name="string" value="40000000" title="40000000"></div>
-											<div class="col-xs-6"><span title="配置底层是否支持新字幕标准要求功能" name="SUPPORT_NEW_SUBTITLE" cnname="新字幕标准" configkey="SUPPORT_NEW_SUBTITLE">新字幕标准 :</span>
-												<select id="58b926700df5170a75f31eac" name="enum">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="配置是否打开samba功能" name="SUPPORT_SAMBA" cnname="Samba功能" configkey="SUPPORT_SAMBA">Samba功能 :</span>
-												<select id="58b926700df5170a75f31ead" name="enum">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="配置是否打开媒体的图片缩略图预览" name="SUPPORT_PIC_PREVIEW" cnname="图片缩略图" configkey="SUPPORT_PIC_PREVIEW">图片缩略图 :</span>
-												<select id="58b926700df5170a75f31eae" name="enum">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="配置是否打开媒体的视频缩略图预览" name="SUPPORT_VIDEO_PREVIEW" cnname="视频缩略图" configkey="SUPPORT_VIDEO_PREVIEW">视频缩略图 :</span>
-												<select id="58b926700df5170a75f31eaf" name="enum">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="配置是否打开本地媒体分类功能" name="SUPPORT_SORT_FUNCTION" cnname="本地媒体分类" configkey="SUPPORT_SORT_FUNCTION">本地媒体分类 :</span>
-												<select id="58b926700df5170a75f31eb0" name="enum">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="配置是否打开获取音乐总时间功能" name="SUPPORT_MUSIC_DUARTION" cnname="计算音乐时长" configkey="SUPPORT_MUSIC_DUARTION">计算音乐时长 :</span>
-												<select id="58b926700df5170a75f31eb1" name="enum">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
-											<div class="col-xs-6"><span title="配置是否打开家庭网络功能（客户要求定制）" name="SUPPORT_HOME_NETWORK_FUNCTION" cnname="家庭网络" configkey="SUPPORT_HOME_NETWORK_FUNCTION">家庭网络 :</span>
-												<select id="58b926710df5170a75f31eb2" name="enum">
-													<option value="true" selected="">true</option>
-													<option value="false">false</option>
-												</select>
-											</div>
 										</td>
 									</tr>
 								</tbody>
@@ -408,22 +204,20 @@
 			</div>
 		</div>
 
-		<!--新增和编辑-->
-		<div class="modal fade" id="page7_config_modal" tabindex="-1" role="dialog" aria-labelledby="myConfigAddChangeModalLabel">
+		<!--Config新增和编辑-->
+		<div class="modal fade" id="page7_config" tabindex="-1" role="dialog" aria-labelledby="myConfigLabel">
 			<div class="modalwidth" role="document">
 				<div class="modal-content" id="page7_config_border">
 					<div class="modal-body">
-						<button type="button" id="inputConfigClose" data-dismiss="modal">关闭</button>
-						<label for="configChineseName" class="control-label configlable">中文名称：</label>
-						<label for="configEnglishName" class="control-label configlable">英文名称：</label><br/>
-						<input type="text" value="" id="configChineseName" class="configinput">
-						<input type="text" value="" id="configEnglishName" class="configinput"><br/>
-						<label for="configSrc" class="control-label configlable">general_config：</label><br/>
-						<input type="text" value="" id="configSrc" class="configinput"><br/>
+						<button type="button" id="configClose" data-dismiss="modal">关闭</button>
+						<label for="configCName" class="control-label configlable">中文名称：</label>
+						<label for="configEName" class="control-label configlable">英文名称：</label><br/>
+						<input type="text" value="" id="configCName" class="configinput">
+						<input type="text" value="" id="configEName" class="configinput"><br/>
 						<label for="configDefaulted" class="control-label configlable">默认参考值：</label><br/>
 						<div id="configDefaulted">
-							<button class="configDefaultedOption">字符串</button>
-							<button class="configDefaultedOption">枚举</button>
+							<button class="defaultOption">字符串</button>
+							<button class="defaultOption">枚举</button>
 							<textarea id="configString" rows="3" cols="" class="configtextarea"></textarea><br/>
 							<div class="tableBox" id="configTableBoxEnum">
 								<div id="ADCSAction">
@@ -452,12 +246,46 @@
 							<option value="localmedia">本地媒体</option>
 							<option value="other">其他功能</option>
 						</select>
-						<button type="button" class="btn" id="inputConfigSubmit">保存</button>
+						<button type="button" hidedata="0" class="btn" id="configSubmit">保存</button>
 						<div id="configErrorInfo"></div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<!--新增和编辑弹框-->
+		<div class="modal fade" id="myModuleAddChangeModal" tabindex="-1" role="dialog" aria-labelledby="myModuleAddChangeModalLabel">
+			<div class="modalwidth" role="document">
+				<div class="modal-content" id="myModuleBorder">
+					<div class="modal-body">
+						<button type="button" id="inputModuleClose" data-dismiss="modal">关闭</button>
+						<label for="moduleCzName" class="control-label" style="margin-bottom: 0px;">模块中文名：</label><br/>
+						<input type="text" value="" id="moduleCzName"><br/>
+						<label for="moduleEnName" class="control-label" style="margin-bottom: 0px;">模块英文名：</label><br/>
+						<input type="text" value="" id="moduleEnName"><br/>
+						<label for="moduleSrc" class="control-label" style="margin-bottom: 0px;">模块路径：</label><br/>
+						<input type="text" value="" id="moduleSrc"><br/>
+						<label for="moduleInstr" class="control-label" style="margin-bottom: 0px;">描述：</label><br/>
+						<!--<input type="text" value="" id="moduleInstr"><br/>-->
+						<textarea id="moduleInstr" rows="2" cols="" class="configtextarea"></textarea><br/>
+						<label for="moduleSelect" class="control-label" style="margin-bottom: 0px;">所属分类：</label><br/>
+						<select id="moduleSelect">
+							<option value="App">App</option>
+							<option value="Service">Service</option>
+							<option value="AppStore">AppStore</option>
+							<option value="HomePage">HomePage</option>
+							<option value="IME">IME</option>
+							<option value="SysApp">SysApp</option>
+							<option value="TV">TV</option>
+							<option value="Other">Other</option>
+							<option value="PlayerLibrary">PlayerLibrary</option>
+						</select>
+						<button type="button" class="btn"id="inputModuleSubmit">保存</button>
+						<div id="moduleErrorInfo"></div>
+					</div>
+				</div>
+			</div>
+		</div>	
 		<!--loading环-->
 		<!--<div id="page7_loading"><span id="page7_loadingImg">wenjian</span><span id="page7_loadingText">数据加载中...</span></div>-->
 		<script type="text/javascript" src="../js/page7.js" charset="UTF-8"></script>

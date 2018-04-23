@@ -37,3 +37,165 @@
 	width: 15px;
 }
 
+.modalwidth{
+	position: relative;
+	width: 98%;
+	padding-left: 2%;
+	padding-top: 4%;
+	margin: 0;
+}
+#page7_config_border{
+	background-color: #bcbcbc;
+	height: 100%;
+	width: 60%;
+	margin: auto;
+}
+#page7_config_border div label:nth-child(2){
+	margin-top: 3%;
+	float: left;
+	margin-bottom: 0;
+}
+#page7_config_border div label:nth-child(3){
+	margin-top: 3%;
+	margin-left: 1%;
+	float: left;
+	margin-bottom: 0;
+}
+#page7_config_border div input:nth-child(5){
+	width: 39%;
+	float: left;
+	margin-left: 10%;
+}
+#page7_config_border div input:nth-child(6){
+	width: 39%;
+	margin-left: 51%;
+}
+#configClose{
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 35px;
+	width: 45px;
+}
+.configlable{
+	width: 40%;
+	margin-bottom: 0px;
+	padding-left: 10%;
+	margin-top: -8%;
+	font-size: 16px;
+	color: #FFFFFF;
+}
+.configinput{
+	display: block;
+	width: 80%;
+	height: 35px;
+	margin:auto;
+	margin-bottom: -8px;
+	font-size: 20px;
+}
+.defaultOption{
+	height: 25px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-right: 0px;
+	border: 0;
+}
+.defaultOption:nth-child(1){
+	margin-left: 10.3%;
+}
+.defaultOption:focus{
+	background-color: red;
+}
+.configtextarea{
+	display: block;
+	resize:none;
+	width: 80%;
+	margin: auto;
+	font-size: 20px;
+}
+.tableBox{
+	width: 80%;
+	margin: auto;
+	padding: 1% 2% 1% 2%;
+	margin-bottom: 3%;
+	display: none;
+}
+#ADCSEfficient{
+	height: 96px;
+	overflow-y: auto;
+	font-size: 20px;
+}
+.menuUnitInput{
+    display: block;
+    float: left;
+    height: 32px;
+    width: 100%;
+    padding-left: 3%;
+}
+.configselect{
+	display: block;
+	width: 80%;
+	height: 35px;
+	margin:auto;
+	font-size: 22px;
+}
+#configSubmit{
+	display: block;
+	width: 150px;
+	margin:auto;
+	height: 30px;
+	margin-top: 20px;
+	background-color: #FFFFFF;
+}
+#configErrorInfo,#moduleErrorInfo{
+	text-align: center;
+	color: red;
+	margin-top: 2%;
+	font-size: 20px;
+}
+
+
+/*model*/
+/*module*/
+#myModuleBorder{
+	background-color: #bcbcbc;
+	width: 50%;
+	margin: auto;
+}
+
+#myModuleBorder label{
+	margin-left: 10%;
+	font-size: 24px;
+	color: #FFFFFF;
+}
+#myModuleBorder input{
+	display: block;
+	width: 80%;
+	height: 35px;
+	margin:auto;
+	font-size: 22px;
+}
+#myModuleBorder select{
+	display: block;
+	width: 80%;
+	height: 35px;
+	margin:auto;
+	font-size: 22px;
+}
+#inputModuleClose{
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 35px;
+	width: 45px;
+}
+#inputModuleSubmit{
+	display: block;
+	width: 150px;
+	margin:auto;
+	height: 30px;
+	margin-top: 20px;
+	background-color: #FFFFFF;
+}
