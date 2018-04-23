@@ -63,7 +63,7 @@ router.post('/soc/query', device.querySoc);
 router.post('/soc/update', device.updateSoc);
 // 模块管理
 router.post('/module/add', content.addModuleData);
-//router.post('/module/delete', content.delete);
+router.post('/module/delete', content.deleteModuleData);
 router.post('/module/query', content.queryModuleData);
 router.post('/module/update', content.updateModuleData);
 // config配置项管理
