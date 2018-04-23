@@ -62,10 +62,10 @@ router.post('/soc/add', device.addSoc);
 router.post('/soc/query', device.querySoc);
 router.post('/soc/update', device.updateSoc);
 // 模块管理
-//router.post('/module/add', content.add);
+router.post('/module/add', content.addModuleData);
 //router.post('/module/delete', content.delete);
 router.post('/module/query', content.queryModuleData);
-//router.post('/module/update', content.update);
+router.post('/module/update', content.updateModuleData);
 // config配置项管理
 //router.post('/config/add', content.add);
 //router.post('/config/delete', content.delete);

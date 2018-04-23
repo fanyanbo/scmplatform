@@ -64,7 +64,7 @@ DeviceModel.prototype.addModel = function (value, callback) {
 }
 
 DeviceModel.prototype.updateModel = function (newValue, oldValue, callback) {
-  var sql = "UPDATE models set name = ? WHERE name = ?";
+  var sql = "UPDATE models SET name = ? WHERE name = ?";
   let sql_params = [newValue,oldValue];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
