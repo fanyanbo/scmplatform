@@ -145,7 +145,7 @@ ContentModel.prototype.addModuleData = function (engName, cnName, category, gitP
   });
 }
 
-ContentModel.prototype.updateModuleData = function (engName, cnName, category, gitPath, desc, callback) {
+ContentModel.prototype.updateModuleData = function (engName, cnName, category, gitPath, desc, orderId, callback) {
 
   let sql_category_count = "SELECT max(orderId) AS count FROM modules WHERE category = ?"; //当修改类别时需要同步修改orderId,以免在新分类中造成冲突
   logger.debug(sql_category_count);
