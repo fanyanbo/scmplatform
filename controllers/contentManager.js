@@ -103,7 +103,7 @@ exports.updateModuleData = function (req, res, next) {
     return output.error(req,res,"请检查参数是否为空！");;
   }
 
-  contentModel.updateModuleData(function(engName, cnName, category, gitPath, desc, orderId, err,results) {
+  contentModel.updateModuleData(engName, cnName, category, gitPath, desc, orderId, function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }
