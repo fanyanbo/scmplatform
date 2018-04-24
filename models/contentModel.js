@@ -93,7 +93,7 @@ ContentModel.prototype.addModuleData = function (engName, cnName, category, gitP
   ep.all('event1', 'event2', function (data1, data2) {
 
       let sql = "INSERT INTO modules(engName,cnName,category,gitPath,descText,orderId) values (?,?,?,?,?,?)";
-      let sql_params = [engName,cnName,category,gitPath,desc,_orderId];
+      let sql_param = [engName,cnName,category,gitPath,desc,_orderId];
       db.conn.query(sql,sql_param,function(err,rows,fields){
         if (err) return ep.emit('error', err);
         return callback(null, "addModuleData OK");
