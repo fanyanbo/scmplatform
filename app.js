@@ -45,7 +45,7 @@ app.use(compress());
 // 静态文件目录
 app.use(express.static(staticDir));
 
-var sessionStore = new MySQLStore(config.mysql_local);
+var sessionStore = new MySQLStore(config.mysql);
 app.use(session({
   name: config.cookie_name,
   secret: config.session_secret,

@@ -6,7 +6,7 @@ var config = require('../config/config');
 
 var conn;
 function handleError () {
-    conn = mysql.createConnection(config.mysql_local);
+    conn = mysql.createConnection(config.mysql);
 
     //连接错误，2秒重试
     conn.connect(function (err) {
