@@ -39,7 +39,7 @@ exports.login = function (req, res, next) {
            req.session.username = loginname;
            req.session.logined = true;
            req.session.level = result[0].adminFlag;
-           output.success(req,res,"登录成功!");
+           return output.success(req,res,"登录成功!");
          }else{
            output.error(req,res,"密码有误!");
          }

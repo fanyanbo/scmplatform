@@ -1,9 +1,12 @@
 var mysql = require( 'mysql');
 var config = require('../config/config');
 
+// 从远程复制数据库
+// mysqldump scm -h 172.20.5.239 -uscmplatform -pscmplatform --add-drop-table | mysql scm -u root -proot
+
 var conn;
 function handleError () {
-    conn = mysql.createConnection(config.mysql);
+    conn = mysql.createConnection(config.mysql_local);
 
     //连接错误，2秒重试
     conn.connect(function (err) {

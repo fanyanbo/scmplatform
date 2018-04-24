@@ -18,10 +18,13 @@ var config = {
   // 域名
   host: 'localhost',
 
+  // 程序运行的端口
+  port: 3018,
+
   // mongodb 配置
   mongodb: 'mongodb://127.0.0.1/scmplatform',
 
-  mysql: {
+  mysql_test: {
     user: 'scmplatform', // 用户名
     password: 'scmplatform', // 密码
     database: 'scm', // 数据库
@@ -32,11 +35,19 @@ var config = {
   //  prefix: 'scm_', // 数据表前缀，如果一个数据库里有多个项目，那项目之间的数据表可以通过前缀来区分
   },
 
+  mysql_local: {
+    user: 'root', // 用户名
+    password: 'root', // 密码
+    database: 'scm', // 数据库
+    host: '127.0.0.1', // host
+    port: 3306, // 端口
+    checkExpirationInterval: 300*1000, // How frequently expired sessions will be cleared; milliseconds
+    connectionLimit: 1, // 连接池的连接个数，默认为 1
+    prefix: 'scm_', // 数据表前缀，如果一个数据库里有多个项目，那项目之间的数据表可以通过前缀来区分
+  },
+
   session_secret: 'scmp_ladygaga', // 务必修改
   cookie_name: 'scmp_sid',
-
-  // 程序运行的端口
-  port: 3018,
 
   log_dir: path.join(__dirname, '../logs'),
 
