@@ -4,6 +4,7 @@ var level = 0;//等级权限，0为管理员，1为一般用户
 var _username = "";
 var _password = "";
 
+console.log("hello");
 function keyLogin(){
     if (event.keyCode==13)   //回车键的键值为13
      document.getElementById("loginbutton").click();  //调用登录按钮的登录事件

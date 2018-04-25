@@ -80,7 +80,6 @@ function configQueryResult() {
 				var _rowConfigOther = document.getElementById("configTableTdOther");
 
 				for(var i = 0; i < data.resultData.length; i++) {
-					console.log("lxw " + data.resultData[i].category);
 					kk = i;
 					if(data.resultData[i].category == "base") {
 						_rowConfigBase.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='0' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
@@ -198,7 +197,6 @@ function modelQueryResult() {
 
 				for(var i = 0; i < data.resultData.length; i++) {
 					kk = i;
-					console.log("lxw " + data.resultData[i].category);
 					if(data.resultData[i].category == "App") {
 						_rowModuleApp.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='5' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
 					} else if(data.resultData[i].category == "Service") {
@@ -338,6 +336,7 @@ function eachPartChange(part,data){
 		$("#inputModuleSubmit").attr("hidedata",2);
 		$("#inputModuleSubmit").attr("oldValue",data);
 		clearAllPart2();
+		editMKModel(data);
 	}
 	$(".modal-backdrop").addClass("new-backdrop");
 }
@@ -382,6 +381,7 @@ function editConfigModel(data){
 		};
 		for (var k = 0; k < JSON.parse(oOpt).length; k++) {
 			$(".menuUnitInput")[k].value = JSON.parse(oOpt)[k];
+			$(".menuUnitInput:eq("+k+")").attr('disabled','');
 		};
 	}
 	$("#configInstr").val(JSON.parse(data).descText);
@@ -395,6 +395,30 @@ function editConfigModel(data){
 	};
 }
 
+function editMKModel(data){
+	console.log(data);
+	document.getElementById("moduleCzName").value = JSON.parse(data).cnName;
+	document.getElementById("moduleEnName").value = JSON.parse(data).engName;
+	document.getElementById("moduleEnName").setAttribute('disabled','');
+	document.getElementById("moduleEnName").style.backgroundColor = "#ebebe4";
+	document.getElementById("moduleSrc").value = JSON.parse(data).gitPath;
+//	document.getElementById("moduleSrc").setAttribute('disabled','');
+// 	document.getElementById("moduleSrc").style.backgroundColor = "#ebebe4";
+	document.getElementById("moduleInstr").value = JSON.parse(data).descText;
+
+	var childSelect = document.getElementById("moduleSelect");
+	console.log(childSelect.options.length);
+	for(var j = 0; j < childSelect.options.length; j++) {
+		if(childSelect.options[j].value == JSON.parse(data).category) {
+			childSelect.options[j].selected = true;
+		} else {
+			childSelect.options[j].selected = false;
+		}
+	};
+	
+	
+	
+}
 function clearAllPart(){
 	document.getElementById("configCName").value = "";
 	document.getElementById("configEName").value = "";
@@ -435,74 +459,73 @@ function clearAllPart2(){
 function saveInConfig(){
 	var _Hidendata = $("#configSubmit").attr("hidedata");
 	var _oldValue = $("#configSubmit").attr("oldValue");
-	_oldValue = JSON.parse(_oldValue);
-	var newConfigCzName = document.getElementById("configCName").value;//中文名
-	var newConfigEnName = document.getElementById("configEName").value;//英文名
-	newConfigString = newConfigString.replace(new RegExp("\"","gm"),"\\\"");
-	newConfigString = newConfigString.replace(new RegExp("\n","gm"),"\\n");
-	var newConfigInstr = document.getElementById("configInstr").value;//描述
+	
+	var node = null;//向后台传递的数据
+	
+	var newConfigEnName = $("#configEName").val();
+	var newConfigCzName = $("#configCName").val();
+	var newConfigSelect = $("#configSelect").val();
+	var newConfigInstr = $("#configInstr").val();
 	newConfigInstr = newConfigInstr.replace(new RegExp("\"","gm"),"\\\"");
 	newConfigInstr = newConfigInstr.replace(new RegExp("\n","gm"),"\\n");
-	var newConfigSelect = document.getElementById("configSelect").value;//下拉列表
+	var newConfigType = "";
+	var newConfigOptions = new Array();
+	var newConfigString = "";
+	newConfigString = $("#configString").val();
+	newConfigString = newConfigString.replace(new RegExp("\"","gm"),"\\\"");
+	newConfigString = newConfigString.replace(new RegExp("\n","gm"),"\\n");
+	var newConfigOrderId = "";
 	var inputNum = document.getElementsByClassName("menuUnitInput");
 	var inputNumState = 0; //枚举型为空时的状态值
 	for (var i = 0; i < inputNum.length; i++) {
-		if (inputNum[i].value!=""){
+		if (inputNum[i].value != ""){
 			inputNumState = 1;
 		}
 	}
-	if (newConfigCzName == "" || newConfigEnName == "" || newConfigSrc == "" || newConfigInstr =="" ||(newConfigString == "" && inputNumState == 0)) {
-		console.log("in here");
-		document.getElementById("configErrorInfo").innerHTML = "请确保所有项不为空！";
-		setTimeout('document.getElementById("configErrorInfo").innerHTML = "　"',3000);
+	if (newConfigCzName == "" || newConfigEnName == "" || newConfigInstr =="" ||(newConfigString == "" && inputNumState == 0)) {
+		console.log("数据项都为空");
+		$("#configErrorInfo")[0].innerHTML = "请确保所有项不为空！";
+		setTimeout('$("#configErrorInfo")[0].innerHTML = "　"',3000);
 	}else{
-		console.log("枚举型是否为空："+inputNumState);
-		console.log("字符串内容："+newConfigString);
-		var node = null;//向后台传递的数据
 		if (newConfigString !="" && inputNumState == 1) {
 			console.log("字符串型不为空，枚举型不为空！！！冲突！！！！");
-			document.getElementById("configErrorInfo").innerHTML = "输入有误，请确保字符串与枚举型的唯一！";
-			setTimeout('document.getElementById("configErrorInfo").innerHTML = "　"',3000);
-		}
-		else if (newConfigString !="" && inputNumState == 0) {
+			$("#configErrorInfo")[0].innerHTML = "输入有误，请确保字符串与枚举型的唯一！";
+			setTimeout('$("#configErrorInfo")[0].innerHTML = "　"',3000);
+		}else if (newConfigString !="" && inputNumState == 0) {
 			console.log("枚举型为空，字符串型！！！");
-			node = '{"data":{"cnName": "'+newConfigCzName+'","engName": "'+newConfigEnName+'", "configKey":"'+newConfigSrc+'", "type": "string", "value": "'+newConfigString+'", "desc": "'+newConfigInstr+'", "category": "'+newConfigSelect+'", "options": []}}';
-		}
-		else if(newConfigString =="" && inputNumState == 1){
-			console.log("枚举型不为为空，字符串型为空！！！");
-			var configMenuDisplay = document.getElementsByClassName("tableBox")[0].style.display;
-			var newConfigMenu = [];//value值是枚举,值放入数组
-			var newConfigMenuObject = document.getElementsByClassName("menuUnit");
+			newConfigType = "string";
+			newConfigOptions = "";
+			newConfigString = $("#configString").val();
+		}else if(newConfigString =="" && inputNumState == 1){
+			console.log("枚举型不为空，字符串型为空！！！");
+			newConfigType = "enum";
 			var newConfigMenuDiv = document.getElementById("ADCSEfficient");
 			var valueTwo = null;
-			for (var i=0; i<newConfigMenuObject.length;i++) {
+			for (var i=0; i<$(".menuUnit").length;i++) {
 				valueTwo =  newConfigMenuDiv.getElementsByTagName("input")[i].value;
-				newConfigMenu.push('"'+valueTwo+'"');
-				console.log("lxw"+newConfigMenu);
+				newConfigOptions.push(valueTwo);
 			}
-			console.log("lxw "+newConfigCzName+"--"+newConfigEnName+"--"+newConfigSrc+"--"+newConfigMenu+"--"+newConfigInstr+"--"+newConfigSelect);
-			if(_oldValue.defaultValue == null||_oldValue.defaultValue== ""){
-				_oldValue.defaultValue = newConfigMenu[0];
-				node = '{"data":{"cnName":"'+newConfigCzName+'","engName":"'+newConfigEnName+'","configKey":"'+newConfigSrc+'","type":"enum", "value":'+_oldValue.defaultValue+',"options":['+newConfigMenu+'],"desc":"'+newConfigInstr+'","category":"'+newConfigSelect+'"}}';
-			}else{
-				node = '{"data":{"cnName":"'+newConfigCzName+'","engName":"'+newConfigEnName+'","configKey":"'+newConfigSrc+'","type":"enum", "value":"'+_oldValue.defaultValue+'","options":['+newConfigMenu+'],"desc":"'+newConfigInstr+'","category":"'+newConfigSelect+'"}}';
-			}
+			newConfigString = newConfigOptions[0];
 		}
+		console.log("engName = "+newConfigEnName);
+		console.log("cnName = "+newConfigCzName);
+		console.log("category = "+newConfigSelect);
+		console.log("type = "+newConfigType);
+		console.log("options = "+newConfigOptions);
+		console.log("defaultValue = "+newConfigString);
+		console.log("desc = "+newConfigInstr);
 		if (_Hidendata == 1) {
-			console.log("新增"+ node);
-			//sendHTTPRequest("/config/add", node, returnConfigAddInfo);
+			console.log("lxw in edit 新增");
+			node = '{"engName":"'+newConfigEnName+'","cnName":"'+newConfigCzName+'","category":"'+newConfigSelect+'","type":"'+newConfigType+'","options":"['+newConfigOptions+']","defaultValue":"'+newConfigString+'","desc":"'+newConfigInstr+'"}';
+			console.log("lxw "+ node);
+			sendHTTPRequest("/config/add", node, returnConfigAddInfo);
 		} else{
-			if (node == null) {}
-			else{
-				console.log("lxw in edit 单项编辑");
-				var nodeObj = JSON.parse(node);
-				console.log("lxw "+ node);
-				var nodeObjString = JSON.stringify(nodeObj.data);
-				console.log(nodeObjString);
-				var newNode = '{"data":{"id":"'+ _oldValue.id +'","update":'+nodeObjString+'}}';
-				console.log("lxw "+ newNode);
-				//sendHTTPRequest("/config/update", newNode, returnAddInfo);
-			}
+			console.log("lxw in edit 修改");
+			newConfigOrderId = JSON.parse(_oldValue).orderId;
+			console.log("orderId = "+newConfigOrderId);
+			node = '{"engName":"'+newConfigEnName+'","cnName":"'+newConfigCzName+'","category":"'+newConfigSelect+'","type":"'+newConfigType+'","options":"['+newConfigOptions+']","defaultValue":"'+newConfigString+'","desc":"'+newConfigInstr+'","orderId":"'+newConfigOrderId+'"}';
+			console.log("lxw "+ node);
+			sendHTTPRequest("/config/update", node, returnConfigAddInfo);
 		}
 	}
 }
@@ -571,6 +594,25 @@ function returnMKAddInfo(){
 				console.log("数据添加失败");
 				document.getElementById("moduleErrorInfo").innerHTML = "添加失败！该内容或已存在。";
 				setTimeout("document.getElementById('moduleErrorInfo').innerHTML='　'", 3000);
+				
+			}
+		}
+	}
+}
+function returnConfigAddInfo(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("数据添加成功");
+				$("#page7_config").modal('hide');
+				freshModuleAddHtml();
+				
+			}else{
+				console.log("数据添加失败");
+				document.getElementById("configErrorInfo").innerHTML = "添加失败！该内容或已存在。";
+				setTimeout("document.getElementById('configErrorInfo').innerHTML='　'", 3000);
 				
 			}
 		}

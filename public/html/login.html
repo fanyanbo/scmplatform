@@ -9,23 +9,23 @@
 	</head>
 
 	<body onkeydown="keyLogin();">
+		<h1 class="title">配置信息管理平台</h1>
 		<div class="main">
 			<div class="login">
-				<h1>配置信息管理平台</h1>
 				<div class="inset">
 					<form role="form">
 						<div>
-							<canvas id="myCanvas"></canvas>
-							<span><label>用户名</label></span>
-							<span><input type="text" class="textbox" id="username" name="username" placeholder="请输入用户名" required autocomplete="off"/></span>
+							<p class="stitle">SKYWORTH</p>
+							<label>用户名</label>
+							<input type="text" class="textbox" id="username" name="username" placeholder="请输入用户名" required autocomplete="off"/>
 						</div>
-						<div>
-							<span><label>密码</label></span>
-							<span><input type="password" class="password" id="password" name="password" placeholder="请输入密码" required/></span>
+						<div style="margin-top: 5px;">
+							<label>密码</label>
+							<input type="password" class="password" id="password" name="password" placeholder="请输入密码" required/>
 						</div>
 						<div id="logintxt" style="color: red;"></div>
 						<div class="sign">
-							<input id="loginbutton" value="登录" class="submit btn btn-default btn-success text-center" onclick="loginfun()">
+							<input id="loginbutton" type="button" class="btn btn-default btn-success text-center"onclick="loginfun()" value="登录"/>
 						</div>
 					</form>
 				</div>
@@ -33,19 +33,6 @@
 		</div>
 		<script type="text/javascript" src="../js/login.js"></script>
 		<script type="text/javascript" src="../js/jquery.min.js"></script>
-		<script type="text/javascript">
-			var c = document.getElementById("myCanvas");
-			var cxt = c.getContext("2d");//创建 context 对象
-			cxt.font="60px Verdana";
-			var gradient=cxt.createLinearGradient(0,0,310,0);
-			gradient.addColorStop("0","magenta");
-			gradient.addColorStop("0.5","blue");
-			gradient.addColorStop("1.0","red");
-			cxt.strokeStyle=gradient;
-			cxt.strokeText("Skyworth",10,80);
-			cxt.closePath();
-			
-		</script>
 	</body>
 
 </html>

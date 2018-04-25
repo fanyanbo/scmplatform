@@ -25,7 +25,8 @@ function buttonInit() {
 		}
 	});
 	$("#index_exit").click(function() {
-		sendHTTPRequest("/logout", '{}', logOutResult);
+		var node2 = '{"userName":"' + loginusername + '","action":"退出","detail":"0"}';
+        sendHTTPRequest("/logout", node2, logOutResult);
 	});
 }
 
@@ -53,7 +54,6 @@ function loginResult() {
 				} else if(data.resultData.level == "0") {
 					adminFlag = 0;
 				}
-				
 			} else {
 				console.log("未登录");
 				document.location.href = "login.html";
@@ -73,31 +73,10 @@ function logOutResult(){
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				loginStatus = 1;
+				document.location.href="login.html";
 			}
 		}
-		if(loginStatus == 1){
-			var node2 = '{"userName":"' + loginusername + '","action":"退出","detail":"0"}';
-        	sendHTTPRequest("/syslog/add", node2, logoutLogresult);
-		}
 	}
-}
-function logoutLogresult(){
-	if (this.readyState == 4) {
-        console.log("this.responseText = " + this.responseText);
-        if (this.status == 200)
-        {
-            var data = JSON.parse(this.responseText);
-            console.log(JSON.stringify(data));
-            if (data.resultCode == "0") {
-            	console.log("push 222 success.");
-            	document.location.href="login.html";
-            }
-            else{
-                console.log("push 222 failure.");
-	    	};
-        }
-    }
 }
 function loginLogresult(){
 	if (this.readyState == 4) {
