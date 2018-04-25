@@ -45,7 +45,7 @@ ContentModel.prototype.addConfigData = function (engName, cnName, category, type
   //   });
   // });
 
-  let sql = "INSERT INTO configs(engName,cnName,category,type,options,defaultValue,desc,orderId) VALUES (?,?,?,?,?,?,?,?)";
+  let sql = "INSERT INTO configs(engName,cnName,category,typeStr,options,defaultValue,descText,orderId) VALUES (?,?,?,?,?,?,?,?)";
   logger.debug(sql);
   let sql_params = [engName,cnName,category,type,options,defaultValue,desc,100];
   logger.debug(sql_params);
