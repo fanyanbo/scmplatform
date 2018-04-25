@@ -6,9 +6,11 @@ var logger = require('../common/logger');
 var SyslogModel = function() {};
 
 SyslogModel.prototype.queryByPage = function (offset, rows, callback) {
-//  var sql = "select * from syslog order by time desc limit ?,?";
-  let sql = "select userName,action,detail,FROM_UNIXTIME(time, '%Y-%m-%d %H:%i:%S') from syslog order by time desc limit ?,?";
+  let sql = "select * from syslog order by time desc limit ?,?";
+//  let sql = "select userName,action,detail,FROM_UNIXTIME(time, '%Y-%m-%d %H:%i:%S') from syslog order by time desc limit ?,?";
+  logger.debug(sql);
   let sql_params = [offset,rows];
+  logger.debug(sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
         return callback(err);
