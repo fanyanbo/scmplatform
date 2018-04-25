@@ -67,10 +67,10 @@ router.post('/module/delete', content.deleteModuleData);
 router.post('/module/query', content.queryModuleData);
 router.post('/module/update', content.updateModuleData);
 // config配置项管理
-//router.post('/config/add', content.add);
+router.post('/config/add', content.addConfigData);
 //router.post('/config/delete', content.delete);
 router.post('/config/query', content.queryConfigData);
-//router.post('/config/update', content.update);
+router.post('/config/update', content.updateConfigData);
 // Settings项管理
 //router.post('/settings/add', content.add);
 router.post('/settings/query', content.querySettingsData);
