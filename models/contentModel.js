@@ -68,7 +68,7 @@ ContentModel.prototype.updateConfigData = function (engName, cnName, category, t
   //  if(rows.length == 0) return callback("模块类别不存在!");
     let _orderId = (rows.length == 0) ? 1 : rows[0].count + 1; //当新类别中没有任何模块是判断
 
-    var sql = "UPDATE configs SET cnName = ?, category = ?, type = ?, options = ?, defaultValue = ?, desc = ?, orderId = ? WHERE engName = ?";
+    var sql = "UPDATE configs SET cnName = ?, category = ?, typeStr = ?, options = ?, defaultValue = ?, descText = ?, orderId = ? WHERE engName = ?";
     logger.debug(sql);
     let sql_params = [cnName,category,type,options,defaultValue,desc,_orderId,engName];
     db.conn.query(sql,sql_params,function(err,rows,fields){
