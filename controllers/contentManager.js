@@ -130,6 +130,27 @@ exports.querySettingsData = function (req, res, next) {
   });
 };
 
+exports.addSettingsData = function (req, res, next) {
+
+
+  contentModel.addSettingsData(engName, cnName, category, type, options, defaultValue, desc, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"添加Setting项成功");
+  });
+};
+
+exports.updateSettingsData = function (req, res, next) {
+
+  contentModel.updateSettingsData(engName, cnName, category, type, options, defaultValue, desc, orderId, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"修改Setting项成功",results);
+  });
+};
+
 exports.queryPropData = function (req, res, next) {
   contentModel.queryPropData(function(err,results) {
     if(err) {

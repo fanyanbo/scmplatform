@@ -206,6 +206,30 @@ ContentModel.prototype.querySettingsData = function (callback) {
   });
 }
 
+ContentModel.prototype.addSettingsData = function (callback) {
+
+  let sql = "SELECT * FROM settings";
+  let sql_params = [];
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
+ContentModel.prototype.updateSettingsData = function (callback) {
+
+  let sql = "SELECT * FROM settings";
+  let sql_params = [];
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
 ContentModel.prototype.queryPropData = function (callback) {
 
   let sql = "SELECT * FROM props";

@@ -72,9 +72,9 @@ router.post('/config/add', content.addConfigData);
 router.post('/config/query', content.queryConfigData);
 router.post('/config/update', content.updateConfigData);
 // Settings项管理
-//router.post('/settings/add', content.add);
+router.post('/settings/add', content.addSettingsData);
 router.post('/settings/query', content.querySettingsData);
-//router.post('/settings/update', content.update);
+router.post('/settings/update', content.updateSettingsData);
 // 操作记录管理
 router.post('/record/add', record.add);
 router.post('/record/delete', record.delete);
