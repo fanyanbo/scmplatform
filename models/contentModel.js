@@ -25,24 +25,34 @@ ContentModel.prototype.queryConfigData = function (callback) {
 
 ContentModel.prototype.addConfigData = function (engName, cnName, category, type, options, defaultValue, desc, callback) {
 
-  let sql_category_count = "SELECT max(orderId) AS count FROM modules WHERE category = ?";
-  logger.debug(sql_category_count);
-  let sql_category_count_param = [category];
-  db.conn.query(sql_category_count,sql_category_count_param,function(err,rows,fields){
+  // let sql_category_count = "SELECT max(orderId) AS count FROM modules WHERE category = ?";
+  // logger.debug(sql_category_count);
+  // let sql_category_count_param = [category];
+  // db.conn.query(sql_category_count,sql_category_count_param,function(err,rows,fields){
+  //   if (err) {
+  //       return callback(err);
+  //   }
+  //   if(rows.length == 0) return callback("模块类别不存在!");
+  //
+  //   let sql = "INSERT INTO configs(engName,cnName,category,type,options,defaultValue,desc,orderId) values (?,?,?,?,?,?,?,?)";
+  //   logger.debug(sql);
+  //   let sql_params = [engName,cnName,category,type,options,defaultValue,desc,rows[0].count+1];
+  //   db.conn.query(sql,sql_params,function(err,rows,fields){
+  //     if (err) {
+  //         return callback(err);
+  //     }
+  //     callback(null, rows);
+  //   });
+  // });
+
+  let sql = "INSERT INTO configs(engName,cnName,category,type,options,defaultValue,desc,orderId) values (?,?,?,?,?,?,?,?)";
+  logger.debug(sql);
+  let sql_params = [engName,cnName,category,type,options,defaultValue,desc,100];
+  db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
         return callback(err);
     }
-    if(rows.length == 0) return callback("模块类别不存在!");
-
-    let sql = "INSERT INTO configs(engName,cnName,category,type,options,defaultValue,desc,orderId) values (?,?,?,?,?,?,?,?)";
-    logger.debug(sql);
-    let sql_params = [engName,cnName,category,type,options,defaultValue,desc,rows[0].count+1];
-    db.conn.query(sql,sql_params,function(err,rows,fields){
-      if (err) {
-          return callback(err);
-      }
-      callback(null, rows);
-    });
+    callback(null, rows);
   });
 }
 
