@@ -83,7 +83,7 @@
 
 .CJJ-Table thead{
     border-bottom: 1px solid #ccc;
-    background: #f2f2f2;
+    background: #42A3E7;
 }
 
 .CJJ-Table thead th{
@@ -97,6 +97,9 @@
 
 .CJJ-Table tbody tr{
     border-bottom: 1px dashed #d9d9d9;
+}
+.CJJ-Table tbody tr:nth-child(even){
+    background-color: #CFEEE9;
 }
 
 .CJJ-Table tbody tr:hover{
@@ -123,16 +126,6 @@
 #page1{
 	min-width: 900px;
 }
-#page1_table tr th {
-	text-align: center;
-}
-
-#page1_table tr th a {
-	padding-left: 3px;
-	padding-right: 3px;
-	height: 25px;
-	background-color: red;
-}
 .infoitems{
 	height: 30px;
 	line-height: 25px;
@@ -144,10 +137,15 @@
 .maxwidth{
 	max-width: 20px;
 }
+
 #page1_table tr th {
 	text-align: center;
 }
-
+#page1_table thead tr th {
+	font-size: 20px;
+	/*color: cornsilk;*/
+	color: floralwhite;
+}
 #page1_table tr th a {
 	padding-left: 3px;
 	padding-right: 3px;
