@@ -45,9 +45,10 @@ ContentModel.prototype.addConfigData = function (engName, cnName, category, type
   //   });
   // });
 
-  let sql = "INSERT INTO configs(engName,cnName,category,type,options,defaultValue,desc,orderId) values (?,?,?,?,?,?,?,?)";
+  let sql = "INSERT INTO configs(engName,cnName,category,type,options,defaultValue,desc,orderId) VALUES (?,?,?,?,?,?,?,?)";
   logger.debug(sql);
   let sql_params = [engName,cnName,category,type,options,defaultValue,desc,100];
+  logger.debug(sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
         return callback(err);
