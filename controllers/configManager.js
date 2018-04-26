@@ -61,3 +61,12 @@ var logger = require('../common/logger');
      output.success(req,res,"修改Config成功",results);
    });
  };
+
+ exports.queryCategory = function (req, res, next) {
+   configModel.queryCategory(function(err,results) {
+     if(err) {
+       return output.error(req,res,err);
+     }
+     output.success(req,res,"查询Config分类列表成功",results);
+   });
+ };

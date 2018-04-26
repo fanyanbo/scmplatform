@@ -120,6 +120,73 @@ ModuleModel.prototype.delete = function (callback) {
   });
 }
 
+ModuleModel.prototype.queryCategory = function (callback) {
+
+  let sql = "SELECT * FROM mkcategory";
+  let sql_params = [];
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
+ModuleModel.prototype.addCategory = function (categoryName, callback) {
+
+  let ep = new eventproxy();
+  let _orderId;
+
+  ep.bind('error', function (err) {
+      logger.error("捕获到错误-->" + err);
+      ep.unbind();
+      callback(err,null);
+  });
+
+  ep.all('event1', 'event2', function (data1, data2) {
+      let sql = "INSERT INTO mkcategory(category,orderId) values (?,?)";
+      let sql_param = [categoryName,_orderId];
+      db.conn.query(sql,sql_param,function(err,rows,fields){
+        if (err) return ep.emit('error', err);
+        return callback(null, "addModuleCategory OK");
+      });
+  });
+
+  let sql1 = "SELECT orderId FROM mkcategory order by orderId desc limit 0,1";
+  let sql1_param = [];
+  db.conn.query(sql1,sql1_param,function(err,rows,fields){
+    if (err) {
+        return ep.emit('error', err);
+    }
+    if(rows.length == 0) return ep.emit('error', "模块类别不存在!");
+    _orderId = rows[0].orderId + 1; //当新类别中没有任何模块是判断
+    console.log(_orderId);
+    ep.emit('event1',"event1 OK");
+  });
+
+  let sql2 = "SELECT * FROM mkcategory WHERE category = ?";
+  let sql2_param = [categoryName];
+  db.conn.query(sql2,sql2_param,function(err,rows,fields){
+    if (err) {
+        return ep.emit('error', err);
+    }
+    if(rows.length == 0) return ep.emit('event2',"event2 OK");
+    ep.emit('error', "categoryName必须唯一!");
+  });
+}
+
+ModuleModel.prototype.updateCategory = function (callback) {
+
+  let sql = "SELECT * FROM configcategory";
+  let sql_params = [];
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
 
 var moduleModel = new ModuleModel();
 

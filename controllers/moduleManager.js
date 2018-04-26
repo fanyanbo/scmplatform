@@ -66,3 +66,24 @@ exports.delete = function (req, res, next) {
     output.success(req,res,"删除Module成功",results);
   });
 };
+
+exports.queryCategory = function (req, res, next) {
+  moduleModel.queryCategory(function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"查询Module分类列表成功",results);
+  });
+};
+
+exports.addCategory = function (req, res, next) {
+
+  let categoryName = validator.trim(req.body.name);
+
+  moduleModel.addCategory(categoryName,function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"查询Module分类列表成功",results);
+  });
+};
