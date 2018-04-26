@@ -12,13 +12,13 @@ var sql = "SELECT count(*) AS count FROM chips WHERE name like '%S%'";  //注意
 
 //具体业务场景
 //查询某个机芯机型的所有模块表
-var sql = SELECT a.engName, b.* FROM mkdata a, modules b WHERE a.engName=b.engName AND a.targetProduct=(SELECT targetProduct FROM products WHERE chip="5S02" AND model="15U");
+//var sql = SELECT a.engName, b.* FROM mkdata a, modules b WHERE a.engName=b.engName AND a.targetProduct=(SELECT targetProduct FROM products WHERE chip="5S02" AND model="15U");
 //查询某个机芯机型的配置项的值
-var sql = SELECT * FROM configdata WHERE chip="5S02" AND model="15U";
+//var sql = SELECT * FROM configdata WHERE chip="5S02" AND model="15U";
 //查询配置项为某值的所有机芯机型
-var sql = SELECT chip,model FROM configdata WHERE engName="SUPPORT_H265" AND curValue="false";
+//var sql = SELECT chip,model FROM configdata WHERE engName="SUPPORT_H265" AND curValue="false";
 //查询模块为某值的所有机芯机型
-var sql = SELECT chip,model FROM products WHERE targetProduct in (SELECT targetProduct FROM mkdata WHERE engName="iwangding");
+//var sql = SELECT chip,model FROM products WHERE targetProduct in (SELECT targetProduct FROM mkdata WHERE engName="iwangding");
 
 var x1 = function() {
 
@@ -58,8 +58,19 @@ var x1 = function() {
 
 };
 
-x1();
+//x1();
 
+let getMaxValue = function() {
+  let sql_order = "SELECT orderId FROM modules WHERE category = 'TV' order by orderId desc limit 0,1";
+  db.conn.query(sql_order,[],function(err,rows,fields) {
+    if (err) {
+        console.log(err);
+    }
+    console.log(rows[0].orderId);
+  });
+}
+
+getMaxValue();
 
 
 

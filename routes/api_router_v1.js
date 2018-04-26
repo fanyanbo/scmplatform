@@ -8,7 +8,10 @@ var express = require('express');
 var config = require('../config/config');
 var logger = require('../common/logger');
 var sign = require('../controllers/sign');
-var content = require('../controllers/contentManager');
+var modules = require('../controllers/moduleManager');
+var configs = require('../controllers/configManager');
+var settings = require('../controllers/settingsManager');
+var props = require('../controllers/propManager');
 var product = require('../controllers/product');
 var record = require('../controllers/record');
 var home = require('../controllers/home');
@@ -62,19 +65,19 @@ router.post('/soc/add', device.addSoc);
 router.post('/soc/query', device.querySoc);
 router.post('/soc/update', device.updateSoc);
 // 模块管理
-router.post('/module/add', content.addModuleData);
-router.post('/module/delete', content.deleteModuleData);
-router.post('/module/query', content.queryModuleData);
-router.post('/module/update', content.updateModuleData);
+router.post('/module/add', modules.add);
+router.post('/module/delete', modules.delete);
+router.post('/module/query', modules.query);
+router.post('/module/update', modules.update);
 // config配置项管理
-router.post('/config/add', content.addConfigData);
+router.post('/config/add', configs.add);
 //router.post('/config/delete', content.delete);
-router.post('/config/query', content.queryConfigData);
-router.post('/config/update', content.updateConfigData);
+router.post('/config/query', configs.query);
+router.post('/config/update', configs.update);
 // Settings项管理
-router.post('/settings/add', content.addSettingsData);
-router.post('/settings/query', content.querySettingsData);
-router.post('/settings/update', content.updateSettingsData);
+router.post('/settings/add', settings.add);
+router.post('/settings/query', settings.query);
+router.post('/settings/update', settings.update);
 // 操作记录管理
 router.post('/record/add', record.add);
 router.post('/record/delete', record.delete);
