@@ -84,6 +84,18 @@ exports.addCategory = function (req, res, next) {
     if(err) {
       return output.error(req,res,err);
     }
-    output.success(req,res,"查询Module分类列表成功",results);
+    output.success(req,res,"新增Module分类列表成功",results);
+  });
+};
+
+exports.updateCategory = function (req, res, next) {
+
+  let categoryName = validator.trim(req.body.name);
+
+  moduleModel.updateCategory(categoryName,function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"修改Module分类列表成功",results);
   });
 };

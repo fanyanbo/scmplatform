@@ -70,3 +70,24 @@ var logger = require('../common/logger');
      output.success(req,res,"查询Config分类列表成功",results);
    });
  };
+
+ exports.addCategory = function (req, res, next) {
+
+   let categoryName = validator.trim(req.body.name);
+
+   configModel.addCategory(categoryName, function(err,results) {
+     if(err) {
+       return output.error(req,res,err);
+     }
+     output.success(req,res,"新增Config分类列表成功",results);
+   });
+ };
+
+ exports.updateCategory = function (req, res, next) {
+   configModel.queryCategory(function(err,results) {
+     if(err) {
+       return output.error(req,res,err);
+     }
+     output.success(req,res,"修改Config分类列表成功",results);
+   });
+ };
