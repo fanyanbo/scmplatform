@@ -72,7 +72,7 @@ router.post('/module/update', modules.update);
 router.post('/module/queryCategory', modules.queryCategory);
 router.post('/module/addCategory', modules.addCategory);
 router.post('/module/updateCategory', modules.updateCategory);
-
+router.post('/module/queryByCategory', modules.queryByCategory);
 // config配置项管理
 router.post('/config/add', configs.add);
 //router.post('/config/delete', content.delete);
@@ -81,7 +81,7 @@ router.post('/config/update', configs.update);
 router.post('/config/queryCategory', configs.queryCategory);
 router.post('/config/addCategory', configs.addCategory);
 router.post('/config/updateCategory', configs.updateCategory);
-
+router.post('/config/queryByCategory', configs.queryByCategory);
 // Settings项管理
 router.post('/settings/add', settings.add);
 router.post('/settings/query', settings.query);

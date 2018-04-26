@@ -16,6 +16,16 @@ exports.query = function (req, res, next) {
   });
 };
 
+exports.queryByCategory = function (req, res, next) {
+  let category = validator.trim(req.body.category);
+  moduleModel.queryByCategory(category, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"根据分类查询Module子项成功",results);
+  });
+};
+
 exports.add = function (req, res, next) {
   let engName = validator.trim(req.body.engName);
   let cnName = validator.trim(req.body.cnName);
@@ -78,9 +88,9 @@ exports.queryCategory = function (req, res, next) {
 
 exports.addCategory = function (req, res, next) {
 
-  let categoryName = validator.trim(req.body.name);
+  let category = validator.trim(req.body.category);
 
-  moduleModel.addCategory(categoryName,function(err,results) {
+  moduleModel.addCategory(category,function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }

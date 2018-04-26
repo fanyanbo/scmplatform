@@ -23,6 +23,18 @@ ModuleModel.prototype.query = function (callback) {
   });
 }
 
+ModuleModel.prototype.queryByCategory = function (category, callback) {
+
+  let sql = "SELECT * FROM modules WHERE category = ?";
+  let sql_params = [category];
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
 ModuleModel.prototype.add = function (engName, cnName, category, gitPath, desc, callback) {
 
   let ep = new eventproxy();
