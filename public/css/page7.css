@@ -10,26 +10,32 @@
 }
 
 .page7_tabs{
+	display: inline-table;
+	padding: 0px 5px;
 	border-radius: 6px;
     background-color: buttonface;
 }
 .page7_tabs:nth-child(1) {
-	background-color: red;
+	/*background-color: antiquewhite;*/
+	/*background-color: aquamarine;*/
+	background-color: darkturquoise;
 }
-.subitem{
-	/*text-align: center;*/
+.subitem,.subitem2{
 	font-size: 18px;
-}
-.subitem2{
-	/*text-align: center;*/
-	font-size: 18px;
+	background-color: lavender;
 }
 .subitem2 span{
 	margin-left: 5px;
 }
 .grouptitle{
+	display: inherit;
 	font-size: 20px;
-	margin-bottom: 5px;
+	/*color: brown;*/
+	/*color: chocolate;*/
+	color: firebrick;
+	/*color: orangered;*/
+	/*color: maroon;*/
+	padding-bottom: 5px;
 }
 #page7 input[type=checkbox], input[type=radio]{
 	height: 15px;

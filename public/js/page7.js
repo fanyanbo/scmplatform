@@ -18,7 +18,7 @@ function buttonInitBefore() {
 			$(".page7_tabs")[k].style.backgroundColor = "buttonface";
 		}
 		$(".page7_boxes")[_curIndex].style.display = "block";
-		$(".page7_tabs")[_curIndex].style.backgroundColor = "red";
+		$(".page7_tabs")[_curIndex].style.backgroundColor = "darkturquoise";
 	});
 	$(".page7_boxes .btn").click(function() {
 		_bIndex = $(".page7_boxes .btn").index($(this));
@@ -26,12 +26,8 @@ function buttonInitBefore() {
 		if (_bIndex == 0) {
 			console.log("点击Config文件页的新增按钮");
 			$('#page7_config').modal();
-			
 			$("#configSubmit").attr("hidedata",1);
-			var addDefaultValue = {"defaultValue" : ""};
-			addDefaultValue = JSON.stringify(addDefaultValue);
-			$("#configSubmit").attr("oldValue",addDefaultValue);
-			
+			$("#configSubmit").attr("oldValue","null");
 			clearAllPart();
 		} else if(_bIndex == 1){
 			console.log("点击系统设置的新增按钮");
@@ -78,7 +74,15 @@ function configQueryResult() {
 				var _rowConfigChannel = document.getElementById("configTableTdChannel");
 				var _rowConfigLocalmedia = document.getElementById("configTableTdLocalmedia");
 				var _rowConfigOther = document.getElementById("configTableTdOther");
-
+				
+				_rowConfigBase.innerHTML = '<div class="grouptitle" title="base">基础功能</div>';
+				_rowConfigServerip.innerHTML = '<div class="grouptitle" title="serverip">服务器IP配置</div>';
+				_rowConfigAd.innerHTML = '<div class="grouptitle" title="ad">广告配置</div>';
+				_rowConfigChannel.innerHTML = '<div class="grouptitle" title="channel">TV通道</div>';
+				_rowConfigLocalmedia.innerHTML = '<div class="grouptitle" title="localmedia">本地媒体</div>';
+				_rowConfigOther.innerHTML = '<div class="grouptitle" title="other">其他功能</div>';
+				
+				
 				for(var i = 0; i < data.resultData.length; i++) {
 					kk = i;
 					if(data.resultData[i].category == "base") {
@@ -124,7 +128,24 @@ function settingQueryResult() {
 
 				var _rowMiddleware1 = document.getElementById("Middleware1");
 				var _rowMiddleware2 = document.getElementById("Middleware2");
-
+				
+				_rowSysSBoot.innerHTML = '<div class="grouptitle" title="PlayerLibrary">开机引导</div>';
+				_rowSysSSetting.innerHTML = '<div class="grouptitle" title="App">设置入口页</div>';
+				_rowSysSNet.innerHTML = '<div class="grouptitle" title="net_connect_setting">网络与连接</div>';
+				_rowSysSPicture.innerHTML = '<div class="grouptitle" title="picture_setting">图像设置</div>';
+				_rowSysSSound.innerHTML = '<div class="grouptitle" title="sound_setting">声音设置</div>';
+				_rowSysSGeneral.innerHTML = '<div class="grouptitle" title="general_setting">通用设置</div>';
+				
+				_rowSourceBoxQuick.innerHTML = '<div class="grouptitle" title="quickOperate">快捷功能</div>';
+				_rowSourceBoxGeneral.innerHTML = '<div class="grouptitle" title="General">常用设置</div>';
+				
+				_rowMarketShowSound.innerHTML = '<div class="grouptitle" title="PlayerLibrary">声音演示</div>';
+				_rowMarketShowPicture.innerHTML = '<div class="grouptitle" title="App">图像演示</div>';
+				
+				_rowMiddleware1.innerHTML = '<div class="grouptitle" title="Middleware1">输入信号源</div>';
+				_rowMiddleware2.innerHTML = '<div class="grouptitle" title="Middleware2">支持纵横比</div>';
+				
+				
 				for(var i = 0; i < data.resultData.length; i++) {
 					kk = i;
 					if(data.resultData[i].uiGroup1 == "系统设置") {
@@ -185,15 +206,15 @@ function modelQueryResult() {
 				var _rowModuleOther = document.getElementById("myMkTableOther");
 				var _rowModulePlayerLibrary = document.getElementById("myMkTablePlayerLibrary");
 
-				_rowModuleApp.innerHTML = '<div class="grouptitle" title="App">App:</div>';
-				_rowModuleService.innerHTML = '<div class="grouptitle" title="Service">Service:</div>';
-				_rowModuleAppStore.innerHTML = '<div class="grouptitle" title="AppStore">AppStore:</div>';
-				_rowModuleHomePage.innerHTML = '<div class="grouptitle" title="HomePage">HomePage:</div>';
-				_rowModuleIME.innerHTML = '<div class="grouptitle" title="IME">IME:</div>';
-				_rowModuleSysApp.innerHTML = '<div class="grouptitle" title="SysApp">SysApp:</div>';
-				_rowModuleTV.innerHTML = '<div class="grouptitle" title="TV">TV:</div>';
-				_rowModuleOther.innerHTML = '<div class="grouptitle" title="Other">Other:</div>';
-				_rowModulePlayerLibrary.innerHTML = '<div class="grouptitle" title="PlayerLibrary">PlayerLibrary:</div>';
+				_rowModuleApp.innerHTML = '<div class="grouptitle" title="App">App</div>';
+				_rowModuleService.innerHTML = '<div class="grouptitle" title="Service">Service</div>';
+				_rowModuleAppStore.innerHTML = '<div class="grouptitle" title="AppStore">AppStore</div>';
+				_rowModuleHomePage.innerHTML = '<div class="grouptitle" title="HomePage">HomePage</div>';
+				_rowModuleIME.innerHTML = '<div class="grouptitle" title="IME">IME</div>';
+				_rowModuleSysApp.innerHTML = '<div class="grouptitle" title="SysApp">SysApp</div>';
+				_rowModuleTV.innerHTML = '<div class="grouptitle" title="TV">TV</div>';
+				_rowModuleOther.innerHTML = '<div class="grouptitle" title="Other">Other</div>';
+				_rowModulePlayerLibrary.innerHTML = '<div class="grouptitle" title="PlayerLibrary">PlayerLibrary</div>';
 
 				for(var i = 0; i < data.resultData.length; i++) {
 					kk = i;
@@ -350,9 +371,10 @@ function editConfigModel(data){
 	$("#configEName").attr('disabled','');
 	$("#configString").attr('disabled','');
 	$(".menuUnitInput").attr('disabled','');
+	$("#ADCSAction").attr('disabled','');
 	$("#configSelect").attr('disabled','');
 	$("#configSelect").css("background-color","#ebebe4")
-
+	
 	if(JSON.parse(data).typeStr == "string"){
 		$("#configString").css("display","block");
 		$("#configTableBoxEnum").css("display","none");
