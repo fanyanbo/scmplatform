@@ -84,7 +84,9 @@ var logger = require('../common/logger');
  };
 
  exports.updateCategory = function (req, res, next) {
-   configModel.queryCategory(function(err,results) {
+
+   let arr = validator.trim(req.body.arr);
+   configModel.updateCategory(arr, function(err,results) {
      if(err) {
        return output.error(req,res,err);
      }

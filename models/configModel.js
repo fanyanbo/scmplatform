@@ -84,16 +84,33 @@ ConfigModel.prototype.addCategory = function (categoryName, callback) {
   });
 }
 
-ConfigModel.prototype.updateCategory = function (callback) {
+ConfigModel.prototype.updateCategory = function (arr, callback) {
 
-  let sql = "SELECT * FROM configcategory";
-  let sql_params = [];
-  db.conn.query(sql,sql_params,function(err,rows,fields){
-    if (err) {
-        return callback(err);
-    }
-    callback(null, rows);
+  if(arr.length == 0) return callback("updateCategory参数为空",null);
+
+  let ep = new eventproxy();
+
+  ep.bind('error', function (err) {
+      logger.error("捕获到错误-->" + err);
+      ep.unbind();
+      callback(err,null);
   });
+
+  ep.after('update_result', arr.length, function (list) { // 所有查询的内容都存在list数组中
+      for(let j in list){
+        console.log(list[j]);
+      }
+      callback(null,"updateCategory OK");
+  });
+
+  for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
+    let sql = "UPDATE configcategory SET orderId = ? WHERE category = ?";
+    let sql_param = [arr[i].orderId,arr[i].category];
+    db.conn.query(sql,sql_param,function(err,rows,fields) {
+      if (err) return ep.emit('error', err);
+      ep.emit('update_result', 'ok' + i);
+    });
+  }
 }
 
 ConfigModel.prototype.add = function (engName, cnName, category, type, options, defaultValue, desc, callback) {

@@ -90,9 +90,9 @@ exports.addCategory = function (req, res, next) {
 
 exports.updateCategory = function (req, res, next) {
 
-  let categoryName = validator.trim(req.body.name);
+  let arr = validator.trim(req.body.arr);
 
-  moduleModel.updateCategory(categoryName,function(err,results) {
+  moduleModel.updateCategory(arr, function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }
