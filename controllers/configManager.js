@@ -108,7 +108,8 @@ var logger = require('../common/logger');
  };
 
  exports.updateItemsOrderId = function (req, res, next) {
-   console(req.body.arr);
+   console.log("1111");
+   console.log(req.body.arr);
    return output.error(req,res);
    let arr = validator.trim(req.body.arr);
    var arrObj = JSON.parse(arr); //由JSON字符串转换为JSON对象
