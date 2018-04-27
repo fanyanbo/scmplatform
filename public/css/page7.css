@@ -47,7 +47,6 @@
 	display: inline-block;
 }
 
-
 .modalwidth{
 	position: relative;
 	width: 98%;
@@ -55,40 +54,8 @@
 	padding-top: 4%;
 	margin: 0;
 }
-#page7_config_border{
-	background-color: #bcbcbc;
-	height: 100%;
-	width: 60%;
-	margin: auto;
-}
-#page7_config_border div label:nth-child(2){
-	margin-top: 3%;
-	float: left;
-	margin-bottom: 0;
-}
-#page7_config_border div label:nth-child(3){
-	margin-top: 3%;
-	margin-left: 1%;
-	float: left;
-	margin-bottom: 0;
-}
-#page7_config_border div input:nth-child(5){
-	width: 39%;
-	float: left;
-	margin-left: 10%;
-}
-#page7_config_border div input:nth-child(6){
-	width: 39%;
-	margin-left: 51%;
-}
-#configClose{
-	display: block;
-	position: absolute;
-	right: 0;
-	top: 0;
-	height: 35px;
-	width: 45px;
-}
+
+/*common*/
 .configlable{
 	width: 40%;
 	margin-bottom: 0px;
@@ -123,7 +90,8 @@
 	resize:none;
 	width: 80%;
 	margin: auto;
-	font-size: 20px;
+	font-size: 16px;
+	padding-top: 5px;
 }
 .tableBox{
 	width: 80%;
@@ -132,7 +100,7 @@
 	margin-bottom: 3%;
 	display: none;
 }
-#ADCSEfficient{
+.ADCSEfficient{
 	height: 96px;
 	overflow-y: auto;
 	font-size: 20px;
@@ -144,57 +112,43 @@
     width: 100%;
     padding-left: 3%;
 }
-.configselect{
+.configselect,.moduleSelect,.sysSelect{
 	display: block;
 	width: 80%;
 	height: 35px;
 	margin:auto;
 	font-size: 22px;
 }
-#configSubmit{
-	display: block;
-	width: 150px;
-	margin:auto;
-	height: 30px;
-	margin-top: 20px;
-	background-color: #FFFFFF;
-}
-#configErrorInfo,#moduleErrorInfo{
-	text-align: center;
-	color: red;
-	margin-top: 2%;
-	font-size: 20px;
-}
 
-
-/*model*/
-/*module*/
-#myModuleBorder{
+#page7_config_border,#page7_module_border,#page7_sys_border{
 	background-color: #bcbcbc;
-	width: 50%;
+	height: 100%;
+	width: 60%;
+	min-width: 425px;
+	max-width: 480px;
 	margin: auto;
 }
-
-#myModuleBorder label{
+#page7_config_border div label:nth-child(2){
+	margin-top: 3%;
+	float: left;
+	margin-bottom: 0;
+}
+#page7_config_border div label:nth-child(3){
+	margin-top: 3%;
+	margin-left: 1%;
+	float: left;
+	margin-bottom: 0;
+}
+#configCName{
+	width: 39%;
+	float: left;
 	margin-left: 10%;
-	font-size: 24px;
-	color: #FFFFFF;
 }
-#myModuleBorder input{
-	display: block;
-	width: 80%;
-	height: 35px;
-	margin:auto;
-	font-size: 22px;
+#configEName{
+	width: 39%;
+	margin-left: 51%;
 }
-#myModuleBorder select{
-	display: block;
-	width: 80%;
-	height: 35px;
-	margin:auto;
-	font-size: 22px;
-}
-#inputModuleClose{
+#configClose,#moduleClose,#sysClose{
 	display: block;
 	position: absolute;
 	right: 0;
@@ -202,11 +156,32 @@
 	height: 35px;
 	width: 45px;
 }
-#inputModuleSubmit{
+#configSubmit,#moduleSubmit,#sysSubmit{
 	display: block;
 	width: 150px;
 	margin:auto;
 	height: 30px;
 	margin-top: 20px;
 	background-color: #FFFFFF;
+}
+#configErrorInfo,#moduleErrorInfo,#sysErrorInfo{
+	text-align: center;
+	color: red;
+	margin-top: 2%;
+	font-size: 20px;
+}
+
+/*module*/
+#page7_module_border label,#page7_sys_border label{
+	margin-left: 10%;
+	font-size: 24px;
+	color: #FFFFFF;
+	margin-bottom: 0px;
+}
+#page7_module_border input,#page7_sys_border input{
+	display: block;
+	width: 80%;
+	height: 35px;
+	margin:auto;
+	font-size: 22px;
 }

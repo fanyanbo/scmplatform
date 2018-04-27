@@ -3,7 +3,6 @@ document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"ut
 $(function() {
 	$(".page7_boxes")[0].style.display = "block";
 	buttonInitBefore();
-	//model/query----config/query----setting/query
 	var node1 = '{}';
 	sendHTTPRequest("/config/query", node1, configQueryResult);
 });
@@ -19,6 +18,17 @@ function buttonInitBefore() {
 		}
 		$(".page7_boxes")[_curIndex].style.display = "block";
 		$(".page7_tabs")[_curIndex].style.backgroundColor = "darkturquoise";
+		
+		if (_curIndex == 5) {
+			var _hasValue = $("#moduleSelect").attr("hasvalue");
+			if (_hasValue == "false") {
+				var node31 = '{}';
+				sendHTTPRequest("/module/queryCategory", node31, moduleCategoryQueryResult);
+			} else{
+				console.log("已经获取过了");
+			}
+		}
+		
 	});
 	$(".page7_boxes .btn").click(function() {
 		_bIndex = $(".page7_boxes .btn").index($(this));
@@ -28,34 +38,24 @@ function buttonInitBefore() {
 			$('#page7_config').modal();
 			$("#configSubmit").attr("hidedata",1);
 			$("#configSubmit").attr("oldValue","null");
-			clearAllPart();
-		} else if(_bIndex == 1){
-			console.log("点击系统设置的新增按钮");
-			
-			
-		}else if(_bIndex == 2){
-			console.log("点击系统信号源工具箱的新增按钮");
-			
-			
-		}else if(_bIndex == 3){
-			console.log("点击卖场演示的新增按钮");
-			
-			
-		}else if(_bIndex == 4){
-			console.log("点击系统中间件的新增按钮");
-			
-			
+			clearConfigPart();
+		} else if(_bIndex == 1||_bIndex == 2||_bIndex == 3||_bIndex == 4){
+			console.log("点击系统设置大项的新增按钮");
+			$('#page7_sys').modal();
+			$("#sysSubmit").attr("hidedata",1);
+			$("#sysSubmit").attr("oldValue","null");
+			clearSysPart(_bIndex);
 		} else if(_bIndex == 5){
 			console.log("点击MK的新增按钮");
-			$('#myModuleAddChangeModal').modal();
-			$("#inputModuleSubmit").attr("hidedata",1);
-			$("#inputModuleSubmit").attr("oldValue","null");
-			clearAllPart2();
+			$('#page7_module').modal();
+			$("#moduleSubmit").attr("hidedata",1);
+			$("#moduleSubmit").attr("oldValue","null");
+			clearMKPart();
 			
 		} else if(_bIndex == 6){
 			console.log("点击Prop的新增按钮");
 			
-			
+			clearPropPart();
 		}
 		$(".modal-backdrop").addClass("new-backdrop");
 	});
@@ -67,7 +67,6 @@ function configQueryResult() {
 			console.log(data);
 			if(data.resultCode == "0") {
 				var kk = 0;
-
 				var _rowConfigBase = document.getElementById("configTableTdBase");
 				var _rowConfigServerip = document.getElementById("configTableTdServerip");
 				var _rowConfigAd = document.getElementById("configTableTdAd");
@@ -85,18 +84,39 @@ function configQueryResult() {
 				
 				for(var i = 0; i < data.resultData.length; i++) {
 					kk = i;
-					if(data.resultData[i].category == "base") {
+					if(data.resultData[i].category == "基础功能") {
 						_rowConfigBase.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='0' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-					} else if(data.resultData[i].category == "serverip") {
+					} else if(data.resultData[i].category == "服务器IP配置") {
 						_rowConfigServerip.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='0' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-					} else if(data.resultData[i].category == "ad") {
+					} else if(data.resultData[i].category == "广告配置") {
 						_rowConfigAd.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='0' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-					} else if(data.resultData[i].category == "channel") {
+					} else if(data.resultData[i].category == "TV通道") {
 						_rowConfigChannel.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='0' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-					} else if(data.resultData[i].category == "localmedia") {
+					} else if(data.resultData[i].category == "本地媒体") {
 						_rowConfigLocalmedia.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='0' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-					} else if(data.resultData[i].category == "other") {
+					} else if(data.resultData[i].category == "其他功能") {
 						_rowConfigOther.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='0' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
+					}
+				}
+			}
+		}
+		var node11 = '{}';
+		sendHTTPRequest("/config/queryCategory", node11, configCategoryQueryResult);
+	}
+}
+
+function configCategoryQueryResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				for (var i=0; i<data.resultData.length; i++) {
+					for (var j=0; j<data.resultData.length; j++) {
+						if(data.resultData[j].orderId == (i+1)){
+							console.log(data.resultData[j].category);
+							document.getElementById("configSelect").options.add(new Option(data.resultData[j].category));
+						}
 					}
 				}
 			}
@@ -105,6 +125,27 @@ function configQueryResult() {
 		sendHTTPRequest("/settings/query", node2, settingQueryResult);
 	}
 }
+
+function moduleCategoryQueryResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$("#moduleSelect").attr("hasvalue","true");
+				for (var i=0; i<data.resultData.length; i++) {
+					for (var j=0; j<data.resultData.length; j++) {
+						if(data.resultData[j].orderId == (i+1)){
+							console.log(data.resultData[j].category);
+							document.getElementById("moduleSelect").options.add(new Option(data.resultData[j].category));
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 
 function settingQueryResult() {
 	if(this.readyState == 4) {
@@ -148,36 +189,36 @@ function settingQueryResult() {
 				
 				for(var i = 0; i < data.resultData.length; i++) {
 					kk = i;
-					if(data.resultData[i].uiGroup1 == "系统设置") {
-						if(data.resultData[i].uiGroup2 == "开机引导") {
+					if(data.resultData[i].category1 == "系统设置") {
+						if(data.resultData[i].category2 == "开机引导") {
 							_rowSysSBoot.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].uiGroup2 == "设置入口页") {
+						} else if(data.resultData[i].category2 == "设置入口页") {
 							_rowSysSSetting.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].uiGroup2 == "网络与连接") {
+						} else if(data.resultData[i].category2 == "网络与连接") {
 							_rowSysSNet.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].uiGroup2 == "图像设置") {
+						} else if(data.resultData[i].category2 == "图像设置") {
 							_rowSysSPicture.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].uiGroup2 == "声音设置") {
+						} else if(data.resultData[i].category2 == "声音设置") {
 							_rowSysSSound.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].uiGroup2 == "通用设置") {
+						} else if(data.resultData[i].category2 == "通用设置") {
 							_rowSysSGeneral.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
 						}
-					} else if(data.resultData[i].uiGroup1 == "信号源工具箱") {
-						if(data.resultData[i].uiGroup2 == "快捷功能") {
+					} else if(data.resultData[i].category1 == "信号源工具箱") {
+						if(data.resultData[i].category2 == "快捷功能") {
 							_rowSourceBoxQuick.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='2' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].uiGroup2 == "常用设置") {
+						} else if(data.resultData[i].category2 == "常用设置") {
 							_rowSourceBoxGeneral.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='2' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
 						}
-					} else if(data.resultData[i].uiGroup1 == "卖场演示") {
-						if(data.resultData[i].uiGroup2 == "声音演示") {
+					} else if(data.resultData[i].category1 == "卖场演示") {
+						if(data.resultData[i].category2 == "声音演示") {
 							_rowMarketShowSound.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='3' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].uiGroup2 == "图像演示") {
+						} else if(data.resultData[i].category2 == "图像演示") {
 							_rowMarketShowPicture.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='3' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
 						}
-					} else if(data.resultData[i].uiGroup1 == "中间件") {
-						if(data.resultData[i].uiGroup2 == "输入信号源") {
+					} else if(data.resultData[i].category1 == "中间件") {
+						if(data.resultData[i].category2 == "输入信号源") {
 							_rowMiddleware1.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='4' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].uiGroup2 == "支持纵横比") {
+						} else if(data.resultData[i].category2 == "支持纵横比") {
 							_rowMiddleware2.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='4' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
 						}
 					}
@@ -265,7 +306,6 @@ function buttonInitAfter() {
 	$(".page7_a").click(function() {
 		_aIndex = $(".page7_a").index($(this));
 		_cHidedata = $(this).attr("hidedata");
-		console.log(_cHidedata);
 		_aPart = $(this).attr("part");
 		eachPartChange(_aPart,_cHidedata);
 	});	
@@ -275,22 +315,21 @@ function buttonInitAfter() {
 		saveInConfig();
 	});
 	/*mk-保存*/
-	$("#inputModuleSubmit").click(function() {
+	$("#moduleSubmit").click(function() {
 		saveInMK();
 	});
+	$("#sysSubmit").click(function() {
+		saveInSys();
+	});
 	
-	var _cIndex2 = ""; 
+	var _cIndex2,_box1,_box2 = ""; 
 	$(".defaultOption").click(function(){
 		_cIndex2 = $(".defaultOption").index($(this));
-		if (_cIndex2 == 0) {
-			console.log("lxw " + "点击的是字符串");
-			document.getElementById("configString").style.display = "block";
-			document.getElementsByClassName("tableBox")[0].style.display = "none";
-		} else{
-			console.log("lxw " + "点击的是枚举");
-			document.getElementById("configString").style.display = "none";
-			document.getElementsByClassName("tableBox")[0].style.display = "block";
-		}
+		_box1 = $(this).attr("boxone");
+		_box2 = $(this).attr("boxtwo");
+		console.log(_box1+"---"+_box2);
+		document.getElementById(_box1).style.display = "block";
+		document.getElementById(_box2).style.display = "none";
 	});
 
 	/*枚举各个图标的点击事件*/
@@ -300,7 +339,7 @@ function buttonInitAfter() {
 		console.log(_cIndex3);
 		if(_cIndex3 == 0) {
 			console.log("lxw " + "点击的是添加");
-			var parentDiv = document.getElementById("ADCSEfficient");
+			var parentDiv = document.getElementsByClassName("ADCSEfficient")[0];
 			var child1 = document.createElement("div");
 			child1.setAttribute("class","menuUnit");
 			var child2 = document.createElement("input");
@@ -311,7 +350,7 @@ function buttonInitAfter() {
 			parentDiv.appendChild(child1);
 		} else if(_cIndex3 == 1) {
 			console.log("lxw " + "点击的是删除");
-			var forDeleteObject = document.getElementById("ADCSEfficient");
+			var forDeleteObject = document.getElementsByClassName("ADCSEfficient")[0];
 			var deleteObject = document.getElementsByClassName("menuUnit");
 			var curLength = deleteObject.length;
 			console.log("lxw " + curLength);
@@ -322,7 +361,7 @@ function buttonInitAfter() {
 			}
 		} else if(_cIndex3 == 2) {
 			console.log("lxw " + "点击的是全部删除");
-			var appendObject = document.getElementById("ADCSEfficient");
+			var appendObject = document.getElementsByClassName("ADCSEfficient")[0];
 			appendObject.innerHTML = "";
 		}
 	});
@@ -337,26 +376,21 @@ function eachPartChange(part,data){
 		$('#page7_config').modal();
 		$("#configSubmit").attr("hidedata",2);
 		$("#configSubmit").attr("oldValue",data);
-		clearAllPart();
+		clearConfigPart();
 		editConfigModel(data);
-	} else if(part == 1){
+	} else if(part == 1||part == 2||part == 3||part == 4){
 		console.log("系统设置子项的修改");
-		
-	} else if(part == 2){
-		console.log("信号源工具箱子项的修改");
-		
-	} else if(part == 3){
-		console.log("卖场演示子项的修改");
-		
-	} else if(part == 4){
-		console.log("中间件子项的修改");
-		
+		$('#page7_sys').modal();
+		$("#sysSubmit").attr("hidedata",1);
+		$("#sysSubmit").attr("oldValue","null");
+		clearSysPart(part);
+		editSysModel(part,data);
 	} else if(part == 5){
 		console.log("MK子项的修改");
-		$('#myModuleAddChangeModal').modal();
-		$("#inputModuleSubmit").attr("hidedata",2);
-		$("#inputModuleSubmit").attr("oldValue",data);
-		clearAllPart2();
+		$('#page7_module').modal();
+		$("#moduleSubmit").attr("hidedata",2);
+		$("#moduleSubmit").attr("oldValue",data);
+		clearMKPart();
 		editMKModel(data);
 	}
 	$(".modal-backdrop").addClass("new-backdrop");
@@ -366,15 +400,7 @@ function editConfigModel(data){
 	console.log(JSON.parse(data));
 	$("#configCName").val(JSON.parse(data).cnName);
 	$("#configEName").val(JSON.parse(data).engName);
-	
-	$("#configCName").attr('disabled','');
 	$("#configEName").attr('disabled','');
-	$("#configString").attr('disabled','');
-	$(".menuUnitInput").attr('disabled','');
-	$("#ADCSAction").attr('disabled','');
-	$("#configSelect").attr('disabled','');
-	$("#configSelect").css("background-color","#ebebe4")
-	
 	if(JSON.parse(data).typeStr == "string"){
 		$("#configString").css("display","block");
 		$("#configTableBoxEnum").css("display","none");
@@ -387,11 +413,11 @@ function editConfigModel(data){
 		$("#configTableBoxEnum").css("display","block");
 		var oOpt = new Array(); 
 		oOpt = JSON.parse(data).options;
-		document.getElementById("ADCSEfficient").innerHTML="";
+		document.getElementsByClassName("ADCSEfficient")[0].innerHTML="";
 		console.log(JSON.parse(oOpt));
 		console.log(JSON.parse(oOpt).length);
 		for (var j = 0; j < JSON.parse(oOpt).length; j++) {
-			var parentDiv = document.getElementById("ADCSEfficient");
+			var parentDiv = document.getElementsByClassName("ADCSEfficient")[0];
 			var child1 = document.createElement("div");
 			child1.setAttribute("class","menuUnit");
 			var child2 = document.createElement("input");
@@ -403,12 +429,29 @@ function editConfigModel(data){
 		};
 		for (var k = 0; k < JSON.parse(oOpt).length; k++) {
 			$(".menuUnitInput")[k].value = JSON.parse(oOpt)[k];
-			$(".menuUnitInput:eq("+k+")").attr('disabled','');
 		};
 	}
 	$("#configInstr").val(JSON.parse(data).descText);
 	var categoryClass = JSON.parse(data).category;
 	var opt = document.getElementById("configSelect").getElementsByTagName("option");
+	console.log(opt);
+	for (var j = 0; j < opt.length; j++) {
+		console.log(opt[j].value+"---"+categoryClass);
+		opt[j].removeAttribute("selected");
+		if(opt[j].value == categoryClass){
+			console.log(j);
+			opt[j].setAttribute("selected","");
+		}
+	};
+}
+
+function editSysModel(part,data){
+	console.log(JSON.parse(data));
+	$("#sysCName").val(JSON.parse(data).cnName);
+	$("#sysEName").val(JSON.parse(data).engName);
+	$("#sysInstr").val(JSON.parse(data).descText);
+	var categoryClass = JSON.parse(data).category;
+	var opt = document.getElementById("sysSelect").getElementsByTagName("option");
 	for (var j = 0; j < opt.length; j++) {
 		opt[j].removeAttribute("selected");
 		if(opt[j].value == categoryClass){
@@ -419,13 +462,11 @@ function editConfigModel(data){
 
 function editMKModel(data){
 	console.log(data);
-	document.getElementById("moduleCzName").value = JSON.parse(data).cnName;
-	document.getElementById("moduleEnName").value = JSON.parse(data).engName;
-	document.getElementById("moduleEnName").setAttribute('disabled','');
-	document.getElementById("moduleEnName").style.backgroundColor = "#ebebe4";
+	document.getElementById("moduleCName").value = JSON.parse(data).cnName;
+	document.getElementById("moduleEName").value = JSON.parse(data).engName;
+	document.getElementById("moduleEName").setAttribute('disabled','');
+	document.getElementById("moduleEName").style.backgroundColor = "#ebebe4";
 	document.getElementById("moduleSrc").value = JSON.parse(data).gitPath;
-//	document.getElementById("moduleSrc").setAttribute('disabled','');
-// 	document.getElementById("moduleSrc").style.backgroundColor = "#ebebe4";
 	document.getElementById("moduleInstr").value = JSON.parse(data).descText;
 
 	var childSelect = document.getElementById("moduleSelect");
@@ -437,27 +478,17 @@ function editMKModel(data){
 			childSelect.options[j].selected = false;
 		}
 	};
-	
-	
-	
 }
-function clearAllPart(){
+
+function clearConfigPart(){
 	document.getElementById("configCName").value = "";
 	document.getElementById("configEName").value = "";
-	document.getElementById("configCName").removeAttribute('disabled');
 	document.getElementById("configEName").removeAttribute('disabled');
-	document.getElementById("configString").removeAttribute('disabled');
-	var myMenuUnitInputTwo = document.getElementsByClassName("menuUnitInput");
-	for (var kk = 0; kk<myMenuUnitInputTwo.length; kk++) {
-		document.getElementsByClassName("menuUnitInput")[kk].removeAttribute('disabled');
-	}
-	document.getElementById("configSelect").removeAttribute('disabled');
-	document.getElementById("configSelect").style.backgroundColor = "white";
 	document.getElementById("configInstr").value = "";
 	document.getElementById("configString").value = "";
-	document.getElementById("ADCSEfficient").innerHTML="";
+	document.getElementsByClassName("ADCSEfficient")[0].innerHTML = "";
 	for (var j = 0; j < 2; j++) {
-		var parentDiv = document.getElementById("ADCSEfficient");
+		var parentDiv = document.getElementsByClassName("ADCSEfficient")[0];
 		var child1 = document.createElement("div");
 		child1.setAttribute("class","menuUnit");
 		var child2 = document.createElement("input");
@@ -467,15 +498,26 @@ function clearAllPart(){
 		child1.appendChild(child2);
 		parentDiv.appendChild(child1);
 	};
+	document.getElementById("configString").style.display = "block";
+	document.getElementById("configTableBoxEnum").style.display = "none";
+	$("#configSelect")[0].options[0].selected = true;
 }
-function clearAllPart2(){
-	document.getElementById("moduleCzName").value = "";
-	document.getElementById("moduleEnName").value = "";
+
+function clearSysPart(num){
+	document.getElementById("sysCName").value = "";
+	document.getElementById("sysEName").value = "";
+	document.getElementById("sysInstr").value = "";
+	$("#sysSelect")[0].options[0].selected = true;
+}
+
+function clearMKPart(){
+	document.getElementById("moduleCName").value = "";
+	document.getElementById("moduleEName").value = "";
 	document.getElementById("moduleSrc").value = "";
-	document.getElementById("moduleSrc").removeAttribute('disabled');
-    document.getElementById("moduleSrc").style.backgroundColor = "white";
+	document.getElementById("moduleEName").removeAttribute('disabled');
+    document.getElementById("moduleEName").style.backgroundColor = "white";
 	document.getElementById("moduleInstr").value = "";
-	document.getElementById("moduleSelect").value = "App";
+	$("#moduleSelect")[0].options[0].selected = true;
 }
 
 function saveInConfig(){
@@ -521,7 +563,7 @@ function saveInConfig(){
 		}else if(newConfigString =="" && inputNumState == 1){
 			console.log("枚举型不为空，字符串型为空！！！");
 			newConfigType = "enum";
-			var newConfigMenuDiv = document.getElementById("ADCSEfficient");
+			var newConfigMenuDiv = document.getElementsByClassName("ADCSEfficient")[0];
 			var valueTwo = null;
 			for (var i=0; i<$(".menuUnit").length;i++) {
 				valueTwo =  newConfigMenuDiv.getElementsByTagName("input")[i].value;
@@ -551,13 +593,56 @@ function saveInConfig(){
 		}
 	}
 }
-function saveInMK(){
-	var _Hidendata2 = $("#inputModuleSubmit").attr("hidedata");
-	var _oldValue2 = $("#inputModuleSubmit").attr("oldValue");
+
+function saveInSys(){
+	var _Hidendata2 = $("#sysSubmit").attr("hidedata");
+	var _oldValue2 = $("#sysSubmit").attr("oldValue");
 	console.log(_oldValue2);
 	
-	var newModuleCzName = document.getElementById("moduleCzName").value;
-	var newModuleEnName = document.getElementById("moduleEnName").value;
+	var newSysCName = document.getElementById("sysCName").value;
+	var newSysEName = document.getElementById("sysEName").value;
+	var newSysInstr = document.getElementById("sysInstr").value;
+	var newSysSelect = document.getElementById("sysSelect").value;
+	
+	newSysCName = newSysCName.replace(/(^\s*)|(\s*$)/g, "");
+	newSysEName = newSysEName.replace(/(^\s*)|(\s*$)/g, "");
+	newSysInstr = newSysInstr.replace(/(^\s*)|(\s*$)/g, "");
+	
+	if(newSysCName == "" || newSysEName == "" || newSysInstr == "") {
+		console.log("存在空项");
+		document.getElementById("sysErrorInfo").style.display = "block";
+		if (newSysCName == "") {
+			document.getElementById("sysCName").innerHTML = "模块中文名项不能为空！";
+		}else if(newSysEName == ""){
+			document.getElementById("sysEName").innerHTML = "模块英文名项不能为空！";
+		}else if(newSysInstr == ""){
+			document.getElementById("sysInstr").innerHTML = "模块描述项不能为空！";
+		}
+		setTimeout("document.getElementById('sysErrorInfo').innerHTML='　'", 3000);
+	} else {
+		if(_Hidendata2 == 1) {
+			console.log("lxw sys 新增");
+			var node = '{"engName":"' + newSysEName + '","cnName":"' + newSysCName + '","category":"' + newSysSelect + '","desc":"' + newSysInstr + '"}';
+			console.log(node);
+			//sendHTTPRequest("/module/add", node, returnMKAddInfo);
+		} else {
+			console.log("lxw sys 修改");
+			_oldValue3 = JSON.parse(_oldValue3);
+			var node = '{"engName":"' + newSysEName + '","cnName":"' + newSysCName + '","category":"' + newSysSelect + '","desc":"' + newSysInstr  + '"}';
+			console.log("lxw " + node);
+			//sendHTTPRequest("/module/update", node, returnMKAddInfo);
+		}
+	}
+	
+}
+
+function saveInMK(){
+	var _Hidendata3 = $("#moduleSubmit").attr("hidedata");
+	var _oldValue3 = $("#moduleSubmit").attr("oldValue");
+	console.log(_oldValue3);
+	
+	var newModuleCzName = document.getElementById("moduleCName").value;
+	var newModuleEnName = document.getElementById("moduleEName").value;
 	var newModuleSrc = document.getElementById("moduleSrc").value;
 	var newModuleInstr = document.getElementById("moduleInstr").value;
 	var newModuleSelect = document.getElementById("moduleSelect").value;
@@ -568,7 +653,6 @@ function saveInMK(){
 	newModuleInstr = newModuleInstr.replace(/(^\s*)|(\s*$)/g, "");
 	console.log("lxw " + newModuleCzName + "--" + newModuleEnName + "--" + newModuleSrc + "--" + newModuleInstr + "--" + newModuleSelect);
 
-	var currentArray = [newModuleCzName, newModuleEnName, newModuleSrc, newModuleInstr];
 	if(newModuleCzName == "" || newModuleEnName == "" || newModuleSrc == "" || newModuleInstr == "") {
 		console.log("存在空项");
 		document.getElementById("moduleErrorInfo").style.display = "block";
@@ -583,22 +667,19 @@ function saveInMK(){
 		}
 		setTimeout("document.getElementById('moduleErrorInfo').innerHTML='　'", 3000);
 	} else {
-		if(_Hidendata2 == 1) {
+		if(_Hidendata3 == 1) {
 			console.log("lxw model 新增");
 			var node = '{"engName":"' + newModuleEnName + '","cnName":"' + newModuleCzName + '","category":"' + newModuleSelect + '","desc":"' + newModuleInstr + '","gitPath":"' + newModuleSrc + '"}';
 			console.log(node);
 			sendHTTPRequest("/module/add", node, returnMKAddInfo);
 		} else {
 			console.log("lxw model 修改");
-			_oldValue2 = JSON.parse(_oldValue2);
-			var node = '{"engName":"' + newModuleEnName + '","cnName":"' + newModuleCzName + '","category":"' + newModuleSelect + '","desc":"' + newModuleInstr + '","gitPath":"' + newModuleSrc + '","orderId":"' + _oldValue2.orderId + '"}';
+			_oldValue3 = JSON.parse(_oldValue3);
+			var node = '{"engName":"' + newModuleEnName + '","cnName":"' + newModuleCzName + '","category":"' + newModuleSelect + '","desc":"' + newModuleInstr + '","gitPath":"' + newModuleSrc + '","orderId":"' + _oldValue3.orderId + '"}';
 			console.log("lxw " + node);
 			sendHTTPRequest("/module/update", node, returnMKAddInfo);
 		}
 	}
-	
-	
-	
 }
 
 
@@ -609,7 +690,7 @@ function returnMKAddInfo(){
 			console.log(data);
 			if(data.resultCode == "0") {
 				console.log("数据添加成功");
-				$("#myModuleAddChangeModal").modal('hide');
+				$("#page7_module").modal('hide');
 				freshModuleAddHtml();
 				
 			}else{
