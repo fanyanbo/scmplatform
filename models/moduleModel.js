@@ -240,6 +240,7 @@ ModuleModel.prototype.updateItemsOrderId = function (arr, callback) {
     let sql_param = [arr[i].orderId,arr[i].engName];
     db.conn.query(sql,sql_param,function(err,rows,fields) {
       if (err) return ep.emit('error', err);
+      console.log('update_result----ok' + i);
       ep.emit('update_result', 'ok' + i);
     });
   }

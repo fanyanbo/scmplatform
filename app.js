@@ -52,7 +52,7 @@ app.use(session({
   store: sessionStore,
   resave: false,
   saveUninitialized: false,
-  cookie: {maxAge: 300*1000} //5分钟
+  cookie: {maxAge: config.cookie_maxAge} 
 }));
 
 // app.use('/', index);
