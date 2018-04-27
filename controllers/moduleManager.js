@@ -98,7 +98,19 @@ exports.addCategory = function (req, res, next) {
   });
 };
 
-exports.updateCategory = function (req, res, next) {
+exports.updateCategoryOrderId = function (req, res, next) {
+
+  let arr = validator.trim(req.body.arr);
+
+  moduleModel.updateCategory(arr, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"修改Module分类列表成功",results);
+  });
+};
+
+exports.updateItemsOrderId = function (req, res, next) {
 
   let arr = validator.trim(req.body.arr);
 

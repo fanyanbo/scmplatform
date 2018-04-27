@@ -93,13 +93,28 @@ var logger = require('../common/logger');
    });
  };
 
- exports.updateCategory = function (req, res, next) {
+ exports.updateCategoryOrderId = function (req, res, next) {
 
    let arr = validator.trim(req.body.arr);
-   configModel.updateCategory(arr, function(err,results) {
+   var arrObj = JSON.parse(arr); //由JSON字符串转换为JSON对象
+   console.log(arrObj);
+   console.log(arrObj.length);
+   configModel.updateCategoryOrderId(arrObj, function(err,results) {
      if(err) {
        return output.error(req,res,err);
      }
      output.success(req,res,"修改Config分类列表成功",results);
+   });
+ };
+
+ exports.updateItemsOrderId = function (req, res, next) {
+
+   let arr = validator.trim(req.body.arr);
+   var arrObj = JSON.parse(arr); //由JSON字符串转换为JSON对象
+   configModel.updateItemsOrderId(arrObj, function(err,results) {
+     if(err) {
+       return output.error(req,res,err);
+     }
+     output.success(req,res,"修改Config Items orderId成功",results);
    });
  };
