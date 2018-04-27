@@ -229,9 +229,6 @@ ModuleModel.prototype.updateItemsOrderId = function (arr, callback) {
   });
 
   ep.after('update_result', arr.length, function (list) { // 所有查询的内容都存在list数组中
-      for(let j in list){
-        console.log(list[j]);
-      }
       callback(null,"updateItemsOrderId OK");
   });
 

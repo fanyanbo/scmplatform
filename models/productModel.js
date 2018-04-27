@@ -59,7 +59,7 @@ ProductModel.prototype.queryHistory = function (chip, model, callback) {
 }
 
 ProductModel.prototype.queryByModule = function (name, callback) {
-  var sql = "SELECT * FROM products WHERE targetProduct in (SELECT targetProduct FROM mkdata WHERE engName=?)";
+  var sql = "SELECT * FROM products WHERE targetProduct in (SELECT targetProduct FROM mkdata WHERE cnName=?)";
   let sql_params = [name];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
