@@ -20,7 +20,15 @@
 .sequence,.sequence_value{
 	width: 12.5%;
 }
-.inputstyle{
+.sequence,.sequence select{
+	background-color: moccasin;
+}
+.sequence_value{
+	color: black;
+	font-size: 13px;
+    background-color: aqua;
+}
+.sequence_select{
 	text-align: center;
 }
 #paged8_inputConfigClose{
@@ -45,7 +53,10 @@
     font-size: 18px;
     text-align: center;
 }
-
+#paged8_myConfigBorder{
+	width: 90%;
+	margin: auto;
+}
 .modal-backdrop.in{
 	opacity: 0.2;
     margin: 5px;
@@ -83,3 +94,33 @@
 	margin-top: 2%;
 	font-size: 20px;
 }
+.page8_tables thead{
+	 background: #42A3E7;
+}
+.page8_tables thead th{
+    font-size: 14px;
+    line-height: 40px;
+}
+.page8_tables tbody tr:nth-child(even){
+    background-color: #CFEEE9;
+}
+
+.page8_tables tbody tr:hover{
+    background-color: #d5d5d5;
+}
+
+#paged8_tableSort thead th{
+	text-align: center;
+	background-color: #0091E6;
+	color: aliceblue;
+}
+
+
+
+
+
+
+
+
+
+
