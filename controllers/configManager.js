@@ -110,6 +110,8 @@ var logger = require('../common/logger');
  exports.updateItemsOrderId = function (req, res, next) {
    console.log("1111");
    console.log(typeof req.body.arr);
+   console.log(req.body.arr);
+   console.log(req.body.arr.length);
    let arr = validator.trim(req.body.arr);
    console.log(arr);
    console.log(arr.length);
