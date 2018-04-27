@@ -19,7 +19,7 @@ ConfigModel.prototype.query = function (callback) {
 
 ConfigModel.prototype.queryByCategory = function (category, callback) {
 
-  let sql = "SELECT * FROM configs WHERE category = ?";
+  let sql = "SELECT * FROM configs WHERE category = ? order by orderId";
   let sql_params = [category];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -31,7 +31,7 @@ ConfigModel.prototype.queryByCategory = function (category, callback) {
 
 ConfigModel.prototype.queryCategory = function (callback) {
 
-  let sql = "SELECT * FROM configcategory";
+  let sql = "SELECT * FROM configcategory order by orderId";
   let sql_params = [];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -96,8 +96,8 @@ ConfigModel.prototype.addCategory = function (categoryName, callback) {
   });
 }
 
-ConfigModel.prototype.updateCategory = function (arr, callback) {
-
+ConfigModel.prototype.updateCategoryOrderId = function (arr, callback) {
+  console.log("enter updateCategoryOrderId model");
   if(arr.length == 0) return callback("updateCategory参数为空",null);
 
   let ep = new eventproxy();
@@ -119,6 +119,33 @@ ConfigModel.prototype.updateCategory = function (arr, callback) {
     let sql = "UPDATE configcategory SET orderId = ? WHERE category = ?";
     let sql_param = [arr[i].orderId,arr[i].category];
     db.conn.query(sql,sql_param,function(err,rows,fields) {
+      if(err) return ep.emit('error', err);
+      ep.emit('update_result', 'ok' + i);
+    });
+  }
+}
+
+ConfigModel.prototype.updateItemsOrderId = function (arr, callback) {
+
+  console.log("enter updateItemsOrderId model");
+  if(arr.length == 0) return callback("updateConfigItemsOrderId参数为空!",null);
+
+  let ep = new eventproxy();
+
+  ep.bind('error', function (err) {
+      logger.error("捕获到错误-->" + err);
+      ep.unbind();
+      callback(err,null);
+  });
+
+  ep.after('update_result', arr.length, function (list) { // 所有查询的内容都存在list数组中
+      callback(null,"updateCategory OK");
+  });
+
+  for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
+    let sql = "UPDATE configs SET orderId = ? WHERE engName = ?";
+    let sql_param = [arr[i].orderId,arr[i].engName];
+    db.conn.query(sql,sql_param,function(err,rows,fields) {
       if (err) return ep.emit('error', err);
       ep.emit('update_result', 'ok' + i);
     });
@@ -134,6 +161,7 @@ ConfigModel.prototype.add = function (engName, cnName, category, type, options, 
         return callback(err);
     }
     let _orderId = (rows.length == 0) ? 1 : rows[0].count + 1; //当新类别中没有任何模块是判断
+    console.log(_orderId);
     let sql = "INSERT INTO configs(engName,cnName,category,typeStr,options,defaultValue,descText,orderId) VALUES (?,?,?,?,?,?,?,?)";
     let sql_params = [engName,cnName,category,type,options,defaultValue,desc,_orderId];
     logger.debug(sql_params);

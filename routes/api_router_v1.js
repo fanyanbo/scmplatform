@@ -71,7 +71,8 @@ router.post('/module/query', modules.query);
 router.post('/module/update', modules.update);
 router.post('/module/queryCategory', modules.queryCategory);
 router.post('/module/addCategory', modules.addCategory);
-router.post('/module/updateCategory', modules.updateCategory);
+router.post('/module/updateCategoryOrderId', modules.updateCategoryOrderId);
+router.post('/module/updateItemsOrderId', modules.updateItemsOrderId);
 router.post('/module/queryByCategory', modules.queryByCategory);
 // config配置项管理
 router.post('/config/add', configs.add);
@@ -80,7 +81,8 @@ router.post('/config/query', configs.query);
 router.post('/config/update', configs.update);
 router.post('/config/queryCategory', configs.queryCategory);
 router.post('/config/addCategory', configs.addCategory);
-router.post('/config/updateCategory', configs.updateCategory);
+router.post('/config/updateCategoryOrderId', configs.updateCategoryOrderId);
+router.post('/config/updateItemsOrderId', configs.updateItemsOrderId);
 router.post('/config/queryByCategory', configs.queryByCategory);
 // Settings项管理
 router.post('/settings/add', settings.add);
