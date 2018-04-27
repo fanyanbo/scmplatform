@@ -218,7 +218,7 @@ ModuleModel.prototype.updateCategory = function (arr, callback) {
 
 ModuleModel.prototype.updateItemsOrderId = function (arr, callback) {
 
-  if(arr.length == 0) return callback("updateCategory参数为空",null);
+  if(arr.length == 0) return callback("Module updateItemsOrderId",null);
 
   let ep = new eventproxy();
 
@@ -232,11 +232,11 @@ ModuleModel.prototype.updateItemsOrderId = function (arr, callback) {
       for(let j in list){
         console.log(list[j]);
       }
-      callback(null,"updateCategory OK");
+      callback(null,"updateItemsOrderId OK");
   });
 
   for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
-    let sql = "UPDATE mkcategory SET orderId = ? WHERE category = ?";
+    let sql = "UPDATE modules SET orderId = ? WHERE engName = ?";
     let sql_param = [arr[i].orderId,arr[i].category];
     db.conn.query(sql,sql_param,function(err,rows,fields) {
       if (err) return ep.emit('error', err);
