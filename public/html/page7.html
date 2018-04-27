@@ -17,7 +17,7 @@
 			<div class="col-xs-12 form-group">
 				<fieldset>
 					<legend style="margin-bottom: 0;">
-						<span class="page7_tabs">config文件</span>
+						<span class="page7_tabs">Config文件</span>
 						<span class="page7_tabs">系统设置</span>
 						<span class="page7_tabs">信号源工具箱</span>
 						<span class="page7_tabs">卖场演示</span>
@@ -144,16 +144,16 @@
 						<input type="text" value="" id="configEName" class="configinput"><br/>
 						<label for="configDefaulted" class="control-label configlable">默认参考值：</label><br/>
 						<div id="configDefaulted">
-							<button class="defaultOption">字符串</button>
-							<button class="defaultOption">枚举</button>
+							<button class="defaultOption" boxone="configString" boxtwo="configTableBoxEnum">字符串</button>
+							<button class="defaultOption" boxone="configTableBoxEnum" boxtwo="configString">枚举</button>
 							<textarea id="configString" rows="3" cols="" class="configtextarea"></textarea><br/>
 							<div class="tableBox" id="configTableBoxEnum">
-								<div id="ADCSAction">
+								<div class="ADCSAction">
 									<span class="menuEdit glyphicon glyphicon-plus"></span>
 									<span class="menuEdit glyphicon glyphicon-remove"></span>
 									<span class="menuEdit glyphicon glyphicon-remove-circle"></span>
 								</div>
-								<div id="ADCSEfficient">
+								<div class="ADCSEfficient">
 									<div class="menuUnit">
 										<input type="text" class="menuUnitInput" value="" placeholder="Value">
 									</div>
@@ -166,14 +166,7 @@
 						<label for="configInstr" class="control-label configlable">描述：</label><br/>
 						<textarea id="configInstr" rows="3" cols="" class="configtextarea"></textarea><br/>
 						<label for="configSelect" class="control-label configlable">所属分类：</label><br/>
-						<select id="configSelect" class="configselect">
-							<option value="base">基础功能</option>
-							<option value="serverip">服务器IP配置</option>
-							<option value="ad"> 广告配置</option>
-							<option value="channel">TV通道</option>
-							<option value="localmedia">本地媒体</option>
-							<option value="other">其他功能</option>
-						</select>
+						<select id="configSelect" class="configselect"></select>
 						<button type="button" hidedata="0" class="btn" id="configSubmit">保存</button>
 						<div id="configErrorInfo"></div>
 					</div>
@@ -181,23 +174,43 @@
 			</div>
 		</div>
 		
-		<!--新增和编辑弹框-->
-		<div class="modal fade" id="myModuleAddChangeModal" tabindex="-1" role="dialog" aria-labelledby="myModuleAddChangeModalLabel">
+		<!--MK新增和编辑-->
+		<div class="modal fade" id="page7_module" tabindex="-1" role="dialog" aria-labelledby="myModuleLabel">
 			<div class="modalwidth" role="document">
-				<div class="modal-content" id="myModuleBorder">
+				<div class="modal-content" id="page7_module_border">
 					<div class="modal-body">
-						<button type="button" id="inputModuleClose" data-dismiss="modal">关闭</button>
-						<label for="moduleCzName" class="control-label" style="margin-bottom: 0px;">模块中文名：</label><br/>
-						<input type="text" value="" id="moduleCzName"><br/>
-						<label for="moduleEnName" class="control-label" style="margin-bottom: 0px;">模块英文名：</label><br/>
-						<input type="text" value="" id="moduleEnName"><br/>
-						<label for="moduleSrc" class="control-label" style="margin-bottom: 0px;">模块路径：</label><br/>
+						<button type="button" id="moduleClose" data-dismiss="modal">关闭</button>
+						<label for="moduleCName" class="control-label">模块中文名：</label><br/>
+						<input type="text" value="" id="moduleCName"><br/>
+						<label for="moduleEName" class="control-label">模块英文名：</label><br/>
+						<input type="text" value="" id="moduleEName"><br/>
+						<label for="moduleSrc" class="control-label">模块路径：</label><br/>
 						<input type="text" value="" id="moduleSrc"><br/>
-						<label for="moduleInstr" class="control-label" style="margin-bottom: 0px;">描述：</label><br/>
-						<!--<input type="text" value="" id="moduleInstr"><br/>-->
+						<label for="moduleInstr" class="control-label">描述：</label><br/>
 						<textarea id="moduleInstr" rows="2" cols="" class="configtextarea"></textarea><br/>
-						<label for="moduleSelect" class="control-label" style="margin-bottom: 0px;">所属分类：</label><br/>
-						<select id="moduleSelect">
+						<label for="moduleSelect" class="control-label">所属分类：</label><br/>
+						<select id="moduleSelect" hasvalue="false" class="moduleSelect"></select>
+						<button type="button" hidedata="0" class="btn" id="moduleSubmit">保存</button>
+						<div id="moduleErrorInfo"></div>
+					</div>
+				</div>
+			</div>
+		</div>	
+		
+		<!--系统设置新增和编辑-->
+		<div class="modal fade" id="page7_sys" tabindex="-1" role="dialog" aria-labelledby="mysysLabel">
+			<div class="modalwidth" role="document">
+				<div class="modal-content" id="page7_sys_border">
+					<div class="modal-body">
+						<button type="button" id="sysClose" data-dismiss="modal">关闭</button>
+						<label for="sysCName" class="control-label" style="margin-bottom: 0px;">模块中文名：</label><br/>
+						<input type="text" value="" id="sysCName"><br/>
+						<label for="sysEName" class="control-label" style="margin-bottom: 0px;">模块英文名：</label><br/>
+						<input type="text" value="" id="sysEName"><br/>
+						<label for="sysInstr" class="control-label" style="margin-bottom: 0px;">描述：</label><br/>
+						<textarea id="sysInstr" rows="2" cols="" class="configtextarea"></textarea><br/>
+						<label for="sysSelect" class="control-label" style="margin-bottom: 0px;">所属分类：</label><br/>
+						<select id="sysSelect" class="sysSelect">
 							<option value="App">App</option>
 							<option value="Service">Service</option>
 							<option value="AppStore">AppStore</option>
@@ -208,12 +221,14 @@
 							<option value="Other">Other</option>
 							<option value="PlayerLibrary">PlayerLibrary</option>
 						</select>
-						<button type="button" class="btn"id="inputModuleSubmit">保存</button>
-						<div id="moduleErrorInfo"></div>
+						<button type="button" hidedata="0" class="btn" id="sysSubmit">保存</button>
+						<div id="sysErrorInfo"></div>
 					</div>
 				</div>
 			</div>
-		</div>	
+		</div>
+		
+			
 		<!--loading环-->
 		<!--<div id="page7_loading"><span id="page7_loadingImg">wenjian</span><span id="page7_loadingText">数据加载中...</span></div>-->
 		<script type="text/javascript" src="../js/page7.js" charset="UTF-8"></script>
