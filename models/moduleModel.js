@@ -25,7 +25,7 @@ ModuleModel.prototype.query = function (callback) {
 
 ModuleModel.prototype.queryByCategory = function (category, callback) {
 
-  let sql = "SELECT * FROM modules WHERE category = ?";
+  let sql = "SELECT * FROM modules WHERE category = ? order by orderId";
   let sql_params = [category];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -134,7 +134,7 @@ ModuleModel.prototype.delete = function (callback) {
 
 ModuleModel.prototype.queryCategory = function (callback) {
 
-  let sql = "SELECT * FROM mkcategory";
+  let sql = "SELECT * FROM mkcategory order by orderId";
   let sql_params = [];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {

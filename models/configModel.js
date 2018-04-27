@@ -19,7 +19,7 @@ ConfigModel.prototype.query = function (callback) {
 
 ConfigModel.prototype.queryByCategory = function (category, callback) {
 
-  let sql = "SELECT * FROM configs WHERE category = ?";
+  let sql = "SELECT * FROM configs WHERE category = ? order by orderId";
   let sql_params = [category];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -31,7 +31,7 @@ ConfigModel.prototype.queryByCategory = function (category, callback) {
 
 ConfigModel.prototype.queryCategory = function (callback) {
 
-  let sql = "SELECT * FROM configcategory";
+  let sql = "SELECT * FROM configcategory order by orderId";
   let sql_params = [];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
