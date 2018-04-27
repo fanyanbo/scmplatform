@@ -7,8 +7,8 @@ var SettingsModel = function() {};
 
 
 SettingsModel.prototype.query = function (callback) {
-
-  let sql = "SELECT * FROM settings order by orderId";
+  console.log("enter SettingsModel query");
+  let sql = "SELECT * FROM settings";
   let sql_params = [];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
