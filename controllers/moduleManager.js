@@ -100,9 +100,9 @@ exports.addCategory = function (req, res, next) {
 
 exports.updateCategoryOrderId = function (req, res, next) {
 
-  let arr = validator.trim(req.body.arr);
+  let arrObj = req.body.arr;
 
-  moduleModel.updateCategory(arr, function(err,results) {
+  moduleModel.updateCategoryOrderId(arrObj, function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }
@@ -112,9 +112,9 @@ exports.updateCategoryOrderId = function (req, res, next) {
 
 exports.updateItemsOrderId = function (req, res, next) {
 
-  let arr = validator.trim(req.body.arr);
+  let arrObj = req.body.arr;
 
-  moduleModel.updateCategory(arr, function(err,results) {
+  moduleModel.updateItemsOrderId(arrObj, function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }

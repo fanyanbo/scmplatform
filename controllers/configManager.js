@@ -95,10 +95,8 @@ var logger = require('../common/logger');
 
  exports.updateCategoryOrderId = function (req, res, next) {
 
-   let arr = validator.trim(req.body.arr);
-   var arrObj = JSON.parse(arr); //由JSON字符串转换为JSON对象
-   console.log(arrObj);
-   console.log(arrObj.length);
+   let arrObj = req.body.arr;
+
    configModel.updateCategoryOrderId(arrObj, function(err,results) {
      if(err) {
        return output.error(req,res,err);
@@ -108,9 +106,7 @@ var logger = require('../common/logger');
  };
 
  exports.updateItemsOrderId = function (req, res, next) {
-   console.log(typeof req.body.arr);
-   console.log(req.body.arr);
-   console.log(req.body.arr.length);
+
   // let arr = validator.trim(req.body.arr);
    let arrObj = req.body.arr;
   // var arrObj = JSON.parse(arr); //由JSON字符串转换为JSON对象

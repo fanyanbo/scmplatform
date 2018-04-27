@@ -245,7 +245,6 @@ ModuleModel.prototype.updateItemsOrderId = function (arr, callback) {
   }
 }
 
-
 var moduleModel = new ModuleModel();
 
 module.exports = moduleModel;
