@@ -109,9 +109,12 @@ var logger = require('../common/logger');
 
  exports.updateItemsOrderId = function (req, res, next) {
    console.log("1111");
-   console.log(req.body.arr);
    let arr = validator.trim(req.body.arr);
+   console.log(arr);
+   console.log(arr.length);
    var arrObj = JSON.parse(arr); //由JSON字符串转换为JSON对象
+   console.log(arrObj);
+   console.log(arrObj.length);
    configModel.updateItemsOrderId(arrObj, function(err,results) {
      if(err) {
        return output.error(req,res,err);

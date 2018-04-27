@@ -128,6 +128,8 @@ ConfigModel.prototype.updateCategoryOrderId = function (arr, callback) {
 ConfigModel.prototype.updateItemsOrderId = function (arr, callback) {
 
   console.log("enter updateItemsOrderId model");
+  return callback(null,"updateCategory OK");
+
   if(arr.length == 0) return callback("updateConfigItemsOrderId参数为空!",null);
 
   let ep = new eventproxy();
