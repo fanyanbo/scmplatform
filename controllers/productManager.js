@@ -115,7 +115,8 @@ exports.queryAllByMachine = function (req, res, next) {
       if(err) {
         return output.error(req,res,err);
       }
-      output.success(req,res,"查询queryEverything成功",results);
+      console.log(results);
+      output.success(req,res,"查询queryAllByMachine成功",results);
     });
 };
 
