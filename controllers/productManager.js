@@ -45,11 +45,13 @@ exports.queryByRegEx = function (req, res, next) {
     });
 };
 
+/**
+ * @param {注：模块名称为中文名，且需全匹配，暂不支持模糊查询}
+ */
 exports.queryByModule = function (req, res, next) {
 
-    let _name = req.body.name;
-
-    productModel.queryByModule(_name, function(err,results) {
+    let name = req.body.name;
+    productModel.queryByModule(name, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
@@ -58,9 +60,9 @@ exports.queryByModule = function (req, res, next) {
 };
 
 exports.queryHistory = function (req, res, next) {
-    let _chip = req.body.chip;
-    let _model = req.body.model;
-    productModel.queryHistory(_chip,_model,function(err,results) {
+    let chip = req.body.chip;
+    let model = req.body.model;
+    productModel.queryHistory(chip,model,function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
@@ -75,6 +77,45 @@ exports.queryTargetProduct = function (req, res, next) {
         return output.error(req,res,err);
       }
       output.success(req,res,"查询产品修改历史表成功",results);
+    });
+};
+
+exports.queryMKDataByTargetProduct = function (req, res, next) {
+    let targetproduct = req.body.targetproduct;
+    console.log(targetproduct);
+    productModel.queryMKDataByTargetProduct(targetproduct, function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"根据TargetProduct查询mkdata列表成功",results);
+    });
+};
+
+/**
+ * @param {注：查询一切，一切...全部信息打包给前端}
+ */
+exports.queryAll = function (req, res, next) {
+
+    productModel.queryAll(function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      console.log(results);
+      output.success(req,res,"查询queryAll成功",results);
+    });
+};
+
+/**
+ * @param {注：查询某个机芯&机型的全部信息}
+ */
+exports.queryAllByMachine = function (req, res, next) {
+    let chip = req.body.chip;
+    let model = req.body.model;
+    productModel.queryAllByMachine(chip, model, function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"查询queryEverything成功",results);
     });
 };
 

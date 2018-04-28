@@ -12,7 +12,7 @@ var modules = require('../controllers/moduleManager');
 var configs = require('../controllers/configManager');
 var settings = require('../controllers/settingsManager');
 var props = require('../controllers/propManager');
-var product = require('../controllers/product');
+var product = require('../controllers/productManager');
 var record = require('../controllers/record');
 var home = require('../controllers/home');
 var device = require('../controllers/deviceManager');
@@ -48,22 +48,37 @@ router.post('/logout', sign.logout);
 
 router.use('/', isAuthenticated); //api访问控制。除了登录，session校验，登出接口外，其余接口访问需要进行验证
 
+//产品管理
+router.post('/product/add', product.add);                        //新增产品项
+router.post('/product/update', product.update);                  //更新产品信息
+router.post('/product/queryByPage', product.queryByPage);        //分页查询产品信息
+router.post('/product/queryByRegEx', product.queryByRegEx);      //模糊查询产品信息
+router.post('/product/queryHistory', product.queryHistory);      //查询某产品的历史修改记录
+router.post('/product/queryByModule', product.queryByModule);    //查询配置有某个模块的所有产品
+router.post('/product/queryBytp', product.queryMKDataByTargetProduct);  //根据targetproduct查询对应的所有modules
+router.post('/product/queryAll', product.queryAll);    
+router.post('/product/queryAllByMachine', product.queryAllByMachine);
+
 //机芯管理
 router.post('/chip/add', device.addChip);
 router.post('/chip/query', device.queryChip);
 router.post('/chip/update', device.updateChip);
+
 // 机型管理
 router.post('/model/add', device.addModel);
 router.post('/model/query', device.queryModel);
 router.post('/model/update', device.updateModel);
+
 // target_product管理，一个target_product对应唯一MK文件
 router.post('/targetproduct/add', device.addTargetProduct);
 router.post('/targetproduct/query', device.queryTargetProduct);
 router.post('/targetproduct/update', device.updateTargetProduct);
+
 //机芯型号(soc)管理
 router.post('/soc/add', device.addSoc);
 router.post('/soc/query', device.querySoc);
 router.post('/soc/update', device.updateSoc);
+
 // 模块管理
 router.post('/module/add', modules.add);
 router.post('/module/delete', modules.delete);
@@ -74,6 +89,7 @@ router.post('/module/addCategory', modules.addCategory);
 router.post('/module/updateCategoryOrderId', modules.updateCategoryOrderId);
 router.post('/module/updateItemsOrderId', modules.updateItemsOrderId);
 router.post('/module/queryByCategory', modules.queryByCategory);
+
 // config配置项管理
 router.post('/config/add', configs.add);
 //router.post('/config/delete', content.delete);
@@ -84,17 +100,16 @@ router.post('/config/addCategory', configs.addCategory);
 router.post('/config/updateCategoryOrderId', configs.updateCategoryOrderId);
 router.post('/config/updateItemsOrderId', configs.updateItemsOrderId);
 router.post('/config/queryByCategory', configs.queryByCategory);
+
 // Settings项管理
 router.post('/settings/add', settings.add);
 router.post('/settings/query', settings.query);
 router.post('/settings/update', settings.update);
-// 操作记录管理
-router.post('/record/add', record.add);
-router.post('/record/delete', record.delete);
-router.post('/record/query', record.query);
-router.post('/record/update', record.update);
+router.post('/settings/queryCategory', settings.queryCategory);
+router.post('/settings/updateItemsOrderId', settings.updateItemsOrderId);
+router.post('/settings/queryByCategory', settings.queryItemsByCategory);
 
-// 开始对接
+// 操作记录管理
 router.post('/home/getSummary',function(req,res,next){
   console.log("test");
   console.log(req.session.username);
@@ -105,12 +120,9 @@ router.post('/syslog/queryByPage', home.querySyslog);            //查询系统�
 router.post('/syslog/queryTotalNum', home.querySyslogTotalNum);  //查询系统操作日志总数
 router.post('/syslog/add', home.addSyslog);                      //新增系统操作日志
 
-router.post('/product/add', product.add);                        //新增产品项
-router.post('/product/update', product.update);                  //更新产品信息
-router.post('/product/queryByPage', product.queryByPage);        //分页查询产品信息
-router.post('/product/queryByRegEx', product.queryByRegEx);      //模糊查询产品信息
-router.post('/product/queryHistory', product.queryHistory);      //查询某产品的历史修改记录
-router.post('/product/queryByModule', product.queryByModule);    //查询配置有某个模块的所有产品
+
+
+
 
 //用于插件预研
 // var jwt = require('../study/jsonwebtokenModule');
