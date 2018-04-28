@@ -13,7 +13,6 @@ var configs = require('../controllers/configManager');
 var settings = require('../controllers/settingsManager');
 var props = require('../controllers/propManager');
 var product = require('../controllers/productManager');
-var record = require('../controllers/record');
 var home = require('../controllers/home');
 var device = require('../controllers/deviceManager');
 var output = require('../common/output');
@@ -56,7 +55,7 @@ router.post('/product/queryByRegEx', product.queryByRegEx);      //模糊查询�
 router.post('/product/queryHistory', product.queryHistory);      //查询某产品的历史修改记录
 router.post('/product/queryByModule', product.queryByModule);    //查询配置有某个模块的所有产品
 router.post('/product/queryBytp', product.queryMKDataByTargetProduct);  //根据targetproduct查询对应的所有modules
-router.post('/product/queryAll', product.queryAll);    
+router.post('/product/queryAll', product.queryAll);
 router.post('/product/queryAllByMachine', product.queryAllByMachine);
 
 //机芯管理

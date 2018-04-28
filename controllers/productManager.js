@@ -59,20 +59,13 @@ exports.queryByModule = function (req, res, next) {
     });
 };
 
+/**
+ * @param {注：查询某个机芯机型的修改历史记录}
+ */
 exports.queryHistory = function (req, res, next) {
     let chip = req.body.chip;
     let model = req.body.model;
     productModel.queryHistory(chip,model,function(err,results) {
-      if(err) {
-        return output.error(req,res,err);
-      }
-      output.success(req,res,"查询产品修改历史表成功",results);
-    });
-};
-
-exports.queryTargetProduct = function (req, res, next) {
-
-    productModel.queryHistory(_chip,_model,function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }

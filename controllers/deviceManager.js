@@ -17,7 +17,8 @@ exports.queryTargetProduct = function (req, res, next) {
 exports.addTargetProduct = function (req, res, next) {
 
     let name = req.body.name;
-    deviceModel.addTargetProduct(name, function(err,results) {
+    let arrObj = req.body.arr;
+    deviceModel.addTargetProduct(name, arrObj, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
