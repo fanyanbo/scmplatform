@@ -99,31 +99,11 @@
 						<div class="col-xs-12">
 							<table class="table table-bordered" id="myPropTable">
 								<tbody>
-									<tr>
-										<td id="myAddModalConfigTableTdBase">
-											<div title="base">基础功能：</div>
-										</td>
-									</tr>
-									<tr>
-										<td id="myAddModalConfigTableTdServerip">
-											<div title="serverip">服务器IP配置：</div>
-										</td>
-									</tr>
-									<tr>
-										<td id="myAddModalConfigTableTdAd">
-											<div title="ad"> 广告配置：</div>
-										</td>
-									</tr>
-									<tr>
-										<td id="myAddModalConfigTableTdChannel">
-											<div title="channel">TV通道：</div>
-										</td>
-									</tr>
-									<tr>
-										<td id="myAddModalConfigTableTdLocalmedia">
-											<div title="localmedia">本地媒体：</div>
-										</td>
-									</tr>
+									<tr><td id="myAddModalConfigTableTdBase"><div title="base">基础功能：</div></td></tr>
+									<tr><td id="myAddModalConfigTableTdServerip"><div title="serverip">服务器IP配置：</div></td></tr>
+									<tr><td id="myAddModalConfigTableTdAd"><div title="ad"> 广告配置：</div></td></tr>
+									<tr><td id="myAddModalConfigTableTdChannel"><div title="channel">TV通道：</div></td></tr>
+									<tr><td id="myAddModalConfigTableTdLocalmedia"><div title="localmedia">本地媒体：</div></td></tr>
 								</tbody>
 							</table>
 						</div>
@@ -166,7 +146,7 @@
 						<label for="configInstr" class="control-label configlable">描述：</label><br/>
 						<textarea id="configInstr" rows="3" cols="" class="configtextarea"></textarea><br/>
 						<label for="configSelect" class="control-label configlable">所属分类：</label><br/>
-						<select id="configSelect" class="configselect"></select>
+						<select id="configSelect" hasvalue="false" class="configselect"></select>
 						<button type="button" hidedata="0" class="btn" id="configSubmit">保存</button>
 						<div id="configErrorInfo"></div>
 					</div>
@@ -210,16 +190,8 @@
 						<label for="sysInstr" class="control-label" style="margin-bottom: 0px;">描述：</label><br/>
 						<textarea id="sysInstr" rows="2" cols="" class="configtextarea"></textarea><br/>
 						<label for="sysSelect" class="control-label" style="margin-bottom: 0px;">所属分类：</label><br/>
-						<select id="sysSelect" class="sysSelect">
-							<option value="App">App</option>
-							<option value="Service">Service</option>
-							<option value="AppStore">AppStore</option>
-							<option value="HomePage">HomePage</option>
-							<option value="IME">IME</option>
-							<option value="SysApp">SysApp</option>
-							<option value="TV">TV</option>
-							<option value="Other">Other</option>
-							<option value="PlayerLibrary">PlayerLibrary</option>
+						<select id="sysSelect" hasvalue="false" class="sysSelect">
+							<!--<option value="Other">Other</option>-->
 						</select>
 						<button type="button" hidedata="0" class="btn" id="sysSubmit">保存</button>
 						<div id="sysErrorInfo"></div>

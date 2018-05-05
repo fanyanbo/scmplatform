@@ -81,23 +81,30 @@ function page6ButtonInitBefore() {
 		console.log(_curIndex0);
 		var _curPart0 = $(".page6AddBtns:eq(" + _curIndex0 + ")").attr("part");
 		console.log(_curPart0);
-		if(_curPart0 == 1){
-			console.log("点击了机芯的增加按钮");
-			document.getElementById("lableText").innerHTML = "输入新增机芯名称：";
-		}else if(_curPart0 == 2){
-			console.log("点击了机型的增加按钮");
-			document.getElementById("lableText").innerHTML = "输入新增机型名称：";
-		}else if(_curPart0 == 3){
-			console.log("点击了芯片型号的增加按钮");
-			document.getElementById("lableText").innerHTML = "输入新增芯片型号名称：";
-		}else if(_curPart0 == 4){
+		if (_curPart0 == 4) {
 			console.log("点击了targetProduct的增加按钮");
-			document.getElementById("lableText").innerHTML = "输入新增TargetProduct名称：";
+			$('#page6Modal2').modal();
+			var node = '{}';
+			sendHTTPRequest("/module/query", node, modelQueryResult2);
+		} else{
+			if(_curPart0 == 1){
+				console.log("点击了机芯的增加按钮");
+				document.getElementById("lableText").innerHTML = "输入新增机芯名称：";
+			}else if(_curPart0 == 2){
+				console.log("点击了机型的增加按钮");
+				document.getElementById("lableText").innerHTML = "输入新增机型名称：";
+			}else if(_curPart0 == 3){
+				console.log("点击了芯片型号的增加按钮");
+				document.getElementById("lableText").innerHTML = "输入新增芯片型号名称：";
+			}else if(_curPart0 == 4){
+				console.log("点击了targetProduct的增加按钮");
+				document.getElementById("lableText").innerHTML = "输入新增TargetProduct名称：";
+			}
+			$('#page6Modal').modal();
+			$("#page6Submit").attr("oldValue"," ");
+			document.getElementById("page6Container").value = "";
 		}
-		$('#page6Modal').modal();
 		$(".modal-backdrop").addClass("new-backdrop");
-		$("#page6Submit").attr("oldValue"," ");
-		document.getElementById("page6Container").value = "";
 	});
 	
 	var _curIndex = "";
@@ -217,6 +224,86 @@ function addOrChangeResult(){
 			}
 		}
 	}
+}
+
+function modelQueryResult2(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				moduleQueryData(data.resultData);
+			}
+		}
+	}
+}
+function moduleQueryData(data) {
+	console.log(data);
+	var kk = 0;
+	var checkId = 0;
+	var firstChecked = "";
+	var _rowAddPageApp = document.getElementById("page6MkApp");
+	var _rowAddPageService = document.getElementById("page6MkService");
+	var _rowAddPageAppStore = document.getElementById("page6MkAppStore");
+	var _rowAddPageHomePage = document.getElementById("page6MkHomePage");
+	var _rowAddPageIME = document.getElementById("page6MkIME");
+	var _rowAddPageSysApp = document.getElementById("page6MkSysApp");
+	var _rowAddPageTV = document.getElementById("page6MkTV");
+	var _rowAddPageOther = document.getElementById("page6MkOther");
+	var _rowAddPagePlayerLibrary = document.getElementById("page6MkPlayerLibrary");
+	_rowAddPageApp.innerHTML = "<div title='App'>App:</div>";
+	_rowAddPageService.innerHTML = "<div title='Service'>Service:</div>";
+	_rowAddPageAppStore.innerHTML = "<div title='AppStore'>AppStore:</div>";
+	_rowAddPageHomePage.innerHTML = "<div title='HomePage'>HomePage:</div>";
+	_rowAddPageIME.innerHTML = "<div title='IME'>IME:</div>";
+	_rowAddPageSysApp.innerHTML = "<div title='SysApp'>SysApp:</div>";
+	_rowAddPageTV.innerHTML = "<div title='TV'>TV:</div>";
+	_rowAddPageOther.innerHTML = "<div title='Other'>Other:</div>";
+	_rowAddPagePlayerLibrary.innerHTML = "<div title='PlayerLibrary'>PlayerLibrary:</div>";
+
+	for(var i = 0; i < data.length; i++) {
+		console.log("lxw " + data[i].category);
+		if(data[i].category == "App") {
+			kk = i;
+			mkDataInsert(kk, _rowAddPageApp, data);
+		} else if(data[i].category == "Service") {
+			kk = i;
+			mkDataInsert(kk, _rowAddPageService, data);
+		} else if(data[i].category == "AppStore") {
+			kk = i;
+			mkDataInsert(kk, _rowAddPageAppStore, data);
+		} else if(data[i].category == "HomePage") {
+			kk = i;
+			mkDataInsert(kk, _rowAddPageHomePage, data);
+		} else if(data[i].category == "IME") {
+			kk = i;
+			mkDataInsert(kk, _rowAddPageIME, data);
+		} else if(data[i].category == "SysApp") {
+			kk = i;
+			if(data[i].engName == "SkyMirrorPlayer") {
+				_rowAddPageSysApp.innerHTML += "<div class='col-xs-3'><input type='checkbox' value='' disabled><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+			} else {
+				mkDataInsert(kk, _rowAddPageSysApp, data);
+			}
+		} else if(data[i].category == "TV") {
+			kk = i;
+			mkDataInsert(kk, _rowAddPageTV, data);
+		} else if(data[i].category == "Other") {
+			kk = i;
+			mkDataInsert(kk, _rowAddPageOther, data);
+		} else if(data[i].category == "PlayerLibrary") {
+			checkId++;
+			kk = i;
+			if(checkId == 1) {
+				firstChecked = "page2Checked" + data[kk].id;
+			}
+			_rowAddPagePlayerLibrary.innerHTML += "<div class='col-xs-3'><input type='radio' name='PlayerLibrary' id='page2Checked" + data[kk].id + "' value=''><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+			document.getElementById(firstChecked).setAttribute('checked', '');
+		}
+	}
+}
+function mkDataInsert(kk, obj, data) {
+	obj.innerHTML += "<div class='col-xs-3'><input type='checkbox' value=''><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 }
 /*刷新页面*/
 function freshHtml() {

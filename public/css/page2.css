@@ -225,3 +225,14 @@
 #page2_table2 .new_productBox .operate span{
 	margin-right: 5px;
 }
+
+.grouptitle{
+	display: inherit;
+	font-size: 20px;
+	/*color: brown;*/
+	/*color: chocolate;*/
+	color: firebrick;
+	/*color: orangered;*/
+	/*color: maroon;*/
+	padding-bottom: 5px;
+}

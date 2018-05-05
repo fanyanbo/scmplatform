@@ -56,6 +56,7 @@ function buttonInitAfter(){
 	$(".edit_box1").click(function(){
 		var _curIndex = "";
 		var _thisKey = "";
+		var _thisLevel= "";
 		var _curId = "";
 		var _ajaxUrl = "";
 		var _node = "{}";
@@ -64,13 +65,17 @@ function buttonInitAfter(){
 		_curId = $("#tabClickIndex").attr("curId");
 		console.log(_curIndex + "---" + _thisKey);
 		if (_curId == 0) {
+			_node = '{"category":"' + _thisKey + '"}';
 			_ajaxUrl = "/config/queryByCategory";
 		} else if(_curId == 1||_curId == 2||_curId == 3||_curId == 4){
-			_ajaxUrl = "/sys/queryCategory";
+			_thisLevel = $(".edit_box1")[_curIndex].getAttribute("level");
+			_node = '{"category":"' + _thisKey + '","level":"' + _thisLevel + '"}';
+			_ajaxUrl = "/settings/queryByCategory";
 		} else if(_curId == 5){
+			_node = '{"category":"' + _thisKey + '"}';
 			_ajaxUrl = "/module/queryByCategory";
 		}
-		_node = '{"category":"' + _thisKey + '"}';
+		console.log(_node);
 		sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
 	});
 }
@@ -112,13 +117,37 @@ function addCategoryResult(){
 function editEachPage(num,array){
 	console.log(num+"--------"+array);
 	$(".page8_tabs:eq(" + (num) + ")").attr("hasvalue","true");
-	var insertTable = "";
-	var _eachTableItem = "";
-	_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
-	for (var i=0; i<array.length; i++) {
-		_eachTableItem += "<tr><td class='col-xs-4'>"+(i+1)+"</td><td class='col-xs-4'>"+array[i].category+"</td><td class='col-xs-4'><a class='edit_box1' tablename = "+array[i].category+">编辑</a></td></tr>";
+	if(num==0||num==5){
+		var insertTable = "";
+		var _eachTableItem = "";
+		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
+		for (var i=0; i<array.length; i++) {
+			_eachTableItem += "<tr><td class='col-xs-4'>"+(i+1)+"</td><td class='col-xs-4'>"+array[i].category+"</td><td class='col-xs-4'><a class='edit_box1' tablename = "+array[i].category+">编辑</a></td></tr>";
+		}
+		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
+	}else if(num==1||num==2||num==3||num==4){
+		
+		var sysSettingArray = ["系统设置","信号源工具箱","卖场演示","中间件"];
+		var insertTable = "";
+		var _eachTableItem = "";
+		var kk = 0;
+		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
+		for (var i=0; i<array.length; i++) {
+			if (array[i].level1 == sysSettingArray[num-1]) {
+				kk++;
+				console.log(array[i].level3 == "");
+				if (array[i].level3 == "") {
+					console.log("level3为空。" + array[i].level2 +"---"+array[i].level3);
+					_eachTableItem += "<tr><td class='col-xs-4'>"+kk+"</td><td class='col-xs-4'>"+array[i].level2+"</td><td class='col-xs-4'><a class='edit_box1' level = 'level2' tablename = "+array[i].level2+">编辑</a></td></tr>";
+				} else{
+					console.log("level3不为空。" + array[i].level2 +"---"+array[i].level3);
+					_eachTableItem += "<tr><td class='col-xs-4'>"+kk+"</td><td class='col-xs-4'>"+array[i].level2+"-"+array[i].level3+"</td><td class='col-xs-4'><a class='edit_box1' level = 'level3' tablename = "+array[i].level3+">编辑</a></td></tr>";
+				}
+			}
+		}
+		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
 	}
-	$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
+	
 }
 
 function creatTableByData(data){
@@ -216,7 +245,7 @@ function changeSubmit(){
 	if (_curId == 0) {
 		_ajaxUrl = "/config/updateItemsOrderId";
 	} else if(_curId == 1||_curId == 2||_curId == 3||_curId == 4){
-		_ajaxUrl = "/sys/updateCategory";
+		_ajaxUrl = "/settings/updateItemsOrderId";
 	} else if(_curId == 5){
 		_ajaxUrl = "/module/updateItemsOrderId";
 	}
@@ -234,11 +263,12 @@ function changeSubmit(){
 		_node.push(_objItem);
 	}
 	console.log(_node);
-//	_node = JSON.stringify(_node);
+	_node = JSON.stringify(_node);
 //	console.log(_node);
 //	_node = _node.toString();
 //	console.log(_node);
-	_node2 = '{"arr":"aaa"}';
+	_node2 = '{"arr":' + _node + '}';
+//	_node2 = '{"arr": [{"engName":"BOOT_AD","orderId":"1"},{"engName":"SUPPORT_POWER_OFF_AD","orderId":"2"}]}';
 //	_node = '{"category":"' + _thisKey + '"}';
 	console.log(_node2);
 	sendHTTPRequest(_ajaxUrl, _node2, updateCategoryResult);
@@ -278,7 +308,7 @@ function tabsClick(num){
 		if (num == 0) {
 			ajaxUrl = "/config/queryCategory";
 		} else if(num == 1||num == 2||num == 3||num == 4){
-			ajaxUrl = "/sys/queryCategory";
+			ajaxUrl = "/settings/queryCategory";
 		} else if(num == 5){
 			ajaxUrl = "/module/queryCategory";
 		}

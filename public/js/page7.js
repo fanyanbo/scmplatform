@@ -189,36 +189,36 @@ function settingQueryResult() {
 				
 				for(var i = 0; i < data.resultData.length; i++) {
 					kk = i;
-					if(data.resultData[i].category1 == "系统设置") {
-						if(data.resultData[i].category2 == "开机引导") {
+					if(data.resultData[i].level1 == "系统设置") {
+						if(data.resultData[i].level2 == "开机引导") {
 							_rowSysSBoot.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].category2 == "设置入口页") {
+						} else if(data.resultData[i].level2 == "设置入口页") {
 							_rowSysSSetting.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].category2 == "网络与连接") {
+						} else if(data.resultData[i].level2 == "网络与连接") {
 							_rowSysSNet.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].category2 == "图像设置") {
+						} else if(data.resultData[i].level2 == "图像设置") {
 							_rowSysSPicture.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].category2 == "声音设置") {
+						} else if(data.resultData[i].level2 == "声音设置") {
 							_rowSysSSound.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].category2 == "通用设置") {
+						} else if(data.resultData[i].level2 == "通用设置") {
 							_rowSysSGeneral.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
 						}
-					} else if(data.resultData[i].category1 == "信号源工具箱") {
-						if(data.resultData[i].category2 == "快捷功能") {
+					} else if(data.resultData[i].level1 == "信号源工具箱") {
+						if(data.resultData[i].level2 == "快捷功能") {
 							_rowSourceBoxQuick.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='2' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].category2 == "常用设置") {
+						} else if(data.resultData[i].level2 == "常用设置") {
 							_rowSourceBoxGeneral.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='2' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
 						}
-					} else if(data.resultData[i].category1 == "卖场演示") {
-						if(data.resultData[i].category2 == "声音演示") {
+					} else if(data.resultData[i].level1 == "卖场演示") {
+						if(data.resultData[i].level2 == "声音演示") {
 							_rowMarketShowSound.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='3' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].category2 == "图像演示") {
+						} else if(data.resultData[i].level2 == "图像演示") {
 							_rowMarketShowPicture.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='3' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
 						}
-					} else if(data.resultData[i].category1 == "中间件") {
-						if(data.resultData[i].category2 == "输入信号源") {
+					} else if(data.resultData[i].level1 == "中间件") {
+						if(data.resultData[i].level2 == "输入信号源") {
 							_rowMiddleware1.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='4' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
-						} else if(data.resultData[i].category2 == "支持纵横比") {
+						} else if(data.resultData[i].level2 == "支持纵横比") {
 							_rowMiddleware2.innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='4' hidedata='" + JSON.stringify(data.resultData[kk]) + "' title='" + data.resultData[kk].engName + "' name='" + data.resultData[kk].engName + "'>" + data.resultData[kk].cnName + "</a></div>";
 						}
 					}
