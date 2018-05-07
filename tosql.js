@@ -320,11 +320,10 @@ function convert_products_table(dbo)
 				for (var k in data.mkFile)
 				{
 					sqltext =  "insert into mkdata ";
-					sqltext += "(targetProduct, engName, selected) values \n    ";
+					sqltext += "(targetProduct, engName) values \n    ";
 					sqltext += "(";
 					sqltext += '\"' + data.targetProduct + '\", ';
-					sqltext += '\"' + data.mkFile[k].engName + '\", ';
-					sqltext += "1";
+					sqltext += '\"' + data.mkFile[k].engName + '\" ';
 
 					sqltext += ");\n";
 

@@ -8,13 +8,17 @@ var dbparam = {
 		database: 'scm', 
 	};
 	
+var os = require('os');
+var fs = require('fs');
 var writer = require("./writer");
-	
+var settingfiles = require("./settingfiles");
+
 var connection;							// 数据库连接
 var infos;								// 所有机型信息表
 var targets;							// 所有机型targetProduct表
 var info_cnt = 0;						// 所有机型信息表计数器
 var target_cnt = 0;						// targetProduct表格计算器
+var tempdir = "";                       // 临时文件夹
 
 var i, j, k;
 var generator = new Generator();
@@ -80,39 +84,15 @@ function CreateInfo(chip, model)
 	
 	newinfo.list[1] = new Object;
 	newinfo.list[1].type = "system_settings";	// 系统设置
-	newinfo.list[1].tmpFileName = "";			// 生成的文件名(临时文件)
+	newinfo.list[1].tmpFileName = new Array;    // 生成的文件名(临时文件)
 	newinfo.list[1].needConfig = true;
 	newinfo.list[1].result = new Object;
-	
+
 	newinfo.list[2] = new Object;
-	newinfo.list[2].type = "source_toolbox";	// 信号源工具箱
+	newinfo.list[2].type = "prop";				// 属性列表
 	newinfo.list[2].tmpFileName = "";			// 生成的文件名(临时文件)
 	newinfo.list[2].needConfig = true;
 	newinfo.list[2].result = new Object;
-	
-	newinfo.list[3] = new Object;
-	newinfo.list[3].type = "sky_tv";			// SKY_TV
-	newinfo.list[3].tmpFileName = "";			// 生成的文件名(临时文件)
-	newinfo.list[3].needConfig = true;
-	newinfo.list[3].result = new Object;
-	
-	newinfo.list[4] = new Object;
-	newinfo.list[4].type = "demo";				// DEMO
-	newinfo.list[4].tmpFileName = "";			// 生成的文件名(临时文件)
-	newinfo.list[4].needConfig = true;
-	newinfo.list[4].result = new Object;
-	
-	newinfo.list[5] = new Object;
-	newinfo.list[5].type = "midware";			// 中间件
-	newinfo.list[5].tmpFileName = "";			// 生成的文件名(临时文件)
-	newinfo.list[5].needConfig = true;
-	newinfo.list[5].result = new Object;
-	
-	newinfo.list[6] = new Object;
-	newinfo.list[6].type = "prop";				// 属性列表
-	newinfo.list[6].tmpFileName = "";			// 生成的文件名(临时文件)
-	newinfo.list[6].needConfig = true;
-	newinfo.list[6].result = new Object;
 	
 	return newinfo;
 } 
@@ -212,42 +192,15 @@ function step_query_all_config(connection)
 	}
 	else if (list[configid].type == "system_settings")
 	{
-		sqltext = "select count(*) from configdata where chip=\"" + 
+		sqltext = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText " 
+		        + " from settingsdata a, settings b where a.engName = b.engName and a.chip = \"" + 
 				infos[info_cnt].chip + "\"" + 
-				" and model=\"" +
-				infos[info_cnt].model + "\";";
-	}
-	else if (list[configid].type == "source_toolbox")
-	{
-		sqltext = "select count(*) from configdata where chip=\"" + 
-				infos[info_cnt].chip + "\"" + 
-				" and model=\"" +
-				infos[info_cnt].model + "\";";
-	}
-	else if (list[configid].type == "sky_tv")
-	{
-		sqltext = "select count(*) from configdata where chip=\"" + 
-				infos[info_cnt].chip + "\"" + 
-				" and model=\"" +
-				infos[info_cnt].model + "\";";
-	}
-	else if (list[configid].type == "demo")
-	{
-		sqltext = "select count(*) from configdata where chip=\"" + 
-				infos[info_cnt].chip + "\"" + 
-				" and model=\"" +
-				infos[info_cnt].model + "\";";
-	}
-	else if (list[configid].type == "midware")
-	{
-		sqltext = "select count(*) from configdata where chip=\"" + 
-				infos[info_cnt].chip + "\"" + 
-				" and model=\"" +
+				" and a.model=\"" +
 				infos[info_cnt].model + "\";";
 	}
 	else if (list[configid].type == "prop")
 	{
-		sqltext = "select count(*) from configdata where chip=\"" + 
+		sqltext = "select engName, curValue from propsdata where chip = \"" + 
 				infos[info_cnt].chip + "\"" + 
 				" and model=\"" +
 				infos[info_cnt].model + "\";";
@@ -270,7 +223,7 @@ function step_query_all_config(connection)
 		console.log(typeof(result));
 		
 		infos[info_cnt].curConfigId++;
-		if (infos[info_cnt].curConfigId >= 7)
+		if (infos[info_cnt].curConfigId >= 3)
 		{
 			infos[info_cnt].curConfigId = 0;
 			info_cnt++;
@@ -293,7 +246,7 @@ function step_query_mkdata_item(connection)
 	{
 		var curTargetProduct = targets[target_cnt].name;
 		var result = 0;
-		var sql = "select a.engName,a.selected,b.cnName,b.gitPath from mkdata a, modules b where a.engName = b.engName and a.targetProduct=\"" + 
+		var sql = "select a.engName,b.cnName,b.gitPath,b.category from mkdata a, modules b where a.engName = b.engName and a.targetProduct=\"" + 
 					curTargetProduct + "\";";
 					
 		connection.query(sql, function (err, result){
@@ -304,13 +257,10 @@ function step_query_mkdata_item(connection)
 			
 			for (j in result)
 			{
-				if (result[j].selected != 0)
-				{
-					targets[target_cnt].mklist[j] = result[j].name;
-				}
+                targets[target_cnt].mklist[j] = result[j];
 			}
 			
-			//console.log(result);
+			//console.log(result[j]);
 			
 			target_cnt++;
 			
@@ -334,17 +284,17 @@ function generate_files()
 	{
 		if (infos[k].chip == "")
 			break;
-		var temp_config_filename =  getTmpDir() + "/temp_general_config_" + infos[k].chip + "_" + infos[k].model + "_" + randValue + ".txt";
-		//var temp_mk_filename =  getTmpDir() + "/temp_android_mk_" + infos[k].chip + "_" + infos[k].model + "_" + randValue + ".txt";
+		var temp_config_filename = getTempGernalConfigFileName(infos[k].chip, infos[k].model);
 		
 		var list = infos[k].list;
 		for (var L in list)
-		{
+		{   
 			var curitem = list[L];
+			var result = curitem.result;
+			
 			if (curitem.type == "general_config")
 			{
-				var result = curitem.result;
-				console.log(result);
+				//console.log(result);
 				writer.writeGeneralConfigStart(temp_config_filename);
 				for (var M in result)
 				{
@@ -355,18 +305,7 @@ function generate_files()
 			}
 			else if (curitem.type == "system_settings")
 			{
-			}
-			else if (curitem.type == "source_toolbox")
-			{
-			}
-			else if (curitem.type == "sky_tv")
-			{
-			}
-			else if (curitem.type == "demo")
-			{
-			}
-			else if (curitem.type == "midware")
-			{
+			    settingfiles.generate(infos[k].chip, infos[k].model, curitem, getTmpDir());
 			}
 			else if (curitem.type == "prop")
 			{
@@ -380,16 +319,64 @@ function generate_files()
 		/*
 		
 		*/
+	}
+	
+	for (x in targets)
+	{
+		var curtarget = targets[x];
 		
-		
-		
-		
-		
+		console.log(curtarget);
+		generateMkFile(curtarget);
 	}
 	
 	
 }
 
+
+function generateMkFile(targetinfo)
+{
+    let playerType = "";
+    let targetName = targetinfo.name;
+    let mkList = targetinfo.mklist;
+    
+    var mk_filename = getTempMkFileName(targetName);
+    
+	for (let i in mkList)
+	{
+		var category = mkList[i].category;
+		if (category == "PlayerLibrary")
+		{
+			playerType = mkList[i].gitPath;
+		}
+	}
+	
+	console.log("playerType = " + playerType);
+	
+	writer.writeAndroidmkStart(mk_filename, playerType);
+	for (var k in mkList)
+	{
+		var category = mkList[k].category;
+		if (category != "PlayerLibrary")
+		{
+			//console.log("mk: " + JSON.stringify(mkList[k]));
+			var path = mkList[k].gitPath;
+			writer.writeAndroidmkItem(mk_filename, path);
+		}
+	}
+	writer.writeAndroidmkEnd(mk_filename);
+	
+}
+
+
+function getTempGernalConfigFileName(chip, model)
+{
+    return getTmpDir() + chip + "_" + model + "-general_config" + ".xml";
+}
+
+function getTempMkFileName(targetProductName)
+{
+    return getTmpDir() + targetProductName + "-mk" + ".mk";
+}
 
 function getGitDir(systemVersion)
 {
@@ -413,9 +400,40 @@ function getGitBranch(systemVersion)
 
 function getTmpDir()
 {
-	var os = require('os');
-	//console.log(os.tmpdir());
-	return os.tmpdir();
+    if (tempdir == "")
+    {        
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth()+1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+        let curtimestr = "scmplatform_" + year + "" + month + "" + day + "-" + hour + "" + minute + "" + second;
+        let randValue = Math.ceil(1000 * Math.random());
+        
+        console.log(curtimestr + "_" + randValue);
+
+        tempdir = os.tmpdir();
+        if (os.platform() == "win32")
+        {
+            tempdir += "\\";
+            tempdir += curtimestr + "_" + randValue;
+            
+            fs.mkdirSync(tempdir);
+            tempdir += "\\";
+            
+        }
+        else
+        {
+            tempdir += "/";
+            tempdir += curtimestr + "_" + randValue;
+            
+            fs.mkdirSync(tempdir);
+            tempdir += "/";
+        }
+    }
+	return tempdir;
 }
 
 
@@ -424,7 +442,7 @@ function getTmpDir()
 //		{"chip":"5S02", "model":"15U" }
 //	];
 
-var info = {"chip":"8H87", "model":"G7200" };
+var info = {"chip":"5S02", "model":"15U" };
 
 generator.generate(info, "Rel6.0", null);
 
