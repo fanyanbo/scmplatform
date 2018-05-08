@@ -49,7 +49,9 @@ ModuleModel.prototype.add = function (engName, cnName, category, gitPath, desc, 
   ep.all('event1', 'event2', function (data1, data2) {
 
       let sql = "INSERT INTO modules(engName,cnName,category,gitPath,descText,orderId) values (?,?,?,?,?,?)";
+      console.log(sql);
       let sql_param = [engName,cnName,category,gitPath,desc,_orderId];
+      console.log(sql_param);
       db.conn.query(sql,sql_param,function(err,rows,fields){
         if (err) return ep.emit('error', err);
         return callback(null, "addModuleData OK");
