@@ -338,14 +338,34 @@ function setting_picture_sound(sqlresult, chip, model, tmpdir)
 	fs.appendFileSync(tmpFileName, '    <SettingItem name="SKY_CFG_TV_PIC_SOUND_SETTING" type="TYPE_TITLE" transparent="true">\n');
     
     
-    let j = 0, class1_cnt = 0;
+    let j = 0;
+    let class1_cnt = 0;
+    let picture_reset_done = false;                             // 图像设置恢复出厂设置,是否已经写入
     for (let i in fileinfo)
     {
         if (curClass1 != fileinfo[i].xmlNode1)
         {
             if (i != 0)
             {
+                if (j != 0)
+                {
+                    fs.appendFileSync(tmpFileName, '            </SettingItem>\n');
+                }
+                
+                if (!picture_reset_done)
+                {
+                    fs.appendFileSync(tmpFileName, '            <!-- 图像恢复默认 -->\n');
+			        fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG"></SettingItem>\n');
+			        picture_reset_done = true;
+                }
+                else
+                {
+                    fs.appendFileSync(tmpFileName, '            <!-- 声音恢复默认 -->\n');
+			        fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_RESET" type="TYPE_DIALOG"></SettingItem>\n');
+                }
+                
                 fs.appendFileSync(tmpFileName, '        </SettingItem>\n\n');
+                
             }
             
             if (fileinfo[i].xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
@@ -420,9 +440,22 @@ function setting_picture_sound(sqlresult, chip, model, tmpdir)
         fs.appendFileSync(tmpFileName, fileinfo[i].xmlText);
         fs.appendFileSync(tmpFileName, "\n");
     }
-    //fs.appendFileSync(tmpFileName, '    </' + curClass + '>\n\n');
     
+    fs.appendFileSync(tmpFileName, '            </SettingItem>   \n');
     
+    if (!picture_reset_done)
+    {
+        fs.appendFileSync(tmpFileName, '            <!-- 图像恢复默认 -->\n');
+        fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG"></SettingItem>\n');
+        picture_reset_done = true;
+    }
+    else
+    {
+        fs.appendFileSync(tmpFileName, '            <!-- 声音恢复默认 -->\n');
+        fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_RESET" type="TYPE_DIALOG"></SettingItem>\n');
+    }
+                
+    fs.appendFileSync(tmpFileName, '        </SettingItem>   \n');
     fs.appendFileSync(tmpFileName, '    </SettingItem>  \n');
     fs.appendFileSync(tmpFileName, "</SettingItem>  \n\n\n\n\n");
 }
