@@ -131,7 +131,7 @@ DeviceModel.prototype.addTargetProduct = function (value, callback) {
       callback(err,null);
   });
 
-  ep.after('insert_result', arr.length + 1, function (list) { // 所有查询的内容都存在list数组中
+  ep.after('insert_result', arr.length + 1, function (list) { // 注意：长度是arr.length + 1
       callback(null,"addTargetProduct OK");
   });
 

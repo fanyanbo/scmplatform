@@ -81,17 +81,6 @@ ProductModel.prototype.queryMKDataByTargetProduct = function (targetproduct, cal
   });
 }
 
-ProductModel.prototype.newAndSave = function(userName, action, detail, callback) {
-  let sql = "insert into syslog(userName, action, detail) values (?,?,?)";
-  let sql_params = [userName,action,detail];
-  db.conn.query(sql,sql_params,function(err,rows,fields) {
-      if(err) {
-        return callback(err);
-      }
-      callback(null,rows);
-  });
-}
-
 ProductModel.prototype.queryAll = function (callback) {
   let ep = new eventproxy();
   let sql_list = [
