@@ -38,6 +38,8 @@ function write_setting_main_xml(sqlresult, chip, model, tmpdir)
     var fileinfo = new Array();
     var tmpFileName = tmpdir + chip + "_" + model + "-setting_main.xml";
     
+    writerlog.w("生成临时的 setting_main.xml \n");
+    
     x = 0;
     for (let i in sqlresult)
     {
@@ -75,6 +77,8 @@ function write_setting_guide_xml(sqlresult, chip, model, tmpdir)
     var x;
     var fileinfo = new Array();
     var tmpFileName = tmpdir + chip + "_" + model + "-setting_guide.xml";
+    
+    writerlog.w("生成临时的 setting_guide.xml \n");
     
     x = 0;
     for (let i in sqlresult)
@@ -139,6 +143,8 @@ function write_setting_connect_xml(sqlresult, chip, model, tmpdir)
     var fileinfo = new Array();
     var tmpFileName = tmpdir + chip + "_" + model + "-setting_connect.xml";
     
+    writerlog.w("生成临时的 setting_connect.xml \n");
+    
     x = 0;
     for (let i in sqlresult)
     {
@@ -176,6 +182,8 @@ function write_market_show_configuration_xml(sqlresult, chip, model, tmpdir)
     var x;
     var fileinfo = new Array();
     var tmpFileName = tmpdir + chip + "_" + model + "-market_show_configuration.xml";
+    
+    writerlog.w("生成临时的 market_show_configuration.xml \n");
     
     x = 0;
     for (let i in sqlresult)
@@ -215,6 +223,8 @@ function write_setting_general_xml(sqlresult, chip, model, tmpdir)
     var curClass = "";
     var fileinfo = new Array();
     var tmpFileName = tmpdir + chip + "_" + model + "-setting_general.xml";
+    
+    writerlog.w("生成临时的 setting_general.xml \n");
     
     x = 0;
     for (let i in sqlresult)
@@ -266,6 +276,8 @@ function write_ssc_item_xml(sqlresult, chip, model, tmpdir)
     var curClass = "";
     var fileinfo = new Array();
     var tmpFileName = tmpdir + chip + "_" + model + "-ssc_item.xml";
+    
+    writerlog.w("生成临时的 ssc_item.xml \n");
     
     x = 0;
     for (let i in sqlresult)
@@ -321,6 +333,8 @@ function setting_picture_sound(sqlresult, chip, model, tmpdir)
     var curMainClass = "";
     var add_SKY_CFG_TV_PICTURE_MODE = false;
     var add_SKY_CFG_TV_SOUND_MODE = false;
+    
+    writerlog.w("生成临时的 setting_picture_sound.xml \n");
     
     x = 0;
     for (let i in sqlresult)
@@ -475,6 +489,8 @@ function write_midware_ini(sqlresult, chip, model, tmpdir)
     var fileinfo = new Array();
     var tmpFileName = tmpdir + chip + "_" + model + "-driverbase_net_config.ini";
     
+    writerlog.w("生成临时的 driverbase_net_config.ini \n");
+    
     x = 0;
     for (let i in sqlresult)
     {
@@ -519,6 +535,8 @@ function write_prop_file(sqlresult, chip, model, tmpdir)
     var curClass = "";
     var fileinfo = new Array();
     var tmpFileName = tmpdir + chip + "_" + model + "-build.prop";
+           
+    writerlog.w("生成临时的  build.prop  \n");
            
     fs.writeFileSync(tmpFileName, ' \n');
     
