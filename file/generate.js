@@ -309,6 +309,7 @@ function generate_files()
 			}
 			else if (curitem.type == "prop")
 			{
+			    settingfiles.generate(infos[k].chip, infos[k].model, curitem, getTmpDir());
 			}
 			else 
 				continue;
