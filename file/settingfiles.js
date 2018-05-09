@@ -21,6 +21,7 @@ SettingFiles.prototype.generate = function(chip, model, obj, tmpdir)
     write_setting_general_xml(obj.result, chip, model, tmpdir);
     write_ssc_item_xml(obj.result, chip, model, tmpdir);
     setting_picture_sound(obj.result, chip, model, tmpdir);
+    write_midware_ini(obj.result, chip, model, tmpdir);
 }
 
 // setting_main.xml
@@ -425,7 +426,6 @@ function setting_picture_sound(sqlresult, chip, model, tmpdir)
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_OUTPUT_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
-                
             else
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="' + fileinfo[i].xmlNode2 + '" type="TYPE_GROUP_ROOT" transparent="true">\n');
             curClass2 = fileinfo[i].xmlNode2;
@@ -459,6 +459,55 @@ function setting_picture_sound(sqlresult, chip, model, tmpdir)
     fs.appendFileSync(tmpFileName, '    </SettingItem>  \n');
     fs.appendFileSync(tmpFileName, "</SettingItem>  \n\n\n\n\n");
 }
+
+// driverbase_net_config.ini
+function write_midware_ini(sqlresult, chip, model, tmpdir)
+{
+    var x;
+    var curClass = "";
+    var fileinfo = new Array();
+    var tmpFileName = tmpdir + chip + "_" + model + "-driverbase_net_config.ini";
+    
+    x = 0;
+    for (let i in sqlresult)
+    {
+        let item = sqlresult[i];
+        
+        //console.log(item);
+        //console.log("AAAAAAAA : " + item.xmlFileName);
+        
+        if (item.xmlFileName == "driverbase_net_config.ini")
+        {
+            //console.log(item);
+            //console.log("AAAAAAAA : " + item.xmlFileName);
+            fileinfo[x] = item;
+            x++;
+        }
+    }
+        
+    fs.writeFileSync(tmpFileName, ' \n');
+    
+    for (let i in fileinfo)
+    {
+        if (curClass != fileinfo[i].xmlNode1)
+        {
+            let iniCollect;
+            if (fileinfo[i].xmlNode1 == "输入信号源")
+                iniCollect = "SOURCE";
+            else
+                iniCollect = "SCALE";
+            fs.appendFileSync(tmpFileName, '[' + iniCollect + ']\n');
+            curClass = fileinfo[i].xmlNode1;
+        }
+        
+        fs.appendFileSync(tmpFileName, fileinfo[i].engName + ' = true\n');
+    }
+    
+}
+
+
+
+
 
 
 var settingfiles = new SettingFiles();
