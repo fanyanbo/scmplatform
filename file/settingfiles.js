@@ -1,7 +1,7 @@
 var fs = require('fs');
+var writerlog = require("./filelog");
 
 function SettingFiles(){}
-
 
 ////  测试时
 
