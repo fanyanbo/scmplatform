@@ -97,7 +97,10 @@ ProductModel.prototype.queryAll = function (callback) {
   let sql_list = [
                   "SELECT * FROM configs",
                   "SELECT * FROM modules",
-                  "SELECT * FROM settings"
+                  "SELECT * FROM settings",
+                  "SELECT * FROM configcategory order by orderId",
+                  "SELECT * FROM mkcategory order by orderId"
+                  //预留设置部分分类查询
                 ];
 
   ep.bind('error', function (err) {
@@ -113,6 +116,29 @@ ProductModel.prototype.queryAll = function (callback) {
       for(let i in list){
         listObject.push(list[i]);
       }
+      let settingsCategory = [
+        {level1:"系统设置", level2:"设置入口页", level3:""},
+        {level1:"系统设置", level2:"开机引导", level3:""},
+        {level1:"系统设置", level2:"网络与连接", level3:""},
+        {level1:"系统设置", level2:"通用设置", level3:"个性化设置"},
+        {level1:"系统设置", level2:"通用设置", level3:"系统设置"},
+        {level1:"系统设置", level2:"通用设置", level3:"位置与安全"},
+        {level1:"系统设置", level2:"图像设置", level3:"基础设置"},
+        {level1:"系统设置", level2:"图像设置", level3:"高级亮度设置"},
+        {level1:"系统设置", level2:"图像设置", level3:"彩色设置"},
+        {level1:"系统设置", level2:"图像设置", level3:"高级清晰度设置"},
+        {level1:"系统设置", level2:"图像设置", level3:"运动设置"},
+        {level1:"系统设置", level2:"声音设置", level3:"基础设置"},
+        {level1:"系统设置", level2:"声音设置", level3:"声音输出设置"},
+        {level1:"系统设置", level2:"声音设置", level3:"ATMOS专业音效设置"},
+        {level1:"信号源工具箱", level2:"快捷功能", level3:""},
+        {level1:"信号源工具箱", level2:"常用设置", level3:""},
+        {level1:"卖场演示", level2:"声音演示", level3:""},
+        {level1:"卖场演示", level2:"图像演示", level3:""},
+        {level1:"中间件", level2:"输入信号源", level3:""},
+        {level1:"中间件", level2:"支持纵横比", level3:""}
+      ];
+      listObject.push(settingsCategory);
       callback(null,listObject);
   });
 
