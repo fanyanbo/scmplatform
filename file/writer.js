@@ -1,4 +1,5 @@
 var fs = require('fs');
+var writerlog = require("./filelog");
 
 function Writer(){}
 

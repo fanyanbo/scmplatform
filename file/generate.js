@@ -12,6 +12,7 @@ var os = require('os');
 var fs = require('fs');
 var writer = require("./writer");
 var settingfiles = require("./settingfiles");
+var writerlog = require("./filelog");
 
 var connection;							// 数据库连接
 var infos;								// 所有机型信息表
@@ -40,6 +41,8 @@ Generator.prototype.generate = function(
 	var type = Object.prototype.toString.call(machines);
 	
 	infoTxt = "";
+	
+	writerlog.checkLogFile();
 	
 	if (type == "[object Array]")
 	{
@@ -145,11 +148,16 @@ function step_query_targetProduct(connection)
 				" and model=\"" + 
 				infos[info_cnt].model + "\";";
 				
+	writerlog.w("开始查询: " + sql + "\n");
+				
 	connection.query(sql,function (err, result){
 		if(err){
-			console.log('[SELECT ERROR] - ',err.message);
+			console.log('[SELECT ERROR] - ', err.message);
+			writerlog.w("查询出错: " + err.message + "\n");
 			return;
 		}
+		
+		writerlog.w("SQL查询成功\n");
 		
 		var curTargetProduct = result[0].targetProduct;
 		if (typeof(curTargetProduct) == "undefined" || curTargetProduct == "")
@@ -208,13 +216,17 @@ function step_query_all_config(connection)
 	else 
 		return;
 
+    writerlog.w("开始查询: " + sqltext + "\n");
 
 	connection.query(sqltext, function (err, result) {
 		if(err)
 		{
 			console.log('[SELECT ERROR] - ', err.message);
+			writerlog.w("查询出错: " + err.message + "\n");
 			return;
 		}
+		
+		writerlog.w("SQL查询成功\n");
 		
 		infos[info_cnt].list[configid].result = result;
 		
@@ -249,11 +261,16 @@ function step_query_mkdata_item(connection)
 		var sql = "select a.engName,b.cnName,b.gitPath,b.category from mkdata a, modules b where a.engName = b.engName and a.targetProduct=\"" + 
 					curTargetProduct + "\";";
 					
+		writerlog.w("开始查询: " + sql + "\n");
+					
 		connection.query(sql, function (err, result){
 			if(err){
 				console.log('[SELECT ERROR] - ', err.message);
+				writerlog.w("查询出错: " + err.message + "\n");
 				return;
 			}
+			
+			writerlog.w("SQL查询成功\n");
 			
 			for (j in result)
 			{
@@ -309,6 +326,7 @@ function generate_files()
 			}
 			else if (curitem.type == "prop")
 			{
+			    settingfiles.generate(infos[k].chip, infos[k].model, curitem, getTmpDir());
 			}
 			else 
 				continue;

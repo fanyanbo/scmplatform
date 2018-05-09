@@ -1,7 +1,7 @@
 var fs = require('fs');
+var writerlog = require("./filelog");
 
 function SettingFiles(){}
-
 
 ////  测试时
 
@@ -14,14 +14,21 @@ SettingFiles.prototype.generate = function(chip, model, obj, tmpdir)
     //console.log(obj);
     console.log(tmpdir);
     
-    write_setting_main_xml(obj.result, chip, model, tmpdir);
-    write_setting_guide_xml(obj.result, chip, model, tmpdir);
-    write_setting_connect_xml(obj.result, chip, model, tmpdir);
-    write_market_show_configuration_xml(obj.result, chip, model, tmpdir);
-    write_setting_general_xml(obj.result, chip, model, tmpdir);
-    write_ssc_item_xml(obj.result, chip, model, tmpdir);
-    setting_picture_sound(obj.result, chip, model, tmpdir);
-    write_midware_ini(obj.result, chip, model, tmpdir);
+    if (obj.type == "system_settings")
+    {
+        write_setting_main_xml(obj.result, chip, model, tmpdir);
+        write_setting_guide_xml(obj.result, chip, model, tmpdir);
+        write_setting_connect_xml(obj.result, chip, model, tmpdir);
+        write_market_show_configuration_xml(obj.result, chip, model, tmpdir);
+        write_setting_general_xml(obj.result, chip, model, tmpdir);
+        write_ssc_item_xml(obj.result, chip, model, tmpdir);
+        setting_picture_sound(obj.result, chip, model, tmpdir);
+        write_midware_ini(obj.result, chip, model, tmpdir);
+    }
+    else if (obj.type == "prop")
+    {
+        write_prop_file(obj.result, chip, model, tmpdir);
+    }
 }
 
 // setting_main.xml
@@ -505,7 +512,23 @@ function write_midware_ini(sqlresult, chip, model, tmpdir)
     
 }
 
-
+// build.prop
+function write_prop_file(sqlresult, chip, model, tmpdir)
+{
+    var x;
+    var curClass = "";
+    var fileinfo = new Array();
+    var tmpFileName = tmpdir + chip + "_" + model + "-build.prop";
+           
+    fs.writeFileSync(tmpFileName, ' \n');
+    
+    for (let i in sqlresult)
+    {        
+        fs.appendFileSync(tmpFileName, sqlresult[i].engName + '=' + sqlresult[i].curValue + '\n');
+    }
+    
+    fs.appendFileSync(tmpFileName, '\n\n\n\n');
+}
 
 
 
