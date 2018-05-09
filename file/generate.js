@@ -297,10 +297,15 @@ function generate_files()
 {
 	var randValue = Math.ceil(1000 * Math.random());
 	
+	writerlog.w("开始生成临时文件\n");
+	
 	for (k in infos)
 	{
 		if (infos[k].chip == "")
 			break;
+			
+		writerlog.w("机芯 = " + infos[k].chip + ", 机型 = " + infos[k].model + "\n");
+			
 		var temp_config_filename = getTempGernalConfigFileName(infos[k].chip, infos[k].model);
 		
 		var list = infos[k].list;
@@ -312,6 +317,8 @@ function generate_files()
 			if (curitem.type == "general_config")
 			{
 				//console.log(result);
+				writerlog.w("生成临时的general_config \n");
+				
 				writer.writeGeneralConfigStart(temp_config_filename);
 				for (var M in result)
 				{
@@ -322,10 +329,12 @@ function generate_files()
 			}
 			else if (curitem.type == "system_settings")
 			{
+			    writerlog.w("生成临时的setting文件 \n");
 			    settingfiles.generate(infos[k].chip, infos[k].model, curitem, getTmpDir());
 			}
 			else if (curitem.type == "prop")
 			{
+			    writerlog.w("生成临时的prop文件 \n");
 			    settingfiles.generate(infos[k].chip, infos[k].model, curitem, getTmpDir());
 			}
 			else 
@@ -358,6 +367,8 @@ function generateMkFile(targetinfo)
     let mkList = targetinfo.mklist;
     
     var mk_filename = getTempMkFileName(targetName);
+    
+    writerlog.w("生成临时的mk文件 " + mk_filename + "\n");
     
 	for (let i in mkList)
 	{
@@ -393,7 +404,7 @@ function getTempGernalConfigFileName(chip, model)
 
 function getTempMkFileName(targetProductName)
 {
-    return getTmpDir() + targetProductName + "-mk" + ".mk";
+    return getTmpDir() + targetProductName + ".mk";
 }
 
 function getGitDir(systemVersion)
@@ -450,6 +461,8 @@ function getTmpDir()
             fs.mkdirSync(tempdir);
             tempdir += "/";
         }
+        
+        writerlog.w("临时存放文件夹为 " + tempdir + "\n");
     }
 	return tempdir;
 }
