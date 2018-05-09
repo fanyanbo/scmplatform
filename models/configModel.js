@@ -154,14 +154,15 @@ ConfigModel.prototype.updateItemsOrderId = function (arr, callback) {
 }
 
 ConfigModel.prototype.add = function (engName, cnName, category, type, options, defaultValue, desc, callback) {
-
+  //SELECT orderId FROM configs WHERE category = '广告配置' order by orderId desc limit 0,1
   let sql_order = "SELECT orderId FROM configs WHERE category = ? order by orderId desc limit 0,1";
   let sql_order_param = [category];
   db.conn.query(sql_order,sql_order_param,function(err,rows,fields){
     if (err) {
         return callback(err);
     }
-    let _orderId = (rows.length == 0) ? 1 : rows[0].count + 1; //当新类别中没有任何模块是判断
+    console.log(rows);
+    let _orderId = (rows.length == 0) ? 1 : rows[0].orderId + 1; //当新类别中没有任何模块是判断
     console.log(_orderId);
     let sql = "INSERT INTO configs(engName,cnName,category,typeStr,options,defaultValue,descText,orderId) VALUES (?,?,?,?,?,?,?,?)";
     let sql_params = [engName,cnName,category,type,options,defaultValue,desc,_orderId];

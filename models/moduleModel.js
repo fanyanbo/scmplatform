@@ -49,7 +49,9 @@ ModuleModel.prototype.add = function (engName, cnName, category, gitPath, desc, 
   ep.all('event1', 'event2', function (data1, data2) {
 
       let sql = "INSERT INTO modules(engName,cnName,category,gitPath,descText,orderId) values (?,?,?,?,?,?)";
+      console.log(sql);
       let sql_param = [engName,cnName,category,gitPath,desc,_orderId];
+      console.log(sql_param);
       db.conn.query(sql,sql_param,function(err,rows,fields){
         if (err) return ep.emit('error', err);
         return callback(null, "addModuleData OK");
@@ -109,7 +111,7 @@ ModuleModel.prototype.update = function (engName, cnName, category, gitPath, des
   let sql_order_param = [category];
   db.conn.query(sql_order,sql_order_param,function(err,rows,fields){
     if (err) return callback(err);
-    let _orderId = (rows.length == 0) ? 1 : rows[0].count + 1; //当新类别中没有任何模块是判断
+    let _orderId = (rows.length == 0) ? 1 : rows[0].orderId + 1; //当新类别中没有任何模块是判断
     logger.debug('updateModuleData _orderId = ' + _orderId);
     let sql = "UPDATE modules SET cnName = ?, category = ?, gitPath = ?, descText = ?, orderId = ? WHERE engName = ?";
     let sql_params = [cnName,category,gitPath,desc,_orderId,engName];
