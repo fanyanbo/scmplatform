@@ -120,7 +120,8 @@ DeviceModel.prototype.queryTargetProduct = function (callback) {
  * @param {新增targetproduct,这里需要更新两个表，mkdata和targetProducts}
  */
 DeviceModel.prototype.addTargetProduct = function (name, arr, callback) {
-
+  console.log(name);
+  console.log(arr);
   if(arr.length == 0) return callback("addTargetProduct参数错误！",null);
   let ep = new eventproxy();
 
