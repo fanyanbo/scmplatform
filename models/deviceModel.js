@@ -143,7 +143,7 @@ DeviceModel.prototype.addTargetProduct = function (name, arr, callback) {
   });
 
   for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
-    let sql = "INSERT INTO mkdata（targetProduct,engName) values(?,?)";
+    let sql = "INSERT INTO mkdata(targetProduct,engName) values (?,?)";
     let sql_params = [name ,arr[i].engName];
     db.conn.query(sql,sql_params,function(err,rows,fields) {
       if (err) return ep.emit('error', err);
