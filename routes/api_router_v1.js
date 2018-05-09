@@ -58,6 +58,7 @@ router.post('/product/queryBytp', product.queryMKDataByTargetProduct);  //根据
 router.post('/product/queryAll', product.queryAll);
 router.post('/product/queryAllByMachine', product.queryAllByMachine);
 
+router.post('/device/queryAll', device.queryAll);
 //机芯管理
 router.post('/chip/add', device.addChip);
 router.post('/chip/query', device.queryChip);
