@@ -4,6 +4,16 @@ var output = require('../common/output');
 var deviceModel = require('../models/deviceModel');
 
 
+exports.queryAll = function (req, res, next) {
+
+    deviceModel.queryAll(function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"查询所有设备信息列表成功",results);
+    });
+};
+
 exports.queryTargetProduct = function (req, res, next) {
 
     deviceModel.queryTargetProduct(function(err,results) {
