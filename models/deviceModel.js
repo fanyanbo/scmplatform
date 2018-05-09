@@ -34,7 +34,7 @@ DeviceModel.prototype.queryAll = function (callback) {
   }
 }
 
-ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
+DeviceModel.prototype.queryAllByMachine = function (chip, model, callback) {
   let ep = new eventproxy();
   let sql_list = [
                   "SELECT * FROM products WHERE chip = ? AND model = ?",
