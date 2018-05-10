@@ -1,7 +1,7 @@
 var db = require('./db');
 var eventproxy = require('eventproxy');
 var logger = require('../common/logger');
-//var generator = require('../file/generate');
+var generator = require('../file/generate');
 
 var ProductModel = function() {};
 
@@ -222,12 +222,12 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
 }
 
 ProductModel.prototype.preview = function (chip, model, callback) {
-    // generator.preview(chip, model, "6.0", function(err, results){
-    //   if (err) {
-    //       return callback(err);
-    //   }
-    //   callback(null, results);
-    // });
+    generator.preview(chip, model, "6.0", function(err, results){
+      if (err) {
+          return callback(err);
+      }
+      callback(null, results);
+    });
 }
 
 var productModel = new ProductModel();
