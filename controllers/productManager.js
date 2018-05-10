@@ -16,17 +16,11 @@ exports.add = function (req, res, next) {
   let configInfo = req.body.configInfo;
   let settingsInfo = req.body.settingsInfo;
 
-  console.log(baseInfo);
-  console.log(configInfo);
-  console.log(settingsInfo);
-
-  return output.success(req,res);
-
   productModel.add(baseInfo, configInfo, settingsInfo, function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }
-    output.success(req,res,"新增产品项成功",results);
+    output.success(req,res,"新增产品项成功");
   });
 
 };

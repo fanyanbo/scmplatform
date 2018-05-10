@@ -1,7 +1,7 @@
 var db = require('./db');
 var eventproxy = require('eventproxy');
 var logger = require('../common/logger');
-//var generator = require('../file/generate');
+var generator = require('../file/generate');
 
 var ProductModel = function() {};
 
@@ -167,13 +167,20 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
 }
 
 ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callback) {
-  return;
+  console.log(baseInfo);
+  console.log(configInfo);
+  console.log(settingsInfo);
 
+  console.log(baseInfo.chip);
+  console.log(baseInfo.auditState);
+  console.log(baseInfo.coocaaVersion);
+  console.log(configInfo.length);
+  console.log(configInfo[0].engName);
+  console.log(settingsInfo.length);
+  console.log(settingsInfo[0].engName);
+
+  return;
   let ep = new eventproxy();
-  let sql_list = [
-    "INSERT INTO products(engName,cnName,category,gitPath,descText,orderId) values (?,?,?,?,?,?)",
-    "INSERT INTO configdata_temp(chip,model,auditState,modifyState,androidVersion,memorySize,EMMC,targetProduct,soc,platform,gitBranch,coocaaVersion) values (?,?,?,?,?,?)"
-                ];
 
   ep.bind('error', function (err) {
       logger.error("捕获到错误-->" + err);
@@ -182,27 +189,45 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
       callback(err,null);
   });
 
-  ep.after('query_result', sql_list.length, function (list) {
+  ep.after('query_result', configInfo.length + settingsInfo.length + 1, function (list) {
       // 所有查询的内容都存在list数组中
-      let listObject = [];
-      for(let i in list){
-        listObject.push(list[i]);
-      }
-      callback(null,listObject);
+      callback(null,null);
   });
 
-  for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
-    db.conn.query(sql_list[i],[chip,model],ep.group('query_result'));
+  let sql0 = "INSERT INTO products(chip,model,auditState,modifyState,androidVersion,memorySize,EMMC,targetProduct,soc,platform,gitBranch,coocaaVersion) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+  let sql0_param = [baseInfo.chip,baseInfo.chip,baseInfo.auditState,baseInfo.modifyState,baseInfo.androidVersion,baseInfo.memorySize,baseInfo.EMMC,baseInfo.targetProduct,baseInfo.soc,baseInfo.platform,baseInfo.gitBranch,baseInfo.coocaaVersion];
+  console.log(sql0_param);
+  db.conn.query(sql0,sql0_param,function(err,rows,fields){
+    if (err) return ep.emit('error', err);
+    ep.emit('insert_result',"INSERT INTO products OK");
+  });
+
+  let sql1 = "INSERT INTO configdata_temp(chip,model,engName,curValue) values (?,?,?,?)";
+  for(var i=0; i<configInfo.length;i++) {
+    let sql1_param = [baseInfo.chip,baseInfo.model,configInfo[i].engName,configInfo[i].curValue];
+    db.conn.query(sql1,sql1_param,function(err,rows,fields){
+      if (err) return ep.emit('error', err);
+      ep.emit('insert_result',"INSERT INTO configdata_temp OK");
+    });
+  }
+
+  let sql2 = "INSERT INTO settingsdata_temp(chip,model,engName) values (?,?,?)";
+  for(var i=0; i<settingsInfo.length;i++) {
+    let sql2_param = [baseInfo.chip,baseInfo.model,settingsInfo[i].engName];
+    db.conn.query(sql2,sql2_param,function(err,rows,fields){
+      if (err) return ep.emit('error', err);
+      ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
+    });
   }
 }
 
 ProductModel.prototype.preview = function (chip, model, callback) {
-    // generator.preview(chip, model, "6.0", function(err, results){
-    //   if (err) {
-    //       return callback(err);
-    //   }
-    //   callback(null, results);
-    // });
+    generator.preview(chip, model, "6.0", function(err, results){
+      if (err) {
+          return callback(err);
+      }
+      callback(null, results);
+    });
 }
 
 var productModel = new ProductModel();
