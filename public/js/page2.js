@@ -1,9 +1,13 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
-var autoComplete = "";
-var autoComplete2 = "";
+var autoComplete1,autoComplete2,autoComplete3,autoComplete4,autoComplete5 = "";
+var autoComplete12,autoComplete22,autoComplete32,autoComplete42,autoComplete52 = "";
 var closePageName = "";
-var autoDataArray2 = ["a", "b", "c", "bb", "cb", "bvv", "ca", "bsd", "cfg", "bd", "adfc", "bas", "asc"];
+var autoDataArray1 = new Array();
+var autoDataArray2 = new Array();
+var autoDataArray3 = new Array();
+var autoDataArray4 = new Array();
+var autogitArray = ["a", "b", "c", "bb", "cb", "bvv", "ca", "bsd", "cfg", "bd", "adfc", "bas", "asc"];
 
 var _twoLevelLinkageArrayOne = [[],[],[],[]];
 var _twoLevelLinkageArrayTwo = [[],[],[],[]];
@@ -25,8 +29,8 @@ function productQuery() {
 				handleTableData(data);
 			}
 		}
-		var node4 = '{}';
-		sendHTTPRequest("/targetproduct/query", node4, targetproductQueryResult);
+		var node1 = '{}';
+		sendHTTPRequest("/device/queryAll", node1 , targetproductQueryResult);
 	}
 }
 
@@ -35,12 +39,20 @@ function targetproductQueryResult() {
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
-			var autoDataArray = new Array();
 			if(data.resultCode == "0") {
-				for(var i = 0; i < data.resultData.length; i++) {
-					autoDataArray.push(data.resultData[i].name)
+				for(var i = 0; i < data.resultData[0].length; i++) {
+					autoDataArray1.push(data.resultData[0][i].name);
 				}
-				instantQuery(autoDataArray, autoDataArray2);
+				for(var i = 0; i < data.resultData[1].length; i++) {
+					autoDataArray2.push(data.resultData[1][i].name);
+				}
+				for(var i = 0; i < data.resultData[2].length; i++) {
+					autoDataArray3.push(data.resultData[2][i].name);
+				}
+				for(var i = 0; i < data.resultData[3].length; i++) {
+					autoDataArray4.push(data.resultData[3][i].name);
+				}
+				instantQuery(autoDataArray1, autoDataArray2, autoDataArray3, autoDataArray4, autogitArray);
 			}
 		}
 	}
@@ -83,7 +95,7 @@ function pageTableInit(data1) {
 	buttonInitAfter();
 }
 
-function instantQuery(array1, array2) {
+function instantQuery(arr1, arr2, arr3, arr4, arr5) {
 	var _$ = function(id) {
 		return "string" == typeof id ? document.getElementById(id) : id;
 	}
@@ -94,7 +106,6 @@ function instantQuery(array1, array2) {
 	}
 
 	function AutoComplete(obj, autoObj, arr) {
-		console.log("111111111111");
 		this.obj = _$(obj); //输入框
 		this.autoObj = _$(autoObj); //DIV的根节点
 		this.value_arr = arr; //不要包含重复值
@@ -121,7 +132,10 @@ function instantQuery(array1, array2) {
 		setValue: function(_this) {
 			return function() {
 				_this.obj.value = this.seq;
-				changeMKByTP(_this.obj.id, _this.obj.value);
+				//checkInArray(_this.obj.id,$("#"+_this.obj.id).val());
+				if (_this.obj.id == "lable2TargetProduct") {
+					changeMKByTP(_this.obj.id, _this.obj.value);
+				}
 				_this.autoObj.className = "auto_hidden";
 			}
 		},
@@ -182,7 +196,10 @@ function instantQuery(array1, array2) {
 			//回车键
 			else if(event.keyCode == 13) {
 				this.autoObj.className = "auto_hidden";
-				changeMKByTP(this.curname, this.curvalue);
+				//checkInArray(this.autoObj.id,document.getElementById(this.autoObj.id).childNodes[this.index].innerText);
+				if (this.autoObj.id == "page2_tp_auto2") {
+					changeMKByTP(this.curname, this.curvalue);
+				}
 				this.index = -1;
 			} else {
 				this.index = -1;
@@ -226,29 +243,39 @@ function instantQuery(array1, array2) {
 			});
 		}
 	}
-
-	autoComplete = new AutoComplete('page2_targetProduct', 'page2_auto', array1);
-	autoComplete2 = new AutoComplete('page2_gitbranch', 'page2_auto2', array2);
-	autoComplete3 = new AutoComplete('lable2TargetProduct', 'page2_auto3', array1);
-
+	autoComplete1 = new AutoComplete('page2_chip', 'page2_chip_auto', arr1);
+	autoComplete2 = new AutoComplete('page2_model', 'page2_model_auto', arr2);
+	autoComplete3 = new AutoComplete('page2_targetProduct', 'page2_tp_auto', arr3);
+	autoComplete4 = new AutoComplete('page2_chipid', 'page2_soc_auto', arr4);
+	autoComplete5 = new AutoComplete('page2_gitbranch', 'page2_git_auto', arr5);
+	
+	autoComplete12 = new AutoComplete('lable2Chip', 'page2_chip_auto2', arr1);
+	autoComplete22 = new AutoComplete('lable2Model', 'page2_model_auto2', arr2);
+	autoComplete32 = new AutoComplete('lable2TargetProduct', 'page2_tp_auto2', arr3);
+	autoComplete42 = new AutoComplete('lable2ChipMode', 'page2_soc_auto2', arr4);
+	autoComplete52 = new AutoComplete('lable2GitBranch', 'page2_git_auto2', arr5);
 	/* 点击空白出隐藏临时div */
 	_$(document).onclick = function(e) {
 		var e = e || window.event; //浏览器兼容性 
 		var elem = e.target || e.srcElement;
-		var _style = document.getElementById("page2_auto").getAttribute("class");
-		var _style2 = document.getElementById("page2_auto2").getAttribute("class");
-		var _style3 = document.getElementById("page2_auto3").getAttribute("class");
-		if(_style == "auto_show") {
-			document.getElementById("page2_auto").setAttribute("class", "auto_hidden")
-		}
-		if(_style2 == "auto_show") {
-			document.getElementById("page2_auto2").setAttribute("class", "auto_hidden")
-		}
-		if(_style3 == "auto_show") {
-			document.getElementById("page2_auto3").setAttribute("class", "auto_hidden")
+		
+		
+		var showArray = ["page2_chip_auto","page2_model_auto","page2_tp_auto","page2_soc_auto","page2_git_auto","page2_chip_auto2","page2_model_auto2","page2_tp_auto2","page2_soc_auto2","page2_git_auto2"];
+		var showBox = ["page2_chip","page2_model","page2_targetProduct","page2_chipid","page2_gitbranch","lable2Chip","lable2Model","lable2TargetProduct","lable2ChipMode","lable2GitBranch"];
+		eachShowObj(showArray,showBox);
+	}
+	function eachShowObj(arr,arr2){
+		for (var i=0; i<arr.length; i++) {
+			var _style = document.getElementById(arr[i]).getAttribute("class");
+			if(_style == "auto_show") {
+				//checkInArray(arr2[i],$("#"+arr2[i])[0].value);
+				document.getElementById(arr[i]).setAttribute("class", "auto_hidden")
+			}
 		}
 	}
 }
+
+function checkInArray(id,value){}
 
 function changeMKByTP(id, value) {
 	console.log(id + "-----" + value);
@@ -297,15 +324,42 @@ function buttonInit() {
 		$("#lable1SubmitTwo").attr("catagory","1");//1-新增、2-修改、3-复制
 		page2AEC("-1");
 	});
-	$("#page2_targetProduct").keyup(function(event) {
-		autoComplete.start(event);
+	
+	
+	
+	$("#page2_chip").keyup(function(event) {
+		autoComplete1.start(event);
 	});
-	$("#page2_gitbranch").keyup(function(event) {
+	$("#page2_model").keyup(function(event) {
 		autoComplete2.start(event);
 	});
-	$("#lable2TargetProduct").keyup(function(event) {
+	$("#page2_targetProduct").keyup(function(event) {
 		autoComplete3.start(event);
 	});
+	$("#page2_chipid").keyup(function(event) {
+		autoComplete4.start(event);
+	});
+	$("#page2_gitbranch").keyup(function(event) {
+		autoComplete5.start(event);
+	});
+	$("#lable2Chip").keyup(function(event) {
+		autoComplete12.start(event);
+	});
+	$("#lable2Model").keyup(function(event) {
+		autoComplete22.start(event);
+	});
+	$("#lable2TargetProduct").keyup(function(event) {
+		autoComplete32.start(event);
+	});
+	$("#lable2ChipMode").keyup(function(event) {
+		autoComplete42.start(event);
+	});
+	$("#lable2GitBranch").keyup(function(event) {
+		autoComplete52.start(event);
+	});
+	
+	
+	
 	$(".page2_tabs").click(function() {
 		var _curIndex = $(".page2_tabs").index($(this));
 		for(var k = 0; k < $(".page2_tabs").length; k++) {
@@ -515,19 +569,54 @@ function getAndCheckAndSendAllData(){
 	console.log(nullName);
 	if (nullName == 0) {
 		console.log("没有空项");
-		//获取基本项、config、MK、系统设置的值
-		var _base = getBaseValue();
-		var _config = getConfigValue();
-		var _sys = getSysValue();
-		_base = JSON.stringify(_base);
-		_config = JSON.stringify(_config);
-		_sys = JSON.stringify(_sys);
-		console.log(_base);
-		console.log(_config);
-		console.log(_sys);
-		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
-		console.log(node);
-		sendHTTPRequest("/product/add", node, productAddResult);
+		var _errNum = 0;
+		var isTrueData0 = $("#page2Modal1Table .fuzzySearch")[0].value;
+		var isTrueData1 = $("#page2Modal1Table .fuzzySearch")[1].value;
+		var isTrueData2 = $("#page2Modal1Table .fuzzySearch")[2].value;
+		var isTrueData3 = $("#page2Modal1Table .fuzzySearch")[3].value;
+		var isTrueData4 = $("#page2Modal1Table .fuzzySearch")[4].value;
+		console.log(isTrueData0+"-"+isTrueData1+"-"+isTrueData2+"-"+isTrueData3+"-"+isTrueData4);
+		var index0 = autoDataArray1.indexOf(isTrueData0);
+		var index1 = autoDataArray2.indexOf(isTrueData1);
+		var index2 = autoDataArray3.indexOf(isTrueData2);
+		var index3 = autoDataArray4.indexOf(isTrueData3);
+		var index4 = autogitArray.indexOf(isTrueData4);
+		console.log(index0+"-"+index1+"-"+index2+"-"+index3+"-"+index4);
+		if (index0 == "-1"||index2 == "-1"||index3 == "-1"||index3 == "-1"||index4 == "-1") {
+			if (index0 == "-1") {
+				_errNum = 0;
+			}
+			if (index1 == "-1") {
+				_errNum = 1;
+			}
+			if (index2 == "-1") {
+				_errNum = 2;
+			}
+			if (index3 == "-1") {
+				_errNum = 3;
+			}
+			if (index4 == "-1") {
+				_errNum = 4;
+			}
+			var _curInput = $("#page2Modal1Table .fuzzySearch")[_errNum].getAttribute("name");
+			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
+			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
+			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
+		} else{
+			//获取基本项、config、MK、系统设置的值
+			var _base = getBaseValue();
+			var _config = getConfigValue();
+			var _sys = getSysValue();
+			_base = JSON.stringify(_base);
+			_config = JSON.stringify(_config);
+			_sys = JSON.stringify(_sys);
+			console.log(_base);
+			console.log(_config);
+			console.log(_sys);
+			var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+			console.log(node);
+			sendHTTPRequest("/product/add", node, productAddResult);
+		}
 	}
 }
 //批量编辑
@@ -587,7 +676,6 @@ function closeparentpage() {
 }
 
 function configQueryData(arr1,arr2) {
-	console.log(arr2);
 	var _myConfigBox = document.getElementById("myConfigBox");
 	for(var i = 0; i < arr1.length; i++) {
 		_myConfigBox.innerHTML += '<div class="configitems1 eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
@@ -603,7 +691,6 @@ function configQueryData(arr1,arr2) {
 	}
 }
 function settingsQueryData(arr1,arr2) {
-	console.log(arr2);
 	var _mySysSettingBox = document.getElementById("mySysSettingBox");
 	var _mySourceBoxBox = document.getElementById("mySourceBoxBox");
 	var _myMarketShowBox = document.getElementById("myMarketShowBox");
@@ -639,7 +726,6 @@ function settingsQueryData(arr1,arr2) {
 	}
 }
 function moduleQueryData(arr1,arr2) {
-	console.log(arr2);
 	var _myMKBox = document.getElementById("myMkBox");
 	for(var i = 0; i < arr1.length; i++) {
 		_myMKBox.innerHTML += '<div class="moduleitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
@@ -735,8 +821,7 @@ function getBaseValue(){
 function getConfigValue(){
 	var configData = [];
 	console.log($(".configitems").length);
-//	for (var i=0; i<$(".configitems").length; i++) {
-	for (var i=0; i<2; i++) {
+	for (var i=0; i<$(".configitems").length; i++) {
 		var oAconfigInfo = {
 			"engName": "",
 			"curValue": ""
@@ -745,22 +830,19 @@ function getConfigValue(){
 		oAconfigInfo.curValue = $(".configitems")[i].value;
 		configData.push(oAconfigInfo);
 	}
-//	console.log(configData);
 	return configData;
 	
 }
 function getSysValue(){
 	var sysData = [];
 	console.log($(".sysitems").length);
-//	for (var i=0; i<$(".sysitems").length; i++) {
-	for (var i=0; i<2; i++) {
+	for (var i=0; i<$(".sysitems").length; i++) {
 		var oAsysInfo = {
 			"engName": "",
 		};
 		oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
 		sysData.push(oAsysInfo);
 	}
-//	console.log(sysData);
 	return sysData;
 }
 
@@ -771,6 +853,8 @@ function productAddResult(){
 			console.log(data);
 			if(data.resultCode == "0") {
 				console.log("数据提交成功");
+				$("#page2Modal1").modal('hide');
+				page2Fresh();
 			}
 		}
 	}

@@ -22,16 +22,18 @@
 				<div class="row text-right">
 					<div class="col-xs-4 form-group">
 						<label for="page2_chip" class="control-label col-xs-5 text-right">机芯:</label>
-						<input type="text" value="" id="page2_chip" class="col-xs-6 inputstyle">
+						<input type="text" value="" id="page2_chip" class="col-xs-6 inputstyle" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_chip_auto"></div>
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_model" class="control-label col-xs-5 text-right">机型:</label>
-						<input type="text" value="" id="page2_model" class="col-xs-6 inputstyle">
+						<input type="text" value="" id="page2_model" class="col-xs-6 inputstyle" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_model_auto"></div>
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_targetProduct" class="control-label col-xs-5 text-right">TP:</label>
-						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="模糊查询">
-						<div class="auto_hidden" id="page2_auto"></div>
+						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_tp_auto"></div>
 					</div>
 				</div>
 				<div class="row text-right">
@@ -61,19 +63,8 @@
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_chipid" class="control-label col-xs-5 text-right">芯片型号:</label>
-						<select id="page2_chipid" class="col-xs-6 inputstyle">
-							<option value=""></option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-						</select>
+						<input type="text" id="page2_chipid" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_soc_auto"></div>
 					</div>
 				</div>
 				<div class="row text-right">
@@ -117,8 +108,8 @@
 				<div class="row text-right">
 					<div class="col-xs-4 form-group">
 						<label for="page2_gitbranch" class="control-label col-xs-5 text-right">git分支:</label>
-						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" placeholder="模糊查询">
-						<div class="auto_hidden" id="page2_auto2"></div>
+						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_git_auto"></div>
 					</div>
 				</div>
 				<div class="form-group text-center">
@@ -165,16 +156,18 @@
 											<td>
 												<div class="col-xs-4 text-left">
 													<label for="lable2Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
-													<input type="text" value="" id="lable2Chip" name="机芯" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" id="lable2Chip" name="机芯" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_chip_auto2"></div>
 												</div>
 												<div class="col-xs-4 text-left">
 													<label for="lable2Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
-													<input type="text" value="" id="lable2Model" name="机型" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" id="lable2Model" name="机型" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_model_auto2"></div>
 												</div>
 												<div class="col-xs-4 text-left">
 													<label for="lable2TargetProduct" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TP:</label>
-													<input type="text" value="" id="lable2TargetProduct" name="TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle text-left">
-													<div class="auto_hidden" id="page2_auto3"></div>
+													<input type="text" value="" id="lable2TargetProduct" name="TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_tp_auto2"></div>
 												</div>
 											</td>
 										</tr>
@@ -204,17 +197,8 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
-													<select id="lable2ChipMode" name="芯片型号" class="col-xs-6 col-xs-push-1 inputstyle text-left">
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-														<option value="5">5</option>
-														<option value="6">6</option>
-														<option value="7">7</option>
-														<option value="8">8</option>
-														<option value="9">9</option>
-													</select>
+													<input type="text" value="" id="lable2ChipMode" name="芯片型号" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_soc_auto2"></div>
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2Emmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
@@ -247,7 +231,8 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
-													<input type="text" value="" name="gitbranch" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" name="gitbranch" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_git_auto2"></div>
 												</div>
 											</td>
 										</tr>
@@ -289,7 +274,7 @@
 								</table>
 							</div>
 							<div class="modal-footer myfooter">
-								<button type="button" class="btn btn-default" id="lable1SubmitTwo" defaultPage="0">提交</button>
+								<button type="button" class="btn btn-default" id="lable1SubmitTwo" errNum="" existence="true" defaultPage="0">提交</button>
 							</div>
 						</div>
 					</div>
