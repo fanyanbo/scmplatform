@@ -11,8 +11,37 @@ var productModel = require('../models/productModel');
  * @param {Function} next
  */
 exports.add = function (req, res, next) {
-    res.json("add:" + req.url);
+
+  let baseInfo = req.body.baseInfo;
+  let configInfo = req.body.configInfo;
+  let settingsInfo = req.body.settingsInfo;
+
+  console.log(baseInfo);
+  console.log(configInfo);
+  console.log(settingsInfo);
+
+  return output.success(req,res);
+
+  productModel.add(baseInfo, configInfo, settingsInfo, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"新增产品项成功",results);
+  });
+
 };
+
+exports.preview = function (req, res, next) {
+  let chip = req.body.chip;
+  let model = req.body.model;
+  console.log(chip + model);
+  productModel.preview(chip, model, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"获取预览信息成功",results);
+  });
+}
 
 exports.delete = function (req, res, next) {
     res.json("delete:" + req.url);
