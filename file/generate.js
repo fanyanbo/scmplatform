@@ -337,7 +337,14 @@ function generate_files()
 
         var content3 = content3_1 + content3_2 + content3_3 + content3_4 + content3_5 + content3_6 + content3_7 + content3_8 ;
         if (mod_callback != null)
-            mod_callback(0, content1, content2, content3, content4);
+        {
+            var preview_result = new Object;
+            preview_result.text1 = content1;
+            preview_result.text2 = content2;
+            preview_result.text3 = content3;
+            preview_result.text4 = content4;
+            mod_callback(0, preview_result);
+        }
 	}
 	else
 	{
@@ -475,12 +482,12 @@ function getTmpDir()
 //generator.preview("5S02", "15U", "Rel6.0", show_preview_text_test);
 
 
-function show_preview_text_test(errno, text1, text2, text3, text4)
+function show_preview_text_test(errno, result)
 {
-    console.log(text1);
-    console.log(text2);
-    console.log(text3);
-    console.log(text4);
+    console.log(result.text1);
+    console.log(result.text2);
+    console.log(result.text3);
+    console.log(result.text4);
 }
 
 
