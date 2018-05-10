@@ -34,7 +34,7 @@ exports.add = function (req, res, next) {
 exports.preview = function (req, res, next) {
   let chip = req.body.chip;
   let model = req.body.model;
-  console.log(chip + model);
+  console.log(chip);
   productModel.preview(chip, model, function(err,results) {
     if(err) {
       return output.error(req,res,err);
