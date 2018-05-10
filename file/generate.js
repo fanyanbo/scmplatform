@@ -15,6 +15,7 @@ var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 
 var connection;							// 数据库连接
+var action_type;                        // 当前动作为
 var infos;								// 所有机型信息表
 var targets;							// 所有机型targetProduct表
 var info_cnt = 0;						// 所有机型信息表计数器
@@ -27,11 +28,28 @@ var generator = new Generator();
 function Generator()
 {
 } 
+
 Generator.prototype.generate = function(
-                                machines,		// 机器列表
+                                chip,		    // 机芯
+								model,		    // 机型
 								version,		// 版本
 								callback		// 回调函数
 								)
+{
+    generateFiles(chip, model, version, "gitpush", callback);
+}
+
+Generator.prototype.preview = function(chip, model, version, callback)
+{
+	//generateFiles(chip, model, version, "preview", callback);
+}
+
+function generateFiles( chip,		    // 机芯
+                        model,          // 机型
+                        version,		// 版本
+                        actionType,     // 动作类型(preview为预览)
+                        callback		// 回调函数
+                        )
 {
 	infos = new Array();
 	targets = new Array();
@@ -44,31 +62,12 @@ Generator.prototype.generate = function(
 	
 	writerlog.checkLogFile();
 	
-	if (type == "[object Array]")
-	{
-		//console.log("machines param type = " + type + "\n");
-		for (i in machines)
-		{
-			infos[i] = CreateInfo(machines[i].chip, machines[i].model);
-		}
-		i++;
-		infos[i] = CreateInfo("", "");
-		
-		return doit(version, callback);
-	}
-	else if (type == "[object Object]")
-	{
-		//console.log("machines param type = " + type + "\n");
-		infos[0] = CreateInfo(machines.chip, machines.model);
-		infos[1] = CreateInfo("", "");
-		return doit(version, callback);
-	}
-	else
-	{
-		if (callback != null)
-			callback(-1, "connect database error!");
-	}
+	//console.log("machines param type = " + type + "\n");
+    infos[0] = CreateInfo(chip, model);
+    infos[1] = CreateInfo("", "");
+    return doit(version, actionType, callback);
 }
+
 
 function CreateInfo(chip, model)
 {
@@ -406,6 +405,22 @@ function getTempMkFileName(targetProductName)
 {
     return getTmpDir() + targetProductName + ".mk";
 }
+
+function gitpush(
+            systemVersion,                      // 系统版本，例如 'Rel6.0' 
+            targetProduct,                      // target_product的值, 例如 'full_sky828_5s02'    
+            chip,                               // 机芯, 例如 '5S02' 
+            model,                              // 机型, 例如 'A2'  
+            deviceTabTempFileName,              // device_tab.mk 临时文件名 
+            mkTempFileName,                     // mk临时文件名 
+            configTempFileName                  // config临时文件名 
+            )
+{
+	var git = require("./gitcommit");
+	git.push(systemVersion, targetProduct, chip, model, deviceTabTempFileName, mkTempFileName, configTempFileName);
+	//deleteTempFile(deviceTabTempFileName, mkTempFileName, configTempFileName);
+}
+
 
 function getGitDir(systemVersion)
 {

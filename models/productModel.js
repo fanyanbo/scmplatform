@@ -165,6 +165,42 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
   }
 }
 
+ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callback) {
+
+
+  let ep = new eventproxy();
+  let sql_list = [
+                  "SELECT * FROM products WHERE chip = ? AND model = ?",
+                  "SELECT * FROM configdata WHERE chip = ? AND model = ?",
+                  "SELECT * FROM mkdata WHERE targetProduct in (SELECT targetProduct FROM products WHERE chip = ? AND model = ?)"
+                ];
+
+  ep.bind('error', function (err) {
+      logger.error("捕获到错误-->" + err);
+      //卸掉所有的handler
+      ep.unbind();
+      callback(err,null);
+  });
+
+  ep.after('query_result', sql_list.length, function (list) {
+      // 所有查询的内容都存在list数组中
+      let listObject = [];
+      for(let i in list){
+        listObject.push(list[i]);
+      }
+      callback(null,listObject);
+  });
+
+  for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
+    db.conn.query(sql_list[i],[chip,model],ep.group('query_result'));
+  }
+}
+
+ProductModel.prototype.preview = function (chip, model, callback) {
+  
+
+}
+
 var productModel = new ProductModel();
 
 module.exports = productModel;
