@@ -39,6 +39,7 @@ exports.preview = function (req, res, next) {
     if(err) {
       return output.error(req,res,err);
     }
+    console.log(results);
     output.success(req,res,"获取预览信息成功",results);
   });
 }
