@@ -167,8 +167,20 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
 }
 
 ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callback) {
-  return;
+  console.log(baseInfo);
+  console.log(configInfo);
+  console.log(settingsInfo);
 
+  console.log(baseInfo.chip);
+  console.log(baseInfo.auditState);
+  console.log(baseInfo.coocaaVersion);
+  console.log(configInfo.length);
+  console.log(configInfo[0].engName);
+  console.log(settingsInfo.length);
+  console.log(settingsInfo[0].engName);
+
+
+  return;
   let ep = new eventproxy();
   let sql_list = [
     "INSERT INTO products(engName,cnName,category,gitPath,descText,orderId) values (?,?,?,?,?,?)",
