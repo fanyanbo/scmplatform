@@ -5,68 +5,33 @@ $(function() {
 	$(".page6_tab")[0].style.color = "blue";
 	
 	var node1 = '{}';
-	sendHTTPRequest("/chip/query", node1 , chipQueryResult);
+	sendHTTPRequest("/device/queryAll", node1 , QueryResult);
 	
 	page6ButtonInitBefore();
 });
 
-function chipQueryResult(){
+function QueryResult(){
 	if(this.readyState == 4) {
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
-			var page6ChipTd = document.getElementById("page6_chip_td");
 			if(data.resultCode == "0") {
-				for (var i=0; i<data.resultData.length; i++) {
-					page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeacha" part="1" name="'+data.resultData[i].name+'" title="'+data.resultData[i].name+'">'+data.resultData[i].name+'</a></div>';
+				var page6ChipTd = document.getElementById("page6_chip_td");
+				var page6ModelTd = document.getElementById("page6_model_td");
+				var page6TpTd = document.getElementById("page6_targetProduct_td");
+				var page6SocTd = document.getElementById("page6_soc_td");
+				
+				for (var i=0; i<data.resultData[0].length; i++) {
+					page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachtpa" part="1" name="'+data.resultData[0][i].name+'" title="'+data.resultData[0][i].name+'">'+data.resultData[0][i].name+'</a></div>';
 				}
-			}
-		}
-		var node2 = '{}';
-		sendHTTPRequest("/model/query", node2, modelQueryResult);
-	}
-}
-function modelQueryResult(){
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			var page6ModelTd = document.getElementById("page6_model_td");
-			if(data.resultCode == "0") {
-				for (var i=0; i<data.resultData.length; i++) {
-					page6ModelTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeacha" part="2" name="'+data.resultData[i].name+'" title="'+data.resultData[i].name+'">'+data.resultData[i].name+'</a></div>';
+				for (var i=0; i<data.resultData[1].length; i++) {
+					page6ModelTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachtpa" part="2" name="'+data.resultData[1][i].name+'" title="'+data.resultData[1][i].name+'">'+data.resultData[1][i].name+'</a></div>';
 				}
-			}
-		}
-		var node3 = '{}';
-		sendHTTPRequest("/soc/query", node3, socQueryResult);
-	}
-}
-function socQueryResult(){
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			var page6SocTd = document.getElementById("page6_soc_td");
-			if(data.resultCode == "0") {
-				for (var i=0; i<data.resultData.length; i++) {
-					page6SocTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeacha" part="3" name="'+data.resultData[i].name+'" title="'+data.resultData[i].name+'">'+data.resultData[i].name+'</a></div>';
+				for (var i=0; i<data.resultData[2].length; i++) {
+					page6TpTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachtpa" part="4" name="'+data.resultData[2][i].name+'" title="'+data.resultData[2][i].name+'">'+data.resultData[2][i].name+'</a></div>';
 				}
-			}
-		}
-		var node4 = '{}';
-		sendHTTPRequest("/targetproduct/query", node4, targetproductQueryResult);
-	}
-}
-function targetproductQueryResult(){
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			var page6TpTd = document.getElementById("page6_targetProduct_td");
-			if(data.resultCode == "0") {
-				for (var i=0; i<data.resultData.length; i++) {
-					page6TpTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeacha" part="4" name="'+data.resultData[i].name+'" title="'+data.resultData[i].name+'">'+data.resultData[i].name+'</a></div>';
+				for (var i=0; i<data.resultData[3].length; i++) {
+					page6SocTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachtpa" part="3" name="'+data.resultData[3][i].name+'" title="'+data.resultData[3][i].name+'">'+data.resultData[3][i].name+'</a></div>';
 				}
 			}
 		}
@@ -84,8 +49,14 @@ function page6ButtonInitBefore() {
 		if (_curPart0 == 4) {
 			console.log("点击了targetProduct的增加按钮");
 			$('#page6Modal2').modal();
-			var node = '{}';
-			sendHTTPRequest("/module/query", node, modelQueryResult2);
+			$('#page6Modal2').attr("status","1");
+			console.log($('#page6Modal2').attr("hasquery"));
+			if ($('#page6Modal2').attr("hasquery") == "false") {
+				var node = '{}';
+				sendHTTPRequest("/module/queryCategory", node, modelQueryResult);
+			}else{
+				console.log("已经请求过了");
+			}
 		} else{
 			if(_curPart0 == 1){
 				console.log("点击了机芯的增加按钮");
@@ -96,9 +67,6 @@ function page6ButtonInitBefore() {
 			}else if(_curPart0 == 3){
 				console.log("点击了芯片型号的增加按钮");
 				document.getElementById("lableText").innerHTML = "输入新增芯片型号名称：";
-			}else if(_curPart0 == 4){
-				console.log("点击了targetProduct的增加按钮");
-				document.getElementById("lableText").innerHTML = "输入新增TargetProduct名称：";
 			}
 			$('#page6Modal').modal();
 			$("#page6Submit").attr("oldValue"," ");
@@ -118,6 +86,15 @@ function page6ButtonInitBefore() {
 		}
 		$(".page_boxes")[_curIndex].style.display = "block";
 		$(".page6_tab")[_curIndex].style.color = "blue";
+	});
+	
+	$("#page6_tp_submit").click(function(){
+		console.log("点击了TP的提交");
+		tpsubmit();
+	});
+	$("#page6_tp_submit2").click(function(){
+		console.log("点击了TP的提交");
+		tpsubmit();
 	});
 }
 
@@ -144,9 +121,23 @@ function page6ButtonInitAfter(){
 			$("#lableText").html("将机型 <span title='"+thisEnName+"'>"+thisEnNameCut+"</span> 的名称改为：");
 		}else if(_curPart == 3){
 			$("#lableText").html("将芯片型号 <span title='"+thisEnName+"'>"+thisEnNameCut+"</span> 的名称改为：");
-		}else if(_curPart == 4){
-			$("#lableText").html("将TP<span title='"+thisEnName+"'>"+thisEnNameCut+"</span> 的名称改为：");
 		}
+	});
+	
+	$(".myeachtpa").click(function(){
+		var _eachtpAIndex = $(".myeachtpa").index($(this));
+		$('#page6Modal2').modal(); //显示新建与编辑机芯机型时的弹框
+		$(".modal-backdrop").addClass("new-backdrop");
+		$('#page6Modal2').attr("status","2");
+		var thisEnName = $(".myeachtpa")[_eachtpAIndex].title;
+		var thisEnNameCut = "";
+		if(thisEnName.length>10){
+			thisEnNameCut = thisEnName.substring(0,10)+"...";  
+		}else{
+			thisEnNameCut = thisEnName;
+		}
+		console.log(thisEnName);
+		document.getElementById("page6_TP").value = thisEnName;
 	});
 	
 	$("#page6Submit").click(function(){
@@ -192,18 +183,6 @@ function page6ButtonInitAfter(){
 				console.log(node5);
 				sendHTTPRequest("/soc/add", node5, addOrChangeResult);
 			}
-		}else if(_curPart2 == 4){
-			if (_oldValue.length>1) {
-				console.log("修改+TP+提交");
-				node5 = '{"newValue":"'+_newValue+'","oldValue":"'+_oldValue+'"}';
-				console.log(node5);
-				sendHTTPRequest("/targetproduct/update", node5, addOrChangeResult);
-			} else{
-				console.log("新增+TP+提交");
-				node5 = '{"name":"'+_newValue+'"}';
-				console.log(node5);
-				sendHTTPRequest("/targetproduct/add", node5, addOrChangeResult);
-			}
 		}
 	});
 }
@@ -226,85 +205,86 @@ function addOrChangeResult(){
 	}
 }
 
+function modelQueryResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				var _myMKBox = document.getElementById("page6MkTbody");
+				for(var i = 0; i < data.resultData.length; i++) {
+					_myMKBox.innerHTML += '<div class="moduleitems eachpartbox" category="'+ data.resultData[i].category +'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></div>';
+				}
+			}
+		}
+		var node = '{}';
+		sendHTTPRequest("/module/query", node, modelQueryResult2);
+	}
+}
+
 function modelQueryResult2(){
 	if(this.readyState == 4) {
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				moduleQueryData(data.resultData);
+				var arr2 = data.resultData;
+				var kk = 0;
+				for (var j=0; j< $(".moduleitems").length; j++) {
+					for(var i = 0; i < arr2.length; i++) {
+						if(arr2[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
+							kk = i;
+							mkDataInsert(kk, $(".moduleitems")[j], arr2);
+						}
+					}
+				}
+				for (var i=0; i<$(".mkradio").length; i++) {
+					document.getElementsByClassName("mkradio")[0].setAttribute('checked', 'true');
+				}
 			}
 		}
+		$('#page6Modal2').attr("hasquery","true");
 	}
 }
-function moduleQueryData(data) {
-	console.log(data);
-	var kk = 0;
-	var checkId = 0;
-	var firstChecked = "";
-	var _rowAddPageApp = document.getElementById("page6MkApp");
-	var _rowAddPageService = document.getElementById("page6MkService");
-	var _rowAddPageAppStore = document.getElementById("page6MkAppStore");
-	var _rowAddPageHomePage = document.getElementById("page6MkHomePage");
-	var _rowAddPageIME = document.getElementById("page6MkIME");
-	var _rowAddPageSysApp = document.getElementById("page6MkSysApp");
-	var _rowAddPageTV = document.getElementById("page6MkTV");
-	var _rowAddPageOther = document.getElementById("page6MkOther");
-	var _rowAddPagePlayerLibrary = document.getElementById("page6MkPlayerLibrary");
-	_rowAddPageApp.innerHTML = "<div title='App'>App:</div>";
-	_rowAddPageService.innerHTML = "<div title='Service'>Service:</div>";
-	_rowAddPageAppStore.innerHTML = "<div title='AppStore'>AppStore:</div>";
-	_rowAddPageHomePage.innerHTML = "<div title='HomePage'>HomePage:</div>";
-	_rowAddPageIME.innerHTML = "<div title='IME'>IME:</div>";
-	_rowAddPageSysApp.innerHTML = "<div title='SysApp'>SysApp:</div>";
-	_rowAddPageTV.innerHTML = "<div title='TV'>TV:</div>";
-	_rowAddPageOther.innerHTML = "<div title='Other'>Other:</div>";
-	_rowAddPagePlayerLibrary.innerHTML = "<div title='PlayerLibrary'>PlayerLibrary:</div>";
 
-	for(var i = 0; i < data.length; i++) {
-		console.log("lxw " + data[i].category);
-		if(data[i].category == "App") {
-			kk = i;
-			mkDataInsert(kk, _rowAddPageApp, data);
-		} else if(data[i].category == "Service") {
-			kk = i;
-			mkDataInsert(kk, _rowAddPageService, data);
-		} else if(data[i].category == "AppStore") {
-			kk = i;
-			mkDataInsert(kk, _rowAddPageAppStore, data);
-		} else if(data[i].category == "HomePage") {
-			kk = i;
-			mkDataInsert(kk, _rowAddPageHomePage, data);
-		} else if(data[i].category == "IME") {
-			kk = i;
-			mkDataInsert(kk, _rowAddPageIME, data);
-		} else if(data[i].category == "SysApp") {
-			kk = i;
-			if(data[i].engName == "SkyMirrorPlayer") {
-				_rowAddPageSysApp.innerHTML += "<div class='col-xs-3'><input type='checkbox' value='' disabled><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
-			} else {
-				mkDataInsert(kk, _rowAddPageSysApp, data);
-			}
-		} else if(data[i].category == "TV") {
-			kk = i;
-			mkDataInsert(kk, _rowAddPageTV, data);
-		} else if(data[i].category == "Other") {
-			kk = i;
-			mkDataInsert(kk, _rowAddPageOther, data);
-		} else if(data[i].category == "PlayerLibrary") {
-			checkId++;
-			kk = i;
-			if(checkId == 1) {
-				firstChecked = "page2Checked" + data[kk].id;
-			}
-			_rowAddPagePlayerLibrary.innerHTML += "<div class='col-xs-3'><input type='radio' name='PlayerLibrary' id='page2Checked" + data[kk].id + "' value=''><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
-			document.getElementById(firstChecked).setAttribute('checked', '');
-		}
+function mkDataInsert(kk, obj, data) {
+	if (data[kk].category == "PlayerLibrary") {
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' value='' name='PlayerLibrary'><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+	} else{
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox' class='mkitems' value=''><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	}
 }
-function mkDataInsert(kk, obj, data) {
-	obj.innerHTML += "<div class='col-xs-3'><input type='checkbox' value=''><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+
+function tpsubmit(){
+	console.log($('#page6Modal2').attr("status"));
+	if ($('#page6Modal2').attr("status") == 1) {
+		console.log("新增+TP+提交");
+		var _tpValue = $("#page6_TP").val();;
+		console.log(_tpValue);
+		var _mkArray = [];
+		for (var i=0; i<$(".mkitems").length; i++) {
+			var _objItem = {
+				"engName":""
+			};
+			if ($(".mkitems")[i].checked == true) {
+				_objItem.engName =  $(".mkitems")[i].getAttribute("id");
+				_mkArray.push(_objItem);
+			}
+		}
+		_mkArray = JSON.stringify(_mkArray);
+		console.log(_mkArray);
+		var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'}';
+		console.log(node);
+		sendHTTPRequest("/targetproduct/add", node, addOrChangeResult);
+	} else{
+		console.log("修改+TP+提交");
+		var node = '{"name":"'+_tpValue+'","oldValue":"'+_mkArray+'"}';
+//		console.log(node);
+//		sendHTTPRequest("/targetproduct/update", node5, addOrChangeResult);
+	}
+	
 }
+
 /*刷新页面*/
 function freshHtml() {
 	var htmlObject = parent.document.getElementById("tab_userMenu6");

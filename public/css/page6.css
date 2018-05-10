@@ -113,6 +113,8 @@
 }
 #page6ModalDiv{
 	height:250px;
+}
+#page6ModalDiv,#page6ModalDiv2{
 	background-color: #bcbcbc;
 }
 #lableText{
@@ -153,3 +155,26 @@
 .divitems{
 	padding-bottom: 5px;
 }
+.eachpartbox{
+	position: relative;
+	width: 100%;
+	clear: both;
+}
+.grouptitle{
+	display: inherit;
+	font-size: 20px;
+	/*color: brown;*/
+	/*color: chocolate;*/
+	color: firebrick;
+	/*color: orangered;*/
+	/*color: maroon;*/
+	padding-bottom: 5px;
+}
+.modalwidth{
+	width: 730px;
+}
+#page6_tp_submit2{
+	display: block;
+    margin: 0 auto;
+}
+    

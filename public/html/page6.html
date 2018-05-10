@@ -20,7 +20,7 @@
 					<span class="page6_tab">机芯列表</span>---
 					<span class="page6_tab">机型列表</span>---
 					<span class="page6_tab">芯片型号</span>---
-					<span class="page6_tab">TP</span>
+					<span class="page6_tab">TargetProduct</span>
 				</legend>
 				<div class="page_boxes" style="display: block;">
 					<div class="">
@@ -86,24 +86,21 @@
 						</div>
 					</div>
 				</div>
-				<!--机芯机型-增加-->
-				<div class="modal fade " id="page6Modal2" tabindex="-1" role="dialog" aria-labelledby="mypage6ModalLabel2">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content" id="page6ModalDiv">
+				<!--TargetProduct-增加-->
+				<div class="modal fade " id="page6Modal2" hasquery="false" tabindex="-1" role="dialog" aria-labelledby="mypage6ModalLabel2">
+					<div class="modal-dialog modalwidth" role="document"><!--modal-dialog-->
+						<div class="modal-content" id="page6ModalDiv2">
 							<div class="modal-body">
-								<input id="page6_TP" type="text" value=""/>
+								<input id="page6_TP" type="text" value="">
+								<button type="button" class="btn btn-primary" style="float: right;" data-dismiss="modal">关闭</button>
+								<button type="button" id="page6_tp_submit" class="btn btn-primary" style="float: right;">提交</button>
 								<table class="table table-bordered" id="page6MkTable">
-									<tr><td id="page6MkPlayerLibrary"></td></tr>
-									<tr><td id="page6MkApp"></td></tr>
-									<tr><td id="page6MkService"></td></tr>
-									<tr><td id="page6MkAppStore"></td></tr>
-									<tr><td id="page6MkHomePage"></td></tr>
-									<tr><td id="page6MkIME"></td></tr>
-									<tr><td id="page6MkSysApp"></td></tr>
-									<tr><td id="page6MkTV"></td></tr>
-									<tr><td id="page6MkOther"></td></tr>
+									<tbody id="page6MkTbody"></tbody>
 								</table>
-							</div>	
+							</div>
+							<div class="modal-footer">
+								<button type="button" id="page6_tp_submit2" class="btn btn-primary">提交</button>
+							</div>
 						</div>
 					</div>
 				</div>

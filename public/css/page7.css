@@ -119,6 +119,19 @@
 	margin:auto;
 	font-size: 22px;
 }
+.sysSelect2{
+	display: inline-block;
+    position: relative;
+    float: left;
+    left: 10%;
+    height: 35px;
+    width: 39%;
+    margin-right: 1%;
+    font-size: 22px;
+}
+#selectSecond{
+	display: none;
+}
 
 #page7_config_border,#page7_module_border,#page7_sys_border{
 	background-color: #bcbcbc;
@@ -163,6 +176,10 @@
 	height: 30px;
 	margin-top: 20px;
 	background-color: #FFFFFF;
+}
+#sysSubmit{
+    clear: both;
+    margin-top: 50px;
 }
 #configErrorInfo,#moduleErrorInfo,#sysErrorInfo{
 	text-align: center;

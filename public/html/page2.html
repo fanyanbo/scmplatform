@@ -151,7 +151,7 @@
 				<!--点击新增、编辑、复制、预览弹出的modal-->
 				<div class="modal fade" id="page2Modal1" tabindex="-1" role="dialog" aria-labelledby="page2Modal1Label">
 					<div class="modalwidth" role="document">
-						<div class="modal-content">
+						<div class="modal-content" style="background-color: lightgray;">
 							<div class="modal-header">
 								<button type="button" class="btn btn-default" aria-label="Close" id="page2Modal1Close" style="float: right;"><span aria-hidden="true">关闭</span></button>
 								<button type="button" class="btn btn-default" id="page2Modal1Submit" style="float: right;"><span aria-hidden="true">提交</span></button>
@@ -160,169 +160,132 @@
 							</div>
 							<div class="modal-body">
 								<table class="table table-bordered " id="page2Modal1Table">
-									<tr>
-										<td>
-											<div class="col-xs-4 text-left">
-												<label for="lable2Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
-												<input type="text" value="" id="lable2Chip" class="col-xs-5 col-xs-push-1 inputstyle text-left">
-											</div>
-											<div class="col-xs-4 text-left">
-												<label for="lable2Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
-												<input type="text" value="" id="lable2Model" class="col-xs-5 col-xs-push-1 inputstyle text-left">
-											</div>
-											<div class="col-xs-4 text-left">
-												<label for="lable2TargetProduct" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TARGET_PRODUCT:</label>
-												<input type="text" value="" id="lable2TargetProduct" class="col-xs-5 col-xs-push-1 inputstyle text-left">
-												<div class="auto_hidden" id="page2_auto3"></div>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable2CoocaaVersion" class="control-label text-right" title="CoocaaVersion" style="width: 41.67%;float: left;">酷开版本&nbsp;:</label>
-												<select id="lable2CoocaaVersion" class="col-xs-5 col-xs-push-1 inputstyle text-left">
-													<option value="Coocaa1.0">Coocaa1.0</option>
-													<option value="Coocaa1.0">Coocaa2.0</option>
-													<option value="Coocaa1.0">Coocaa3.0</option>
-													<option value="Coocaa1.0">Coocaa4.0</option>
-													<option value="Coocaa1.0">Coocaa5.0</option>
-													<option value="Coocaa1.0">Coocaa6.0</option>
-												</select>
-											</div>
-											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable2AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
-												<select id="lable2AndroidVersion" class="col-xs-5 col-xs-push-1 inputstyle text-left">
-													<option value="Android4.2">Android4.2</option>
-													<option value="Android4.3">Android4.3</option>
-													<option value="Android4.4">Android4.4</option>
-													<option value="Android5.0">Android5.0</option>
-													<option value="Android5.1">Android5.1</option>
-													<option value="Android6.0">Android6.0</option>
-												</select>
-											</div>
-											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable2ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
-												<select id="lable2ChipMode" class="col-xs-5 col-xs-push-1 inputstyle text-left">
-													<option value="1">1</option>
-													<option value="2">2</option>
-													<option value="3">3</option>
-													<option value="4">4</option>
-													<option value="5">5</option>
-													<option value="6">6</option>
-													<option value="7">7</option>
-													<option value="8">8</option>
-													<option value="9">9</option>
-												</select>
-											</div>
-											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable2Emmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
-												<select id="lable2Emmc" class="col-xs-5 col-xs-push-1 inputstyle text-left">
-													<option value="EMMC1">EMMC1</option>
-													<option value="EMMC2">EMMC2</option>
-													<option value="EMMC3">EMMC3</option>
-													<option value="EMMC4">EMMC4</option>
-													<option value="EMMC5">EMMC5</option>
-													<option value="EMMC6">EMMC6</option>
-													<option value="EMMC7">EMMC7</option>
-													<option value="EMMC8">EMMC8</option>
-													<option value="EMMC9">EMMC9</option>
-												</select>
-											</div>
-											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable2Memory" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">内存&nbsp;:</label>
-												<select id="lable2Memory" class="col-xs-5 col-xs-push-1 inputstyle text-left">
-													<option value="256MB">256MB</option>
-													<option value="512MB">512MB</option>
-													<option value="768MB">768MB</option>
-													<option value="1GB">1GB</option>
-													<option value="1.5GB">1.5GB</option>
-													<option value="2GB">2GB</option>
-													<option value="2.5GB">2.5GB</option>
-													<option value="3GB">3GB</option>
-													<option value="3.5GB">3.5GB</option>
-													<option value="4GB">4GB</option>
-												</select>
-											</div>
-											<div class="col-xs-4 text-left inputdiv">
-												<label for="lable2GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
-												<input type="text" value="" id="lable2GitBranch" class="col-xs-5 col-xs-push-1 inputstyle text-left">
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td style="padding: 0;">
-											<div class="btn-group">
-												<button class="page2_tabs" firstget="false">config文件</button>
-												<button class="page2_tabs" firstget="false">系统设置</button>
-												<button class="page2_tabs" firstget="false">信号源工具箱</button>
-												<button class="page2_tabs" firstget="false">卖场演示</button>
-												<button class="page2_tabs" firstget="false">中间件</button>
-												<button class="page2_tabs" firstget="false">MK</button>
-												<button class="page2_tabs" firstget="false">PROP</button>
-											</div>
-											<div class="col-xs-12 page2_boxes">
-												<table class="table table-bordered" id="page2ConfigTable">
-													<tr><td id="page2ConfigBase"></td></tr>
-													<tr><td id="page2ConfigServerip"></td></tr>
-													<tr><td id="page2ConfigAd"></td></tr>
-													<tr><td id="page2ConfigChannel"></td></tr>
-													<tr><td id="page2ConfigLocalmedia"></td></tr>
-													<tr><td id="page2ConfigOther"></td></tr>
-												</table>
-											</div>
-											<div class="col-xs-12 page2_boxes">
-												<table class="table table-bordered" id="page2SysTable">
-													<tr><td id="page2SysBoot"></td></tr>
-													<tr><td id="page2SysSetting"></td></tr>
-													<tr><td id="page2SysNet"></td></tr>
-													<tr><td id="page2SysPicture"></td></tr>
-													<tr><td id="page2SysSound"></td></tr>
-													<tr><td id="page2SysGeneral"></td></tr>
-												</table>
-											</div>
-											<div class="col-xs-12 page2_boxes">
-												<table class="table table-bordered" id="page2SourceBoxTable">
-													<tr><td id="page2SourceBoxQuick"></td></tr>
-													<tr><td id="page2SourceBoxGeneral"></td></tr>
-												</table>
-											</div>
-											<div class="col-xs-12 page2_boxes">
-												<table class="table table-bordered" id="page2MarketShowTable">
-													<tr><td id="page2MarketShowSound"></td></tr>
-													<tr><td id="page2MarketShowPicture"></td></tr>
-												</table>
-											</div>
-											<div class="col-xs-12 page2_boxes">
-												<table class="table table-bordered"id="page2MiddlewareTable">
-													<tr><td id="page2Middleware1"></td></tr>
-													<tr><td id="page2Middleware2"></td></tr>
-												</table>
-											</div>
-											<div class="col-xs-12 page2_boxes">
-												<table class="table table-bordered" id="page2MkTable">
-													<tr><td id="page2MkPlayerLibrary"></td></tr>
-													<tr><td id="page2MkApp"></td></tr>
-													<tr><td id="page2MkService"></td></tr>
-													<tr><td id="page2MkAppStore"></td></tr>
-													<tr><td id="page2MkHomePage"></td></tr>
-													<tr><td id="page2MkIME"></td></tr>
-													<tr><td id="page2MkSysApp"></td></tr>
-													<tr><td id="page2MkTV"></td></tr>
-													<tr><td id="page2MkOther"></td></tr>
-												</table>
-											</div>
-											<div class="col-xs-12 page2_boxes">
-												<table class="table table-bordered" id="page2PropTable">
-													<tr><td id="page2PropBase"></td></tr>
-													<tr><td id="page2PropServerip"></td></tr>
-													<tr><td id="page2PropAd"></td></tr>
-													<tr><td id="page2PropChannel"></td></tr>
-													<tr><td id="page2PropLocalmedia"></td></tr>
-												</table>
-											</div>
-										</td>
-									</tr>
+									<tbody>
+										<tr>
+											<td>
+												<div class="col-xs-4 text-left">
+													<label for="lable2Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
+													<input type="text" value="" id="lable2Chip" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+												</div>
+												<div class="col-xs-4 text-left">
+													<label for="lable2Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
+													<input type="text" value="" id="lable2Model" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+												</div>
+												<div class="col-xs-4 text-left">
+													<label for="lable2TargetProduct" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TP:</label>
+													<input type="text" value="" id="lable2TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<div class="auto_hidden" id="page2_auto3"></div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2CoocaaVersion" class="control-label text-right" title="CoocaaVersion" style="width: 41.67%;float: left;">酷开版本&nbsp;:</label>
+													<select id="lable2CoocaaVersion" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="Coocaa1.0">Coocaa1.0</option>
+														<option value="Coocaa1.0">Coocaa2.0</option>
+														<option value="Coocaa1.0">Coocaa3.0</option>
+														<option value="Coocaa1.0">Coocaa4.0</option>
+														<option value="Coocaa1.0">Coocaa5.0</option>
+														<option value="Coocaa1.0">Coocaa6.0</option>
+													</select>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
+													<select id="lable2AndroidVersion" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="Android4.2">Android4.2</option>
+														<option value="Android4.3">Android4.3</option>
+														<option value="Android4.4">Android4.4</option>
+														<option value="Android5.0">Android5.0</option>
+														<option value="Android5.1">Android5.1</option>
+														<option value="Android6.0">Android6.0</option>
+													</select>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
+													<select id="lable2ChipMode" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="1">1</option>
+														<option value="2">2</option>
+														<option value="3">3</option>
+														<option value="4">4</option>
+														<option value="5">5</option>
+														<option value="6">6</option>
+														<option value="7">7</option>
+														<option value="8">8</option>
+														<option value="9">9</option>
+													</select>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Emmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
+													<select id="lable2Emmc" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="EMMC1">EMMC1</option>
+														<option value="EMMC2">EMMC2</option>
+														<option value="EMMC3">EMMC3</option>
+														<option value="EMMC4">EMMC4</option>
+														<option value="EMMC5">EMMC5</option>
+														<option value="EMMC6">EMMC6</option>
+														<option value="EMMC7">EMMC7</option>
+														<option value="EMMC8">EMMC8</option>
+														<option value="EMMC9">EMMC9</option>
+													</select>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Memory" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">内存&nbsp;:</label>
+													<select id="lable2Memory" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="256MB">256MB</option>
+														<option value="512MB">512MB</option>
+														<option value="768MB">768MB</option>
+														<option value="1GB">1GB</option>
+														<option value="1.5GB">1.5GB</option>
+														<option value="2GB">2GB</option>
+														<option value="2.5GB">2.5GB</option>
+														<option value="3GB">3GB</option>
+														<option value="3.5GB">3.5GB</option>
+														<option value="4GB">4GB</option>
+													</select>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
+													<input type="text" value="" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td style="padding: 0;">
+												<div class="btn-group">
+													<button class="page2_tabs" firstget="false">config文件</button>
+													<button class="page2_tabs" firstget="false">系统设置</button>
+													<button class="page2_tabs" firstget="false">信号源工具箱</button>
+													<button class="page2_tabs" firstget="false">卖场演示</button>
+													<button class="page2_tabs" firstget="false">中间件</button>
+													<button class="page2_tabs" firstget="false">MK</button>
+													<button class="page2_tabs" firstget="false">PROP</button>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myConfigBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="mySysSettingBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="mySourceBoxBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myMarketShowBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myMiddlewareBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myMkBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myPropBox" class="eachpartbox"></div>
+												</div>
+											</td>
+										</tr>
+									</tbody>	
 								</table>
 							</div>
 							<div class="modal-footer myfooter">
@@ -515,7 +478,7 @@
 						</div>
 					</div>
 				</div>
-				
+
 				<!-- 点击查看 -->
 				<div class="modal fade col-xs-12" id="page1_examine" tabindex="-1" role="dialog" aria-labelledby="page1_examineLabel">
 					<div class="" role="document">
@@ -532,21 +495,99 @@
 							<div class="modal-body">
 								<table class="table table-striped table-bordered table-hover" id="contenttable">
 									<thead>
-										<tr><th>修改内容</th><th>修改原因</th><th>状态</th><th>提交者</th><th>提交时间</th></tr>
+										<tr>
+											<th>修改内容</th>
+											<th>修改原因</th>
+											<th>状态</th>
+											<th>提交者</th>
+											<th>提交时间</th>
+										</tr>
 									</thead>
 									<tbody>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
-										<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
+										<tr>
+											<td>1</td>
+											<td>2</td>
+											<td>3</td>
+											<td>4</td>
+											<td>5</td>
+										</tr>
 									</tbody>
 								</table>
 							</div>
