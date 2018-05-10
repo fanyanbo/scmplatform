@@ -1,6 +1,7 @@
 var db = require('./db');
 var eventproxy = require('eventproxy');
 var logger = require('../common/logger');
+var generator = require('../file/generate');
 
 var ProductModel = function() {};
 
@@ -166,13 +167,12 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
 }
 
 ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callback) {
-
+  return;
 
   let ep = new eventproxy();
   let sql_list = [
-                  "SELECT * FROM products WHERE chip = ? AND model = ?",
-                  "SELECT * FROM configdata WHERE chip = ? AND model = ?",
-                  "SELECT * FROM mkdata WHERE targetProduct in (SELECT targetProduct FROM products WHERE chip = ? AND model = ?)"
+    "INSERT INTO products(engName,cnName,category,gitPath,descText,orderId) values (?,?,?,?,?,?)",
+    "INSERT INTO configdata_temp(chip,model,auditState,modifyState,androidVersion,memorySize,EMMC,targetProduct,soc,platform,gitBranch,coocaaVersion) values (?,?,?,?,?,?)"
                 ];
 
   ep.bind('error', function (err) {
@@ -197,8 +197,12 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
 }
 
 ProductModel.prototype.preview = function (chip, model, callback) {
-  
-
+    generator.preview(chip, model, "6.0", function(err, results){
+      if (err) {
+          return callback(err);
+      }
+      callback(null, results);
+    });
 }
 
 var productModel = new ProductModel();
