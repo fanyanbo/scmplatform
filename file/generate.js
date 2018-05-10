@@ -60,7 +60,7 @@ function generateFiles( chip,		    // 机芯
 	
 	//console.log("machines param type = " + type + "\n");
     baseinfo = CreateInfo(chip, model);
-    return doit(version, actionType, callback);
+    return doit(version, actionType);
 }
 
 
@@ -118,18 +118,17 @@ function targetArrayIndex(arr, targetProduct)
 }
 
 function doit(	systemVersion,		// 系统版本
-				callback, 			// 回调函数
-				result_callback
+				callback  			// 回调函数
 								)
 {
 	connection = mysql.createConnection(dbparam);
 	
 	connection.connect();
 	
-	step_query_targetProduct(connection, result_callback);
+	step_query_targetProduct(connection);
 }
 
-function step_query_targetProduct(connection, result_callback)
+function step_query_targetProduct(connection)
 {
 	var result = 0;
 	var sql = "select targetProduct from products where chip=\"" + 
@@ -157,12 +156,12 @@ function step_query_targetProduct(connection, result_callback)
 		
 		targetinfo = CreateTarget(curTargetProduct);
 		
-		step_query_all_config(connection, result_callback);
+		step_query_all_config(connection);
 		
 	});
 }
 
-function step_query_all_config(connection, result_callback)
+function step_query_all_config(connection)
 {
 	var chip = baseinfo.chip;
 	var model = baseinfo.model;
@@ -217,20 +216,20 @@ function step_query_all_config(connection, result_callback)
 		if (baseinfo.curConfigId >= 3)
 		{
 			baseinfo.curConfigId = 0;
-			step_query_mkdata(connection, result_callback);
+			step_query_mkdata(connection);
 		}
 		else
-		    step_query_all_config(connection, result_callback);
+		    step_query_all_config(connection);
 	});
 
 }
 
-function step_query_mkdata(connection, result_callback)
+function step_query_mkdata(connection)
 {
-	step_query_mkdata_item(connection, result_callback);
+	step_query_mkdata_item(connection);
 }
 
-function step_query_mkdata_item(connection, result_callback)
+function step_query_mkdata_item(connection)
 {
 	if (true)
 	{
@@ -259,7 +258,7 @@ function step_query_mkdata_item(connection, result_callback)
 			
 			console.log("***********************\n");
 		    connection.end();
-		    generate_files(result_callback);
+		    generate_files();
 		});
 	}
 	else
@@ -268,7 +267,7 @@ function step_query_mkdata_item(connection, result_callback)
 	}
 }
 
-function generate_files(result_callback)
+function generate_files()
 {
 	var randValue = Math.ceil(1000 * Math.random());
 	
@@ -325,11 +324,24 @@ function generate_files(result_callback)
 	    console.log("preview");
 	    var content1 = fs.readFileSync(getTempGernalConfigFileName(baseinfo.chip, baseinfo.model), "utf-8");
         var content2 = fs.readFileSync(getTempMkFileName(targetinfo.name), "utf-8");
+        var content4 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-build.prop", "utf-8");
+        
+        var content3_1 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_main.xml", "utf-8");
+        var content3_2 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_guide.xml", "utf-8");
+        var content3_3 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_connect.xml", "utf-8");
+        var content3_4 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-market_show_configuration.xml", "utf-8");
+        var content3_5 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_general.xml", "utf-8");
+        var content3_6 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-ssc_item.xml", "utf-8");
+        var content3_7 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_picture_sound.xml", "utf-8");
+        var content3_8 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-driverbase_net_config.ini", "utf-8");
+
+        var content3 = content3_1 + content3_2 + content3_3 + content3_4 + content3_5 + content3_6 + content3_7 + content3_8 ;
         if (mod_callback != null)
-            mod_callback(0, content1, content2, content1, content2);
+            mod_callback(0, content1, content2, content3, content4);
 	}
 	else
 	{
+	    
 	}
 }
 
@@ -458,25 +470,17 @@ function getTmpDir()
 }
 
 
-//var info = [
-//		{"chip":"5S07", "model":"A2" },
-//		{"chip":"5S02", "model":"15U" }
-//	];
-
-//var info = {"chip":"5S02", "model":"15U" };
 
 //generator.generate("5S02", "15U", "Rel6.0", null);
-//generator.preview("5S02", "15U", "Rel6.0", show111);
-//generator.preview("5S02", "15U", function(errno, text1, text2){
-//	if (errno == 0)
-//	{
-//		console.log(text2);
-//	}
-//});
+//generator.preview("5S02", "15U", "Rel6.0", show_preview_text_test);
 
-function show111(errno, text1, text2, text3, text4)
+
+function show_preview_text_test(errno, text1, text2, text3, text4)
 {
     console.log(text1);
+    console.log(text2);
+    console.log(text3);
+    console.log(text4);
 }
 
 
