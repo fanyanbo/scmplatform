@@ -156,7 +156,7 @@
 								<button type="button" class="btn btn-default" aria-label="Close" id="page2Modal1Close" style="float: right;"><span aria-hidden="true">关闭</span></button>
 								<button type="button" class="btn btn-default" id="page2Modal1Submit" style="float: right;"><span aria-hidden="true">提交</span></button>
 								<h4 class="modal-title" id="page2Modal1Label">新增</h4>
-								<h4 id="page2Modal1ErrorInfo" class=""></h4>
+								<h4 id="page2Modal1ErrorInfo" class="myModalErrorInfo"></h4>
 							</div>
 							<div class="modal-body">
 								<table class="table table-bordered " id="page2Modal1Table">
@@ -165,15 +165,15 @@
 											<td>
 												<div class="col-xs-4 text-left">
 													<label for="lable2Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
-													<input type="text" value="" id="lable2Chip" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" id="lable2Chip" name="机芯" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 												</div>
 												<div class="col-xs-4 text-left">
 													<label for="lable2Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
-													<input type="text" value="" id="lable2Model" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" id="lable2Model" name="机型" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 												</div>
 												<div class="col-xs-4 text-left">
 													<label for="lable2TargetProduct" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TP:</label>
-													<input type="text" value="" id="lable2TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" id="lable2TargetProduct" name="TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 													<div class="auto_hidden" id="page2_auto3"></div>
 												</div>
 											</td>
@@ -182,7 +182,7 @@
 											<td>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2CoocaaVersion" class="control-label text-right" title="CoocaaVersion" style="width: 41.67%;float: left;">酷开版本&nbsp;:</label>
-													<select id="lable2CoocaaVersion" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<select id="lable2CoocaaVersion" name="酷开版本" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="Coocaa1.0">Coocaa1.0</option>
 														<option value="Coocaa1.0">Coocaa2.0</option>
 														<option value="Coocaa1.0">Coocaa3.0</option>
@@ -193,7 +193,7 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
-													<select id="lable2AndroidVersion" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<select id="lable2AndroidVersion" name="Android版本" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="Android4.2">Android4.2</option>
 														<option value="Android4.3">Android4.3</option>
 														<option value="Android4.4">Android4.4</option>
@@ -204,7 +204,7 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
-													<select id="lable2ChipMode" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<select id="lable2ChipMode" name="芯片型号" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="1">1</option>
 														<option value="2">2</option>
 														<option value="3">3</option>
@@ -218,7 +218,7 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2Emmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
-													<select id="lable2Emmc" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<select id="lable2Emmc" name="EMMC" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="EMMC1">EMMC1</option>
 														<option value="EMMC2">EMMC2</option>
 														<option value="EMMC3">EMMC3</option>
@@ -232,7 +232,7 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2Memory" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">内存&nbsp;:</label>
-													<select id="lable2Memory" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<select id="lable2Memory" name="内存" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="256MB">256MB</option>
 														<option value="512MB">512MB</option>
 														<option value="768MB">768MB</option>
@@ -247,7 +247,7 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
-													<input type="text" value="" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" name="gitbranch" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 												</div>
 											</td>
 										</tr>

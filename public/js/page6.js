@@ -277,12 +277,11 @@ function tpsubmit(){
 		console.log(node);
 		sendHTTPRequest("/targetproduct/add", node, addOrChangeResult);
 	} else{
-		console.log("修改+TP+提交");
-		var node = '{"name":"'+_tpValue+'","oldValue":"'+_mkArray+'"}';
+//		console.log("修改+TP+提交");
+//		var node = '{"name":"'+_tpValue+'","oldValue":"'+_mkArray+'"}';
 //		console.log(node);
 //		sendHTTPRequest("/targetproduct/update", node5, addOrChangeResult);
 	}
-	
 }
 
 /*刷新页面*/

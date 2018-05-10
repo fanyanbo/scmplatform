@@ -497,7 +497,38 @@ function clearAllInfo() {
 }
 
 function getAndCheckAndSendAllData(){
-	
+	//判断基本项是否为空
+	var nullName = 0;
+	for (var i=0; i<$("#page2Modal1Table .inputstyle").length; i++) {
+		var _curValue = $("#page2Modal1Table .inputstyle")[i].value;
+		var _curInput = $("#page2Modal1Table .inputstyle")[i].getAttribute("name");
+		console.log(_curValue);
+		if (_curValue==null||_curValue=="") {
+			console.log(_curInput + "项不能为空");
+			nullName = i+1;
+			i = $("#page2Modal1Table .inputstyle").length;
+			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
+			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项不能为空";
+			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
+		}
+	}
+	console.log(nullName);
+	if (nullName == 0) {
+		console.log("没有空项");
+		//获取基本项、config、MK、系统设置的值
+		var _base = getBaseValue();
+		var _config = getConfigValue();
+		var _sys = getSysValue();
+		_base = JSON.stringify(_base);
+		_config = JSON.stringify(_config);
+		_sys = JSON.stringify(_sys);
+		console.log(_base);
+		console.log(_config);
+		console.log(_sys);
+		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+		console.log(node);
+		sendHTTPRequest("/product/add", node, productAddResult);
+	}
 }
 //批量编辑
 function page2EditMore() {
@@ -506,16 +537,12 @@ function page2EditMore() {
 }
 //批量删除
 function page2DeleteMore() {
-	//1、判断是否勾选
+	//1、判断是否勾选 0-没勾选 1-勾选了
 	var checkedLength = 0;
 	if(checkedLength == 0) {
-		//如果没勾选
 		$("#myDeleteDialogModal").modal("toggle");
-
 	} else {
-		//如果勾选了
 		$("#myMoreDeleteModal").modal("toggle");
-
 	}
 }
 //导出功能
@@ -560,21 +587,23 @@ function closeparentpage() {
 }
 
 function configQueryData(arr1,arr2) {
+	console.log(arr2);
 	var _myConfigBox = document.getElementById("myConfigBox");
 	for(var i = 0; i < arr1.length; i++) {
-		_myConfigBox.innerHTML += '<div class="configitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
+		_myConfigBox.innerHTML += '<div class="configitems1 eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
 	}
 	var kk = 0;
-	for (var j=0; j< $(".configitems").length; j++) {
+	for (var j=0; j< $(".configitems1").length; j++) {
 		for(var i = 0; i < arr2.length; i++) {
-			if(arr2[i].category == $(".configitems:eq(" + (j) + ")").attr("category")) {
+			if(arr2[i].category == $(".configitems1:eq(" + (j) + ")").attr("category")) {
 				kk = i;
-				configDataInsert(kk, $(".configitems")[j], arr2);
+				configDataInsert(kk, $(".configitems1")[j], arr2);
 			}
 		}
 	}
 }
 function settingsQueryData(arr1,arr2) {
+	console.log(arr2);
 	var _mySysSettingBox = document.getElementById("mySysSettingBox");
 	var _mySourceBoxBox = document.getElementById("mySourceBoxBox");
 	var _myMarketShowBox = document.getElementById("myMarketShowBox");
@@ -595,15 +624,14 @@ function settingsQueryData(arr1,arr2) {
 			sysDataInsert(kk,_myMiddlewareBox,3,arr1);
 		}
 	}
-	
 	for (var j=0; j< $(".settingsitems").length; j++) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
 				if (arr2[i].level3 === null || arr2[i].level3 == "") {
-					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' value=''><span level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' name='" + arr2[i].engName + "' title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 				} else{
 					if (arr2[i].level3 == $(".settingsitems:eq(" + (j) + ")").attr("level3")) {
-						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' value=''><span level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2+ arr2[i].level1 + "' level3='" + arr2[i].level3 + "' name='" + arr2[i].engName + "' title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 					}
 				}
 			}
@@ -611,6 +639,7 @@ function settingsQueryData(arr1,arr2) {
 	}
 }
 function moduleQueryData(arr1,arr2) {
+	console.log(arr2);
 	var _myMKBox = document.getElementById("myMkBox");
 	for(var i = 0; i < arr1.length; i++) {
 		_myMKBox.innerHTML += '<div class="moduleitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
@@ -631,9 +660,9 @@ function moduleQueryData(arr1,arr2) {
 
 function configDataInsert(kk, obj, data) {
 	if(data[kk].typeStr == "string") {
-		obj.innerHTML += "<div class='col-xs-6'><span title='" + data[kk].descText + "' name='" + data[kk].engName + "' cnName='" + data[kk].cnName + "'>" + data[kk].cnName + " :</span><input type='text' name='" + data[kk].typeStr + "' value='" + data[kk].defaultValue + "'title='" + data[kk].defaultValue + "'></div>";
+		obj.innerHTML += "<div class='col-xs-6'><span title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 	} else if(data[kk].typeStr == "enum") {
-		var _myAddselect = "<select name='" + data[kk].typeStr + "' oldvalue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
+		var _myAddselect = "<select class='configitems' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='" + data[kk].typeStr + "' defaultValue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
 		var str2 = data[kk].options.replace(/"/g, '');
 		str2 = str2.replace("[", "");
 		str2 = str2.replace("]", "");
@@ -645,17 +674,16 @@ function configDataInsert(kk, obj, data) {
 				_myAddselect += "<option value='" + str2[k] + "'>" + str2[k] + "</option>";
 			}
 		}
-		_myAddselect = "<div class='col-xs-6'><span title='" + data[kk].descText + "' name='" + data[kk].engName + "' cnName='" + data[kk].cnName + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
+		_myAddselect = "<div class='col-xs-6'><span title='" + data[kk].descText + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
 		obj.innerHTML += _myAddselect;
 	}
 }
 function mkDataInsert(kk, obj, data) {
 	if (data[kk].category == "PlayerLibrary") {
-		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' value='' disabled><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	} else{
-		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox' class='mkitems' value='' disabled><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox' class='mkitems' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	}
-	
 }
 function sysDataInsert(i, obj, num, arr1){
 	if(arr1[i].level3 != ""){
@@ -671,6 +699,98 @@ function sysDataInsert(i, obj, num, arr1){
 		_twoLevelLinkageArrayOne[num].push(arr1[i].level2);
 	}
 }
+
+
+function getBaseValue(){
+	var _chip = $("#page2Modal1Table .inputstyle")[0].value;
+	var _model = $("#page2Modal1Table .inputstyle")[1].value;
+	var _tp = $("#page2Modal1Table .inputstyle")[2].value;
+	var _coocaa = $("#page2Modal1Table .inputstyle")[3].value;
+	var _android = $("#page2Modal1Table .inputstyle")[4].value;
+	var _soc = $("#page2Modal1Table .inputstyle")[5].value;
+	var _emmc = $("#page2Modal1Table .inputstyle")[6].value;
+	var _memory = $("#page2Modal1Table .inputstyle")[7].value;
+	var _branch = $("#page2Modal1Table .inputstyle")[8].value;
+	//chip、model、auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
+	//androidVersion、memorySize、EMMC、targetProduct、soc、platform、gitbranch、coocaaVersion
+	var baseObj = {
+		"chip" : _chip,
+		"model" : _model,
+		"targetProduct" : _tp,
+		"coocaaVersion" : _coocaa,
+		"androidVersion" : _android,
+		"soc" : _soc,
+		"EMMC" : _emmc,
+		"memorySize" : _memory,
+		"gitbranch" : _branch,
+		"auditState" : 1,
+		"modifyState" : 2,
+		"platform" : 0
+	}
+	
+	baseObj = JSON.stringify(baseObj);
+	return baseObj;
+//	console.log(baseObj);
+}
+function getConfigValue(){
+	var configData = [];
+	console.log($(".configitems").length);
+//	for (var i=0; i<$(".configitems").length; i++) {
+	for (var i=0; i<2; i++) {
+		var oAconfigInfo = {
+			"engName": "",
+			"curValue": ""
+		};
+		oAconfigInfo.engName = $(".configitems")[i].getAttribute("engname");
+		oAconfigInfo.curValue = $(".configitems")[i].value;
+		configData.push(oAconfigInfo);
+	}
+//	console.log(configData);
+	return configData;
+	
+}
+function getSysValue(){
+	var sysData = [];
+	console.log($(".sysitems").length);
+//	for (var i=0; i<$(".sysitems").length; i++) {
+	for (var i=0; i<2; i++) {
+		var oAsysInfo = {
+			"engName": "",
+		};
+		oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
+		sysData.push(oAsysInfo);
+	}
+//	console.log(sysData);
+	return sysData;
+}
+
+function productAddResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("数据提交成功");
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function scrollTopStyle(name){
 	var div = document.getElementById(name);
