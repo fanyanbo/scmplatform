@@ -170,12 +170,10 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
   console.log(baseInfo);
   console.log(configInfo);
   console.log(settingsInfo);
-  console.log(typeof baseInfo);
-  console.log(typeof JSON.parse(baseInfo));
-
-  console.log(baseInfo.chip);
-  console.log(baseInfo.auditState);
-  console.log(baseInfo.coocaaVersion);
+  let baseInfoObj = JSON.parse(baseInfo);
+  console.log(baseInfoObj.chip);
+  console.log(baseInfoObj.auditState);
+  console.log(baseInfoObj.coocaaVersion);
   console.log(configInfo.length);
   console.log(configInfo[0].engName);
   console.log(settingsInfo.length);
