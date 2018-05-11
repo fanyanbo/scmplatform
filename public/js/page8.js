@@ -264,12 +264,7 @@ function changeSubmit(){
 	}
 	console.log(_node);
 	_node = JSON.stringify(_node);
-//	console.log(_node);
-//	_node = _node.toString();
-//	console.log(_node);
 	_node2 = '{"arr":' + _node + '}';
-//	_node2 = '{"arr": [{"engName":"BOOT_AD","orderId":"1"},{"engName":"SUPPORT_POWER_OFF_AD","orderId":"2"}]}';
-//	_node = '{"category":"' + _thisKey + '"}';
 	console.log(_node2);
 	sendHTTPRequest(_ajaxUrl, _node2, updateCategoryResult);
 }

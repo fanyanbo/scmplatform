@@ -308,7 +308,6 @@ function clearMKLastWork(){
 function buttonInit() {
 	document.getElementById("page2_searchInfo").onclick = page2Select;
 	document.getElementById("page2_reset").onclick = page2Reset;
-	document.getElementById("page2_editMore").onclick = page2EditMore;
 	document.getElementById("page2_deleteMore").onclick = page2DeleteMore;
 	document.getElementById("page2_export").onclick = page2Export;
 	document.getElementById("page2_fresh").onclick = page2Fresh;
@@ -324,7 +323,6 @@ function buttonInit() {
 		$("#lable1SubmitTwo").attr("catagory","1");//1-新增、2-修改、3-复制
 		page2AEC("-1");
 	});
-	
 	
 	
 	$("#page2_chip").keyup(function(event) {
@@ -357,7 +355,6 @@ function buttonInit() {
 	$("#lable2GitBranch").keyup(function(event) {
 		autoComplete52.start(event);
 	});
-	
 	
 	
 	$(".page2_tabs").click(function() {
@@ -619,11 +616,7 @@ function getAndCheckAndSendAllData(){
 		}
 	}
 }
-//批量编辑
-function page2EditMore() {
-	$("#myMoreEditModal").modal("toggle");
-	$(".modal-backdrop").addClass("new-backdrop");
-}
+
 //批量删除
 function page2DeleteMore() {
 	//1、判断是否勾选 0-没勾选 1-勾选了
