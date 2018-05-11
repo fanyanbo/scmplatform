@@ -238,6 +238,8 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
 }
 
 ProductModel.prototype.preview = function (chip, model, callback) {
+    console.log("preview chip:" + chip);
+    console.log("preview model:" + model);
     generator.preview(chip, model, "6.0", function(err, results){
       if (err) {
           return callback(err);
