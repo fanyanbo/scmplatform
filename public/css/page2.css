@@ -277,3 +277,20 @@
     line-height: 32px;
     margin-bottom: 0px;
 }
+.modalwidth{
+	position: relative;
+	width: 98%;
+	padding-left: 2%;
+	padding-top: 4%;
+	margin: 0;
+}
+.myheader{
+	padding-bottom: 5px;
+}
+.mybody{
+	padding-bottom: 0px;
+}
+#myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree{
+	width: 100%;
+	min-height: 500px;
+}

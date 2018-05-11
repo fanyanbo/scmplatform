@@ -36,6 +36,8 @@ function QueryResult(){
 			}
 		}
 		page6ButtonInitAfter();
+		var node = '{}';
+				sendHTTPRequest("/module/queryCategory", node, modelQueryResult);
 	}
 }
 
@@ -50,6 +52,8 @@ function page6ButtonInitBefore() {
 			console.log("点击了targetProduct的增加按钮");
 			$('#page6Modal2').modal();
 			$('#page6Modal2').attr("status","1");
+			document.getElementById("page6_TP").value = "";
+			resetAllInfo();
 			console.log($('#page6Modal2').attr("hasquery"));
 			if ($('#page6Modal2').attr("hasquery") == "false") {
 				var node = '{}';
@@ -138,6 +142,9 @@ function page6ButtonInitAfter(){
 		}
 		console.log(thisEnName);
 		document.getElementById("page6_TP").value = thisEnName;
+		
+		var node = '{"targetproduct":"' + thisEnName + '"}';
+		sendHTTPRequest("/product/queryBytp", node, getMKByTPResult);
 	});
 	
 	$("#page6Submit").click(function(){
@@ -196,7 +203,7 @@ function addOrChangeResult(){
 				console.log("数据提交成功");
 				console.log("关闭弹窗，刷新父页面");
 				$("#myConfigAddChangeModal").modal('hide');
-				freshHtml();
+				page6freshHtml();
 			}else{
 				document.getElementById("chipMangInfo").innerHTML = "修改失败！该机型或已存在。";
 				setTimeout("document.getElementById('chipMangInfo').innerHTML='　'",3000);
@@ -277,15 +284,44 @@ function tpsubmit(){
 		console.log(node);
 		sendHTTPRequest("/targetproduct/add", node, addOrChangeResult);
 	} else{
-//		console.log("修改+TP+提交");
-//		var node = '{"name":"'+_tpValue+'","oldValue":"'+_mkArray+'"}';
-//		console.log(node);
+		console.log("修改+TP+提交");
+		var node = '{"name":"'+_tpValue+'","oldValue":"'+_mkArray+'"}';
+		console.log(node);
 //		sendHTTPRequest("/targetproduct/update", node5, addOrChangeResult);
 	}
 }
 
+function getMKByTPResult() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				resetAllInfo();
+				
+				for (var i=0; i<data.resultData.length; i++) {
+					document.getElementById(data.resultData[i].engName).setAttribute('checked', 'true');
+				}
+			}
+		}
+	}
+}
+function resetAllInfo(){
+	
+	for (var k=0; k<$(".mkitems").length; k++) {
+		if ($(".mkitems")[k].getAttribute("type") == "checkbox") {
+			document.getElementsByClassName("mkitems")[k].removeAttribute('checked');
+		} else if($(".mkitems")[k].getAttribute("type") == "radio"){
+			document.getElementsByClassName("mkitems")[k].removeAttribute('checked');
+		}
+	}
+	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
+	document.getElementsByClassName("mkradio")[0].checked = true;
+}
+
+
 /*刷新页面*/
-function freshHtml() {
+function page6freshHtml() {
 	var htmlObject = parent.document.getElementById("tab_userMenu6");
 	console.log("lxw " + htmlObject.firstChild.src);
 	htmlObject.firstChild.src = "page6.html";

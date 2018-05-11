@@ -46,7 +46,7 @@
 							<option value="Coocaa 3.0">Coocaa 3.0</option>
 							<option value="Coocaa 4.0">Coocaa 4.0</option>
 							<option value="Coocaa 5.0">Coocaa 5.0</option>
-							<option value="6.0">6.0</option>
+							<option value="Coocaa 6.0">Coocaa 6.0</option>
 						</select>
 					</div>
 					<div class="col-xs-4 form-group">
@@ -139,7 +139,7 @@
 				<a id="dlink" style="display:none;"></a>
 				<!-- 表格结束 -->
 
-				<!--点击新增、编辑、复制、预览弹出的modal-->
+				<!--点击新增、编辑、复制弹出的modal-->
 				<div class="modal fade" id="page2Modal1" tabindex="-1" role="dialog" aria-labelledby="page2Modal1Label">
 					<div class="modalwidth" role="document">
 						<div class="modal-content" style="background-color: lightgray;">
@@ -176,12 +176,12 @@
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2CoocaaVersion" class="control-label text-right" title="CoocaaVersion" style="width: 41.67%;float: left;">酷开版本&nbsp;:</label>
 													<select id="lable2CoocaaVersion" name="酷开版本" class="col-xs-6 col-xs-push-1 inputstyle text-left">
-														<option value="Coocaa1.0">Coocaa1.0</option>
-														<option value="Coocaa1.0">Coocaa2.0</option>
-														<option value="Coocaa1.0">Coocaa3.0</option>
-														<option value="Coocaa1.0">Coocaa4.0</option>
-														<option value="Coocaa1.0">Coocaa5.0</option>
-														<option value="Coocaa1.0">Coocaa6.0</option>
+														<option value="Coocaa 1.0">Coocaa 1.0</option>
+														<option value="Coocaa 2.0">Coocaa 2.0</option>
+														<option value="Coocaa 3.0">Coocaa 3.0</option>
+														<option value="Coocaa 4.0">Coocaa 4.0</option>
+														<option value="Coocaa 5.0">Coocaa 5.0</option>
+														<option value="Coocaa 6.0">Coocaa 6.0</option>
 													</select>
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
@@ -193,6 +193,7 @@
 														<option value="Android5.0">Android5.0</option>
 														<option value="Android5.1">Android5.1</option>
 														<option value="Android6.0">Android6.0</option>
+														<option value="Android8.0">Android8.0</option>
 													</select>
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
@@ -298,91 +299,6 @@
 						</div>
 					</div>
 				</div>
-				<!--点击批量修改弹出批量修改的modal-->
-				<!--<div class="modal fade" id="myMoreEditModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myMoreEditModalLabel">
-					<div class="" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" aria-label="Close" id="myMoreEditModalClose"><span aria-hidden="true">关闭</span></button>
-								<button type="button" class="close" id="myMoreEditModalSubmit"><span aria-hidden="true">提交</span></button>
-								<h4 class="modal-title" id="myMoreEditModalLabel">批量修改</h4>
-								<span id="myMEModalErrorInfo" class="myModalErrorInfo"></span>
-							</div>
-							<div class="modal-body">
-								<table class="table table-bordered" id="myMoreEditModalTable">
-									<tr>
-										<td style="padding: 0;">
-											<div class="btn-group">
-												<button type="button" class="btn btn-default" id="myMoreEditModalMkButton" disabled title="mk暂不支持批量修改">批量编辑MK文件</button>
-												<button type="button" class="btn btn-default" id="myMoreEditModalConfigButton">批量编辑config文件</button>
-											</div>
-											<div class="col-xs-12 inputstyle" id="myMoreEditModalMkTable">
-												<table class="table table-bordered " style="display:none">
-													<tbody id="myMoreEditModalMkTableTbody">
-														<tr>
-															<td id="myMoreEditModalMkTableApp"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalMkTableService"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalMkTableAppStore"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalMkTableHomePage"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalMkTableIME"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalMkTableSysApp"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalMkTableTV"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalMkTableEtc"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalMkTableOther"></td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-											<div class="col-xs-12 inputstyle" id="myMoreEditModalConfigTable">
-												<table class="table table-bordered fontsize ">
-													<tbody id="myMoreEditModalConfigTableTbody">
-														<tr>
-															<td id="myMoreEditModalConfigTableTdBase"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalConfigTableTdServerip"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalConfigTableTdAd"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalConfigTableTdChannel"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalConfigTableTdLocalmedia"></td>
-														</tr>
-														<tr>
-															<td id="myMoreEditModalConfigTableTdOther"></td>
-														</tr>
-													</tbody>
-												</table>
-											</div>
-										</td>
-									</tr>
-								</table>
-							</div>
-							<div class="modal-footer myfooter">
-								<button type="button" class="btn btn-default" id="myMoreEditModalSubmitTwo">提交</button>
-							</div>
-						</div>
-					</div>-->
-				</div>
 
 				<!--点击批量删除弹出批量删除的modal-->
 				<div class="modal fade col-xs-8" id="myMoreDeleteModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myMoreDeleteModalLabel">
@@ -404,7 +320,7 @@
 					</div>
 				</div>
 				<!--点击删除弹出删除的modal-->
-				<div class="col-xs-8 col-xs-push-2 col-lg-8 col-lg-push-2 modal fade" id="myDeleteModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel">
+				<div class="col-xs-8 col-xs-push-2 col-lg-8 col-lg-push-2 modal fade" id="myDeleteModal" style="padding-top: 350px;" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel">
 					<div class="modal-delete" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -416,35 +332,12 @@
 								<p style="font-size: 24px;text-align: center;">确认要删除吗？</p>
 							</div>
 							<div class="modal-footer">
-								<button type="button" class="btn btn-primary" id="myDeleteModalEnsure">确定</button>
+								<button type="button" class="btn btn-primary" id="myDeleteModalEnsure" style="display: block;margin: 0 auto;">确定</button>
 								<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
 							</div>
 						</div>
 					</div>
 				</div>
-				<!--批量修改-保存-确认框-->
-				<!--<div class="modal fade col-xs-8 text-left" id="myMoreEditSubmitModal" style="padding-right: 0; top: 7%;" tabindex="-1" role="dialog" aria-labelledby="myMoreEditSubmitModalLabel">
-					<div class="modalwidth" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" aria-label="Close" id="MoreEditX"><span aria-hidden="true" class="glyphicon glyphicon-remove"></span></button>
-								<h4 class="modal-title text-left" id="myMoreEditSubmitModalLabel">批量修改确认框</h4>
-							</div>
-							<div class="modal-body">
-								<p class="moreEditDetail">是否确认保存修改？</p>
-								<p class="moreEditDetail">针对：<span id="AimAtChipAndModel" style="color: skyblue;"></span>型号的机器做了如下修改。</p>
-								<p class="moreEditDetail">新增模块：<span id="addmodules" style="color: skyblue;"></span></p>
-								<p class="moreEditDetail">删除模块：<span id="deletemodules" style="color: skyblue;"></span></p>
-								<p class="moreEditDetail">配置项：<span id="setmodules" style="color: skyblue;"></span></p>
-								<p class="moreEditDetail">您未做任何操作。</p>
-							</div>
-							<div class="modal-footer">
-								<button type="submit" class="btn btn-primary" id="MoreEditSaveSubmit">确定</button>
-								<button type="reset" class="btn btn-default" id="MoreEditBack">取消</button>
-							</div>
-						</div>
-					</div>
-				</div>-->
 				<!--请先勾选要删除的项-->
 				<div class="modal fade col-xs-8" id="myDeleteDialogModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myDeleteDialogModalLabel">
 					<div class="modal-delete" role="document">
@@ -582,6 +475,42 @@
 						</div>
 					</div>
 				</div>
+				
+				<!--点击预览-->
+				<!--点击预览弹出复制的modal-->
+				<div class="modal fade" id="myPreviewModal" tabindex="-1" role="dialog" aria-labelledby="myPreviewModalLabel">
+					<div class="modalwidth" role="document">
+						<div class="modal-content">
+							<div class="modal-header myheader">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="myCopyModalClose"><span aria-hidden="true">关闭</span></button>
+								<h4 class="modal-title" id="myPreviewModalLabel">预览</h4>
+							</div>
+						
+							<div class="modal-body mybody">
+								<ul class="nav nav-pills nav-justified" role="tablist">
+									<li role="presentation" class="presentation active">
+										<a href="#myPreviewBodyOne" aria-controls="myPreviewBodyOne" role="tab" data-toggle="tab">Config文件</a>
+									</li>
+									<li role="presentation" class="presentation">
+										<a href="#myPreviewBodyTwo" aria-controls="myPreviewBodyTwo" role="tab" data-toggle="tab">MK文件</a>
+									</li>
+									<li role="presentation" class="presentation">
+										<a href="#myPreviewBodyThree" aria-controls="myPreviewBodyThree" role="tab" data-toggle="tab">Settings文件</a>
+									</li>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<textarea wrap="off" style="overflow:scroll;" role="tabpanel" class="tab-pane active" id="myPreviewBodyOne" disabled></textarea>
+									<textarea wrap="off" style="overflow:scroll;" role="tabpanel" class="tab-pane" id="myPreviewBodyTwo" disabled></textarea>
+									<textarea wrap="off" style="overflow:scroll;" role="tabpanel" class="tab-pane" id="myPreviewBodyThree" disabled></textarea>
+								</div>
+							</div>
+							<div class="modal-footer myfooter">
+								<button type="button" class="btn btn-default" data-dismiss="modal" id="myCopyModalSubmitTwo">确定</button>
+							</div>
+						</div>
+					</div>
+				</div>	
 				<!--<div id="noList">当前没有符合查询条件的文件！！</div>-->
 			</fieldset>
 		</div>
@@ -594,3 +523,4 @@
 	</body>
 
 </html>
+
