@@ -221,12 +221,39 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
   }
 }
 
+ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, callback) {
+  console.log(baseInfo);
+  console.log(configInfo);
+  console.log(settingsInfo);
+  let baseInfoObj = JSON.parse(baseInfo);
+  console.log(baseInfoObj.chip);
+  console.log(baseInfoObj.auditState);
+  console.log(baseInfoObj.coocaaVersion);
+  console.log(configInfo.length);
+  console.log(configInfo[0].engName);
+  console.log(settingsInfo.length);
+  console.log(settingsInfo[0].engName);
+
+  return;
+}
+
 ProductModel.prototype.preview = function (chip, model, callback) {
     generator.preview(chip, model, "6.0", function(err, results){
       if (err) {
           return callback(err);
       }
       callback(null, results);
+    });
+}
+
+ProductModel.prototype.delete = function (chip, model, callback) {
+    var sql = "UPDATE products set auditState = 1, modifyState = 2 WHERE chip = ? AND model = ?";
+    let sql_params = [chip, model];
+    db.conn.query(sql,sql_params,function(err,rows,fields){
+      if (err) {
+        return callback(err);
+      }
+      callback(null, rows);
     });
 }
 

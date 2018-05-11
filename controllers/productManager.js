@@ -25,6 +25,19 @@ exports.add = function (req, res, next) {
 
 };
 
+exports.update = function (req, res, next) {
+  let baseInfo = req.body.baseInfo;
+  let configInfo = req.body.configInfo;
+  let settingsInfo = req.body.settingsInfo;
+
+  productModel.update(baseInfo, configInfo, settingsInfo, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"新增产品项成功");
+  });
+};
+
 exports.preview = function (req, res, next) {
   let chip = req.body.chip;
   let model = req.body.model;
@@ -39,7 +52,15 @@ exports.preview = function (req, res, next) {
 }
 
 exports.delete = function (req, res, next) {
-    res.json("delete:" + req.url);
+  let chip = req.body.chip;
+  let model = req.body.model;
+  console.log(chip);
+  productModel.delete(chip, model, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"执行产品删除操作成功");
+  });
 };
 
 exports.queryByPage = function (req, res, next) {
@@ -135,8 +156,4 @@ exports.queryAllByMachine = function (req, res, next) {
       console.log(results);
       output.success(req,res,"查询queryAllByMachine成功",results);
     });
-};
-
-exports.update = function (req, res, next) {
-
 };
