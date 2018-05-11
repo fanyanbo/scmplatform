@@ -1,13 +1,13 @@
 
 var mysql = require('mysql');
 var dbparam = {
-		host     : '172.20.5.239',       
-		user     : 'scmplatform',              
-		password : 'scmplatform',       
-		port: '3306',                   
-		database: 'scm', 
+		host     : '172.20.5.239',
+		user     : 'scmplatform',
+		password : 'scmplatform',
+		port: '3306',
+		database: 'scm',
 	};
-	
+
 var os = require('os');
 var fs = require('fs');
 var writer = require("./writer");
@@ -26,7 +26,7 @@ var generator = new Generator();
 
 function Generator()
 {
-} 
+}
 
 Generator.prototype.generate = function(
                                 chip,		    // 机芯
@@ -50,14 +50,14 @@ function generateFiles( chip,		    // 机芯
                         callback		// 回调函数
                         )
 {
-	
+
 	action_type = actionType;
 	mod_callback = callback;
-	
+
 	infoTxt = "";
-	
+
 	writerlog.checkLogFile();
-	
+
 	//console.log("machines param type = " + type + "\n");
     baseinfo = CreateInfo(chip, model);
     return doit(version, actionType);
@@ -72,13 +72,13 @@ function CreateInfo(chip, model)
 	newinfo.targetProduct = "";					// 对应的机芯机型的targetProduct
 	newinfo.curConfigId = 0;					// 当前已处理好configID
 	newinfo.list = new Array();
-	
+
 	newinfo.list[0] = new Object;
 	newinfo.list[0].type = "general_config";	// general_config
 	newinfo.list[0].tmpFileName = "";			// 生成的文件名(临时文件)
 	newinfo.list[0].needConfig = true;
 	newinfo.list[0].result = new Object;
-	
+
 	newinfo.list[1] = new Object;
 	newinfo.list[1].type = "system_settings";	// 系统设置
 	newinfo.list[1].tmpFileName = new Array;    // 生成的文件名(临时文件)
@@ -90,9 +90,9 @@ function CreateInfo(chip, model)
 	newinfo.list[2].tmpFileName = "";			// 生成的文件名(临时文件)
 	newinfo.list[2].needConfig = true;
 	newinfo.list[2].result = new Object;
-	
+
 	return newinfo;
-} 
+}
 
 function CreateTarget(targetProduct)
 {
@@ -122,42 +122,44 @@ function doit(	systemVersion,		// 系统版本
 								)
 {
 	connection = mysql.createConnection(dbparam);
-	
+
 	connection.connect();
-	
+
 	step_query_targetProduct(connection);
 }
 
 function step_query_targetProduct(connection)
 {
 	var result = 0;
-	var sql = "select targetProduct from products where chip=\"" + 
-				baseinfo.chip + "\"" + 
-				" and model=\"" + 
+	var sql = "select targetProduct from products where chip=\"" +
+				baseinfo.chip + "\"" +
+				" and model=\"" +
 				baseinfo.model + "\";";
-				
+
 	writerlog.w("开始查询: " + sql + "\n");
-				
+
 	connection.query(sql, function (err, result){
 		if(err){
 			console.log('[SELECT ERROR] - ', err.message);
 			writerlog.w("查询出错: " + err.message + "\n");
 			return;
 		}
-		
+
 		writerlog.w("SQL查询成功 1 \n");
-		
+
+		console.log(result);
+
 		var curTargetProduct = result[0].targetProduct;
 		if (typeof(curTargetProduct) == "undefined" || curTargetProduct == "")
 		{
 			// 打印错误信息
 			return;
 		}
-		
+
 		targetinfo = CreateTarget(curTargetProduct);
-		
+
 		step_query_all_config(connection);
-		
+
 	});
 }
 
@@ -168,30 +170,30 @@ function step_query_all_config(connection)
 	var configid = baseinfo.curConfigId;
 	var list = baseinfo.list;
 	var sqltext;
-	
+
 	if (list[configid].type == "general_config")
 	{
-		sqltext = "select a.engName, a.curValue, b.descText from configdata a, configs b where a.engName=b.engName and a.chip=\"" + 
-				baseinfo.chip + "\"" + 
+		sqltext = "select a.engName, a.curValue, b.descText from configdata a, configs b where a.engName=b.engName and a.chip=\"" +
+				baseinfo.chip + "\"" +
 				" and a.model=\"" +
 				baseinfo.model + "\";";
 	}
 	else if (list[configid].type == "system_settings")
 	{
-		sqltext = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText " 
-		        + " from settingsdata a, settings b where a.engName = b.engName and a.chip = \"" + 
-				baseinfo.chip + "\"" + 
+		sqltext = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText "
+		        + " from settingsdata a, settings b where a.engName = b.engName and a.chip = \"" +
+				baseinfo.chip + "\"" +
 				" and a.model=\"" +
 				baseinfo.model + "\";";
 	}
 	else if (list[configid].type == "prop")
 	{
-		sqltext = "select engName, curValue from propsdata where chip = \"" + 
-				baseinfo.chip + "\"" + 
+		sqltext = "select engName, curValue from propsdata where chip = \"" +
+				baseinfo.chip + "\"" +
 				" and model=\"" +
 				baseinfo.model + "\";";
 	}
-	else 
+	else
 		return;
 
     writerlog.w("开始查询: " + sqltext + "\n");
@@ -203,15 +205,15 @@ function step_query_all_config(connection)
 			writerlog.w("查询出错: " + err.message + "\n");
 			return;
 		}
-		
+
 		writerlog.w("SQL查询成功 2 \n");
-		
+
 		baseinfo.list[configid].result = result;
-		
+
 		//console.log(result);
-		
+
 		console.log(typeof(result));
-		
+
 		baseinfo.curConfigId++;
 		if (baseinfo.curConfigId >= 3)
 		{
@@ -235,27 +237,27 @@ function step_query_mkdata_item(connection)
 	{
 		var curTargetProduct = targetinfo.name;
 		var result = 0;
-		var sql = "select a.engName,b.cnName,b.gitPath,b.category from mkdata a, modules b where a.engName = b.engName and a.targetProduct=\"" + 
+		var sql = "select a.engName,b.cnName,b.gitPath,b.category from mkdata a, modules b where a.engName = b.engName and a.targetProduct=\"" +
 					curTargetProduct + "\";";
-					
+
 		writerlog.w("开始查询: " + sql + "\n");
-					
+
 		connection.query(sql, function (err, result){
 			if(err){
 				console.log('[SELECT ERROR] - ', err.message);
 				writerlog.w("查询出错: " + err.message + "\n");
 				return;
 			}
-			
+
 			writerlog.w("SQL查询成功 3 \n");
-			
+
 			for (j in result)
 			{
                 targetinfo.mklist[j] = result[j];
 			}
-			
+
 			//console.log(result[j]);
-			
+
 			console.log("***********************\n");
 		    connection.end();
 		    generate_files();
@@ -263,38 +265,38 @@ function step_query_mkdata_item(connection)
 	}
 	else
 	{
-		
+
 	}
 }
 
 function generate_files()
 {
 	var randValue = Math.ceil(1000 * Math.random());
-	
+
 	writerlog.w("开始生成临时文件\n");
-			
+
 	writerlog.w("机芯 = " + baseinfo.chip + ", 机型 = " + baseinfo.model + "\n");
-		
+
 	var temp_config_filename = getTempGernalConfigFileName(baseinfo.chip, baseinfo.model);
-	
+
 	var list = baseinfo.list;
 	for (var L in list)
-	{   
+	{
 		var curitem = list[L];
 		var result = curitem.result;
-		
+
 		if (curitem.type == "general_config")
 		{
 			//console.log(result);
 			writerlog.w("生成临时的general_config \n");
-			
+
 			writer.writeGeneralConfigStart(temp_config_filename);
 			for (var M in result)
 			{
 				writer.writeGeneralConfigItem(temp_config_filename, result[M].engName, result[M].curValue, result[M].descText);
 			}
 			writer.writeGeneralConfigEnd(temp_config_filename);
-			
+
 		}
 		else if (curitem.type == "system_settings")
 		{
@@ -306,26 +308,26 @@ function generate_files()
 		    writerlog.w("生成临时的prop文件 \n");
 		    settingfiles.generate(baseinfo.chip, baseinfo.model, curitem, getTmpDir());
 		}
-		else 
+		else
 			continue;
-		
+
 	}
-	
+
 	if (true)
 	{
 		var curtarget = targetinfo;
-		
+
 		console.log(curtarget);
 		generateMkFile(curtarget);
 	}
-	
+
 	if (action_type == "preview")
 	{
 	    console.log("preview");
 	    var content1 = fs.readFileSync(getTempGernalConfigFileName(baseinfo.chip, baseinfo.model), "utf-8");
         var content2 = fs.readFileSync(getTempMkFileName(targetinfo.name), "utf-8");
         var content4 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-build.prop", "utf-8");
-        
+
         var content3_1 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_main.xml", "utf-8");
         var content3_2 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_guide.xml", "utf-8");
         var content3_3 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_connect.xml", "utf-8");
@@ -348,7 +350,7 @@ function generate_files()
 	}
 	else
 	{
-	    
+
 	}
 }
 
@@ -358,11 +360,11 @@ function generateMkFile(targetinfo)
     let playerType = "";
     let targetName = targetinfo.name;
     let mkList = targetinfo.mklist;
-    
+
     var mk_filename = getTempMkFileName(targetName);
-    
+
     writerlog.w("生成临时的mk文件 " + mk_filename + "\n");
-    
+
 	for (let i in mkList)
 	{
 		var category = mkList[i].category;
@@ -371,9 +373,9 @@ function generateMkFile(targetinfo)
 			playerType = mkList[i].gitPath;
 		}
 	}
-	
+
 	console.log("playerType = " + playerType);
-	
+
 	writer.writeAndroidmkStart(mk_filename, playerType);
 	for (var k in mkList)
 	{
@@ -386,7 +388,7 @@ function generateMkFile(targetinfo)
 		}
 	}
 	writer.writeAndroidmkEnd(mk_filename);
-	
+
 }
 
 
@@ -401,13 +403,13 @@ function getTempMkFileName(targetProductName)
 }
 
 function gitpush(
-            systemVersion,                      // 系统版本，例如 'Rel6.0' 
-            targetProduct,                      // target_product的值, 例如 'full_sky828_5s02'    
-            chip,                               // 机芯, 例如 '5S02' 
-            model,                              // 机型, 例如 'A2'  
-            deviceTabTempFileName,              // device_tab.mk 临时文件名 
-            mkTempFileName,                     // mk临时文件名 
-            configTempFileName                  // config临时文件名 
+            systemVersion,                      // 系统版本，例如 'Rel6.0'
+            targetProduct,                      // target_product的值, 例如 'full_sky828_5s02'
+            chip,                               // 机芯, 例如 '5S02'
+            model,                              // 机型, 例如 'A2'
+            deviceTabTempFileName,              // device_tab.mk 临时文件名
+            mkTempFileName,                     // mk临时文件名
+            configTempFileName                  // config临时文件名
             )
 {
 	var git = require("./gitcommit");
@@ -439,7 +441,7 @@ function getGitBranch(systemVersion)
 function getTmpDir()
 {
     if (tempdir == "")
-    {        
+    {
         let date = new Date();
         let year = date.getFullYear();
         let month = date.getMonth()+1;
@@ -449,7 +451,7 @@ function getTmpDir()
         let second = date.getSeconds();
         let curtimestr = "scmplatform_" + year + "" + month + "" + day + "-" + hour + "" + minute + "" + second;
         let randValue = Math.ceil(1000 * Math.random());
-        
+
         console.log(curtimestr + "_" + randValue);
 
         tempdir = os.tmpdir();
@@ -457,20 +459,20 @@ function getTmpDir()
         {
             tempdir += "\\";
             tempdir += curtimestr + "_" + randValue;
-            
+
             fs.mkdirSync(tempdir);
             tempdir += "\\";
-            
+
         }
         else
         {
             tempdir += "/";
             tempdir += curtimestr + "_" + randValue;
-            
+
             fs.mkdirSync(tempdir);
             tempdir += "/";
         }
-        
+
         writerlog.w("临时存放文件夹为 " + tempdir + "\n");
     }
 	return tempdir;
@@ -492,6 +494,3 @@ function show_preview_text_test(errno, result)
 
 
 module.exports = generator;
-
-
-
