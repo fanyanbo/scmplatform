@@ -22,7 +22,7 @@ var config = require('./config/config');
 var index = require('./routes/index');
 var signRouter = require('./routes/sign_router');
 var apiRouterV6_0 = require('./routes/api_router_v6.0');
-//var apiRouterV6_2 = require('./routes/api_router_v6.2');
+var apiRouterV6_2 = require('./routes/api_router_v6.2');
 
 var app = express();
 

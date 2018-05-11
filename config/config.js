@@ -9,6 +9,8 @@ var config = {
   // debug 为 true 时，用于本地调试
   debug: true,
 
+  rootPath: path.join(__dirname, '../'),
+
   get mini_assets() { return !this.debug; }, // 是否启用静态文件的合并压缩，详见视图中的Loader
 
   name: '软件配置管理平台', // 平台名字

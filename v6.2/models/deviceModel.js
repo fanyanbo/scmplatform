@@ -1,5 +1,5 @@
-var db = require('./db');
 var eventproxy = require('eventproxy');
+var db = require('../../common/db');
 var logger = require('../../common/logger');
 
 var DeviceModel = function() {};

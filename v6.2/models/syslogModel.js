@@ -1,6 +1,5 @@
-var db = require('./db');
 var eventproxy = require('eventproxy');
-var config = require('../../config/config');
+var db = require('../../common/db');
 var logger = require('../../common/logger');
 
 var SyslogModel = function() {};

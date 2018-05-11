@@ -4,16 +4,18 @@
  * MIT Licensed
  */
 var express = require('express');
+var path = require('path');
 var config = require('../config/config');
 var logger = require('../common/logger');
 var output = require('../common/output');
-var modules = require('../v6.2/controllers/moduleManager');
-var configs = require('../v6.2/controllers/configManager');
-var settings = require('../v6.2/controllers/settingsManager');
-var props = require('../v6.2/controllers/propManager');
-var product = require('../v6.2/controllers/productManager');
-var home = require('../v6.2/controllers/home');
-var device = require('../v6.2/controllers/deviceManager');
+var prefixPath =  path.join(config.rootPath, '/v6.2');
+var modules = require(prefixPath + '/controllers/moduleManager');
+var configs = require(prefixPath + '/controllers/configManager');
+var settings = require(prefixPath + '/controllers/settingsManager');
+var props = require(prefixPath + '/controllers/propManager');
+var product = require(prefixPath + '/controllers/productManager');
+var home = require(prefixPath + '/controllers/home');
+var device = require(prefixPath + '/controllers/deviceManager');
 
 var router = express.Router();
 

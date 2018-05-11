@@ -1,7 +1,7 @@
-var db = require('./db');
 var eventproxy = require('eventproxy');
+var db = require('../../common/db');
 var logger = require('../../common/logger');
-var config = require('../../config/config');
+
 //var mysql = require( 'mysql');
 // var connection = mysql.createConnection(config.mysql);
 // connection.connect();
