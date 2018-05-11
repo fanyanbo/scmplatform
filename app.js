@@ -20,8 +20,9 @@ var compress = require('compression');
 var requestLog = require('./common/request_log');
 var config = require('./config/config');
 var index = require('./routes/index');
-var users = require('./routes/users');
-var apiRouterV1 = require('./routes/api_router_v1');
+var signRouter = require('./routes/sign_router');
+var apiRouterV6_0 = require('./routes/api_router_v6.0');
+//var apiRouterV6_2 = require('./routes/api_router_v6.2');
 
 var app = express();
 
@@ -52,14 +53,15 @@ app.use(session({
   store: sessionStore,
   resave: false,
   saveUninitialized: false,
-  cookie: {maxAge: config.cookie_maxAge} 
+  cookie: {maxAge: config.cookie_maxAge}
 }));
 
 // app.use('/', index);
-// app.use('/users', users);
 // app.use('/api/v1', cors(), apiRouterV1);
 
-app.use('/', apiRouterV1);
+app.use('/', signRouter);
+app.use('/', apiRouterV6_0);
+//app.use('/v6.2', apiRouterV6_2);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
