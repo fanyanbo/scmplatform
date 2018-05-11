@@ -1,6 +1,6 @@
-var db = require('./db');
-var config = require('../config/config');
+var db = require('../common/db');
 var logger = require('../common/logger');
+var config = require('../config/config');
 
 var UserModel = function() {};
 

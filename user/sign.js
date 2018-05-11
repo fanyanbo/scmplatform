@@ -1,11 +1,10 @@
 var validator = require('validator');
 var eventproxy = require('eventproxy');
-var config = require('../config/config');
 var utility = require('utility');
+var config = require('../config/config');
 var output = require('../common/output');
 var logger = require('../common/logger');
-var syslogModel = require('../models/syslogModel');
-var userModel = require('../models/userModel');
+var userModel = require('./userModel');
 
 //var user = new User();
 
@@ -66,15 +65,17 @@ exports.logout = function (req, res, next) {
     if(req.session.username == undefined){
       output.error(req,res,"当前已是登出状态!");
     }else{
-      let userName = req.body.userName;
-      let action = req.body.action;
-      let detail = req.body.detail;
-      syslogModel.newAndSave(userName, action, detail, function(err,results) {
-        if(err) {
-          return output.error(req,res,"当前登出操作失败!");
-        }
-        req.session.logined = false;
-        output.success(req,res,"登出成功!");
-      });
+      req.session.logined = false;
+      output.success(req,res,"登出成功!");
+      // let userName = req.body.userName;
+      // let action = req.body.action;
+      // let detail = req.body.detail;
+      // syslogModel.newAndSave(userName, action, detail, function(err,results) {
+      //   if(err) {
+      //     return output.error(req,res,"当前登出操作失败!");
+      //   }
+      //   req.session.logined = false;
+      //   output.success(req,res,"登出成功!");
+      // });
     }
 };

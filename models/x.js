@@ -1,5 +1,5 @@
-var db = require('./db');
 var eventproxy = require('eventproxy');
+var db = require('../common/db');
 
 //mysql的基本用法知识点
 var sql = "SELECT `userName`,`email` FROM users WHERE LOCATE('skyworth',`email`) > 0";  //使用LOCATE进行模糊查询

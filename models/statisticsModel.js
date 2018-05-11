@@ -1,5 +1,5 @@
-var db = require('./db');
 var eventproxy = require('eventproxy');
+var db = require('../common/db');
 var config = require('../config/config');
 var logger = require('../common/logger');
 
