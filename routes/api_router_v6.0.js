@@ -57,6 +57,7 @@ router.post('/product/queryByModule', product.queryByModule);    //查询配置�
 router.post('/product/queryBytp', product.queryMKDataByTargetProduct);  //根据targetproduct查询对应的所有modules
 router.post('/product/queryAll', product.queryAll);
 router.post('/product/queryAllByMachine', product.queryAllByMachine);
+router.post('/product/preview', product.preview);                        //新增产品项
 
 router.post('/device/queryAll', device.queryAll);
 //机芯管理
