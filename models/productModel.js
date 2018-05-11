@@ -179,11 +179,10 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
   console.log(settingsInfo.length);
   console.log(settingsInfo[0].engName);
 
-  return;
   let ep = new eventproxy();
 
   ep.bind('error', function (err) {
-      logger.error("捕获到错误-->" + err);
+      logger.error("ProductModel.prototype.add 捕获到错误-->" + err);
       //卸掉所有的handler
       ep.unbind();
       callback(err,null);
@@ -234,7 +233,45 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
   console.log(settingsInfo.length);
   console.log(settingsInfo[0].engName);
 
-  return;
+  let ep = new eventproxy();
+
+  ep.bind('error', function (err) {
+      logger.error("ProductModel.prototype.update 捕获到错误-->" + err);
+      //卸掉所有的handler
+      ep.unbind();
+      callback(err,null);
+  });
+
+  ep.after('query_result', configInfo.length + settingsInfo.length + 1, function (list) {
+      // 所有查询的内容都存在list数组中
+      callback(null,null);
+  });
+
+  let sql0 = "UPDATE products SET auditState=1,modifyState=1,androidVersion=?,memorySize=?,EMMC=?,targetProduct=?,soc=?,platform=?,gitBranch=?,coocaaVersion=? WHERE chip=? AND model=?";
+  let sql0_param = [baseInfo.androidVersion,baseInfo.memorySize,baseInfo.EMMC,baseInfo.targetProduct,baseInfo.soc,baseInfo.platform,baseInfo.gitBranch,baseInfo.coocaaVersion,baseInfo.chip,baseInfo.chip];
+  console.log(sql0_param);
+  db.conn.query(sql0,sql0_param,function(err,rows,fields){
+    if (err) return ep.emit('error', err);
+    ep.emit('insert_result',"INSERT INTO products OK");
+  });
+
+  let sql1 = "INSERT INTO configdata_temp(chip,model,engName,curValue) values (?,?,?,?)";
+  for(var i=0; i<configInfo.length;i++) {
+    let sql1_param = [baseInfo.chip,baseInfo.model,configInfo[i].engName,configInfo[i].curValue];
+    db.conn.query(sql1,sql1_param,function(err,rows,fields){
+      if (err) return ep.emit('error', err);
+      ep.emit('insert_result',"INSERT INTO configdata_temp OK");
+    });
+  }
+
+  let sql2 = "INSERT INTO settingsdata_temp(chip,model,engName) values (?,?,?)";
+  for(var i=0; i<settingsInfo.length;i++) {
+    let sql2_param = [baseInfo.chip,baseInfo.model,settingsInfo[i].engName];
+    db.conn.query(sql2,sql2_param,function(err,rows,fields){
+      if (err) return ep.emit('error', err);
+      ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
+    });
+  }
 }
 
 ProductModel.prototype.preview = function (chip, model, callback) {
