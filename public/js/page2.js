@@ -1,9 +1,13 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
-var autoComplete = "";
-var autoComplete2 = "";
+var autoComplete1,autoComplete2,autoComplete3,autoComplete4,autoComplete5 = "";
+var autoComplete12,autoComplete22,autoComplete32,autoComplete42,autoComplete52 = "";
 var closePageName = "";
-var autoDataArray2 = ["a", "b", "c", "bb", "cb", "bvv", "ca", "bsd", "cfg", "bd", "adfc", "bas", "asc"];
+var autoDataArray1 = new Array();
+var autoDataArray2 = new Array();
+var autoDataArray3 = new Array();
+var autoDataArray4 = new Array();
+var autogitArray = ["a", "b", "c", "bb", "cb", "bvv", "ca", "bsd", "cfg", "bd", "adfc", "bas", "asc"];
 
 var _twoLevelLinkageArrayOne = [[],[],[],[]];
 var _twoLevelLinkageArrayTwo = [[],[],[],[]];
@@ -25,8 +29,8 @@ function productQuery() {
 				handleTableData(data);
 			}
 		}
-		var node4 = '{}';
-		sendHTTPRequest("/targetproduct/query", node4, targetproductQueryResult);
+		var node1 = '{}';
+		sendHTTPRequest("/device/queryAll", node1 , targetproductQueryResult);
 	}
 }
 
@@ -35,12 +39,20 @@ function targetproductQueryResult() {
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
-			var autoDataArray = new Array();
 			if(data.resultCode == "0") {
-				for(var i = 0; i < data.resultData.length; i++) {
-					autoDataArray.push(data.resultData[i].name)
+				for(var i = 0; i < data.resultData[0].length; i++) {
+					autoDataArray1.push(data.resultData[0][i].name);
 				}
-				instantQuery(autoDataArray, autoDataArray2);
+				for(var i = 0; i < data.resultData[1].length; i++) {
+					autoDataArray2.push(data.resultData[1][i].name);
+				}
+				for(var i = 0; i < data.resultData[2].length; i++) {
+					autoDataArray3.push(data.resultData[2][i].name);
+				}
+				for(var i = 0; i < data.resultData[3].length; i++) {
+					autoDataArray4.push(data.resultData[3][i].name);
+				}
+				instantQuery(autoDataArray1, autoDataArray2, autoDataArray3, autoDataArray4, autogitArray);
 			}
 		}
 	}
@@ -83,7 +95,7 @@ function pageTableInit(data1) {
 	buttonInitAfter();
 }
 
-function instantQuery(array1, array2) {
+function instantQuery(arr1, arr2, arr3, arr4, arr5) {
 	var _$ = function(id) {
 		return "string" == typeof id ? document.getElementById(id) : id;
 	}
@@ -94,7 +106,6 @@ function instantQuery(array1, array2) {
 	}
 
 	function AutoComplete(obj, autoObj, arr) {
-		console.log("111111111111");
 		this.obj = _$(obj); //输入框
 		this.autoObj = _$(autoObj); //DIV的根节点
 		this.value_arr = arr; //不要包含重复值
@@ -121,7 +132,10 @@ function instantQuery(array1, array2) {
 		setValue: function(_this) {
 			return function() {
 				_this.obj.value = this.seq;
-				changeMKByTP(_this.obj.id, _this.obj.value);
+				//checkInArray(_this.obj.id,$("#"+_this.obj.id).val());
+				if (_this.obj.id == "lable2TargetProduct") {
+					changeMKByTP(_this.obj.id, _this.obj.value);
+				}
 				_this.autoObj.className = "auto_hidden";
 			}
 		},
@@ -182,7 +196,10 @@ function instantQuery(array1, array2) {
 			//回车键
 			else if(event.keyCode == 13) {
 				this.autoObj.className = "auto_hidden";
-				changeMKByTP(this.curname, this.curvalue);
+				//checkInArray(this.autoObj.id,document.getElementById(this.autoObj.id).childNodes[this.index].innerText);
+				if (this.autoObj.id == "page2_tp_auto2") {
+					changeMKByTP(this.curname, this.curvalue);
+				}
 				this.index = -1;
 			} else {
 				this.index = -1;
@@ -226,29 +243,39 @@ function instantQuery(array1, array2) {
 			});
 		}
 	}
-
-	autoComplete = new AutoComplete('page2_targetProduct', 'page2_auto', array1);
-	autoComplete2 = new AutoComplete('page2_gitbranch', 'page2_auto2', array2);
-	autoComplete3 = new AutoComplete('lable2TargetProduct', 'page2_auto3', array1);
-
+	autoComplete1 = new AutoComplete('page2_chip', 'page2_chip_auto', arr1);
+	autoComplete2 = new AutoComplete('page2_model', 'page2_model_auto', arr2);
+	autoComplete3 = new AutoComplete('page2_targetProduct', 'page2_tp_auto', arr3);
+	autoComplete4 = new AutoComplete('page2_chipid', 'page2_soc_auto', arr4);
+	autoComplete5 = new AutoComplete('page2_gitbranch', 'page2_git_auto', arr5);
+	
+	autoComplete12 = new AutoComplete('lable2Chip', 'page2_chip_auto2', arr1);
+	autoComplete22 = new AutoComplete('lable2Model', 'page2_model_auto2', arr2);
+	autoComplete32 = new AutoComplete('lable2TargetProduct', 'page2_tp_auto2', arr3);
+	autoComplete42 = new AutoComplete('lable2ChipMode', 'page2_soc_auto2', arr4);
+	autoComplete52 = new AutoComplete('lable2GitBranch', 'page2_git_auto2', arr5);
 	/* 点击空白出隐藏临时div */
 	_$(document).onclick = function(e) {
 		var e = e || window.event; //浏览器兼容性 
 		var elem = e.target || e.srcElement;
-		var _style = document.getElementById("page2_auto").getAttribute("class");
-		var _style2 = document.getElementById("page2_auto2").getAttribute("class");
-		var _style3 = document.getElementById("page2_auto3").getAttribute("class");
-		if(_style == "auto_show") {
-			document.getElementById("page2_auto").setAttribute("class", "auto_hidden")
-		}
-		if(_style2 == "auto_show") {
-			document.getElementById("page2_auto2").setAttribute("class", "auto_hidden")
-		}
-		if(_style3 == "auto_show") {
-			document.getElementById("page2_auto3").setAttribute("class", "auto_hidden")
+		
+		
+		var showArray = ["page2_chip_auto","page2_model_auto","page2_tp_auto","page2_soc_auto","page2_git_auto","page2_chip_auto2","page2_model_auto2","page2_tp_auto2","page2_soc_auto2","page2_git_auto2"];
+		var showBox = ["page2_chip","page2_model","page2_targetProduct","page2_chipid","page2_gitbranch","lable2Chip","lable2Model","lable2TargetProduct","lable2ChipMode","lable2GitBranch"];
+		eachShowObj(showArray,showBox);
+	}
+	function eachShowObj(arr,arr2){
+		for (var i=0; i<arr.length; i++) {
+			var _style = document.getElementById(arr[i]).getAttribute("class");
+			if(_style == "auto_show") {
+				//checkInArray(arr2[i],$("#"+arr2[i])[0].value);
+				document.getElementById(arr[i]).setAttribute("class", "auto_hidden")
+			}
 		}
 	}
 }
+
+function checkInArray(id,value){}
 
 function changeMKByTP(id, value) {
 	console.log(id + "-----" + value);
@@ -281,7 +308,6 @@ function clearMKLastWork(){
 function buttonInit() {
 	document.getElementById("page2_searchInfo").onclick = page2Select;
 	document.getElementById("page2_reset").onclick = page2Reset;
-	document.getElementById("page2_editMore").onclick = page2EditMore;
 	document.getElementById("page2_deleteMore").onclick = page2DeleteMore;
 	document.getElementById("page2_export").onclick = page2Export;
 	document.getElementById("page2_fresh").onclick = page2Fresh;
@@ -297,15 +323,40 @@ function buttonInit() {
 		$("#lable1SubmitTwo").attr("catagory","1");//1-新增、2-修改、3-复制
 		page2AEC("-1");
 	});
-	$("#page2_targetProduct").keyup(function(event) {
-		autoComplete.start(event);
+	
+	
+	$("#page2_chip").keyup(function(event) {
+		autoComplete1.start(event);
 	});
-	$("#page2_gitbranch").keyup(function(event) {
+	$("#page2_model").keyup(function(event) {
 		autoComplete2.start(event);
 	});
-	$("#lable2TargetProduct").keyup(function(event) {
+	$("#page2_targetProduct").keyup(function(event) {
 		autoComplete3.start(event);
 	});
+	$("#page2_chipid").keyup(function(event) {
+		autoComplete4.start(event);
+	});
+	$("#page2_gitbranch").keyup(function(event) {
+		autoComplete5.start(event);
+	});
+	$("#lable2Chip").keyup(function(event) {
+		autoComplete12.start(event);
+	});
+	$("#lable2Model").keyup(function(event) {
+		autoComplete22.start(event);
+	});
+	$("#lable2TargetProduct").keyup(function(event) {
+		autoComplete32.start(event);
+	});
+	$("#lable2ChipMode").keyup(function(event) {
+		autoComplete42.start(event);
+	});
+	$("#lable2GitBranch").keyup(function(event) {
+		autoComplete52.start(event);
+	});
+	
+	
 	$(".page2_tabs").click(function() {
 		var _curIndex = $(".page2_tabs").index($(this));
 		for(var k = 0; k < $(".page2_tabs").length; k++) {
@@ -497,25 +548,83 @@ function clearAllInfo() {
 }
 
 function getAndCheckAndSendAllData(){
-	
+	//判断基本项是否为空
+	var nullName = 0;
+	for (var i=0; i<$("#page2Modal1Table .inputstyle").length; i++) {
+		var _curValue = $("#page2Modal1Table .inputstyle")[i].value;
+		var _curInput = $("#page2Modal1Table .inputstyle")[i].getAttribute("name");
+		console.log(_curValue);
+		if (_curValue==null||_curValue=="") {
+			console.log(_curInput + "项不能为空");
+			nullName = i+1;
+			i = $("#page2Modal1Table .inputstyle").length;
+			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
+			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项不能为空";
+			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
+		}
+	}
+	console.log(nullName);
+	if (nullName == 0) {
+		console.log("没有空项");
+		var _errNum = 0;
+		var isTrueData0 = $("#page2Modal1Table .fuzzySearch")[0].value;
+		var isTrueData1 = $("#page2Modal1Table .fuzzySearch")[1].value;
+		var isTrueData2 = $("#page2Modal1Table .fuzzySearch")[2].value;
+		var isTrueData3 = $("#page2Modal1Table .fuzzySearch")[3].value;
+		var isTrueData4 = $("#page2Modal1Table .fuzzySearch")[4].value;
+		console.log(isTrueData0+"-"+isTrueData1+"-"+isTrueData2+"-"+isTrueData3+"-"+isTrueData4);
+		var index0 = autoDataArray1.indexOf(isTrueData0);
+		var index1 = autoDataArray2.indexOf(isTrueData1);
+		var index2 = autoDataArray3.indexOf(isTrueData2);
+		var index3 = autoDataArray4.indexOf(isTrueData3);
+		var index4 = autogitArray.indexOf(isTrueData4);
+		console.log(index0+"-"+index1+"-"+index2+"-"+index3+"-"+index4);
+		if (index0 == "-1"||index2 == "-1"||index3 == "-1"||index3 == "-1"||index4 == "-1") {
+			if (index0 == "-1") {
+				_errNum = 0;
+			}
+			if (index1 == "-1") {
+				_errNum = 1;
+			}
+			if (index2 == "-1") {
+				_errNum = 2;
+			}
+			if (index3 == "-1") {
+				_errNum = 3;
+			}
+			if (index4 == "-1") {
+				_errNum = 4;
+			}
+			var _curInput = $("#page2Modal1Table .fuzzySearch")[_errNum].getAttribute("name");
+			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
+			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
+			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
+		} else{
+			//获取基本项、config、MK、系统设置的值
+			var _base = getBaseValue();
+			var _config = getConfigValue();
+			var _sys = getSysValue();
+			_base = JSON.stringify(_base);
+			_config = JSON.stringify(_config);
+			_sys = JSON.stringify(_sys);
+			console.log(_base);
+			console.log(_config);
+			console.log(_sys);
+			var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+			console.log(node);
+			sendHTTPRequest("/product/add", node, productAddResult);
+		}
+	}
 }
-//批量编辑
-function page2EditMore() {
-	$("#myMoreEditModal").modal("toggle");
-	$(".modal-backdrop").addClass("new-backdrop");
-}
+
 //批量删除
 function page2DeleteMore() {
-	//1、判断是否勾选
+	//1、判断是否勾选 0-没勾选 1-勾选了
 	var checkedLength = 0;
 	if(checkedLength == 0) {
-		//如果没勾选
 		$("#myDeleteDialogModal").modal("toggle");
-
 	} else {
-		//如果勾选了
 		$("#myMoreDeleteModal").modal("toggle");
-
 	}
 }
 //导出功能
@@ -562,14 +671,14 @@ function closeparentpage() {
 function configQueryData(arr1,arr2) {
 	var _myConfigBox = document.getElementById("myConfigBox");
 	for(var i = 0; i < arr1.length; i++) {
-		_myConfigBox.innerHTML += '<div class="configitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
+		_myConfigBox.innerHTML += '<div class="configitems1 eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
 	}
 	var kk = 0;
-	for (var j=0; j< $(".configitems").length; j++) {
+	for (var j=0; j< $(".configitems1").length; j++) {
 		for(var i = 0; i < arr2.length; i++) {
-			if(arr2[i].category == $(".configitems:eq(" + (j) + ")").attr("category")) {
+			if(arr2[i].category == $(".configitems1:eq(" + (j) + ")").attr("category")) {
 				kk = i;
-				configDataInsert(kk, $(".configitems")[j], arr2);
+				configDataInsert(kk, $(".configitems1")[j], arr2);
 			}
 		}
 	}
@@ -595,15 +704,14 @@ function settingsQueryData(arr1,arr2) {
 			sysDataInsert(kk,_myMiddlewareBox,3,arr1);
 		}
 	}
-	
 	for (var j=0; j< $(".settingsitems").length; j++) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
 				if (arr2[i].level3 === null || arr2[i].level3 == "") {
-					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' value=''><span level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' name='" + arr2[i].engName + "' title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 				} else{
 					if (arr2[i].level3 == $(".settingsitems:eq(" + (j) + ")").attr("level3")) {
-						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' value=''><span level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2+ arr2[i].level1 + "' level3='" + arr2[i].level3 + "' name='" + arr2[i].engName + "' title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 					}
 				}
 			}
@@ -631,9 +739,9 @@ function moduleQueryData(arr1,arr2) {
 
 function configDataInsert(kk, obj, data) {
 	if(data[kk].typeStr == "string") {
-		obj.innerHTML += "<div class='col-xs-6'><span title='" + data[kk].descText + "' name='" + data[kk].engName + "' cnName='" + data[kk].cnName + "'>" + data[kk].cnName + " :</span><input type='text' name='" + data[kk].typeStr + "' value='" + data[kk].defaultValue + "'title='" + data[kk].defaultValue + "'></div>";
+		obj.innerHTML += "<div class='col-xs-6'><span title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 	} else if(data[kk].typeStr == "enum") {
-		var _myAddselect = "<select name='" + data[kk].typeStr + "' oldvalue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
+		var _myAddselect = "<select class='configitems' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='" + data[kk].typeStr + "' defaultValue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
 		var str2 = data[kk].options.replace(/"/g, '');
 		str2 = str2.replace("[", "");
 		str2 = str2.replace("]", "");
@@ -645,17 +753,16 @@ function configDataInsert(kk, obj, data) {
 				_myAddselect += "<option value='" + str2[k] + "'>" + str2[k] + "</option>";
 			}
 		}
-		_myAddselect = "<div class='col-xs-6'><span title='" + data[kk].descText + "' name='" + data[kk].engName + "' cnName='" + data[kk].cnName + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
+		_myAddselect = "<div class='col-xs-6'><span title='" + data[kk].descText + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
 		obj.innerHTML += _myAddselect;
 	}
 }
 function mkDataInsert(kk, obj, data) {
 	if (data[kk].category == "PlayerLibrary") {
-		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' value='' disabled><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	} else{
-		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox' class='mkitems' value='' disabled><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox' class='mkitems' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	}
-	
 }
 function sysDataInsert(i, obj, num, arr1){
 	if(arr1[i].level3 != ""){
@@ -671,6 +778,96 @@ function sysDataInsert(i, obj, num, arr1){
 		_twoLevelLinkageArrayOne[num].push(arr1[i].level2);
 	}
 }
+
+
+function getBaseValue(){
+	var _chip = $("#page2Modal1Table .inputstyle")[0].value;
+	var _model = $("#page2Modal1Table .inputstyle")[1].value;
+	var _tp = $("#page2Modal1Table .inputstyle")[2].value;
+	var _coocaa = $("#page2Modal1Table .inputstyle")[3].value;
+	var _android = $("#page2Modal1Table .inputstyle")[4].value;
+	var _soc = $("#page2Modal1Table .inputstyle")[5].value;
+	var _emmc = $("#page2Modal1Table .inputstyle")[6].value;
+	var _memory = $("#page2Modal1Table .inputstyle")[7].value;
+	var _branch = $("#page2Modal1Table .inputstyle")[8].value;
+	//chip、model、auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
+	//androidVersion、memorySize、EMMC、targetProduct、soc、platform、gitbranch、coocaaVersion
+	var baseObj = {
+		"chip" : _chip,
+		"model" : _model,
+		"targetProduct" : _tp,
+		"coocaaVersion" : _coocaa,
+		"androidVersion" : _android,
+		"soc" : _soc,
+		"EMMC" : _emmc,
+		"memorySize" : _memory,
+		"gitbranch" : _branch,
+		"auditState" : 1,
+		"modifyState" : 2,
+		"platform" : 0
+	}
+	
+	baseObj = JSON.stringify(baseObj);
+	return baseObj;
+//	console.log(baseObj);
+}
+function getConfigValue(){
+	var configData = [];
+	console.log($(".configitems").length);
+	for (var i=0; i<$(".configitems").length; i++) {
+		var oAconfigInfo = {
+			"engName": "",
+			"curValue": ""
+		};
+		oAconfigInfo.engName = $(".configitems")[i].getAttribute("engname");
+		oAconfigInfo.curValue = $(".configitems")[i].value;
+		configData.push(oAconfigInfo);
+	}
+	return configData;
+	
+}
+function getSysValue(){
+	var sysData = [];
+	console.log($(".sysitems").length);
+	for (var i=0; i<$(".sysitems").length; i++) {
+		var oAsysInfo = {
+			"engName": "",
+		};
+		oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
+		sysData.push(oAsysInfo);
+	}
+	return sysData;
+}
+
+function productAddResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("数据提交成功");
+				$("#page2Modal1").modal('hide');
+				page2Fresh();
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function scrollTopStyle(name){
 	var div = document.getElementById(name);

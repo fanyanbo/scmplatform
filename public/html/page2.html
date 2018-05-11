@@ -22,16 +22,18 @@
 				<div class="row text-right">
 					<div class="col-xs-4 form-group">
 						<label for="page2_chip" class="control-label col-xs-5 text-right">机芯:</label>
-						<input type="text" value="" id="page2_chip" class="col-xs-6 inputstyle">
+						<input type="text" value="" id="page2_chip" class="col-xs-6 inputstyle" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_chip_auto"></div>
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_model" class="control-label col-xs-5 text-right">机型:</label>
-						<input type="text" value="" id="page2_model" class="col-xs-6 inputstyle">
+						<input type="text" value="" id="page2_model" class="col-xs-6 inputstyle" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_model_auto"></div>
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_targetProduct" class="control-label col-xs-5 text-right">TP:</label>
-						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="模糊查询">
-						<div class="auto_hidden" id="page2_auto"></div>
+						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_tp_auto"></div>
 					</div>
 				</div>
 				<div class="row text-right">
@@ -61,19 +63,8 @@
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_chipid" class="control-label col-xs-5 text-right">芯片型号:</label>
-						<select id="page2_chipid" class="col-xs-6 inputstyle">
-							<option value=""></option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-						</select>
+						<input type="text" id="page2_chipid" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_soc_auto"></div>
 					</div>
 				</div>
 				<div class="row text-right">
@@ -117,8 +108,8 @@
 				<div class="row text-right">
 					<div class="col-xs-4 form-group">
 						<label for="page2_gitbranch" class="control-label col-xs-5 text-right">git分支:</label>
-						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" placeholder="模糊查询">
-						<div class="auto_hidden" id="page2_auto2"></div>
+						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_git_auto"></div>
 					</div>
 				</div>
 				<div class="form-group text-center">
@@ -137,7 +128,7 @@
 				<legend>内容列表</legend>
 				<div class="buttonboxes">
 					<button class="mybuttons btn-success" id="page2_add">新增</button>
-					<button class="mybuttons btn-success" id="page2_editMore">批量修改</button>
+					<!--<button class="mybuttons btn-success" id="page2_editMore">批量修改</button>-->
 					<button class="mybuttons btn-success" id="page2_deleteMore">批量删除</button>
 					<button class="mybuttons btn-success" id="page2_export">导出</button>
 					<button class="mybuttons btn-success" id="page2_fresh">刷新</button>
@@ -156,7 +147,7 @@
 								<button type="button" class="btn btn-default" aria-label="Close" id="page2Modal1Close" style="float: right;"><span aria-hidden="true">关闭</span></button>
 								<button type="button" class="btn btn-default" id="page2Modal1Submit" style="float: right;"><span aria-hidden="true">提交</span></button>
 								<h4 class="modal-title" id="page2Modal1Label">新增</h4>
-								<h4 id="page2Modal1ErrorInfo" class=""></h4>
+								<h4 id="page2Modal1ErrorInfo" class="myModalErrorInfo"></h4>
 							</div>
 							<div class="modal-body">
 								<table class="table table-bordered " id="page2Modal1Table">
@@ -165,16 +156,18 @@
 											<td>
 												<div class="col-xs-4 text-left">
 													<label for="lable2Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
-													<input type="text" value="" id="lable2Chip" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" id="lable2Chip" name="机芯" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_chip_auto2"></div>
 												</div>
 												<div class="col-xs-4 text-left">
 													<label for="lable2Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
-													<input type="text" value="" id="lable2Model" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" id="lable2Model" name="机型" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_model_auto2"></div>
 												</div>
 												<div class="col-xs-4 text-left">
 													<label for="lable2TargetProduct" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TP:</label>
-													<input type="text" value="" id="lable2TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle text-left">
-													<div class="auto_hidden" id="page2_auto3"></div>
+													<input type="text" value="" id="lable2TargetProduct" name="TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_tp_auto2"></div>
 												</div>
 											</td>
 										</tr>
@@ -182,7 +175,7 @@
 											<td>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2CoocaaVersion" class="control-label text-right" title="CoocaaVersion" style="width: 41.67%;float: left;">酷开版本&nbsp;:</label>
-													<select id="lable2CoocaaVersion" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<select id="lable2CoocaaVersion" name="酷开版本" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="Coocaa1.0">Coocaa1.0</option>
 														<option value="Coocaa1.0">Coocaa2.0</option>
 														<option value="Coocaa1.0">Coocaa3.0</option>
@@ -193,7 +186,7 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
-													<select id="lable2AndroidVersion" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<select id="lable2AndroidVersion" name="Android版本" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="Android4.2">Android4.2</option>
 														<option value="Android4.3">Android4.3</option>
 														<option value="Android4.4">Android4.4</option>
@@ -204,21 +197,12 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
-													<select id="lable2ChipMode" class="col-xs-6 col-xs-push-1 inputstyle text-left">
-														<option value="1">1</option>
-														<option value="2">2</option>
-														<option value="3">3</option>
-														<option value="4">4</option>
-														<option value="5">5</option>
-														<option value="6">6</option>
-														<option value="7">7</option>
-														<option value="8">8</option>
-														<option value="9">9</option>
-													</select>
+													<input type="text" value="" id="lable2ChipMode" name="芯片型号" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_soc_auto2"></div>
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2Emmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
-													<select id="lable2Emmc" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<select id="lable2Emmc" name="EMMC" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="EMMC1">EMMC1</option>
 														<option value="EMMC2">EMMC2</option>
 														<option value="EMMC3">EMMC3</option>
@@ -232,7 +216,7 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2Memory" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">内存&nbsp;:</label>
-													<select id="lable2Memory" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<select id="lable2Memory" name="内存" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="256MB">256MB</option>
 														<option value="512MB">512MB</option>
 														<option value="768MB">768MB</option>
@@ -247,7 +231,8 @@
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
-													<input type="text" value="" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+													<input type="text" value="" name="gitbranch" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_git_auto2"></div>
 												</div>
 											</td>
 										</tr>
@@ -289,7 +274,7 @@
 								</table>
 							</div>
 							<div class="modal-footer myfooter">
-								<button type="button" class="btn btn-default" id="lable1SubmitTwo" defaultPage="0">提交</button>
+								<button type="button" class="btn btn-default" id="lable1SubmitTwo" errNum="" existence="true" defaultPage="0">提交</button>
 							</div>
 						</div>
 					</div>
@@ -314,7 +299,7 @@
 					</div>
 				</div>
 				<!--点击批量修改弹出批量修改的modal-->
-				<div class="modal fade" id="myMoreEditModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myMoreEditModalLabel">
+				<!--<div class="modal fade" id="myMoreEditModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myMoreEditModalLabel">
 					<div class="" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -396,7 +381,7 @@
 								<button type="button" class="btn btn-default" id="myMoreEditModalSubmitTwo">提交</button>
 							</div>
 						</div>
-					</div>
+					</div>-->
 				</div>
 
 				<!--点击批量删除弹出批量删除的modal-->
@@ -438,7 +423,7 @@
 					</div>
 				</div>
 				<!--批量修改-保存-确认框-->
-				<div class="modal fade col-xs-8 text-left" id="myMoreEditSubmitModal" style="padding-right: 0; top: 7%;" tabindex="-1" role="dialog" aria-labelledby="myMoreEditSubmitModalLabel">
+				<!--<div class="modal fade col-xs-8 text-left" id="myMoreEditSubmitModal" style="padding-right: 0; top: 7%;" tabindex="-1" role="dialog" aria-labelledby="myMoreEditSubmitModalLabel">
 					<div class="modalwidth" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
@@ -459,7 +444,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>-->
 				<!--请先勾选要删除的项-->
 				<div class="modal fade col-xs-8" id="myDeleteDialogModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myDeleteDialogModalLabel">
 					<div class="modal-delete" role="document">
