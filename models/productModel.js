@@ -52,7 +52,7 @@ ProductModel.prototype.queryByRegEx = function (chip, model, version, memory, so
  * @param {注：查询某个机芯机型的修改历史记录，state：0->审核已通过 1->待审核 2->审核未通过}
  */
 ProductModel.prototype.queryHistory = function (chip, model, callback) {
-  var sql = "SELECT * FROM modifyhistory WHRER chip = ? AND model = ?";
+  var sql = "SELECT * FROM modifyhistory WHERE chip = ? AND model = ?";
   let sql_params = [chip, model];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -283,12 +283,12 @@ ProductModel.prototype.addHistory = function (data, callback) {
   let dataObj = JSON.parse(data);
   console.log(dataObj.chip);
 
-  let sql0 = "INSERT INTO modifyhistory(chip,model,state,userName,content,reason) values (?,?,?,?,?,?)";
-  let sql0_param = [baseInfo.chip,baseInfo.chip,baseInfo.auditState,baseInfo.modifyState,baseInfo.androidVersion,baseInfo.memorySize,baseInfo.EMMC,baseInfo.targetProduct,baseInfo.soc,baseInfo.platform,baseInfo.gitBranch,baseInfo.coocaaVersion];
-  console.log(sql0_param);
-  db.conn.query(sql0,sql0_param,function(err,rows,fields){
-    if (err) return ep.emit('error', err);
-    ep.emit('insert_result',"INSERT INTO products OK");
+  let sql = "INSERT INTO modifyhistory(chip,model,state,userName,content,reason) values (?,?,?,?,?,?)";
+  let sql_param = [dataObj.chip,dataObj.model,dataObj.state,dataObj.userName,dataObj.content,dataObj.reason];
+  console.log(sql_param);
+  db.conn.query(sql,sql_param,function(err,rows,fields){
+    if (err) return callback(err);
+    callback(null, rows);
   });
 }
 
