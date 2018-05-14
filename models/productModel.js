@@ -49,7 +49,7 @@ ProductModel.prototype.queryByRegEx = function (chip, model, version, memory, so
 }
 
 ProductModel.prototype.queryHistory = function (chip, model, callback) {
-  var sql = "SELECT * FROM modifyhistory WHRER chip = ? AND model ?";
+  var sql = "SELECT * FROM modifyhistory WHRER chip = ? AND model = ?";
   let sql_params = [chip,model];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
