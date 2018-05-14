@@ -49,6 +49,7 @@ router.use('/', isAuthenticated); //api访问控制。除了登录，session校�
 
 //产品管理
 router.post('/product/add', product.add);                        //新增产品项
+router.post('/product/addHistory', product.addHistory);          //新增产品项的修改记录
 router.post('/product/update', product.update);                  //更新产品信息
 router.post('/product/queryByPage', product.queryByPage);        //分页查询产品信息
 router.post('/product/queryByRegEx', product.queryByRegEx);      //模糊查询产品信息

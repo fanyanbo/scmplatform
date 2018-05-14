@@ -25,6 +25,19 @@ exports.add = function (req, res, next) {
 
 };
 
+exports.addHistory = function (req, res, next) {
+
+  let data = req.body.data;
+
+  productModel.addHistory(data, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"新增产品的历史修改记录成功");
+  });
+
+};
+
 exports.update = function (req, res, next) {
   let baseInfo = req.body.baseInfo;
   let configInfo = req.body.configInfo;
