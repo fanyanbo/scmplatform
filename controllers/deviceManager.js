@@ -24,6 +24,17 @@ exports.queryTargetProduct = function (req, res, next) {
     });
 };
 
+exports.queryTargetProductByRegEx = function (req, res, next) {
+
+    let value = req.body.value;
+    deviceModel.queryTargetProductByRegEx(value, function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"模糊查询targetProduct成功",results);
+    });
+};
+
 exports.addTargetProduct = function (req, res, next) {
 
     let name = req.body.name;

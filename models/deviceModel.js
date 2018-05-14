@@ -116,6 +116,21 @@ DeviceModel.prototype.queryTargetProduct = function (callback) {
   });
 }
 
+DeviceModel.prototype.queryTargetProductByRegEx = function (value, callback) {
+
+  let _targetProduct;
+  (value == undefined) ? _targetProduct = `name like '%%'` : _targetProduct = `name like '%${value}%'`;
+  console.log(_targetProduct);
+  var sql = `SELECT * FROM targetProducts WHERE ${_targetProduct}`;
+  console.log(sql);
+  db.conn.query(sql,[],function(err,rows,fields){
+    if (err) {
+      return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
 /**
  * @param {新增targetproduct,这里需要更新两个表，mkdata和targetProducts}
  */
