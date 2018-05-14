@@ -73,8 +73,8 @@ router.post('/model/update', device.updateModel);
 
 // target_product管理，一个target_product对应唯一MK文件
 router.post('/targetproduct/add', device.addTargetProduct);
-router.post('/targetproduct/query', device.queryTargetProductByRegEx);
-router.post('/targetproduct/queryByRegEx', device.queryByRegEx);
+router.post('/targetproduct/query', device.queryTargetProduct);
+router.post('/targetproduct/queryByRegEx', device.queryTargetProductByRegEx);
 router.post('/targetproduct/update', device.updateTargetProduct);
 
 //机芯型号(soc)管理
