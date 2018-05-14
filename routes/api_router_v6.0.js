@@ -58,7 +58,7 @@ router.post('/product/queryBytp', product.queryMKDataByTargetProduct);  //根据
 router.post('/product/queryAll', product.queryAll);
 router.post('/product/queryAllByMachine', product.queryAllByMachine);
 router.post('/product/preview', product.preview);
-router.post('/product/delete', product.delete);                
+router.post('/product/delete', product.delete);
 
 router.post('/device/queryAll', device.queryAll);
 //机芯管理
@@ -131,12 +131,11 @@ router.post('/syslog/add', home.addSyslog);                      //新增系统�
 // router.get('/gen',jwt.gen);
 // router.get('/verify',jwt.verify);
 
-var bcrypt = require('../study/bcryptModule');
-router.get('/test/signup',bcrypt.signup);
-router.get('/test/login',bcrypt.login);
-router.get('/test/logout',bcrypt.logout);
-router.get('/test/verify',bcrypt.verifySession);
-
+// var bcrypt = require('../study/bcryptModule');
+// router.get('/test/signup',bcrypt.signup);
+// router.get('/test/login',bcrypt.login);
+// router.get('/test/logout',bcrypt.logout);
+// router.get('/test/verify',bcrypt.verifySession);
 
 // home page
 // router.get('/', function(req, res, next) {
