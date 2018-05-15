@@ -255,7 +255,7 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
   });
 
   let sql0 = "UPDATE products SET auditState=1,modifyState=1,androidVersion=?,memorySize=?,EMMC=?,targetProduct=?,soc=?,platform=?,gitBranch=?,coocaaVersion=? WHERE chip=? AND model=?";
-  let sql0_param = [baseInfo.androidVersion,baseInfo.memorySize,baseInfo.EMMC,baseInfo.targetProduct,baseInfo.soc,baseInfo.platform,baseInfo.gitBranch,baseInfo.coocaaVersion,baseInfo.chip,baseInfo.chip];
+  let sql0_param = [baseInfoObj.androidVersion,baseInfoObj.memorySize,baseInfoObj.EMMC,baseInfoObj.targetProduct,baseInfoObj.soc,baseInfoObj.platform,baseInfoObj.gitBranch,baseInfoObj.coocaaVersion,baseInfoObj.chip,baseInfoObj.model];
   console.log(sql0_param);
   db.conn.query(sql0,sql0_param,function(err,rows,fields){
     if (err) return ep.emit('error', err);
@@ -264,7 +264,7 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
 
   let sql1 = "INSERT INTO configdata_temp(chip,model,engName,curValue) values (?,?,?,?)";
   for(var i=0; i<configInfo.length;i++) {
-    let sql1_param = [baseInfo.chip,baseInfo.model,configInfo[i].engName,configInfo[i].curValue];
+    let sql1_param = [baseInfoObj.chip,baseInfoObj.model,configInfo[i].engName,configInfo[i].curValue];
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO configdata_temp OK");
@@ -273,7 +273,8 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
 
   let sql2 = "INSERT INTO settingsdata_temp(chip,model,engName) values (?,?,?)";
   for(var i=0; i<settingsInfo.length;i++) {
-    let sql2_param = [baseInfo.chip,baseInfo.model,settingsInfo[i].engName];
+    let sql2_param = [baseInfoObj.chip,baseInfoObj.model,settingsInfo[i].engName];
+    console.log(sql2_param);
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
