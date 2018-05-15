@@ -11,7 +11,7 @@ ProductModel.prototype.queryByPage = function (offset, rows, callback) {
     sql = "select * from products order by operateTime desc";
     sql_params = [];
   } else {
-    sql = "select * from products order by operateTime desc limit ?,?";
+    sql = "select a.*,b.userName from products AS a, modifyhistory AS b WHERE a.chip = b.chip AND a.model = b.model order by operateTime desc limit ?,?";
     sql_params = [offset,rows];
   }
   db.conn.query(sql,sql_params,function(err,rows,fields){
@@ -226,8 +226,6 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
 
 ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, callback) {
   console.log(baseInfo);
-  console.log(configInfo);
-  console.log(settingsInfo);
   let baseInfoObj = JSON.parse(baseInfo);
   console.log(baseInfoObj.chip);
   console.log(baseInfoObj.auditState);
