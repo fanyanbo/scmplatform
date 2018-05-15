@@ -16,7 +16,7 @@ var sendErrorToFront = function (req, res, errorDesc, errorCode) {
 
   let url = req.url;
   let code = (errorCode !== undefined) ? errorCode : -1;
-  let desc = (errorDesc !== undefined) ? errorDesc : `${url} [Call Failed]`;
+  let desc = (errorDesc !== undefined) ? `${url}-${errorDesc}` : `${url} [Call Failed]`;
   res.send({
     resultCode: code,
     resultDesc: desc
