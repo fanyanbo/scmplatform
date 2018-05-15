@@ -246,7 +246,7 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
       callback(err,null);
   });
 
-  ep.after('query_result', configInfo.length + settingsInfo.length + 1, function (list) {
+  ep.after('insert_result', configInfo.length + settingsInfo.length + 1, function (list) {
       // 所有查询的内容都存在list数组中
       console.log("ProductModel.prototype.update OK");
       callback(null,null);
