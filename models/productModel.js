@@ -271,7 +271,7 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
   }
 
   let sql2 = "INSERT INTO settingsdata_temp(chip,model,engName) values (?,?,?)";
-  for(var j=0; i<settingsInfo.length;j++) {
+  for(var j=0; j<settingsInfo.length;j++) {
     let sql2_param = [baseInfoObj.chip,baseInfoObj.model,settingsInfo[i].engName];
     console.log(sql2_param + j);
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
