@@ -11,7 +11,7 @@ ProductModel.prototype.queryByPage = function (offset, rows, callback) {
     sql = "select * from products order by operateTime desc";
     sql_params = [];
   } else {
-    sql = "select a.*,b.userName from products AS a, modifyhistory AS b WHERE a.chip = b.chip AND a.model = b.model order by operateTime desc limit ?,?";
+    sql = "select a.*,b.userName from products AS a, modifyhistory AS b WHERE a.chip = b.chip AND a.model = b.model order by a.operateTime desc limit ?,?";
     sql_params = [offset,rows];
   }
   db.conn.query(sql,sql_params,function(err,rows,fields){
