@@ -395,11 +395,9 @@ function buttonInit() {
 	});
 	
 	$("#page2Modal1Submit").click(function() {
-		console.log("单项编辑页-提交按钮一");
 		getAndCheckAndSendAllData();
 	});
 	$("#lable1SubmitTwo").click(function() {
-		console.log("单项编辑页-提交按钮二");
 		scrollTopStyle("page2Modal1");
 		getAndCheckAndSendAllData();
 	});
@@ -430,12 +428,12 @@ function buttonInit() {
 		_base = JSON.stringify(_base);
 		_config = JSON.stringify(_config);
 		_sys = JSON.stringify(_sys);
-		console.log(_base);
-		console.log(_config);
-		console.log(_sys);
+//		console.log(_base);
+//		console.log(_config);
+//		console.log(_sys);
 		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
 		console.log(node);
-		//sendHTTPRequest("/product/add", node, productAddResult);
+		sendHTTPRequest("/product/update", node, productAddResult);
 	});
 }
 
@@ -768,6 +766,8 @@ function getPreviewInfo(){
 }
 
 function getAndCheckAndSendAllData(){
+	var type = $("#lable1SubmitTwo").attr("catagory");
+	console.log(type);
 	//判断基本项是否为空
 	var nullName = 0;
 	for (var i=0; i<$("#page2Modal1Table .inputstyle").length; i++) {
@@ -820,37 +820,49 @@ function getAndCheckAndSendAllData(){
 			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
-			//弹出确认框
-			console.log(changeAdd);
-			console.log(changeReduce);
-			console.log(changeConf);
-			console.log(changeDev);
-			if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length == 0) {
-				console.log("未做任何修改");
-				document.getElementById("page2Modal1ErrorInfo").innerHTML = "您未做任何修改。";
-				document.getElementById("MoreEditBack").style.display = "none";
-				setTimeout("document.getElementById('page2Modal1ErrorInfo').innerHTML='　'",3000);
+			if (type == 1|| type == 3) {
+				var _base = getBaseValue();
+				var _config = getConfigValue();
+				var _sys = getSysValue();
+				_base = JSON.stringify(_base);
+				_config = JSON.stringify(_config);
+				_sys = JSON.stringify(_sys);
+				var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+				console.log(node);
+				sendHTTPRequest("/product/add", node, productAddResult);
 			} else{
-				console.log("做了修改");
-				document.getElementById("myEditEnsureDiv").style.display = "block";
-				if (changeDev.length != 0) {
-			        $("#txt1").css("display", "block");
-			        document.getElementById("txt11").innerHTML = changeDev;
-			    	
+				//弹出确认框
+				console.log(changeAdd);
+				console.log(changeReduce);
+				console.log(changeConf);
+				console.log(changeDev);
+				if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length == 0) {
+					console.log("未做任何修改");
+					document.getElementById("page2Modal1ErrorInfo").innerHTML = "您未做任何修改。";
+					document.getElementById("MoreEditBack").style.display = "none";
+					setTimeout("document.getElementById('page2Modal1ErrorInfo').innerHTML='　'",3000);
+				} else{
+					console.log("做了修改");
+					document.getElementById("myEditEnsureDiv").style.display = "block";
+					if (changeDev.length != 0) {
+				        $("#txt1").css("display", "block");
+				        document.getElementById("txt11").innerHTML = changeDev;
+				    	
+					}
+				    if(changeAdd.length != 0){
+				        $("#txt2").css("display", "block");
+				        document.getElementById("txt22").innerHTML = changeAdd;
+				    }
+				    if (changeReduce.length != 0) {
+				        $("#txt3").css("display", "block");
+				        document.getElementById("txt33").innerHTML = changeReduce;
+				    }
+				    if (changeConf.length != 0) {
+				        $("#txt4").css("display", "block");
+				        $("#txt44").val(changeConf);
+				        document.getElementById("txt44").innerHTML = changeConf;
+				    }
 				}
-			    if(changeAdd.length != 0){
-			        $("#txt2").css("display", "block");
-			        document.getElementById("txt22").innerHTML = changeAdd;
-			    }
-			    if (changeReduce.length != 0) {
-			        $("#txt3").css("display", "block");
-			        document.getElementById("txt33").innerHTML = changeReduce;
-			    }
-			    if (changeConf.length != 0) {
-			        $("#txt4").css("display", "block");
-			        $("#txt44").val(changeConf);
-			        document.getElementById("txt44").innerHTML = changeConf;
-			    }
 			}
 		}
 	}
@@ -1037,10 +1049,10 @@ function getBaseValue(){
 		"soc" : _soc,
 		"EMMC" : _emmc,
 		"memorySize" : _memory,
-		"gitbranch" : _branch,
+		"gitBranch" : _branch,
 		"auditState" : 1,
 		"modifyState" : 2,
-		"platform" : 0
+		"platform" : "lll"
 	}
 	baseObj = JSON.stringify(baseObj);
 	return baseObj;
@@ -1087,12 +1099,25 @@ function productAddResult(){
 					page2Fresh();
 				}else if(type == 2){
 					console.log("编辑");
+					var _chip = $("#lable2Chip").val();
+					var _model = $("#lable2Model").val();
 					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
 					var _reason = document.getElementById("changeReason").innerHTML;
 					//0审核通过\1待审核\2审核未通过
 					var _state = "1";
 					var _author = loginusername;
-					var node = '{}';
+					
+					var historyObj = {
+						"chip" : _chip,
+						"model" : _model,
+						"reason" : _reason,
+						"state" : _state,
+						"userName" : _author,
+						"content" : _desc
+					}
+					
+					var _history = JSON.stringify(historyObj);
+					var node = '{"data":' + _history + '}';
 					sendHTTPRequest("/product/addHistory", node, productHistoryAdd);
 				}
 			}

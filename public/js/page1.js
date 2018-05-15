@@ -12,15 +12,16 @@ function homePageInfoResult() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
+				console.log(data.resultData);
 				console.log(data.resultDesc);
-				$(".infoitems span")[0].innerHTML = data.resultDesc.productTotalNum;
-				$(".infoitems span")[1].innerHTML = data.resultDesc.chipTotalNum;
-				$(".infoitems span")[2].innerHTML = data.resultDesc.modelTotalNum;
-				$(".infoitems span")[3].innerHTML = data.resultDesc.hisiTotalNum;
-				$(".infoitems span")[4].innerHTML = data.resultDesc.mstarTotalNum;
-				$(".infoitems span")[5].innerHTML = data.resultDesc.rtkTotalNum;
-				$(".infoitems span")[6].innerHTML = data.resultDesc.amlogicTotalNum;
-				$(".infoitems span")[7].innerHTML = data.resultDesc.novaTotalNum;
+				$(".infoitems span")[0].innerHTML = data.resultData.productTotalNum;
+				$(".infoitems span")[1].innerHTML = data.resultData.chipTotalNum;
+				$(".infoitems span")[2].innerHTML = data.resultData.modelTotalNum;
+				$(".infoitems span")[3].innerHTML = data.resultData.hisiTotalNum;
+				$(".infoitems span")[4].innerHTML = data.resultData.mstarTotalNum;
+				$(".infoitems span")[5].innerHTML = data.resultData.rtkTotalNum;
+				$(".infoitems span")[6].innerHTML = data.resultData.amlogicTotalNum;
+				$(".infoitems span")[7].innerHTML = data.resultData.novaTotalNum;
 			}
 		}
 		sendHTTPRequest("/syslog/queryTotalNum", '{"data":""}', pageTableInit);

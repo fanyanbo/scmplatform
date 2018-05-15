@@ -103,5 +103,38 @@
 	text-align: center;
 }
 
-
+#myEditEnsureDiv{
+	position: absolute;
+    top: 100px;
+    padding-right: 0px;
+    display: none;
+    max-height: 350px;
+    overflow: auto;
+}
+#txt1,#txt2,#txt3,#txt4{
+	display: none;
+}
+.grouptitle{
+	display: inherit;
+	font-size: 20px;
+	/*color: brown;*/
+	/*color: chocolate;*/
+	color: firebrick;
+	/*color: orangered;*/
+	/*color: maroon;*/
+	padding-bottom: 5px;
+}
+.eachpartbox{
+	position: relative;
+	width: 100%;
+	clear: both;
+}
+.close1 {
+    float: right;
+    display: inline-block;
+    font-size: 13px;
+    margin-top: -4px;
+}
+#changeDeviceDesc, #removeModelDesc, #addModelDesc, #changeConfigDesc, #newFileDesc, #changeFileDesc{
+	display: none;
 
