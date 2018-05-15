@@ -285,6 +285,7 @@ ProductModel.prototype.addHistory = function (data, callback) {
   console.log(data);
   let dataObj = JSON.parse(data);
   console.log(dataObj.chip);
+  console.log(dataObj.model);
 
   let sql = "INSERT INTO modifyhistory(chip,model,state,userName,content,reason) values (?,?,?,?,?,?)";
   let sql_param = [dataObj.chip,dataObj.model,dataObj.state,dataObj.userName,dataObj.content,dataObj.reason];
