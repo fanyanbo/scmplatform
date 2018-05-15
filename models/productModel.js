@@ -248,6 +248,7 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
 
   ep.after('query_result', configInfo.length + settingsInfo.length + 1, function (list) {
       // 所有查询的内容都存在list数组中
+      console.log("ProductModel.prototype.update OK");
       callback(null,null);
   });
 
@@ -262,6 +263,7 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
   let sql1 = "INSERT INTO configdata_temp(chip,model,engName,curValue) values (?,?,?,?)";
   for(var i=0; i<configInfo.length;i++) {
     let sql1_param = [baseInfoObj.chip,baseInfoObj.model,configInfo[i].engName,configInfo[i].curValue];
+    console.log(sql1_param + i);
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO configdata_temp OK");
@@ -269,9 +271,9 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
   }
 
   let sql2 = "INSERT INTO settingsdata_temp(chip,model,engName) values (?,?,?)";
-  for(var i=0; i<settingsInfo.length;i++) {
+  for(var j=0; i<settingsInfo.length;j++) {
     let sql2_param = [baseInfoObj.chip,baseInfoObj.model,settingsInfo[i].engName];
-    console.log(sql2_param);
+    console.log(sql2_param + j);
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
