@@ -40,11 +40,29 @@
 
 			<fieldset>
 				<legend>内容列表</legend>
+				<button class="mybuttons btn-success" id="page3_add">新增</button>
 				<!-- 表格开始 -->
 				<div id="page3_table"></div>
 				<!-- 表格结束 -->
 				
-				
+				<!--TargetProduct-增加-->
+				<div class="modal fade " id="page3Modal" hasquery="false" tabindex="-1" role="dialog" aria-labelledby="mypage6ModalLabel2">
+					<div class="modal-dialog modalwidth" role="document"><!--modal-dialog-->
+						<div class="modal-content" id="page6ModalDiv2">
+							<div class="modal-body">
+								<span id="page3_title">新增TP的名称：</span><input id="page3_TP" type="text" value="">
+								<button type="button" class="btn btn-primary" style="float: right;" data-dismiss="modal">关闭</button>
+								<button type="button" id="page3_tp_submit" class="btn btn-primary" style="float: right;">提交</button>
+								<table class="table table-bordered" id="page6MkTable">
+									<tbody id="page3MkTbody"></tbody>
+								</table>
+							</div>
+							<div class="modal-footer">
+								<button type="button" id="page3_tp_submit2" class="btn btn-primary">提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
 				<!--<div id="noList">当前没有符合查询条件的文件！！</div>-->
 			</fieldset>
 		</div>

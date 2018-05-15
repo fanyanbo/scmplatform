@@ -37,7 +37,7 @@ function QueryResult(){
 		}
 		page6ButtonInitAfter();
 		var node = '{}';
-				sendHTTPRequest("/module/queryCategory", node, modelQueryResult);
+		sendHTTPRequest("/module/queryCategory", node, modelQueryResult);
 	}
 }
 

@@ -14,7 +14,21 @@ var _twoLevelLinkageArrayTwo = [[],[],[],[]];
 var _twoLevelLinkageArrayThree = [[],[],[],[]];
 var _myArray = [];
 
+var changeAdd = [];//保存新增模块信息
+var changeReduce = [];//保存删除模块信息
+var changeConf = [];//保存修改配置信息
+var changeDev = [];//保存修改设备信息
+var olrplayerid = null;
+
+var fromEmail = null;
+var adminFlag = null;
+var loginusername = null;
+
 $(function() {
+	fromEmail = parent.loginEmail;
+	loginusername = parent.loginusername;
+	adminFlag = parent.adminFlag;
+	console.log(fromEmail+"--"+loginusername+"--"+adminFlag);
 	var node = '{"offset":"-1","rows":"10"}';
 	sendHTTPRequest("/product/queryByPage", node, productQuery);
 	buttonInit();
@@ -396,6 +410,33 @@ function buttonInit() {
 		document.getElementById("myAddCloseDiv").style.display = "block";
 		document.getElementById("infoEdit").innerHTML = "确认要关闭吗？";
 	});
+	
+	$("#myEditEnsureX").click(function() {
+		console.log("修改提示框的X按钮");
+		document.getElementById("myEditEnsureDiv").style.display = "none";
+		page2Fresh()
+	});
+	$("#myEditCancle").click(function() {
+		console.log("修改提示框的取消按钮");
+		document.getElementById("myEditEnsureDiv").style.display = "none";
+		page2Fresh()
+	});
+	$("#myEditEnsure").click(function() {
+		console.log("修改提示框的确定按钮");
+		//获取基本项、config、MK、系统设置的值
+		var _base = getBaseValue();
+		var _config = getConfigValue();
+		var _sys = getSysValue();
+		_base = JSON.stringify(_base);
+		_config = JSON.stringify(_config);
+		_sys = JSON.stringify(_sys);
+		console.log(_base);
+		console.log(_config);
+		console.log(_sys);
+		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+		console.log(node);
+		//sendHTTPRequest("/product/add", node, productAddResult);
+	});
 }
 
 function colorstatus(number){
@@ -415,6 +456,9 @@ function buttonInitAfter() {
 		$("#page1_check_model").html($(".new_productBox .model")[_cIndex].innerHTML);
 		$("#page1_check_targetProduct").html($(".new_productBox .target_product")[_cIndex].innerHTML);
 		$('#page1_examine').modal();
+		
+		var node = '{"chip":"'+$(".new_productBox .chip")[_cIndex].innerHTML+'","model":"'+$(".new_productBox .model")[_cIndex].innerHTML+'"}';
+		sendHTTPRequest("/product/queryHistory", node, productHistoryQuery);
 	});
 	$(".eachedit").click(function() {
 		var _aIndex = $(".eachedit").index($(this));
@@ -522,7 +566,7 @@ function page2Reset() {
 }
 //新增、编辑、复制、预览 功能
 function page2AEC(number) {
-	var _type = $("#lable1SubmitTwo").attr("catagory");//1-新增、2-修改、3-复制、4-预览
+	var _type = $("#lable1SubmitTwo").attr("catagory");//1-新增、2-编辑、3-复制、4-预览
 	var _chip = $(".chip")[number].innerText;
 	var	_model = $(".model")[number].innerText;
 	var	_target = $(".target_product")[number].innerText;
@@ -537,7 +581,7 @@ function page2AEC(number) {
 	}
 }
 
-//页面加载是新增页的查询功能
+//页面加载时新增页的查询功能
 function allQueryResult() {
 	if(this.readyState == 4) {
 		if(this.status == 200) {
@@ -612,10 +656,12 @@ function getPointProductInfo(){
             console.log(data);
             if(data.resultCode == 0){
             	console.log("数据返回成功");
-            	CommonDataInsert(data.resultData[0]);
-            	ConfigDataInsert(data.resultData[1]);
-            	MKDataInsert(data.resultData[2]);
-//          	SysDataInsert(data.resultData[3]);
+            	var _type = $("#lable1SubmitTwo").attr("catagory");//2-编辑、3-复制
+            	
+            	CommonDataInsert(_type,data.resultData[0]);
+            	ConfigDataInsert(_type,data.resultData[1]);
+            	MKDataInsert(_type,data.resultData[2]);
+//          	SysDataInsert(_type,data.resultData[3]);
             }
         };
     }
@@ -636,37 +682,60 @@ function getDeleteProductInfo(){
 }
 
 
-function CommonDataInsert(arr){
-	$("#lable2TargetProduct").val(arr[0].targetProduct);
+function CommonDataInsert(type,arr){
 	$("#lable2CoocaaVersion").val(arr[0].coocaaVersion);
 	$("#lable2AndroidVersion").val(arr[0].androidVersion);
 	$("#lable2ChipMode").val(arr[0].soc);
 	$("#lable2Emmc").val(arr[0].EMMC);
 	$("#lable2Memory").val(arr[0].memorySize);
 	$("#lable2GitBranch").val(arr[0].gitBranch);
-	var _type = $("#lable1SubmitTwo").attr("catagory");
-	console.log(_type);
-	if (_type == 2) {//编辑
+	if (type == 2) {//编辑
 		$("#lable2Chip").val(arr[0].chip);
 		$("#lable2Chip").css("color","red");
 		$("#lable2Chip").attr("disabled","disabled");
 		$("#lable2Model").val(arr[0].model);
 		$("#lable2Model").css("color","red");
 		$("#lable2Model").attr("disabled","disabled");
+		$("#lable2TargetProduct").val(arr[0].targetProduct);
+		$("#lable2TargetProduct").css("color","red");
+		$("#lable2TargetProduct").attr("disabled","disabled");
+		
+		
+		$("#lable2CoocaaVersion").attr("oldvalue",arr[0].coocaaVersion);
+		$("#lable2AndroidVersion").attr("oldvalue",arr[0].androidVersion);
+		$("#lable2ChipMode").attr("oldvalue",arr[0].chipModel);
+		$("#lable2Emmc").attr("oldvalue",arr[0].EMMC);
+		$("#lable2Memory").attr("oldvalue",arr[0].memorySize);
+		$("#lable2GitBranch").attr("oldvalue",arr[0].gitBranch);
+		
+		$("#lable2CoocaaVersion").attr("onchange","changeDevice(this)");
+		$("#lable2AndroidVersion").attr("onchange","changeDevice(this)");
+        $("#lable2ChipMode").attr("onchange","changeDevice(this)");
+        $("#lable2Memory").attr("onchange","changeDevice(this)");
+        $("#newEditDevice").attr("onchange","changeDevice(this)");
+        $("#lable2GitBranch").attr("onchange","changeDevice(this)");
 	}
 }
-function ConfigDataInsert(arr){
+function ConfigDataInsert(type, arr){
 	for (var i=0; i<arr.length; i++) {
 		$("#"+arr[i].engName).val(arr[i].curValue);
+		$("#"+arr[i].engName).attr("value",arr[i].curValue);
+	}
+	if (type == 2) {
+		for (var i=0; i<$(".configitems").length; i++) {
+			$(".configitems:eq("+i+")").attr("onchange","changeConfig(this)");
+			$(".configitems:eq("+i+")").attr("oldvalue",$(".configitems:eq("+i+")").attr("value"));
+		}
 	}
 }
-function MKDataInsert(arr){
+function MKDataInsert(type, arr){
 	for (var j=0; j<$(".mkradio").length; j++) {
 		document.getElementsByClassName("mkradio")[j].removeAttribute('checked');
 	}
 	for (var i=0; i<arr.length; i++) {
 		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
 	}
+//	olrplayerid = arr[i].id;
 }
 
 //点击预览
@@ -697,8 +766,6 @@ function getPreviewInfo(){
         };
     }
 }
-
-
 
 function getAndCheckAndSendAllData(){
 	//判断基本项是否为空
@@ -753,19 +820,38 @@ function getAndCheckAndSendAllData(){
 			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
-			//获取基本项、config、MK、系统设置的值
-			var _base = getBaseValue();
-			var _config = getConfigValue();
-			var _sys = getSysValue();
-			_base = JSON.stringify(_base);
-			_config = JSON.stringify(_config);
-			_sys = JSON.stringify(_sys);
-			console.log(_base);
-			console.log(_config);
-			console.log(_sys);
-			var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
-			console.log(node);
-			sendHTTPRequest("/product/add", node, productAddResult);
+			//弹出确认框
+			console.log(changeAdd);
+			console.log(changeReduce);
+			console.log(changeConf);
+			console.log(changeDev);
+			if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length == 0) {
+				console.log("未做任何修改");
+				document.getElementById("page2Modal1ErrorInfo").innerHTML = "您未做任何修改。";
+				document.getElementById("MoreEditBack").style.display = "none";
+				setTimeout("document.getElementById('page2Modal1ErrorInfo').innerHTML='　'",3000);
+			} else{
+				console.log("做了修改");
+				document.getElementById("myEditEnsureDiv").style.display = "block";
+				if (changeDev.length != 0) {
+			        $("#txt1").css("display", "block");
+			        document.getElementById("txt11").innerHTML = changeDev;
+			    	
+				}
+			    if(changeAdd.length != 0){
+			        $("#txt2").css("display", "block");
+			        document.getElementById("txt22").innerHTML = changeAdd;
+			    }
+			    if (changeReduce.length != 0) {
+			        $("#txt3").css("display", "block");
+			        document.getElementById("txt33").innerHTML = changeReduce;
+			    }
+			    if (changeConf.length != 0) {
+			        $("#txt4").css("display", "block");
+			        $("#txt44").val(changeConf);
+			        document.getElementById("txt44").innerHTML = changeConf;
+			    }
+			}
 		}
 	}
 }
@@ -910,9 +996,9 @@ function configDataInsert(kk, obj, data) {
 }
 function mkDataInsert(kk, obj, data) {
 	if (data[kk].category == "PlayerLibrary") {
-		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].category + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	} else{
-		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox' class='mkitems' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox'class='mkitems' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].category + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	}
 }
 function sysDataInsert(i, obj, num, arr1){
@@ -941,8 +1027,7 @@ function getBaseValue(){
 	var _emmc = $("#page2Modal1Table .inputstyle")[6].value;
 	var _memory = $("#page2Modal1Table .inputstyle")[7].value;
 	var _branch = $("#page2Modal1Table .inputstyle")[8].value;
-	//chip、model、auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
-	//androidVersion、memorySize、EMMC、targetProduct、soc、platform、gitbranch、coocaaVersion
+	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,
 		"model" : _model,
@@ -957,10 +1042,8 @@ function getBaseValue(){
 		"modifyState" : 2,
 		"platform" : 0
 	}
-	
 	baseObj = JSON.stringify(baseObj);
 	return baseObj;
-//	console.log(baseObj);
 }
 function getConfigValue(){
 	var configData = [];
@@ -970,7 +1053,7 @@ function getConfigValue(){
 			"engName": "",
 			"curValue": ""
 		};
-		oAconfigInfo.engName = $(".configitems")[i].getAttribute("engname");
+		oAconfigInfo.engName = $(".configitems")[i].getAttribute("id");
 		oAconfigInfo.curValue = $(".configitems")[i].value;
 		configData.push(oAconfigInfo);
 	}
@@ -997,21 +1080,151 @@ function productAddResult(){
 			console.log(data);
 			if(data.resultCode == "0") {
 				console.log("数据提交成功");
-				$("#page2Modal1").modal('hide');
+				var type = $("#lable1SubmitTwo").attr("catagory");
+				if(type == 1||type == 3){
+					console.log("新增或者复制");
+					$("#page2Modal1").modal('hide');
+					page2Fresh();
+				}else if(type == 2){
+					console.log("编辑");
+					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
+					var _reason = document.getElementById("changeReason").innerHTML;
+					//0审核通过\1待审核\2审核未通过
+					var _state = "1";
+					var _author = loginusername;
+					var node = '{}';
+					sendHTTPRequest("/product/addHistory", node, productHistoryAdd);
+				}
+			}
+		}
+	}
+}
+function productHistoryAdd(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("日志数据提交成功");
+				document.getElementById("myEditEnsureDiv").style.display = "none";
 				page2Fresh();
 			}
 		}
 	}
 }
 
+function productHistoryQuery(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("数据查询成功");
+				for (var i=0; i<data.resultData.length; i++) {
+					var _row = document.getElementById("descriptTbody").insertRow(0);
+					var _cell0 = _row.insertCell(0);
+					_cell0.innerHTML = data.resultData[i].content;
+					var _cell1 = _row.insertCell(1);
+					_cell1.innerHTML = data.resultData[i].reason;
+					var _cell2 = _row.insertCell(2);
+					_cell2.innerHTML = data.resultData[i].state;
+					var _cell3 = _row.insertCell(3);
+					_cell3.innerHTML = data.resultData[i].userName;
+					var _cell4 = _row.insertCell(4);
+					_cell4.innerHTML = data.resultData[i].modifyTime;
+				}
+			}
+		}
+	}
+}
 
+function changeConfig(obj){
+    var x = obj.value;
+    console.log(x);
+    console.log(obj.getAttribute("oldvalue"))
+    if(x == obj.getAttribute("oldvalue")){
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeConf.remove(obj.getAttribute("cnname"));
+        console.log("changeConf= "+changeConf);
+    }
+    else{
+        if (changeConf.indexOf(obj.getAttribute("cnname")) == -1){
+            changeConf.push(obj.getAttribute("cnname"));
+            console.log("changeConf= "+changeConf);
+        }
+    }
+}
 
-
-
-
-
-
-
+function changeSettings(obj){
+    if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
+        // obj.oldvalue = '1';
+        obj.setAttribute("oldvalue","1");
+        changeAdd.push(obj.getAttribute("cvalue"));
+        console.log("add"+changeAdd);
+        console.log("changeReduce"+changeReduce);
+    }else if(!(obj.checked) && (obj.getAttribute("oldvalue") == '0')){
+        obj.setAttribute("oldvalue","2");
+        changeReduce.push(obj.getAttribute("cvalue"));
+        console.log("add"+changeAdd);
+        console.log("changeReduce"+changeReduce);
+    }else{
+        obj.setAttribute("oldvalue","0");
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeReduce.remove(obj.getAttribute("name"));
+        changeAdd.remove(obj.getAttribute("name"));
+        console.log("add"+changeAdd);
+        console.log("changeReduce"+changeReduce);
+    }   
+}
+function changeDevice(obj){
+    var x = obj.value;
+    console.log(x);
+    console.log(obj.getAttribute("oldvalue"))
+    if(x == obj.getAttribute("oldvalue")){
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeDev.remove(obj.getAttribute("name"));
+        console.log("changeDev = "+changeDev);
+    }
+    else{
+        if (changeDev.indexOf(obj.getAttribute("name")) == -1) {
+            changeDev.push(obj.getAttribute("name"));
+            console.log("changeDev = "+changeDev);
+        }
+    }
+}
 
 
 
@@ -1039,3 +1252,5 @@ function page2Fresh() {
 		htmlObject2.firstChild.src = "page5.html";
 	}
 }
+
+

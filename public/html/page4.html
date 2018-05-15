@@ -19,8 +19,115 @@
 			<!-- 表格开始 -->
 			<div id="page4_table"></div>
 			<!-- 表格结束 -->
+			<div id="noList" style="display: none;">当前没有符合查询条件的文件！！</div>
 		</div>
-		
+		<!--点击新增弹出新增的modal-->
+		<div class="modal fade" id="myCheckModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myAddModalLabel">
+			<div class="modalwidth" role="document">
+				<div class="modal-content">
+					<div class="modal-header myheader">
+						<button type="button" class="close1 btn btn-default"  aria-label="Close" id="closeReview"><span aria-hidden="true">关闭</span></button> 
+						<button type="button" class="close1 btn btn-default" id="button_submit"><span aria-hidden="true" id="reButton"></span></button>  
+                    	<button type="button" class="close1 btn btn-default "  id="noPassReview" style="display:none"><span aria-hidden="true">审核不通过</span></button>
+                    	<button type="button" class="close1 btn btn-default "  id="ReviewCat" style="display:none"><span aria-hidden="true">预览</span></button>
+                    	
+						<h3 class="modal-title" id="myAddModalLabel">审核</h3>
+						<h4 id="myAddModalErrorInfo" class="myModalErrorInfo"></h4>
+					</div>
+					<div class="modal-body mybody">
+						<table class="table table-bordered mytable" id="myAddModalTable">
+							<tr >
+								<DIV class="col-xs-12" id="changeDescDiv">
+									<div class="col-xs-12 form-group text-left inputdiv">
+										<span id="changeDescTitle"><b>当前文件做了如下更改，请注意审核：</b>
+										</span>
+										<div id="newFileDesc" class="redDesc marginCenter">当前文件为新增配置，请仔细审核！</div>
+										<div id="changeFileDesc" class="redDesc marginCenter">当前文件因配置管理项添加(或修改)导致文件发生变化，请仔细审核！</div>
+										<div id="changeDeviceDesc" class="marginCenter">修改设备信息：<span id="changeInfo1" class="redDesc">fffsdfd</span></div>
+										<div id="addModelDesc" class="marginCenter">新增模块：<span span id="changeInfo2" class="redDesc">sdfsdgrty</span></div>
+										<div id="removeModelDesc" class="marginCenter">删除模块：<span span id="changeInfo3" class="redDesc">reyeryty</span></div>
+										<div id="changeConfigDesc" class="marginCenter">修改配置：<span span id="changeInfo4" class="redDesc">tryrt</span></div>
+									</div>
+								</DIV>
+							</tr>
+							<tr>
+								<td>
+									<div class="col-xs-6 form-group text-left inputdiv">
+										<label for="newCheckChip" class="control-label col-xs-5 text-right inputdiv checkModalSpan" title="oChip">机芯&nbsp;:</label>
+										<input type="text" value="" id="newCheckChip" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+									</div>
+									<div class="col-xs-6 form-group text-left inputdiv">
+										<label for="newCheckModel" class="control-label col-xs-5 text-right inputdiv checkModalSpan" title="oModel">机型&nbsp;:</label>
+										<input type="text" value="" id="newCheckModel" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="col-xs-6 form-group inputdiv">
+										<label for="newCheckDevice" class="control-label col-xs-5 text-right inputdiv checkModalSpan" title="TARGET_PRODUCT">TARGET_PRODUCT&nbsp;:</label>
+										<input type="text" value="" id="newCheckDevice" class="col-xs-5 col-xs-push-1 inputstyle text-left" onchange="changeDevice(this)">
+									</div>
+									<div class="col-xs-6 form-group text-left inputdiv">
+										<label for="newCheckAndroidVersion" class="control-label col-xs-5 text-right inputdiv checkModalSpan" title="AndroidVersion">Android版本&nbsp;:</label>
+										<select  id="newCheckAndroidVersion" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+											<option value="Android4.2">Android4.2</option>
+											<option value="Android4.3">Android4.3</option>
+											<option value="Android4.4">Android4.4</option>
+											<option value="Android5.0">Android5.0</option>
+											<option value="Android5.1">Android5.1</option>
+											<option value="Android6.0">Android6.0</option>
+										</select>
+									</div>
+									<div class="col-xs-6 form-group text-left inputdiv">
+										<label for="newCheckChipMode" class="control-label col-xs-5 text-right inputdiv checkModalSpan" title="ChipMode">芯片型号&nbsp;:</label>
+										<select id="newCheckChipMode" class="col-xs-5 col-xs-push-1 inputstyle text-left"></select>
+									</div>
+									<div class="col-xs-6 form-group text-left inputdiv">
+										<label for="newCheckMemory" class="control-label col-xs-5 text-right inputdiv checkModalSpan" title="memory">内存&nbsp;:</label>
+										<select   id="newCheckMemory" class="col-xs-5 col-xs-push-1 inputstyle text-left">
+											<option value="256MB">256MB</option>
+											<option value="512MB">512MB</option>
+											<option value="768MB">768MB</option>
+											<option value="1GB">1GB</option>
+											<option value="1.5GB">1.5GB</option>
+											<option value="2GB">2GB</option>
+											<option value="2.5GB">2.5GB</option>
+											<option value="3GB">3GB</option>
+											<option value="3.5GB">3.5GB</option>
+											<option value="4GB">4GB</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td style="padding: 0;">
+									<div class="btn-group">
+										<button type="button" class="btn btn-default" id="mkbutton">MK文件</button>
+                               	 		<button type="button" class="btn btn-default" id="configbutton">config文件</button>
+									</div>
+									<div class="col-xs-12 inputstyle" id="reviewmkfile">
+										<table class="table table-bordered mytable">
+											<tbody id="myCheckModalMkTableTbody">
+											</tbody>
+										</table>
+									</div>
+									<div class="col-xs-12 inputstyle" id="reviewconfigfile">
+										<table class="table table-bordered mytable">
+											<tbody id="myCheckModalConfigTableTbody">
+											</tbody>
+										</table>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div class="modal-footer" id="reviewBottom">
+                    	<button type="button" id="btn_submit" class="btn btn-default"><span class="" aria-hidden="true" id="reviewSubmit"></span ></button>
+                	</div>
+				</div>
+			</div>
+		</div>
 		<!--loading环-->
 		<!--<div id="page4_loading"><span id="page4_loadingImg">wenjian</span><span id="page4_loadingText">数据加载中...</span></div>-->
 		<script src="../js/jquery.dataTables.min.js" type="text/javascript" charset="utf8"></script>

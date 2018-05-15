@@ -157,3 +157,15 @@
 #page2_table2 .new_productBox .operate span{
 	margin-right: 5px;
 }
+
+.mybuttons {
+	margin-bottom: 10px;
+	height: 30px;
+	padding-left: 7px;
+	padding-right: 7px;
+	border-radius: 5px;
+	text-align: center;
+}
+#page3_TP{
+	border: 1px solid black;
+}

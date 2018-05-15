@@ -273,6 +273,33 @@
 										</tr>
 									</tbody>	
 								</table>
+								<div class="col-xs-11" id="myEditEnsureDiv" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel">
+									<div class="modal-delete" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" aria-label="Close" id="myEditEnsureX"><span aria-hidden="true">×</span></button>
+												<h4 class="modal-title text-left" id="myEditModalLabel">关闭</h4>
+											</div>
+											<div class="modal-body">
+												<span class="changetitle">修改内容</span>
+												<div id="changeContent" style="font-size: 16px;text-align: left;">
+													<span id="txt1">修改设备信息：<span id="txt11"></span></span><br/>
+													<span id="txt2">新增模块：<span id="txt22"></span></span><br/>
+													<span id="txt3">删除模块：<span id="txt33"></span></span><br/>
+													<span id="txt4">修改配置：<span id="txt44"></span></span><br/>
+												</div>
+												<span class="changetitle">修改原因</span>
+												<div id="changeReason">
+													
+												</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" id="myEditEnsure">确定</button>
+												<button type="button" class="btn btn-default" id="myEditCancle">取消</button>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 							<div class="modal-footer myfooter">
 								<button type="button" class="btn btn-default" id="lable1SubmitTwo" errNum="" existence="true" defaultPage="0">提交</button>
@@ -356,9 +383,9 @@
 						</div>
 					</div>
 				</div>
-
+				
 				<!-- 点击查看 -->
-				<div class="modal fade col-xs-12" id="page1_examine" tabindex="-1" role="dialog" aria-labelledby="page1_examineLabel">
+				<div class="modal fade col-xs-12" id="page1_examine" tabindex="-1" role="dialog" aria-labelledby="page1_examineLabel" style="margin-top: 100px;">
 					<div class="" role="document">
 						<div class="modal-content">
 							<!--modal-content-->
@@ -381,91 +408,8 @@
 											<th>提交时间</th>
 										</tr>
 									</thead>
-									<tbody>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
-										<tr>
-											<td>1</td>
-											<td>2</td>
-											<td>3</td>
-											<td>4</td>
-											<td>5</td>
-										</tr>
+									<tbody id="descriptTbody">
+										
 									</tbody>
 								</table>
 							</div>
