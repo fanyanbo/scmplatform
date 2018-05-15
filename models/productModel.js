@@ -150,7 +150,7 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
                 ];
 
   ep.bind('error', function (err) {
-      logger.error("捕获到错误-->" + err);
+      logger.error("queryAllByMachine 捕获到错误-->" + err);
       //卸掉所有的handler
       ep.unbind();
       callback(err,null);
