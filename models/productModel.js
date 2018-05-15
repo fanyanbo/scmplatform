@@ -283,6 +283,8 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
 
 ProductModel.prototype.addHistory = function (data, callback) {
   console.log(data);
+  console.log(data.chip);
+  console.log(data.model);
   let dataObj = JSON.parse(data);
   console.log(dataObj.chip);
   console.log(dataObj.model);
