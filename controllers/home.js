@@ -28,7 +28,7 @@ exports.getSummary = function (req, res, next) {
       resultData.amlogicTotalNum = results[6];
       resultData.novaTotalNum = results[7];
 
-      return output.success(req,res,resultData);
+      return output.success(req,res,"获取总览信息成功",resultData);
     });
 };
 
