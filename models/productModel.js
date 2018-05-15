@@ -168,9 +168,6 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
   for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
     db.conn.query(sql_list[i],[chip,model],ep.group('query_result'));
   }
-
-
-
 }
 
 ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callback) {

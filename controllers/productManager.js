@@ -47,7 +47,7 @@ exports.update = function (req, res, next) {
     if(err) {
       return output.error(req,res,err);
     }
-    output.success(req,res,"新增产品项成功");
+    output.success(req,res,"update产品项成功");
   });
 };
 
