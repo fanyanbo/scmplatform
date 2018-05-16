@@ -233,6 +233,9 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
   }
 }
 
+/**
+ * @param {更新时应该先清空某产品的临时表，再进行插入}
+ */
 ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, callback) {
   console.log(baseInfo);
   let baseInfoObj = JSON.parse(baseInfo);
@@ -310,6 +313,26 @@ ProductModel.prototype.preview = function (chip, model, callback) {
           return callback(err);
       }
       callback(null, results);
+    });
+}
+
+ProductModel.prototype.review = function (data, callback) {
+    console.log(data);
+    let chip = data.chip;
+    let model = data.model;
+    let flag = data.flag; //0表示审核通过，1表示不通过
+    let sql;
+    if(flag === 0){
+      sql = "UPDATE products set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?";
+    }else {
+      sql = "UPDATE products set auditState = 2, modifyState = 3 WHERE chip = ? AND model = ?";
+    }
+    console.log(sql);
+    db.conn.query(sql,[chip, model],function(err,rows,fields){
+      if (err) {
+        return callback(err);
+      }
+      callback(null, rows);
     });
 }
 

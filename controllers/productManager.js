@@ -25,6 +25,9 @@ exports.add = function (req, res, next) {
 
 };
 
+/**
+ * @param {添加某个产品修改记录}
+ */
 exports.addHistory = function (req, res, next) {
 
   let data = req.body.data;
@@ -38,6 +41,9 @@ exports.addHistory = function (req, res, next) {
 
 };
 
+/**
+ * @param {更新产品数据}
+ */
 exports.update = function (req, res, next) {
   let baseInfo = req.body.baseInfo;
   let configInfo = req.body.configInfo;
@@ -51,6 +57,9 @@ exports.update = function (req, res, next) {
   });
 };
 
+/**
+ * @param {预览}
+ */
 exports.preview = function (req, res, next) {
   let chip = req.body.chip;
   let model = req.body.model;
@@ -64,6 +73,9 @@ exports.preview = function (req, res, next) {
   });
 }
 
+/**
+ * @param {删除某个产品}
+ */
 exports.delete = function (req, res, next) {
   let data = req.body.data;
   console.log(data);
@@ -72,6 +84,20 @@ exports.delete = function (req, res, next) {
       return output.error(req,res,err);
     }
     output.success(req,res,"执行产品删除操作成功");
+  });
+};
+
+/**
+ * @param {进行审核}
+ */
+exports.review = function (req, res, next) {
+  let data = req.body.data;
+  console.log(data);
+  productModel.review(data, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"执行审核操作成功");
   });
 };
 
