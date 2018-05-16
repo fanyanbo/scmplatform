@@ -304,9 +304,30 @@ ProductModel.prototype.preview = function (chip, model, callback) {
     });
 }
 
-ProductModel.prototype.delete = function (chip, model, callback) {
-    var sql = "UPDATE products set auditState = 1, modifyState = 2 WHERE chip = ? AND model = ?";
+/**
+ * @param {auditState 0->正常 1->待审核 2->审核未通过；modifyState 0->正常 1->修改 2->增加 3->删除}
+ */
+ProductModel.prototype.delete = function (data, callback) {
+    let chip = data.chip;
+    let model = data.model;
+    let userName = data.userName;
+    var sql = "UPDATE products set auditState = 1, modifyState = 3, userName = ? WHERE chip = ? AND model = ?";
+    let sql_params = [userName, chip, model];
+    console.log(sql_params);
+    db.conn.query(sql,sql_params,function(err,rows,fields){
+      if (err) {
+        return callback(err);
+      }
+      callback(null, rows);
+    });
+}
+
+ProductModel.prototype.deleteRecovery = function (data, callback) {
+    let chip = data.chip;
+    let model = data.model;
+    var sql = "UPDATE products set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?";
     let sql_params = [chip, model];
+    console.log(sql_params);
     db.conn.query(sql,sql_params,function(err,rows,fields){
       if (err) {
         return callback(err);

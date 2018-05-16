@@ -65,14 +65,24 @@ exports.preview = function (req, res, next) {
 }
 
 exports.delete = function (req, res, next) {
-  let chip = req.body.chip;
-  let model = req.body.model;
-  console.log(chip);
-  productModel.delete(chip, model, function(err,results) {
+  let data = req.body.data;
+  console.log(data);
+  productModel.delete(data, function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }
     output.success(req,res,"执行产品删除操作成功");
+  });
+};
+
+exports.deleteRecovery = function (req, res, next) {
+  let data = req.body.data;
+  console.log(data);
+  productModel.deleteRecovery(data, function(err,results) {
+    if(err) {
+      return output.error(req,res,err);
+    }
+    output.success(req,res,"执行产品删除恢复操作成功");
   });
 };
 
