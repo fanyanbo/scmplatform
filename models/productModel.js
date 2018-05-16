@@ -175,13 +175,8 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
   console.log(configInfo);
   console.log(settingsInfo);
   let baseInfoObj = JSON.parse(baseInfo);
-  console.log(baseInfoObj.chip);
-  console.log(baseInfoObj.auditState);
-  console.log(baseInfoObj.coocaaVersion);
   console.log(configInfo.length);
-  console.log(configInfo[0].engName);
   console.log(settingsInfo.length);
-  console.log(settingsInfo[0].engName);
 
   let ep = new eventproxy();
 
@@ -192,13 +187,27 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
       callback(err,null);
   });
 
-  ep.after('query_result', configInfo.length + settingsInfo.length + 1, function (list) {
+  ep.after('insert_result', configInfo.length + settingsInfo.length + 1, function (list) {
       // 所有查询的内容都存在list数组中
       callback(null,null);
   });
 
-  let sql0 = "INSERT INTO products(chip,model,auditState,modifyState,androidVersion,memorySize,EMMC,targetProduct,soc,platform,gitBranch,coocaaVersion) values (?,?,?,?,?,?,?,?,?,?,?,?)";
-  let sql0_param = [baseInfo.chip,baseInfo.chip,baseInfo.auditState,baseInfo.modifyState,baseInfo.androidVersion,baseInfo.memorySize,baseInfo.EMMC,baseInfo.targetProduct,baseInfo.soc,baseInfo.platform,baseInfo.gitBranch,baseInfo.coocaaVersion];
+  let chip = baseInfoObj.chip;
+  let model = baseInfoObj.model;
+  let targetProduct = baseInfoObj.targetProduct;
+  let auditState = baseInfoObj.auditState;
+  let modifyState = baseInfoObj.modifyState;
+  let androidVersion = baseInfoObj.androidVersion;
+  let memorySize = baseInfoObj.memorySize;
+  let EMMC = baseInfoObj.EMMC;
+  let soc = baseInfoObj.soc;
+  let platform = baseInfoObj.platform;
+  let gitBranch = baseInfoObj.gitBranch;
+  let coocaaVersion = baseInfoObj.coocaaVersion;
+  let userName = baseInfoObj.userName;
+  let sql0 = "INSERT INTO products(chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,\
+    gitBranch,coocaaVersion,userName) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  let sql0_param = [chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,gitBranch,coocaaVersion,userName];
   console.log(sql0_param);
   db.conn.query(sql0,sql0_param,function(err,rows,fields){
     if (err) return ep.emit('error', err);
@@ -207,7 +216,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
 
   let sql1 = "INSERT INTO configdata_temp(chip,model,engName,curValue) values (?,?,?,?)";
   for(var i=0; i<configInfo.length;i++) {
-    let sql1_param = [baseInfo.chip,baseInfo.model,configInfo[i].engName,configInfo[i].curValue];
+    let sql1_param = [chip,model,configInfo[i].engName,configInfo[i].curValue];
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO configdata_temp OK");
@@ -216,7 +225,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
 
   let sql2 = "INSERT INTO settingsdata_temp(chip,model,engName) values (?,?,?)";
   for(var i=0; i<settingsInfo.length;i++) {
-    let sql2_param = [baseInfo.chip,baseInfo.model,settingsInfo[i].engName];
+    let sql2_param = [chip,model,settingsInfo[i].engName];
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
