@@ -2,18 +2,20 @@ var eventproxy = require('eventproxy');
 var db = require('../../common/db');
 var logger = require('../../common/logger');
 var generator = require('../file/generate');
+var dbConfig = require('./dbConfig');
 
 var ProductModel = function() {};
 
 ProductModel.prototype.queryByPage = function (offset, rows, callback) {
   let sql, sql_params;
   if(offset == -1 || offset == undefined) {
-    sql = "select * from products order by operateTime desc";
+    sql = `select * from ${dbConfig.tables.products} order by operateTime desc`;
     sql_params = [];
   } else {
-    sql = "select a.*,b.userName from products AS a, modifyhistory AS b WHERE a.chip = b.chip AND a.model = b.model order by a.operateTime desc limit ?,?";
+    sql = `select a.*,b.userName from ${dbConfig.tables.products} AS a, ${dbConfig.tables.modifyhistory} AS b WHERE a.chip = b.chip AND a.model = b.model order by a.operateTime desc limit ?,?`;
     sql_params = [offset,rows];
   }
+  console.log(sql);
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
         return callback(err);
@@ -37,7 +39,7 @@ ProductModel.prototype.queryByRegEx = function (chip, model, version, memory, so
     console.log(_memory);
     console.log(_soc);
 
-    var sql = `SELECT * FROM products WHERE ${_chip} AND ${_model} AND ${_verison} AND ${_memory} AND ${_soc}  order by operateTime desc`;
+    var sql = `SELECT * FROM ${dbConfig.tables.products} WHERE ${_chip} AND ${_model} AND ${_verison} AND ${_memory} AND ${_soc}  order by operateTime desc`;
     console.log(sql);
     let sql_params = [];
     db.conn.query(sql,sql_params,function(err,rows,fields){
@@ -52,7 +54,8 @@ ProductModel.prototype.queryByRegEx = function (chip, model, version, memory, so
  * @param {注：查询某个机芯机型的修改历史记录，state：0->审核已通过 1->待审核 2->审核未通过}
  */
 ProductModel.prototype.queryHistory = function (chip, model, callback) {
-  var sql = "SELECT * FROM modifyhistory WHERE chip = ? AND model = ?";
+
+  var sql = `SELECT * FROM ${dbConfig.tables.modifyhistory} WHERE chip = ? AND model = ?`;
   let sql_params = [chip, model];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -64,9 +67,9 @@ ProductModel.prototype.queryHistory = function (chip, model, callback) {
 }
 
 ProductModel.prototype.queryByModule = function (name, callback) {
-//  var sql = "SELECT * FROM products WHERE targetProduct in (SELECT targetProduct FROM mkdata WHERE cnName=?)";
-  let sql = "SELECT * FROM products WHERE targetProduct IN (SELECT a.targetProduct FROM mkdata a, modules b WHERE a.engName=b.engName AND b.cnName=?)";
-  let sql_params = [name];
+
+  let sql = `SELECT * FROM ${dbConfig.tables.products} WHERE targetProduct IN (SELECT a.targetProduct FROM ${dbConfig.tables.mkdata} a, modules b WHERE a.engName=b.engName AND b.cnName=?)`;
+  let sql_params = [name]; //模块中文名
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
         return callback(err);
@@ -76,7 +79,7 @@ ProductModel.prototype.queryByModule = function (name, callback) {
 }
 
 ProductModel.prototype.queryMKDataByTargetProduct = function (targetproduct, callback) {
-  let sql = "SELECT * FROM mkdata WHERE targetProduct = ?";
+  let sql = `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
   let sql_params = [targetproduct];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -147,10 +150,10 @@ ProductModel.prototype.queryAll = function (callback) {
 ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
   let ep = new eventproxy();
   let sql_list = [
-                  "SELECT * FROM products WHERE chip = ? AND model = ?",
-                  "SELECT * FROM configdata WHERE chip = ? AND model = ?",
-                  "SELECT * FROM settingsdata WHERE chip = ? AND model = ?",
-                  "SELECT * FROM mkdata WHERE targetProduct in (SELECT targetProduct FROM products WHERE chip = ? AND model = ?)"
+                  `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?`,
+                  `SELECT * FROM ${dbConfig.tables.configdata} WHERE chip = ? AND model = ?`,
+                  `SELECT * FROM ${dbConfig.tables.settingsdata} WHERE chip = ? AND model = ?`,
+                  `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?)`
                 ];
 
   ep.bind('error', function (err) {
@@ -180,10 +183,10 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
 ProductModel.prototype.queryAllByMachineTemp = function (chip, model, callback) {
   let ep = new eventproxy();
   let sql_list = [
-                  "SELECT * FROM products WHERE chip = ? AND model = ?",
-                  "SELECT * FROM configdata_temp WHERE chip = ? AND model = ?",
-                  "SELECT * FROM settingsdata_temp WHERE chip = ? AND model = ?",
-                  "SELECT * FROM mkdata WHERE targetProduct in (SELECT targetProduct FROM products WHERE chip = ? AND model = ?)"
+                  `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?`,
+                  `SELECT * FROM ${dbConfig.tables.configdata_temp} WHERE chip = ? AND model = ?`,
+                  `SELECT * FROM ${dbConfig.tables.settingsdata_temp} WHERE chip = ? AND model = ?`,
+                  `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?)`
                 ];
 
   ep.bind('error', function (err) {
@@ -240,18 +243,17 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
   let soc = baseInfoObj.soc;
   let platform = baseInfoObj.platform;
   let gitBranch = baseInfoObj.gitBranch;
-  let coocaaVersion = baseInfoObj.coocaaVersion;
   let userName = baseInfoObj.userName;
-  let sql0 = "INSERT INTO products(chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,\
-    gitBranch,coocaaVersion,userName) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-  let sql0_param = [chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,gitBranch,coocaaVersion,userName];
+  let sql0 = `INSERT INTO ${dbConfig.tables.products}(chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,\
+    gitBranch,userName) values (?,?,?,?,?,?,?,?,?,?,?,?)`;
+  let sql0_param = [chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,gitBranch,userName];
   console.log(sql0_param);
   db.conn.query(sql0,sql0_param,function(err,rows,fields){
     if (err) return ep.emit('error', err);
     ep.emit('insert_result',"INSERT INTO products OK");
   });
 
-  let sql1 = "INSERT INTO configdata_temp(chip,model,engName,curValue) values (?,?,?,?)";
+  let sql1 = `INSERT INTO ${dbConfig.tables.configdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
   for(var i=0; i<configInfo.length;i++) {
     let sql1_param = [chip,model,configInfo[i].engName,configInfo[i].curValue];
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
@@ -260,7 +262,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
     });
   }
 
-  let sql2 = "INSERT INTO settingsdata_temp(chip,model,engName) values (?,?,?)";
+  let sql2 = `INSERT INTO ${dbConfig.tables.settingsdata_temp}(chip,model,engName) values (?,?,?)`;
   for(var i=0; i<settingsInfo.length;i++) {
     let sql2_param = [chip,model,settingsInfo[i].engName];
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
@@ -282,14 +284,14 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
   async.parallel(
     {
       delConfigTemp: function(callback1){
-          let sql = 'DELETE FROM configdata_temp WHERE chip=? AND model=?';
+          let sql = `DELETE FROM ${dbConfig.tables.configdata_temp} WHERE chip=? AND model=?`;
           db.conn.query(sql,[chip,model],function(err,rows,fields){
             if (err) return callback1(err,null);
             callback1(null,"delConfigTemp OK");
           });
       },
       delSettingsTemp: function(callback1){
-        let sql = 'DELETE FROM settingsdata_temp WHERE chip=? AND model=?';
+        let sql = `DELETE FROM ${dbConfig.tables.settingsdata_temp} WHERE chip=? AND model=?`;
         db.conn.query(sql,[chip,model],function(err,rows,fields){
           if (err) return callback1(err,null);
           callback1(null,"delSettingsTemp OK");
@@ -317,7 +319,6 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
   let soc = baseInfoObj.soc;
   let platform = baseInfoObj.platform;
   let gitBranch = baseInfoObj.gitBranch;
-  let coocaaVersion = baseInfoObj.coocaaVersion;
   let userName = baseInfoObj.userName;
 
   let ep = new eventproxy();
@@ -334,18 +335,18 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
       callback(null,null);
   });
 
-  let sql0 = "UPDATE products SET auditState=1,modifyState=1,androidVersion=?,memorySize=?,EMMC=?,targetProduct=?,soc=?,platform=?,gitBranch=?,coocaaVersion=? \
-  userName=? WHERE chip=? AND model=?";
-  let sql0_param = [androidVersion,memorySize,EMMC,targetProduct,soc,platform,gitBranch,coocaaVersion,userName,chip,model];
+  let sql0 = `UPDATE ${dbConfig.tables.products} SET auditState=1,modifyState=1,androidVersion=?,memorySize=?,EMMC=?,targetProduct=?,soc=?,platform=?,gitBranch=?, \
+  userName=? WHERE chip=? AND model=?`;
+  let sql0_param = [androidVersion,memorySize,EMMC,targetProduct,soc,platform,gitBranch,userName,chip,model];
   console.log(sql0_param);
   db.conn.query(sql0,sql0_param,function(err,rows,fields){
     if (err) return ep.emit('error', err);
     ep.emit('insert_result',"INSERT INTO products OK");
   });
 
-  let sql1 = "INSERT INTO configdata_temp(chip,model,engName,curValue) values (?,?,?,?)";
+  let sql1 = `INSERT INTO ${dbConfig.tables.configdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
   for(var i=0; i<configInfo.length;i++) {
-    let sql1_param = [baseInfoObj.chip,baseInfoObj.model,configInfo[i].engName,configInfo[i].curValue];
+    let sql1_param = [chip,model,configInfo[i].engName,configInfo[i].curValue];
     console.log(sql1_param + i);
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
@@ -353,9 +354,9 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
     });
   }
 
-  let sql2 = "INSERT INTO settingsdata_temp(chip,model,engName) values (?,?,?)";
+  let sql2 = `INSERT INTO ${dbConfig.tables.settingsdata_temp}(chip,model,engName) values (?,?,?)`;
   for(var j=0; j<settingsInfo.length;j++) {
-    let sql2_param = [baseInfoObj.chip,baseInfoObj.model,settingsInfo[i].engName];
+    let sql2_param = [chip,model,settingsInfo[i].engName];
     console.log(sql2_param + j);
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
@@ -369,7 +370,7 @@ ProductModel.prototype.addHistory = function (data, callback) {
   console.log(data.chip);
   console.log(data.model);
 
-  let sql = "INSERT INTO modifyhistory(chip,model,state,userName,content,reason) values (?,?,?,?,?,?)";
+  let sql = `INSERT INTO ${dbConfig.tables.modifyhistory}(chip,model,state,userName,content,reason) values (?,?,?,?,?,?)`;
   let sql_param = [data.chip,data.model,data.state,data.userName,data.content,data.reason];
   console.log(sql_param);
   db.conn.query(sql,sql_param,function(err,rows,fields){
@@ -396,9 +397,9 @@ ProductModel.prototype.review = function (data, callback) {
     let flag = data.flag; //0表示审核通过，1表示不通过
     let sql;
     if(flag === 0){
-      sql = "UPDATE products set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?";
+      sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?`;
     }else {
-      sql = "UPDATE products set auditState = 2, modifyState = 3 WHERE chip = ? AND model = ?";
+      sql = `UPDATE ${dbConfig.tables.products} set auditState = 2, modifyState = 3 WHERE chip = ? AND model = ?`;
     }
     console.log(sql);
     db.conn.query(sql,[chip, model],function(err,rows,fields){
@@ -416,7 +417,7 @@ ProductModel.prototype.delete = function (data, callback) {
     let chip = data.chip;
     let model = data.model;
     let userName = data.userName;
-    var sql = "UPDATE products set auditState = 1, modifyState = 3, userName = ? WHERE chip = ? AND model = ?";
+    var sql = `UPDATE ${dbConfig.tables.products} set auditState = 1, modifyState = 3, userName = ? WHERE chip = ? AND model = ?`;
     let sql_params = [userName, chip, model];
     console.log(sql_params);
     db.conn.query(sql,sql_params,function(err,rows,fields){
@@ -430,7 +431,7 @@ ProductModel.prototype.delete = function (data, callback) {
 ProductModel.prototype.deleteRecovery = function (data, callback) {
     let chip = data.chip;
     let model = data.model;
-    var sql = "UPDATE products set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?";
+    var sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?`;
     let sql_params = [chip, model];
     console.log(sql_params);
     db.conn.query(sql,sql_params,function(err,rows,fields){
