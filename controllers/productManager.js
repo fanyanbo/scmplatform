@@ -218,6 +218,6 @@ exports.queryAllByMachineTemp = function (req, res, next) {
         return output.error(req,res,err);
       }
       console.log(results);
-      output.success(req,res,"查询queryAllByMachine成功",results);
+      output.success(req,res,"查询queryAllByMachineTemp成功",results);
     });
 };
