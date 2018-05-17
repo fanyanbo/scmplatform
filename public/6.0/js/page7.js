@@ -4,11 +4,14 @@ var _twoLevelLinkageArrayOne = [[],[],[],[]];
 var _twoLevelLinkageArrayTwo = [[],[],[],[]];
 var _twoLevelLinkageArrayThree = [[],[],[],[]];
 var _myArray = [];
+
+var coocaaVersion = "/6.0";
+
 $(function() {
 	$(".page7_boxes")[0].style.display = "block";
 	buttonInitBefore();
 	var node11 = '{}';
-	sendHTTPRequest("/config/queryCategory", node11, configCategoryQueryResult);
+	sendHTTPRequest(coocaaVersion+"/config/queryCategory", node11, configCategoryQueryResult);
 });
 
 function buttonInitBefore() {
@@ -62,7 +65,7 @@ function configCategoryQueryResult() {
 			}
 		}
 		var node1 = '{}';
-		sendHTTPRequest("/config/query", node1, configQueryResult);
+		sendHTTPRequest(coocaaVersion+"/config/query", node1, configQueryResult);
 	}
 }
 
@@ -435,14 +438,14 @@ function saveInConfig() {
 			console.log("lxw in edit 新增");
 			node = '{"engName":"' + newConfigEnName + '","cnName":"' + newConfigCzName + '","category":"' + newConfigSelect + '","type":"' + newConfigType + '","options":"[' + newConfigOptions + ']","defaultValue":"' + newConfigString + '","desc":"' + newConfigInstr + '"}';
 			console.log("lxw " + node);
-			sendHTTPRequest("/config/add", node, returnConfigAddInfo);
+			sendHTTPRequest(coocaaVersion+"/config/add", node, returnConfigAddInfo);
 		} else {
 			console.log("lxw in edit 修改");
 			newConfigOrderId = JSON.parse(_oldValue).orderId;
 			console.log("orderId = " + newConfigOrderId);
 			node = '{"engName":"' + newConfigEnName + '","cnName":"' + newConfigCzName + '","category":"' + newConfigSelect + '","type":"' + newConfigType + '","options":"[' + newConfigOptions + ']","defaultValue":"' + newConfigString + '","desc":"' + newConfigInstr + '","orderId":"' + newConfigOrderId + '"}';
 			console.log("lxw " + node);
-			sendHTTPRequest("/config/update", node, returnConfigAddInfo);
+			sendHTTPRequest(coocaaVersion+"/config/update", node, returnConfigAddInfo);
 		}
 	}
 }
@@ -491,13 +494,13 @@ function saveInSys() {
 			console.log("lxw sys 新增");
 			var node = '{"engName":"' + newSysEName + '","cnName":"' + newSysCName + '","level1":"' + newSysSelect1 + '","level2":"' + newSysSelect2 + '","level3":"' + newSysSelect3 + '","desc":"' + newSysInstr + '"}';
 			console.log(node);
-			//sendHTTPRequest("/module/add", node, returnMKAddInfo);
+			//sendHTTPRequest(coocaaVersion+"/module/add", node, returnMKAddInfo);
 		} else {
 			console.log("lxw sys 修改");
 			_oldValue3 = JSON.parse(_oldValue3);
 			var node = '{"engName":"' + newSysEName + '","cnName":"' + newSysCName + '","level1":"' + newSysSelect1 + '","level2":"' + newSysSelect2 + '","level3":"' + newSysSelect3 + '","desc":"' + newSysInstr + '"}';
 			console.log("lxw " + node);
-			//sendHTTPRequest("/module/update", node, returnMKAddInfo);
+			//sendHTTPRequest(coocaaVersion+"/module/update", node, returnMKAddInfo);
 		}
 	}
 }
@@ -537,13 +540,13 @@ function saveInMK() {
 			console.log("lxw model 新增");
 			var node = '{"engName":"' + newModuleEnName + '","cnName":"' + newModuleCzName + '","category":"' + newModuleSelect + '","desc":"' + newModuleInstr + '","gitPath":"' + newModuleSrc + '"}';
 			console.log(node);
-			sendHTTPRequest("/module/add", node, returnMKAddInfo);
+			sendHTTPRequest(coocaaVersion+"/module/add", node, returnMKAddInfo);
 		} else {
 			console.log("lxw model 修改");
 			_oldValue3 = JSON.parse(_oldValue3);
 			var node = '{"engName":"' + newModuleEnName + '","cnName":"' + newModuleCzName + '","category":"' + newModuleSelect + '","desc":"' + newModuleInstr + '","gitPath":"' + newModuleSrc + '","orderId":"' + _oldValue3.orderId + '"}';
 			console.log("lxw " + node);
-			sendHTTPRequest("/module/update", node, returnMKAddInfo);
+			sendHTTPRequest(coocaaVersion+"/module/update", node, returnMKAddInfo);
 		}
 	}
 }
@@ -621,11 +624,11 @@ function tabsClick(num) {
 		var node31 = '{}';
 		var ajaxUrl = "";
 		if(num == 0) {
-			ajaxUrl = "/config/queryCategory";
+			ajaxUrl = coocaaVersion+"/config/queryCategory";
 		} else if(num == 1 || num == 2 || num == 3 || num == 4) {
-			ajaxUrl = "/settings/queryCategory";
+			ajaxUrl = coocaaVersion+"/settings/queryCategory";
 		} else if(num == 5) {
-			ajaxUrl = "/module/queryCategory";
+			ajaxUrl = coocaaVersion+"/module/queryCategory";
 		}
 		sendHTTPRequest(ajaxUrl, node31, categoryQueryResult);
 	} else {
@@ -649,7 +652,7 @@ function categoryQueryResult() {
 						_myConfigTbody.innerHTML += '<tr><td class="configitems" category="'+ data.resultData[i].category +'" id="configTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
 					}
 					var node = '{}';
-					sendHTTPRequest("/config/query", node, configQueryResult);
+					sendHTTPRequest(coocaaVersion+"/config/query", node, configQueryResult);
 				}else if(_curId==1||_curId==2||_curId==3||_curId==4) {
 					console.log(data);
 					
@@ -717,7 +720,7 @@ function categoryQueryResult() {
 					console.log(_twoLevelLinkageArrayTwo);
 					console.log(_twoLevelLinkageArrayThree);
 					var node = '{}';
-					sendHTTPRequest("/settings/query", node, settingQueryResult);
+					sendHTTPRequest(coocaaVersion+"/settings/query", node, settingQueryResult);
 				} else if(_curId==5){
 					$("#moduleSelect").attr("hasvalue", "true");
 					var _myMKTbody = document.getElementById("myMKTbody");
@@ -726,7 +729,7 @@ function categoryQueryResult() {
 						_myMKTbody.innerHTML += '<tr><td class="moduleitems" category="'+ data.resultData[i].category +'" id="moduleTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
 					}
 					var node = '{}';
-					sendHTTPRequest("/module/query", node, moduleQueryResult);
+					sendHTTPRequest(coocaaVersion+"/module/query", node, moduleQueryResult);
 				}
 			}
 		}

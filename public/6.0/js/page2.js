@@ -24,13 +24,15 @@ var fromEmail = null;
 var adminFlag = null;
 var loginusername = null;
 
+var coocaaVersion = "/6.0";
+
 $(function() {
 	fromEmail = parent.loginEmail;
 	loginusername = parent.loginusername;
 	adminFlag = parent.adminFlag;
 	console.log(fromEmail+"--"+loginusername+"--"+adminFlag);
 	var node = '{"offset":"-1","rows":"10"}';
-	sendHTTPRequest("/product/queryByPage", node, productQuery);
+	sendHTTPRequest(coocaaVersion+"/product/queryByPage", node, productQuery);
 	buttonInit();
 });
 
@@ -51,7 +53,7 @@ function productQuery() {
 			}
 		}
 		var node1 = '{}';
-		sendHTTPRequest("/device/queryAll", node1 , targetproductQueryResult);
+		sendHTTPRequest(coocaaVersion+"/device/queryAll", node1 , targetproductQueryResult);
 	}
 }
 
@@ -77,7 +79,7 @@ function targetproductQueryResult() {
 			}
 		}
 		clearAllInfo();
-		sendHTTPRequest("/product/queryAll", '{}', allQueryResult);
+		sendHTTPRequest(coocaaVersion+"/product/queryAll", '{}', allQueryResult);
 	}
 }
 
@@ -301,7 +303,7 @@ function checkInArray(id,value){}
 function changeMKByTP(id, value) {
 	console.log(id + "-----" + value);
 	var node = '{"targetproduct":"' + value + '"}';
-	sendHTTPRequest("/product/queryBytp", node, getMKByTPResult);
+	sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
 }
 
 function getMKByTPResult() {
@@ -361,7 +363,7 @@ function buttonInit() {
 		var _delete = JSON.stringify(deleteObj);
 		var node = '{"data":' + _delete + '}';
 		console.log(node);
-		sendHTTPRequest("/product/delete", node, getDeleteProductInfo);
+		sendHTTPRequest(coocaaVersion+"/product/delete", node, getDeleteProductInfo);
 	});
 	
 	$("#page2_chip").keyup(function(event) {
@@ -437,7 +439,7 @@ function buttonInit() {
 		_sys = JSON.stringify(_sys);
 		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
 		console.log(node);
-		sendHTTPRequest("/product/update", node, productAddResult);
+		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
 	});
 	$("#myAddEnsure").click(function() {
 		console.log("新增提示框的确定按钮");
@@ -449,7 +451,7 @@ function buttonInit() {
 		_sys = JSON.stringify(_sys);
 		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
 		console.log(node);
-		sendHTTPRequest("/product/add", node, productAddResult);
+		sendHTTPRequest(coocaaVersion+"/product/add", node, productAddResult);
 	});
 }
 
@@ -472,7 +474,7 @@ function buttonInitAfter() {
 		$('#page1_examine').modal();
 		
 		var node = '{"chip":"'+$(".new_productBox .chip")[_cIndex].innerHTML+'","model":"'+$(".new_productBox .model")[_cIndex].innerHTML+'"}';
-		sendHTTPRequest("/product/queryHistory", node, productHistoryQuery);
+		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
 	});
 	$(".eachedit").click(function() {
 		var _aIndex = $(".eachedit").index($(this));
@@ -536,11 +538,11 @@ function page2Select() {
 	if(oKeyWord == null || oKeyWord == "") {
 		node = '{"chip":"' + oChip + '","model":"' + oModel + '","soc":"' + oChipid + '","memory":"' + oMemory + '"}';
 		console.log(node);
-		sendHTTPRequest("/product/queryByRegEx", node, searchResource);
+		sendHTTPRequest(coocaaVersion+"/product/queryByRegEx", node, searchResource);
 	} else {
 		node = '{"name":"' + oKeyWord + '"}';
 		console.log(node);
-		sendHTTPRequest("/product/queryByModule", node, searchResource);
+		sendHTTPRequest(coocaaVersion+"/product/queryByModule", node, searchResource);
 	}
 }
 
@@ -585,11 +587,11 @@ function page2AEC(number) {
 	if(_type == 2 || _type == 3) {
 		console.log("点击了编辑 或者是复制" + number);
 		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
-		sendHTTPRequest("/product/queryAllByMachine", node, getPointProductInfo);
+		sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 	} else if(_type == 4) {
 		console.log("点击了预览" + number);
 		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
-		sendHTTPRequest("/product/preview", node, getPreviewInfo);
+		sendHTTPRequest(coocaaVersion+"/product/preview", node, getPreviewInfo);
 	}
 }
 
@@ -704,7 +706,7 @@ function getDeleteProductInfo(){
 				var _history = JSON.stringify(historyObj);
 				var node = '{"data":' + _history + '}';
 				$('#myDeleteModal').modal('hide');
-				sendHTTPRequest("/product/addHistory", node, productHistoryAdd);
+				sendHTTPRequest(coocaaVersion+"/product/addHistory", node, productHistoryAdd);
             }
         };
     }
@@ -1152,7 +1154,7 @@ function productAddResult(){
 				$("#page2Modal1").modal('hide');
 				var _history = JSON.stringify(historyObj);
 				var node = '{"data":' + _history + '}';
-				sendHTTPRequest("/product/addHistory", node, productHistoryAdd);
+				sendHTTPRequest(coocaaVersion+"/product/addHistory", node, productHistoryAdd);
 			}
 		}
 	}

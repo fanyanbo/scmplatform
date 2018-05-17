@@ -19,13 +19,15 @@ var changeReduce = [];
 var changeConf = [];
 var changeDev = [];
 
+var coocaaVersion = "/6.0";
+
 $(function() {
 	level = parent.adminFlag;
     loginusername = parent.loginusername;
     fromEmail = parent.loginEmail;
 	
 	var node = '{"offset":"-1","rows":"10"}';
-	sendHTTPRequest("/product/queryByPage", node, productQuery);
+	sendHTTPRequest(coocaaVersion+"/product/queryByPage", node, productQuery);
 	
 	buttonInitBefore();
 });
@@ -45,7 +47,7 @@ function productQuery() {
 				handleTableData(arr);
 			}
 		}
-		sendHTTPRequest("/product/queryAll", '{}', allQueryResult);
+		sendHTTPRequest(coocaaVersion+"/product/queryAll", '{}', allQueryResult);
 	}
 }
 function handleTableData(arr) {
@@ -181,7 +183,7 @@ function buttonInitAfter(){
 		var _model = $("#lable4Model").val();
 		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
 		console.log(node);
-		sendHTTPRequest("/product/preview", node, getPreviewInfo);
+		sendHTTPRequest(coocaaVersion+"/product/preview", node, getPreviewInfo);
 	});
 	$("#noPassReview").click(function() {
         console.log("点击了审核页面的审核不通过");
@@ -243,7 +245,7 @@ function buttonInitAfter(){
 			var _recove = JSON.stringify(recoveObj);
 			var node = '{"data":' + _recove + '}';
 			console.log(node);
-			sendHTTPRequest("/product/review", node, setreviewInfo);
+			sendHTTPRequest(coocaaVersion+"/product/review", node, setreviewInfo);
 		} else if(_type == 2){
 			console.log("编辑时确认框的确认键的点击");
 			reviewEdit();
@@ -282,7 +284,7 @@ function buttonInitAfter(){
 		_sys = JSON.stringify(_sys);
 		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
 		console.log(node);
-		sendHTTPRequest("/product/update", node, productAddResult);
+		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
 	});
 	
 }
@@ -332,7 +334,7 @@ function allQueryResult() {
 			colorstatus(0);
 		};
 		var node1 = '{}';
-		sendHTTPRequest("/device/queryAll", node1 , targetproductQueryResult);
+		sendHTTPRequest(coocaaVersion+"/device/queryAll", node1 , targetproductQueryResult);
 	}
 }
 function targetproductQueryResult() {
@@ -485,7 +487,7 @@ function review(obj,adminControl,deleteFlag){
 	$("#myAddModalLabel").attr("num","1");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
 	var node = '{"chip":"'+$("#page4_table2 .chip")[_index].innerHTML+'","model":"'+$("#page4_table2 .model")[_index].innerHTML+'"}';
-	sendHTTPRequest("/product/queryAllByMachine", node, getPointProductInfo);
+	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 }
 function edit(obj,adminControl,deleteFlag){
 //	document.getElementById("loading").style.display = "block";
@@ -499,7 +501,7 @@ function edit(obj,adminControl,deleteFlag){
 	var _index = Math.abs(a)*Math.abs(b);
 	console.log(_index);
 	var node = '{"chip":"'+$("#page4_table2 .chip")[_index].innerHTML+'","model":"'+$("#page4_table2 .model")[_index].innerHTML+'"}';
-	sendHTTPRequest("/product/queryAllByMachine", node, getPointProductInfo);
+	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 }
 //恢复
 function recover(obj,deleteFlag){
@@ -530,7 +532,7 @@ function recoverSure(){
 	var _recove = JSON.stringify(recoveObj);
 	var node = '{"data":' + _recove + '}';
 	console.log(node);
-	sendHTTPRequest("/product/deleteRecovery", node, getRecoverProductInfo);
+	sendHTTPRequest(coocaaVersion+"/product/deleteRecovery", node, getRecoverProductInfo);
 }
 function getRecoverProductInfo(){
 	if(this.readyState == 4) {
@@ -978,7 +980,7 @@ function productAddResult(){
 				document.getElementById("myEditEnsureDiv").style.display = "none";
 				var _history = JSON.stringify(historyObj);
 				var node = '{"data":' + _history + '}';
-				sendHTTPRequest("/product/addHistory", node, productHistoryAdd);
+				sendHTTPRequest(coocaaVersion+"/product/addHistory", node, productHistoryAdd);
 			}
 		}
 	}

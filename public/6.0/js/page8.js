@@ -2,6 +2,7 @@ document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"ut
 
 var sortCnArray = [];
 var sortEnArray = [];
+var coocaaVersion = "/6.0";
 
 $(function() {
 	$(".page8_boxes")[0].style.display = "block";
@@ -9,7 +10,7 @@ $(function() {
 	
 	buttonInitBefore();
 	var node1 = '{}';
-	sendHTTPRequest("/config/queryCategory", node1, categoryQueryResult);
+	sendHTTPRequest(coocaaVersion+"/config/queryCategory", node1, categoryQueryResult);
 });
 
 function buttonInitBefore(){
@@ -66,14 +67,14 @@ function buttonInitAfter(){
 		console.log(_curIndex + "---" + _thisKey);
 		if (_curId == 0) {
 			_node = '{"category":"' + _thisKey + '"}';
-			_ajaxUrl = "/config/queryByCategory";
+			_ajaxUrl = coocaaVersion+"/config/queryByCategory";
 		} else if(_curId == 1||_curId == 2||_curId == 3||_curId == 4){
 			_thisLevel = $(".edit_box1")[_curIndex].getAttribute("level");
 			_node = '{"category":"' + _thisKey + '","level":"' + _thisLevel + '"}';
-			_ajaxUrl = "/settings/queryByCategory";
+			_ajaxUrl = coocaaVersion+"/settings/queryByCategory";
 		} else if(_curId == 5){
 			_node = '{"category":"' + _thisKey + '"}';
-			_ajaxUrl = "/module/queryByCategory";
+			_ajaxUrl = coocaaVersion+"/module/queryByCategory";
 		}
 		console.log(_node);
 		sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
@@ -227,11 +228,11 @@ function addSubmit(){
 	var ajaxUrl3 = "";
 	var _curIndex3 = $("#page8Submit").attr("clickid");
 	if (_curIndex3 == 0) {
-		ajaxUrl3 = "/config/addCategory";
+		ajaxUrl3 = coocaaVersion+"/config/addCategory";
 	} else if(_curIndex3 == 1||_curIndex3 == 2||_curIndex3 == 3||_curIndex3 == 4){
-		ajaxUrl3 = "/sys/addCategory";
+		ajaxUrl3 = coocaaVersion+"/sys/addCategory";
 	} else if(_curIndex3 == 5){
-		ajaxUrl3 = "/module/addCategory";
+		ajaxUrl3 = coocaaVersion+"/module/addCategory";
 	}
 	var _category = $("#page8Container").val();
 	var node33 = '{"category":"' + _category + '"}';
@@ -243,11 +244,11 @@ function changeSubmit(){
 	var _curId = $("#tabClickIndex").attr("curId");
 	var _ajaxUrl = "";
 	if (_curId == 0) {
-		_ajaxUrl = "/config/updateItemsOrderId";
+		_ajaxUrl = coocaaVersion+"/config/updateItemsOrderId";
 	} else if(_curId == 1||_curId == 2||_curId == 3||_curId == 4){
-		_ajaxUrl = "/settings/updateItemsOrderId";
+		_ajaxUrl = coocaaVersion+"/settings/updateItemsOrderId";
 	} else if(_curId == 5){
-		_ajaxUrl = "/module/updateItemsOrderId";
+		_ajaxUrl = coocaaVersion+"/module/updateItemsOrderId";
 	}
 	
 	var _node = [];
@@ -301,11 +302,11 @@ function tabsClick(num){
 		var node31 = '{}';
 		var ajaxUrl = "";
 		if (num == 0) {
-			ajaxUrl = "/config/queryCategory";
+			ajaxUrl = coocaaVersion+"/config/queryCategory";
 		} else if(num == 1||num == 2||num == 3||num == 4){
-			ajaxUrl = "/settings/queryCategory";
+			ajaxUrl = coocaaVersion+"/settings/queryCategory";
 		} else if(num == 5){
-			ajaxUrl = "/module/queryCategory";
+			ajaxUrl = coocaaVersion+"/module/queryCategory";
 		}
 		sendHTTPRequest(ajaxUrl, node31, categoryQueryResult);
 	} else{

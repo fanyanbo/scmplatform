@@ -4,6 +4,7 @@ var adminFlag = null; //访问session之后存取管理员标志位
 var loginusername = null; //访问session之后存取登录用户名
 var loginEmail = null; //当前用户的邮箱地址
 var loginStatus = null;
+var coocaaVersion = "/6.0";
 
 $(function() {
 	sendHTTPRequest("/verify", '{}', loginResult);
@@ -61,7 +62,7 @@ function loginResult() {
 		}
 		if(loginStatus == 0){
 			var node2 = '{"userName":"' + loginusername + '","action":"登录","detail":"1"}';
-        	sendHTTPRequest("/syslog/add", node2, loginLogresult);
+        	sendHTTPRequest(coocaaVersion+"/syslog/add", node2, loginLogresult);
 		}
 	}
 }
@@ -73,7 +74,7 @@ function logOutResult(){
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				document.location.href="login.html";
+				document.location.href="../../html/login.html";
 			}
 		}
 	}

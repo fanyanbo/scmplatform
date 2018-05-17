@@ -1,10 +1,11 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
 var autoComplete3 = "";
+var coocaaVersion = "/6.0";
 
 $(function() {
 	var node = '{}';
-	sendHTTPRequest("/targetproduct/query", node , QueryResult);
+	sendHTTPRequest(coocaaVersion+"/targetproduct/query", node , QueryResult);
 	
 	buttonInitBefore()
 });
@@ -32,7 +33,7 @@ function QueryResult(){
 		}
 		buttonInitAfter();
 		var node = '{}';
-		sendHTTPRequest("/module/queryCategory", node, modelQueryResult);
+		sendHTTPRequest(coocaaVersion+"/module/queryCategory", node, modelQueryResult);
 	}
 }
 
@@ -93,7 +94,7 @@ function buttonInitAfter(){
 		console.log(thisEnName);
 		var node = '{"targetproduct":"' + thisEnName + '"}';
 		console.log(node);
-		//sendHTTPRequest("/product/queryBytp", node, getMKByTPResult);
+		//sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
 	});
 }
 
@@ -111,7 +112,7 @@ function eachOperate(index,num){
 	console.log(thisEnName);
 	document.getElementById("page3_TP").value = thisEnName;
 	var node = '{"targetproduct":"' + thisEnName + '"}';
-	sendHTTPRequest("/product/queryBytp", node, getMKByTPResult);
+	sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
 	
 	if (num == 0) {
 		console.log("编辑");//不能修改tp名称
@@ -129,7 +130,7 @@ function page3Select(){
 	var oTargetProduct = document.getElementById('page3_targetProduct').value;
 	var node = '{"value":"' + oTargetProduct + '"}';
 	console.log(node);
-	sendHTTPRequest("/targetproduct/queryByRegEx", node, searchResource);
+	sendHTTPRequest(coocaaVersion+"/targetproduct/queryByRegEx", node, searchResource);
 }
 
 //重置功能
@@ -147,7 +148,7 @@ function page3Add(){
 	console.log($('#page3Modal').attr("hasquery"));
 	if ($('#page3Modal').attr("hasquery") == "false") {
 		var node = '{}';
-		sendHTTPRequest("/module/queryCategory", node, modelQueryResult);
+		sendHTTPRequest(coocaaVersion+"/module/queryCategory", node, modelQueryResult);
 	}else{
 		console.log("已经请求过了");
 	}
@@ -176,7 +177,7 @@ function modelQueryResult(){
 			}
 		}
 		var node = '{}';
-		sendHTTPRequest("/module/query", node, modelQueryResult2);
+		sendHTTPRequest(coocaaVersion+"/module/query", node, modelQueryResult2);
 	}
 }
 function modelQueryResult2(){
@@ -259,13 +260,13 @@ function tpsubmit(){
 		} else{
 			var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'}';
 			console.log(node);
-			sendHTTPRequest("/targetproduct/add", node, addOrChangeResult);
+			sendHTTPRequest(coocaaVersion+"/targetproduct/add", node, addOrChangeResult);
 		}
 	} else{
 		console.log("修改+TP+提交");
 		var node = '{"name":"'+_tpValue+'","oldValue":"'+_mkArray+'"}';
 		console.log(node);
-//		sendHTTPRequest("/targetproduct/update", node5, addOrChangeResult);
+//		sendHTTPRequest("coocaaVersion+/targetproduct/update", node5, addOrChangeResult);
 	}
 }
 
