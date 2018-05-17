@@ -1,3 +1,4 @@
+
 .CJJ-Table .clearfix {
     clear: both;
 }
@@ -183,4 +184,46 @@
 #myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree{
 	width: 100%;
 	min-height: 500px;
+}
+.myModalErrorInfo{
+    margin-left: 20%;
+    margin-top: -30px;
+    width: 60%;
+    height: 30px;
+    font-size: 24px;
+    overflow: hidden;
+    text-align: center;
+    color: red;
+    line-height: 32px;
+    margin-bottom: 0px;
+}
+.auto_hidden {
+	width: 150px;
+	position: absolute;
+	text-align: left;
+	display: none;
+}
+.auto_show {
+	width: 150px;
+	position: absolute;
+	text-align: left;
+	z-index: 9999;
+	/* 设置对象的层叠顺序 */
+	display: block;
+	max-height: 200px;
+	background-color: #94A6B0;
+	overflow: auto;
+}
+.auto_onmouseover {
+	color: #ffffff;
+	background-color: highlight;
+	text-align: left;
+	width: 100%;
+	padding-left: 5px;
+}
+.auto_onmouseout {
+	color: #000000;
+	width: 100%;
+	background-color: #94A6B0;
+	padding-left: 5px;
 }

@@ -601,9 +601,13 @@ function allQueryResult() {
 	if(this.readyState == 4) {
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
-			configQueryData(data.resultData[3],data.resultData[0]);
-			moduleQueryData(data.resultData[4],data.resultData[1]);
-			settingsQueryData(data.resultData[5],data.resultData[2]);
+            console.log(data);
+            if(data.resultCode == 0){
+            	configQueryData(data.resultData[3],data.resultData[0]);
+				moduleQueryData(data.resultData[4],data.resultData[1]);
+				settingsQueryData(data.resultData[5],data.resultData[2]);
+            }
+			colorstatus(0);
 		};
 	}
 }
@@ -677,8 +681,8 @@ function getPointProductInfo(){
             	
             	CommonDataInsert(_type,data.resultData[0]);
             	ConfigDataInsert(_type,data.resultData[1]);
-            	MKDataInsert(_type,data.resultData[2]);
-            	SysDataInsert(_type,data.resultData[3]);
+            	SysDataInsert(_type,data.resultData[2]);
+            	MKDataInsert(_type,data.resultData[3]);
             }
         };
     }

@@ -1,10 +1,8 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
 var autoDataArray1 = new Array();
-var autoDataArray2 = new Array();
-var autoDataArray3 = new Array();
-var autoDataArray4 = new Array();
 var autogitArray = ["a", "b", "c", "bb", "cb", "bvv", "ca", "bsd", "cfg", "bd", "adfc", "bas", "asc"];
+var autoComplete1,autoComplete2 = "";
 
 var _twoLevelLinkageArrayOne = [[],[],[],[]];
 var _twoLevelLinkageArrayTwo = [[],[],[],[]];
@@ -154,6 +152,13 @@ function buttonInitBefore(){
 		var _curIndex = $(".page4_tabs").index($(this));
 		colorstatus(_curIndex);
 	});
+	
+	$("#lable4ChipMode").keyup(function(event) {
+		autoComplete1.start(event);
+	});
+	$("#lable4GitBranch").keyup(function(event) {
+		autoComplete2.start(event);
+	});
 }
 function colorstatus(number){
 	for(var k = 0; k < $(".page4_tabs").length; k++) {
@@ -229,12 +234,9 @@ function buttonInitAfter(){
 			var _chip = $("#lable4Chip").val();
 			var _model = $("#lable4Model").val();
 			var _flag = "";
-			if($("#mydialog").attr("buttontype") == 0){
-				_flag = 0
-			}else if($("#mydialog").attr("buttontype") == 1){
-				_flag = 1
+			if($("#mydialog").attr("buttontype") == 0||$("#mydialog").attr("buttontype") == 1){
+				_flag = $("#mydialog").attr("buttontype");
 			}
-			
 			var recoveObj = {
 				"chip" : _chip,
 				"model" : _model,
@@ -260,6 +262,31 @@ function buttonInitAfter(){
 	$("#myCopyModalClose").click(function() {
 		$("#myPreviewModal").css("display","none");
 	});
+	
+	$("#myEditEnsureX").click(function() {
+		console.log("修改提示框的X按钮");
+		document.getElementById("myEditEnsureDiv").style.display = "none";
+		freshReviewHtml(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+	});
+	$("#myEditCancle").click(function() {
+		console.log("修改提示框的取消按钮");
+		document.getElementById("myEditEnsureDiv").style.display = "none";
+		freshReviewHtml(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+	});
+	$("#myEditEnsure").click(function() {
+		console.log("修改提示框的确定按钮");
+		//获取基本项、config、MK、系统设置的值
+		var _base = getBaseValue();
+		var _config = getConfigValue();
+		var _sys = getSysValue();
+		_base = JSON.stringify(_base);
+		_config = JSON.stringify(_config);
+		_sys = JSON.stringify(_sys);
+		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+		console.log(node);
+		sendHTTPRequest("/product/update", node, productAddResult);
+	});
+	
 }
 function setreviewInfo(){
 	if(this.readyState == 4) {
@@ -306,8 +333,25 @@ function allQueryResult() {
             }
 			colorstatus(0);
 		};
+		var node1 = '{}';
+		sendHTTPRequest("/device/queryAll", node1 , targetproductQueryResult);
 	}
 }
+function targetproductQueryResult() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				for(var i = 0; i < data.resultData[3].length; i++) {
+					autoDataArray1.push(data.resultData[3][i].name);
+				}
+				instantQuery(autoDataArray1,autogitArray);
+			}
+		}
+	}
+}
+
 function configQueryData(arr1,arr2) {
 	var _myConfigBox = document.getElementById("myConfigBox");
 	for(var i = 0; i < arr1.length; i++) {
@@ -364,10 +408,10 @@ function settingsQueryData(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
 				if (arr2[i].level3 === null || arr2[i].level3 == "") {
-					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' oldvalue='0' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 				} else{
 					if (arr2[i].level3 == $(".settingsitems:eq(" + (j) + ")").attr("level3")) {
-						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' oldvalue='0' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 					}
 				}
 			}
@@ -517,8 +561,8 @@ function getPointProductInfo(){
             	console.log(_type +"---"+_state);
             	CommonDataInsert2(_type,data.resultData[0]);
             	ConfigDataInsert2(_type,data.resultData[1]);
-            	MKDataInsert2(_type,data.resultData[2]);
-            	//SysDataInsert2(_type,data.resultData[3]);
+            	SysDataInsert2(_type,data.resultData[2]);
+            	MKDataInsert2(_type,data.resultData[3]);
 				buttonstyle(_type,_state);
 				
 				$('#page4Modal1').modal();
@@ -540,21 +584,7 @@ function CommonDataInsert2(type,arr){
 	$("#lable4Memory").val(arr[0].memorySize);
 	$("#lable4GitBranch").val(arr[0].gitBranch);
 	$("#lable4Platform").val(arr[0].platform);
-	if (type == 1) {//审核、都不可修改
-		$("#lable4Chip").attr("disabled","disabled");
-		$("#lable4Model").attr("disabled","disabled");
-		$("#lable4TP").attr("disabled","disabled");
-	}else if(type == 2){//编辑
-		$("#lable4Chip").val(arr[0].chip);
-		$("#lable4Chip").css("color","red");
-		$("#lable4Chip").attr("disabled","disabled");
-		$("#lable4Model").val(arr[0].model);
-		$("#lable4Model").css("color","red");
-		$("#lable4Model").attr("disabled","disabled");
-		$("#lable4TP").val(arr[0].targetProduct);
-		$("#lable4TP").css("color","red");
-		$("#lable4TP").attr("disabled","disabled");
-		
+	if(type == 2){//编辑
 		$("#lable4CoocaaVersion").attr("oldvalue",arr[0].coocaaVersion);
 		$("#lable4AndroidVersion").attr("oldvalue",arr[0].androidVersion);
 		$("#lable4ChipMode").attr("oldvalue",arr[0].chipModel);
@@ -601,8 +631,8 @@ function SysDataInsert2(type, arr){
 	}
 	if (type == 2) {
 		for (var i=0; i<$(".sysitems").length; i++) {
-			$(".sysitems:eq("+i+")").attr("onchange","changeConfig(this)");
-			$(".sysitems:eq("+i+")").attr("oldvalue",$(".sysitems:eq("+i+")").attr("value"));
+			$(".sysitems:eq("+i+")").attr("onchange","changeSettings(this)");
+//			$(".sysitems:eq("+i+")").attr("oldvalue",$(".sysitems:eq("+i+")").attr("value"));
 		}
 	}
 }
@@ -653,6 +683,12 @@ function buttonstyle(type,state){
         for (var i=0; i<$(".mkitems").length; i++) {
 			$(".mkitems:eq("+i+")").attr("disabled","disabled");
 		}
+        $("#lable4Chip").attr("disabled","disabled");
+		$("#lable4Model").attr("disabled","disabled");
+		$("#lable4TP").attr("disabled","disabled");
+		$("#lable4Chip").css("backgroundColor","#ebebe4");
+		$("#lable4Model").css("backgroundColor","#ebebe4");
+		$("#lable4TP").css("backgroundColor","#ebebe4");
 	}
 }
 
@@ -672,153 +708,84 @@ function passIssue(){
 //编辑提交弹窗
 function editIssue(){
     console.log("changeDev"+changeDev);
-//	if (changeDev.length==0&&changeAdd.length==0&&changeReduce.length==0&&changeConf.length==0) {
-//		document.getElementById("myAddModalErrorInfo").innerHTML = "您未做任何修改。";
-//		setTimeout("document.getElementById('myAddModalErrorInfo').innerHTML='　'",3000);
-//	} else{
-//	   	document.getElementById("mydialog").style.display = "block";
-//	    document.getElementById("dialogword").setAttribute("style","text-align:left");
-//	    document.getElementById("myDeleteModalLabel").innerHTML = "编辑操作";
-//	    document.getElementById("dialogword").innerHTML = "您做了以下操作，确认提交该修改吗？<br>"+"<span id='txt1'>修改设备信息：<br><span id='txt11'>　"+changeDev+"</span></span><span id='txt2'>新增模块：<br><span id='txt22'>　"+changeAdd+"</span></span><span id='txt3'>删除模块：<br><span id='txt33'>　"+changeReduce+"</span></span><span id='txt4'>修改配置：<br>　<span id='txt44'>"+changeConf+"</span></span>";
-//	    if (changeDev.length != 0) {
-//	        document.getElementById("txt1").style.display="block";
-//	    }
-//	    if(changeAdd.length != 0    ){
-//	        document.getElementById("txt2").style.display="block";
-//	    }
-//	    if (changeReduce.length != 0) {
-//	        document.getElementById("txt3").style.display="block";
-//	    }
-//	    if (changeConf.length != 0) {
-//	        document.getElementById("txt4").style.display="block";
-//	    }
-//	    document.getElementById("dialogword").setAttribute("max-height","350px");
-// 	}
+    console.log("changeAdd"+changeAdd);
+    console.log("changeReduce"+changeReduce);
+    console.log("changeConf"+changeConf);
+    //判断基本项是否为空
+	var nullName = 0;
+	for (var i=0; i<$("#page4Modal1Table .inputstyle").length; i++) {
+		var _curValue = $("#page4Modal1Table .inputstyle")[i].value;
+		var _curInput = $("#page4Modal1Table .inputstyle")[i].getAttribute("name");
+		console.log(_curValue);
+		if (_curValue==null||_curValue=="") {
+			console.log(_curInput + "项不能为空");
+			nullName = i+1;
+			i = $("#page4Modal1Table .inputstyle").length;
+			document.getElementById("page4Modal1ErrorInfo").style.display = "block";
+			document.getElementById("page4Modal1ErrorInfo").innerHTML = _curInput + "项不能为空";
+			setTimeout("document.getElementById('page4Modal1ErrorInfo').style.display = 'none';", 3000);
+		}
+	}
+	console.log(nullName);
+	if (nullName == 0) {
+		console.log("没有空项");
+		var _errNum = 0;
+		var isTrueData0 = $("#page4Modal1Table .fuzzySearch")[3].value;
+		var isTrueData1 = $("#page4Modal1Table .fuzzySearch")[4].value;
+		console.log(isTrueData0+"-"+isTrueData1);
+		var index0 = autoDataArray1.indexOf(isTrueData0);
+		var index1 = autogitArray.indexOf(isTrueData1);
+		console.log(index0+"-"+index1);
+		if (index0 == "-1"||index1 == "-1") {
+			var _curInput = "";
+			if (index0 == "-1") {
+				_errNum = 3;
+			}
+			if (index1 == "-1") {
+				_errNum = 4;
+			}
+			var _curInput = $("#page4Modal1Table .fuzzySearch")[_errNum].getAttribute("name");
+			document.getElementById("page4Modal1ErrorInfo").style.display = "block";
+			document.getElementById("page4Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
+			setTimeout("document.getElementById('page4Modal1ErrorInfo').style.display = 'none';", 3000);
+		} else{
+			//弹出确认框
+			console.log(changeAdd);
+			console.log(changeReduce);
+			console.log(changeConf);
+			console.log(changeDev);
+			if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length == 0) {
+				console.log("未做任何修改");
+				document.getElementById("page2Modal1ErrorInfo").innerHTML = "您未做任何修改。";
+				document.getElementById("MoreEditBack").style.display = "none";
+				setTimeout("document.getElementById('page2Modal1ErrorInfo').innerHTML='　'",3000);
+			} else{
+				console.log("做了修改");
+				document.getElementById("myEditEnsureDiv").style.display = "block";
+				if (changeDev.length != 0) {
+			        $("#txt1").css("display", "block");
+			        document.getElementById("txt11").innerHTML = changeDev;
+				}
+			    if(changeAdd.length != 0){
+			        $("#txt2").css("display", "block");
+			        document.getElementById("txt22").innerHTML = changeAdd;
+			    }
+			    if (changeReduce.length != 0) {
+			        $("#txt3").css("display", "block");
+			        document.getElementById("txt33").innerHTML = changeReduce;
+			    }
+			    if (changeConf.length != 0) {
+			        $("#txt4").css("display", "block");
+			        $("#txt44").val(changeConf);
+			        document.getElementById("txt44").innerHTML = changeConf;
+			    }
+			}
+		}
+	}
 }
 //点击编辑提交的函数
 function reviewEdit(){
 	console.log("lxw " + loginusername + "--" + level);
-//	var dataObj = {
-//		"configFile": "",
-//		"mkFile": "",
-//		"memorySize": "",
-//		"chipModel": "",
-//		"androidVersion": "",
-//		"model": "",
-//		"chip": "",
-//		"targetProduct": "",
-//		"gerritState": "1", // 0表示正常状态，1表示待审核状态，2表示审核不通过状态
-//		"operateType": "3", // 0表示无状态，1表示增加，2表示删除，3表示修改
-//		"userName": loginusername,
-//		"desc": "enenen"
-//	};
-//	// 获取DeviceInfo里的信息
-//	var oEchip = document.getElementById("newCheckChip").value;
-//  oEchip123 = oEchip;
-//	var oEmodel = document.getElementById("newCheckModel").value;
-//  oEmodel123 = oEmodel;
-//	var oEandroidVersion = document.getElementById("newCheckAndroidVersion").value;
-//	var oEchipModel = document.getElementById("newCheckChipMode").value;
-//	var oEmemorySize = document.getElementById("newCheckMemory").value;
-//	var oEtargetProduct = document.getElementById("newCheckDevice").value;
-//  var oldProduct = document.getElementById("newCheckDevice").getAttribute("oldvalue");
-//	var oEgerritState = "1";
-//	var oEoperateType = "3";
-//	var userName = loginusername;
-//	var desc = "enheng";
-//
-//	//获取config里的数据
-//	var editConfigFile = {};
-//	var oEconfigTrlength = $("#myCheckModalConfigTableTbody").find("tr");
-//	console.log("lxw " + oEconfigTrlength.length);
-//	for(var i = 0; i < oEconfigTrlength.length; i++) {
-//		var oEConfigobj = {};
-//		var thisConfigindex = null;
-//		oEconfigTrDiv = $("#myCheckModalConfigTableTbody").find("tr:eq(" + i + ")").find("div");
-//		console.log("lxw" + oEconfigTrDiv.length);
-//		for(var j = 1; j < oEconfigTrDiv.length; j++) {
-//			var oEopt = [];
-//			var oEstuInfo = {
-//				"cnName": "",
-//				"engName": "",
-//				"configKey": "",
-//				"type": "",
-//				"value": "",
-//				"category": "",
-//				"desc": "XXXXX",
-//				"options": []
-//			};
-//			thisConfigindex = j;
-//			oEstuInfo.category = oEconfigTrDiv[0].title;
-//			oEstuInfo.cnName = oEconfigTrDiv[thisConfigindex].childNodes[0].getAttribute("cnName");
-//			oEstuInfo.engName = oEconfigTrDiv[thisConfigindex].childNodes[0].getAttribute("name");
-//			oEstuInfo.configKey = oEconfigTrDiv[thisConfigindex].childNodes[0].getAttribute("configKey");
-//			oEstuInfo.type = oEconfigTrDiv[thisConfigindex].childNodes[1].name;
-//			oEstuInfo.value = oEconfigTrDiv[thisConfigindex].childNodes[1].value;
-//          oEstuInfo.desc = oEconfigTrDiv[thisConfigindex].childNodes[0].getAttribute("title");
-//			if(oEstuInfo.type == "string") {
-//				oEopt = [];
-//			} else if(oEstuInfo.type == "enum") {
-//				var jjlength = oEconfigTrDiv[thisConfigindex].childNodes[1].childNodes;
-//				console.log("lxw " + jjlength.length);
-//				for(var jj = 0; jj < jjlength.length; jj++) {
-//					var optValue = jjlength[jj].value;
-//					oEopt.push(optValue);
-//				}
-//			}
-//			oEstuInfo.options = oEopt;
-//			editConfigFile[oEconfigTrDiv[thisConfigindex].childNodes[1].getAttribute("id")] = oEstuInfo;
-//		}
-//	}
-//	//获取mkFile里的信息
-//	var editMkFile = {};
-//	var oEMkTrDiv = $("#myCheckModalMkTableTbody").find("tr");
-//	console.log("lxw " + oEMkTrDiv.length);
-//	var oEMkindex = null;
-//	for(var i = 0; i < oEMkTrDiv.length; i++) {
-//		var oEMkobj = {};
-//		oEMkTrDivTwo = $("#myCheckModalMkTableTbody").find("tr:eq(" + i + ")").find("div");
-//		console.log("lxw" + oEMkTrDivTwo.length);
-//		for(var j = 1; j < oEMkTrDivTwo.length; j++) {
-//			oEMkindex = j;
-//			if(oEMkTrDivTwo[oEMkindex].childNodes[0].checked == true) {
-//				var oEoptTwo = [];
-//				var oEstuInfoTwo = {
-//					"cnName": "",
-//					"engName": "",
-//					"gitPath": "",
-//					"category": "",
-//					"desc": "XXXXX", //后期做“”的处理。
-//				};
-//				oEstuInfoTwo.category = oEMkTrDivTwo[oEMkindex].childNodes[1].getAttribute("category");
-//				oEstuInfoTwo.cnName = oEMkTrDivTwo[oEMkindex].childNodes[1].innerHTML;
-//				oEstuInfoTwo.engName = oEMkTrDivTwo[oEMkindex].childNodes[1].getAttribute("name");
-//				oEstuInfoTwo.gitPath = oEMkTrDivTwo[oEMkindex].childNodes[1].getAttribute("gitPath");
-//				oEstuInfoTwo.desc = oEMkTrDivTwo[oEMkindex].childNodes[1].getAttribute("title");
-//				editMkFile[oEMkTrDivTwo[oEMkindex].childNodes[0].getAttribute("id")] = oEstuInfoTwo;
-//			}
-//		}
-//	}
-//	dataObj.configFile = editConfigFile;
-//	dataObj.mkFile = editMkFile;
-//	dataObj.memorySize = oEmemorySize;
-//	dataObj.chipModel = oEchipModel;
-//	dataObj.androidVersion = oEandroidVersion;
-//	dataObj.model = oEmodel;
-//	dataObj.chip = oEchip;
-//	dataObj.targetProduct = oEtargetProduct;
-//	dataObj.gerritState = "1"; // 0表示审核通过，1表示待审核状态，2表示审核不通过状态
-//	dataObj.operateType = "3"; // 0表示无状态，1表示增加，2表示删除，3表示修改
-//	dataObj.userName = loginusername;
-//	dataObj.desc = "enenene";
-//  var operateTime = new Date().getTime();
-//  console.log(operateTime);
-//  var changedesc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
-//  var a = JSON.parse(changedesc);
-//	var oEnode = '{"data":{"condition":{"targetProduct":"'+oldProduct+'","chip":"' + oEchip + '","model":"' + oEmodel + '"},"action":"set","update":{"userName":"' + loginusername +'","operateTime":"' + operateTime + '","memorySize":"' + oEmemorySize + '","chipModel":"' + oEchipModel + '","androidVersion":"' + oEandroidVersion + '","targetProduct":"' + oEtargetProduct + '","gerritState":"1","operateType":"3","androidVersion":"' + oEandroidVersion + '","mkFile":' + JSON.stringify(editMkFile) + ',"configFile":' + JSON.stringify(editConfigFile) + ',"desc":'+JSON.stringify(a) + '}}}';
-//	console.log("lxw " + oEnode);
-//  allTargetMk = editMkFile;
-//	submitStatus(hashObj,dataObj,oEnode);
 }
 //点击预览
 function getPreviewInfo(){
@@ -848,6 +815,194 @@ function getPreviewInfo(){
     }
 }
 
+function getBaseValue(){
+	var _chip = $("#page4Modal1Table .inputstyle")[0].value;
+	var _model = $("#page4Modal1Table .inputstyle")[1].value;
+	var _tp = $("#page4Modal1Table .inputstyle")[2].value;
+	var _coocaa = $("#page4Modal1Table .inputstyle")[3].value;
+	var _android = $("#page4Modal1Table .inputstyle")[4].value;
+	var _soc = $("#page4Modal1Table .inputstyle")[5].value;
+	var _emmc = $("#page4Modal1Table .inputstyle")[6].value;
+	var _memory = $("#page4Modal1Table .inputstyle")[7].value;
+	var _branch = $("#page4Modal1Table .inputstyle")[8].value;
+	var _platform = $("#page4Modal1Table .inputstyle")[9].value;
+	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
+	var baseObj = {
+		"chip" : _chip,
+		"model" : _model,
+		"targetProduct" : _tp,
+		"coocaaVersion" : _coocaa,
+		"androidVersion" : _android,
+		"soc" : _soc,
+		"EMMC" : _emmc,
+		"memorySize" : _memory,
+		"gitBranch" : _branch,
+		"auditState" : 1,
+		"modifyState" : 2,
+		"platform" : _platform,
+		"userName" : loginusername
+	}
+	baseObj = JSON.stringify(baseObj);
+	return baseObj;
+}
+function getConfigValue(){
+	var configData = [];
+	for (var i=0; i<$(".configitems").length; i++) {
+		var oAconfigInfo = {
+			"engName": "",
+			"curValue": ""
+		};
+		oAconfigInfo.engName = $(".configitems")[i].getAttribute("id");
+		oAconfigInfo.curValue = $(".configitems")[i].value;
+		configData.push(oAconfigInfo);
+	}
+	return configData;
+	
+}
+function getSysValue(){
+	var sysData = [];
+	for (var i=0; i<$(".sysitems").length; i++) {
+		var oAsysInfo = {
+			"engName": "",
+		};
+		oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
+		sysData.push(oAsysInfo);
+	}
+	return sysData;
+}
+
+function changeConfig(obj){
+    var x = obj.value;
+    console.log(x);
+    console.log(obj.getAttribute("oldvalue"))
+    if(x == obj.getAttribute("oldvalue")){
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeConf.remove(obj.getAttribute("cnname"));
+        console.log("changeConf= "+changeConf);
+    }
+    else{
+        if (changeConf.indexOf(obj.getAttribute("cnname")) == -1){
+            changeConf.push(obj.getAttribute("cnname"));
+            console.log("changeConf= "+changeConf);
+        }
+    }
+}
+function changeSettings(obj){
+	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
+    if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
+        // obj.oldvalue = '1';
+        obj.setAttribute("oldvalue","1");
+        changeAdd.push(obj.getAttribute("cnname"));
+        console.log("add"+changeAdd);
+        console.log("changeReduce"+changeReduce);
+    }else if(!(obj.checked) && (obj.getAttribute("oldvalue") == '0')){
+        obj.setAttribute("oldvalue","2");
+        changeReduce.push(obj.getAttribute("cnname"));
+        console.log("add"+changeAdd);
+        console.log("changeReduce"+changeReduce);
+    }else{
+        obj.setAttribute("oldvalue","0");
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeReduce.remove(obj.getAttribute("cnname"));
+        changeAdd.remove(obj.getAttribute("cnname"));
+        console.log("add"+changeAdd);
+        console.log("changeReduce"+changeReduce);
+    }   
+}
+function changeDevice(obj){
+    var x = obj.value;
+    console.log(x);
+    console.log(obj.getAttribute("oldvalue"))
+    if(x == obj.getAttribute("oldvalue")){
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeDev.remove(obj.getAttribute("name"));
+        console.log("changeDev = "+changeDev);
+    }
+    else{
+        if (changeDev.indexOf(obj.getAttribute("name")) == -1) {
+            changeDev.push(obj.getAttribute("name"));
+            console.log("changeDev = "+changeDev);
+        }
+    }
+}
+
+function productAddResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("数据修改提交成功");
+				var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
+				var _reason = document.getElementById("changeReason").innerHTML;
+				var _chip = $("#lable4Chip").val();
+				var _model = $("#lable4Model").val();
+				//0审核通过\1待审核\2审核未通过
+				var _state = "1";
+				var _author = loginusername;
+				var historyObj = {
+					"chip" : _chip,
+					"model" : _model,
+					"reason" : _reason,
+					"state" : _state,
+					"userName" : _author,
+					"content" : _desc
+				}
+				$("#page4Modal1").modal('hide');
+				document.getElementById("myEditEnsureDiv").style.display = "none";
+				var _history = JSON.stringify(historyObj);
+				var node = '{"data":' + _history + '}';
+				sendHTTPRequest("/product/addHistory", node, productHistoryAdd);
+			}
+		}
+	}
+}
+
+function productHistoryAdd(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("日志数据提交成功");
+				freshReviewHtml(1);
+			}
+		}
+	}
+}
 
 
 
@@ -858,17 +1013,176 @@ function getPreviewInfo(){
 
 
 
+function instantQuery(arr1, arr2) {
+	console.log(arr1);
+	console.log(arr2);
+	var _$ = function(id) {
+		return "string" == typeof id ? document.getElementById(id) : id;
+	}
+	var Bind = function(object, fun) {
+		return function() {
+			return fun.apply(object, arguments);
+		}
+	}
 
+	function AutoComplete(obj, autoObj, arr) {
+		this.obj = _$(obj); //输入框
+		this.autoObj = _$(autoObj); //DIV的根节点
+		this.value_arr = arr; //不要包含重复值
+		this.index = -1; //当前选中的DIV的索引
+		this.search_value = ""; //保存当前搜索的字符
+		this.curvalue = ""; //保存当前搜索到的结果
+		this.curname = ""; //保存当前输入框id
+	}
+	AutoComplete.prototype = {
+		//初始化DIV的位置
+		init: function() {
+			this.autoObj.style.left = this.obj.offsetLeft + "px";
+			this.autoObj.style.top = this.obj.offsetTop + this.obj.offsetHeight + "px";
+			this.autoObj.style.width = this.obj.offsetWidth - 2 + "px"; //减去边框的长度2px
+		},
+		//删除自动完成需要的所有DIV
+		deleteDIV: function() {
+			while(this.autoObj.hasChildNodes()) {
+				this.autoObj.removeChild(this.autoObj.firstChild);
+			}
+			this.autoObj.className = "auto_hidden";
+		},
+		//设置值
+		setValue: function(_this) {
+			return function() {
+				_this.obj.value = this.seq;
+				//checkInArray(_this.obj.id,$("#"+_this.obj.id).val());
+				if (_this.obj.id == "lable2TargetProduct") {
+					changeMKByTP(_this.obj.id, _this.obj.value);
+				}
+				_this.autoObj.className = "auto_hidden";
+			}
+		},
+		//模拟鼠标移动至DIV时，DIV高亮
+		autoOnmouseover: function(_this, _div_index) {
+			return function() {
+				_this.index = _div_index;
+				var length = _this.autoObj.children.length;
+				for(var j = 0; j < length; j++) {
+					if(j != _this.index) {
+						_this.autoObj.childNodes[j].className = 'auto_onmouseout';
+					} else {
+						_this.autoObj.childNodes[j].className = 'auto_onmouseover';
+					}
+				}
+			}
+		},
+		//更改classname
+		changeClassname: function(length) {
+			for(var i = 0; i < length; i++) {
+				if(i != this.index) {
+					this.autoObj.childNodes[i].className = 'auto_onmouseout';
+				} else {
+					this.autoObj.childNodes[i].className = 'auto_onmouseover';
+					this.obj.value = this.autoObj.childNodes[i].seq;
+				}
+			}
+		},
 
-
-
-
-
-
-
-
-
-
+		//响应键盘
+		pressKey: function(event) {
+			var length = this.autoObj.children.length;
+			//光标键"↓"
+			if(event.keyCode == 40) {
+				++this.index;
+				if(this.index > length) {
+					this.index = 0;
+				} else if(this.index == length) {
+					this.obj.value = this.search_value;
+				}
+				this.curvalue = this.autoObj.children[this.index].innerText;
+				console.log(this.curvalue + "--" + this.index + "--" + this.autoObj);
+				this.changeClassname(length);
+				this.autoObj.scrollTop = this.autoObj.children[this.index].offsetHeight * this.index;
+			}
+			//光标键"↑"
+			else if(event.keyCode == 38) {
+				this.index--;
+				if(this.index < -1) {
+					this.index = length - 1;
+				} else if(this.index == -1) {
+					this.obj.value = this.search_value;
+				}
+				this.curvalue = this.autoObj.children[this.index].innerText;
+				console.log(this.curvalue);
+				this.changeClassname(length);
+			}
+			//回车键
+			else if(event.keyCode == 13) {
+				this.autoObj.className = "auto_hidden";
+				//checkInArray(this.autoObj.id,document.getElementById(this.autoObj.id).childNodes[this.index].innerText);
+				if (this.autoObj.id == "page2_tp_auto2") {
+					changeMKByTP(this.curname, this.curvalue);
+				}
+				this.index = -1;
+			} else {
+				this.index = -1;
+			}
+		},
+		//程序入口
+		start: function(event) {
+			if(event.keyCode != 13 && event.keyCode != 38 && event.keyCode != 40) {
+				this.init();
+				this.deleteDIV();
+				this.search_value = this.obj.value;
+				var valueArr = this.value_arr;
+				valueArr.sort();
+				if(this.obj.value.replace(/(^\s*)|(\s*$)/g, '') == "") {
+					return;
+				} //值为空，退出
+				try {
+					var reg = new RegExp("(" + this.obj.value + ")", "i");
+				} catch(e) {
+					return;
+				}
+				var div_index = 0; //记录创建的DIV的索引
+				for(var i = 0; i < valueArr.length; i++) {
+					if(reg.test(valueArr[i])) {
+						var div = document.createElement("div");
+						div.className = "auto_onmouseout";
+						div.seq = valueArr[i];
+						div.onclick = this.setValue(this);
+						div.onmouseover = this.autoOnmouseover(this, div_index);
+						div.innerHTML = valueArr[i].replace(reg, "<strong>$1</strong>"); //搜索到的字符粗体显示
+						this.autoObj.appendChild(div);
+						this.autoObj.className = "auto_show";
+						this.curname = this.obj.id;
+						div_index++;
+					}
+				}
+			}
+			this.pressKey(event);
+			window.onresize = Bind(this, function() {
+				this.init();
+			});
+		}
+	}
+	autoComplete1 = new AutoComplete('lable4ChipMode', 'page4_soc_auto2', arr1);
+	autoComplete2 = new AutoComplete('lable4GitBranch', 'page4_git_auto2', arr2);
+	
+	/* 点击空白出隐藏临时div */
+	_$(document).onclick = function(e) {
+		var e = e || window.event; //浏览器兼容性 
+		var elem = e.target || e.srcElement;
+		var showArray = ["page4_soc_auto2","page4_git_auto2"];
+		var showBox = ["lable4ChipMode","lable4ChipMode"];
+		eachShowObj(showArray,showBox);
+	}
+	function eachShowObj(arr,arr2){
+		for (var i=0; i<arr.length; i++) {
+			var _style = document.getElementById(arr[i]).getAttribute("class");
+			if(_style == "auto_show") {
+				document.getElementById(arr[i]).setAttribute("class", "auto_hidden")
+			}
+		}
+	}
+}
 function scrollTopStyle(name){
 	var div = document.getElementById(name);
 	var body = parent.document.getElementById("homePage");
