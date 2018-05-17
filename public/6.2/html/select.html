@@ -1,0 +1,169 @@
+<html>
+
+	<head>
+		<title>年月日三下拉框联动</title>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>
+	</head>
+	<style type="text/css">
+		select{
+			text-align: center;
+		}
+	</style>
+
+	<body>
+		<form name="reg_testdate">
+			<select name="YYYY" onchange="YYYYDD(this.value)">
+				<option value="">请选择 年</option>
+			</select>
+			<select name="MM" onchange="MMDD(this.value)">
+				<option value="">选择 月</option>
+			</select>
+			<select name="DD">
+				<option value="">选择 日</option>
+			</select>
+		</form>
+		
+		<!--
+		系统设置
+			开机引导
+			设置入口页
+			网络与连接
+			图像设置
+			声音设置
+			通用设置
+		信号源工具箱
+			快捷功能
+			常用设置
+		卖场演示
+			声音演示
+			图像演示
+		中间件
+			输入信号源
+			支持纵横比
+		-->
+		
+		<form name="ssss">
+			<select id="first" name="一级" onchange="bbbbb(this.value)">
+				<option value=""></option>
+				<!--<option value="1">系统设置</option>
+				<option value="2">信号源工具箱</option>
+				<option value="3">卖场演示</option>
+				<option value="4">中间件</option>-->
+			</select>
+			<select id="second" name="二级" onchange="ccccc(this.value)">
+				<option value=""></option>
+			</select>
+			<select id="three" name="三级">
+				<option value=""></option>
+			</select>
+		</form>
+		
+		<script language="JavaScript">
+			var data1 = ["系统设置","信号源工具箱","卖场演示","中间件"];
+			var data2 = [["开机引导","设置入口页","网络与连接","图像设置","声音设置","通用设置"],["快捷功能","常用设置"],["声音演示","图像演示"],["输入信号源","支持纵横比"]];
+			var data3 = [];
+			function aaaaa(){
+				for (var i=0; i<data1.length; i++) {
+					document.getElementById("first").options.add(new Option(data1[i]));
+				}
+			}
+			function bbbbb(str){
+				console.log(str);
+				var _index = indexOf(data1, str);
+				for (var i=0; i<data2[_index].length; i++) {
+					document.getElementById("second").options.add(new Option(data2[_index][i]));
+				}
+			}
+			function ccccc(str){
+				console.log(str);
+				
+			}
+			function indexOf(arr, str){
+			    if(arr && arr.indexOf){
+			        return arr.indexOf(str);
+			    }
+			    var len = arr.length;
+			    for(var i = 0; i < len; i++){
+			        // 定位该元素位置
+			        if(arr[i] == str){
+			            return i;
+			        }
+			    }
+			    // 数组中不存在该元素
+			    return -1;
+			}
+			
+		
+			function YYYYMMDDstart() {
+				MonHead = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+				//先给年下拉框赋内容   
+				var y = new Date().getFullYear();
+				for(var i = (y - 30); i < (y + 30); i++) //以今年为准，前30年，后30年   
+					document.reg_testdate.YYYY.options.add(new Option(" " + i + " 年", i));
+
+				//赋月份的下拉框   
+				for(var i = 1; i < 13; i++)
+					document.reg_testdate.MM.options.add(new Option(" " + i + " 月", i));
+
+				document.reg_testdate.YYYY.value = y;
+				document.reg_testdate.MM.value = new Date().getMonth() + 1;
+				var n = MonHead[new Date().getMonth()];
+				if(new Date().getMonth() == 1 && IsPinYear(YYYYvalue)) n++;
+				writeDay(n); //赋日期下拉框Author:meizz   
+				document.reg_testdate.DD.value = new Date().getDate();
+			}
+			if(document.attachEvent){
+//				window.attachEvent("onload", YYYYMMDDstart);
+				window.attachEvent("onload", aaaaa);
+			}else{
+//				window.addEventListener('load', YYYYMMDDstart, false);
+				window.addEventListener('load', aaaaa, false);
+			}
+
+			function YYYYDD(str) //年发生变化时日期发生变化(主要是判断闰平年)   
+			{
+				var MMvalue = document.reg_testdate.MM.options[document.reg_testdate.MM.selectedIndex].value;
+				if(MMvalue == "") {
+					var e = document.reg_testdate.DD;
+					optionsClear(e);
+					return;
+				}
+				var n = MonHead[MMvalue - 1];
+				if(MMvalue == 2 && IsPinYear(str)) n++;
+				writeDay(n)
+			}
+
+			function MMDD(str) //月发生变化时日期联动   
+			{
+				var YYYYvalue = document.reg_testdate.YYYY.options[document.reg_testdate.YYYY.selectedIndex].value;
+				if(YYYYvalue == "") {
+					var e = document.reg_testdate.DD;
+					optionsClear(e);
+					return;
+				}
+				var n = MonHead[str - 1];
+				if(str == 2 && IsPinYear(YYYYvalue)) n++;
+				writeDay(n)
+			}
+
+			function writeDay(n) //据条件写日期的下拉框   
+			{
+				var e = document.reg_testdate.DD;
+				optionsClear(e);
+				for(var i = 1; i < (n + 1); i++)
+					e.options.add(new Option(" " + i + " 日", i));
+			}
+
+			function IsPinYear(year) //判断是否闰平年   
+			{
+				return(0 == year % 4 && (year % 100 != 0 || year % 400 == 0));
+			}
+
+			function optionsClear(e) {
+				e.options.length = 1;
+			}
+		</script>
+	</body>
+
+</html>

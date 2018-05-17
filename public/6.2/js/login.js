@@ -6,9 +6,8 @@ var _password = "";
 
 console.log("hello");
 function keyLogin(){
-    if(event.keyCode==13){//回车键的键值为13
-    	document.getElementById("loginbutton").click();//调用登录按钮的登录事件
-    }   
+    if (event.keyCode==13)   //回车键的键值为13
+     document.getElementById("loginbutton").click();  //调用登录按钮的登录事件
 }
 
 function loginfun() {
@@ -38,8 +37,7 @@ function loginresult() {
             var data = JSON.parse(this.responseText);
             console.log(JSON.stringify(data));
             if (data.resultCode == "0") {
-              	//document.location.href="index.html";
-              	document.location.href="version.html";
+                document.location.href="index.html";
             }
             else{
                 if (data.resultCode == "-1") {

@@ -1,0 +1,171 @@
+.CJJ-Table .clearfix {
+    clear: both;
+}
+
+.CJJ-Table .pagenumberBox {
+    float: left;
+}
+
+.CJJ-Table .pagenumberBox li {
+    float: left;
+    padding: 4px 9px 4px 9px;
+    border: 1px solid #d9d9d9;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #333;
+}
+
+.CJJ-Table .pagenumberBox li:hover {
+    background: #ff6666 !important;
+    padding: 5px 10px 5px 10px !important;
+    color: white !important;
+    border: none !important;
+}
+
+.CJJ-Table .pagenumberBoxLi {
+    background: #ff6666 !important;
+    padding: 5px 10px 5px 10px !important;
+    color: white !important;
+    border: none !important;
+}
+
+.CJJ-Table tfoot span {
+    padding: 4px 15px 4px 15px;
+    border: 1px solid #d9d9d9;
+    color: #333;
+}
+
+.CJJ-Table tfoot span:hover {
+    background: #ff6666 !important;
+    padding: 5px 16px 5px 16px !important;
+    color: white !important;
+    border: none !important;
+}
+
+.CJJ-Table .tfootRight input {
+    width: 80px;
+    padding-left: 10px;
+    height: 25px;
+    border: 1px solid #d9d9d9;
+    color: #333;
+}
+
+.CJJ-Table .tfootRight button {
+    width: 60px;
+    height: 25px;
+    border: 1px solid #d9d9d9;
+    color: #333;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.CJJ-Table .tfootRight button:hover {
+    background: #ff6666 !important;
+    height: 27px;
+    color: white !important;
+    border: none !important;
+}
+.CJJ-Table {
+    width: 95%;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.CJJ-Table thead{
+    border-bottom: 1px solid #ccc;
+    background: #f2f2f2;
+}
+
+.CJJ-Table thead th{
+    font-size: 14px;
+    line-height: 40px;
+}
+
+.CJJ-Table tbody td{
+    text-align: center;
+}
+
+.CJJ-Table tbody tr{
+    border-bottom: 1px dashed #d9d9d9;
+}
+
+.CJJ-Table tbody tr:hover{
+    background-color: #d5d5d5;
+}
+.CJJ-Table tfoot select{
+    width: 80px;
+    padding-left: 10px;
+    height: 26px;
+    border: 1px solid #d9d9d9;
+    color: #333;
+}
+.CJJ-Table tfoot td{
+	padding-top: 10px;
+}
+.new_productBox{
+	height: 35px;
+}
+#page3{
+	min-width: 900px;
+}
+.auto_hidden {
+	width: 150px;
+	position: absolute;
+	text-align: left;
+	display: none;
+}
+
+.auto_show {
+	width: 150px;
+	position: absolute;
+	text-align: left;
+	z-index: 9999;
+	/* 设置对象的层叠顺序 */
+	display: block;
+	max-height: 100px;
+	overflow: auto;
+}
+
+.auto_onmouseover {
+	color: #ffffff;
+	background-color: highlight;
+	text-align: left;
+	width: 100%;
+	padding-left: 5px;
+}
+
+.auto_onmouseout {
+	color: #000000;
+	width: 100%;
+	background-color: #ffffff;
+	padding-left: 5px;
+}
+#page3_table{
+	width: 100%;
+}
+#page3_table tr th{
+	text-align: center;
+}
+.inputstyle{
+	background-color: #94A6B0;
+	padding-left: 5px;
+}
+#myDeleteModal.col-xs-push-2{
+	left: 16.66666667%;
+}
+#page2_table2 .new_productBox .operate span{
+	margin-right: 5px;
+}
+
+.mybuttons {
+	margin-bottom: 10px;
+	height: 30px;
+	padding-left: 7px;
+	padding-right: 7px;
+	border-radius: 5px;
+	text-align: center;
+}
+#page3_TP{
+	border: 1px solid black;
+}
