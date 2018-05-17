@@ -42,18 +42,6 @@ ConfigModel.prototype.queryCategory = function (callback) {
 
 ConfigModel.prototype.addCategory = function (categoryName, callback) {
 
-  let sql = "SELECT * FROM configcategory";
-  let sql_params = [];
-  db.conn.query(sql,sql_params,function(err,rows,fields){
-    if (err) {
-        return callback(err);
-    }
-    callback(null, rows);
-  });
-}
-
-ConfigModel.prototype.addCategory = function (categoryName, callback) {
-
   let ep = new eventproxy();
   let _orderId;
 

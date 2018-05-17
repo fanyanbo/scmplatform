@@ -28,8 +28,8 @@ let isAuthenticated = function(req, res, next) {
 
 router.use('/', isAuthenticated); //api访问控制。除了登录，session校验，登出接口外，其余接口访问需要进行验证
 
-//产品管理
 router.post('/product/add', product.add);                        //新增产品项
+router.post('/product/addHistory', product.addHistory);          //新增产品项的修改记录
 router.post('/product/update', product.update);                  //更新产品信息
 router.post('/product/queryByPage', product.queryByPage);        //分页查询产品信息
 router.post('/product/queryByRegEx', product.queryByRegEx);      //模糊查询产品信息
@@ -38,6 +38,11 @@ router.post('/product/queryByModule', product.queryByModule);    //查询配置�
 router.post('/product/queryBytp', product.queryMKDataByTargetProduct);  //根据targetproduct查询对应的所有modules
 router.post('/product/queryAll', product.queryAll);
 router.post('/product/queryAllByMachine', product.queryAllByMachine);
+router.post('/product/queryAllByMachineTemp', product.queryAllByMachineTemp);
+router.post('/product/preview', product.preview);
+router.post('/product/review', product.review);
+router.post('/product/delete', product.delete);
+router.post('/product/deleteRecovery', product.deleteRecovery);
 
 router.post('/device/queryAll', device.queryAll);
 //机芯管理
@@ -53,6 +58,7 @@ router.post('/model/update', device.updateModel);
 // target_product管理，一个target_product对应唯一MK文件
 router.post('/targetproduct/add', device.addTargetProduct);
 router.post('/targetproduct/query', device.queryTargetProduct);
+router.post('/targetproduct/queryByRegEx', device.queryTargetProductByRegEx);
 router.post('/targetproduct/update', device.updateTargetProduct);
 
 //机芯型号(soc)管理
@@ -100,6 +106,7 @@ router.post('/home/getSummary',function(req,res,next){
 router.post('/syslog/queryByPage', home.querySyslog);            //查询系统操作日志
 router.post('/syslog/queryTotalNum', home.querySyslogTotalNum);  //查询系统操作日志总数
 router.post('/syslog/add', home.addSyslog);                      //新增系统操作日志
+
 
 
 module.exports = router;

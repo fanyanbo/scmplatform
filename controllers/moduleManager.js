@@ -1,7 +1,8 @@
 var logger = require('../common/logger');
-var moduleModel = require('../models/moduleModel');
 var output = require('../common/output');
+var moduleModel = require('../models/moduleModel');
 var validator = require('validator');
+
 /**
  * @param {HttpRequest} req
  * @param {HttpResponse} res

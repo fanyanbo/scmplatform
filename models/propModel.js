@@ -5,7 +5,6 @@ var config = require('../config/config');
 
 var PropModel = function() {};
 
-
 PropModel.prototype.query = function (callback) {
 
   let sql = "SELECT * FROM props";

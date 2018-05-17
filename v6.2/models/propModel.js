@@ -4,7 +4,6 @@ var logger = require('../../common/logger');
 
 var PropModel = function() {};
 
-
 PropModel.prototype.query = function (callback) {
 
   let sql = "SELECT * FROM props";

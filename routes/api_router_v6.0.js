@@ -47,7 +47,6 @@ let isAuthenticated = function(req, res, next) {
 
 router.use('/', isAuthenticated); //api访问控制。除了登录，session校验，登出接口外，其余接口访问需要进行验证
 
-//产品管理
 router.post('/product/add', product.add);                        //新增产品项
 router.post('/product/addHistory', product.addHistory);          //新增产品项的修改记录
 router.post('/product/update', product.update);                  //更新产品信息
@@ -127,10 +126,6 @@ router.post('/syslog/queryByPage', home.querySyslog);            //查询系统�
 router.post('/syslog/queryTotalNum', home.querySyslogTotalNum);  //查询系统操作日志总数
 router.post('/syslog/add', home.addSyslog);                      //新增系统操作日志
 
-
-
-
-
 //用于插件预研
 // var jwt = require('../study/jsonwebtokenModule');
 // router.get('/gen',jwt.gen);
@@ -141,6 +136,8 @@ router.post('/syslog/add', home.addSyslog);                      //新增系统�
 // router.get('/test/login',bcrypt.login);
 // router.get('/test/logout',bcrypt.logout);
 // router.get('/test/verify',bcrypt.verifySession);
+
+module.exports = router;
 
 // home page
 // router.get('/', function(req, res, next) {
@@ -193,16 +190,3 @@ router.post('/syslog/add', home.addSyslog);                      //新增系统�
 //       res.json('中文');
 //   }
 // });
-
-
-
-
-
-
-
-
-
-
-
-
-module.exports = router;

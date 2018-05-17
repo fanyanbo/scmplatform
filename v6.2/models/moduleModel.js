@@ -2,13 +2,6 @@ var eventproxy = require('eventproxy');
 var db = require('../../common/db');
 var logger = require('../../common/logger');
 
-//var mysql = require( 'mysql');
-// var connection = mysql.createConnection(config.mysql);
-// connection.connect();
-// connection.on('error', function(e){
-//   logger.error(e);
-// });
-
 var ModuleModel = function() {};
 
 ModuleModel.prototype.query = function (callback) {

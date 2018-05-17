@@ -5,7 +5,6 @@ var config = require('../config/config');
 
 var SettingsModel = function() {};
 
-
 SettingsModel.prototype.query = function (callback) {
   let sql = "SELECT * FROM settings";
   let sql_params = [];
