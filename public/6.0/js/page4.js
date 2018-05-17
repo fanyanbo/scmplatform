@@ -58,7 +58,6 @@ function handleTableData(arr) {
 			"chip": "8H81",
 			"target_product": "123123",
 			"chipmodel": "123",
-			"coocaaVersion": "1",
 			"AndroidVersion": "6.0",
 			"memory": "1.5G",
 			"type": "1",
@@ -75,7 +74,6 @@ function handleTableData(arr) {
 		eachItem2.chip = arr[i].chip;
 		eachItem2.target_product = arr[i].targetProduct;
 		eachItem2.chipmodel = arr[i].soc;
-		eachItem2.coocaaVersion = arr[i].coocaaVersion;
 		eachItem2.AndroidVersion = arr[i].androidVersion;
 		eachItem2.memory = arr[i].memorySize;
 		if (operateType == 0) {
@@ -123,9 +121,9 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页
 	$('#page4_table').CJJTable({
-		'title': ["序号", "机型", "机芯", "TP", "芯片型号", "酷开版本", "安卓版本", "内存", "类型", "提交者", "跟新原因", "操作"],
-		'body': ["number", "model", "chip", "target_product", "chipmodel", "coocaaVersion", "AndroidVersion", "memory", "type", "author", "reason", "operate"], //tbody td 取值的字段 必填
-		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
+		'title': ["序号", "机型", "机芯", "TP", "芯片型号", "安卓版本", "内存", "类型", "提交者", "跟新原因", "操作"],
+		'body': ["number", "model", "chip", "target_product", "chipmodel", "AndroidVersion", "memory", "type", "author", "reason", "operate"], //tbody td 取值的字段 必填
+		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
 		'url': data1 //数据源 必填
@@ -577,7 +575,6 @@ function CommonDataInsert2(type,arr){
 	$("#lable4Chip").val(arr[0].chip);
 	$("#lable4Model").val(arr[0].model);
 	$("#lable4TP").val(arr[0].targetProduct);
-	$("#lable4CoocaaVersion").val(arr[0].coocaaVersion);
 	$("#lable4AndroidVersion").val(arr[0].androidVersion);
 	$("#lable4ChipMode").val(arr[0].soc);
 	$("#lable4Emmc").val(arr[0].EMMC);
@@ -585,7 +582,6 @@ function CommonDataInsert2(type,arr){
 	$("#lable4GitBranch").val(arr[0].gitBranch);
 	$("#lable4Platform").val(arr[0].platform);
 	if(type == 2){//编辑
-		$("#lable4CoocaaVersion").attr("oldvalue",arr[0].coocaaVersion);
 		$("#lable4AndroidVersion").attr("oldvalue",arr[0].androidVersion);
 		$("#lable4ChipMode").attr("oldvalue",arr[0].chipModel);
 		$("#lable4Emmc").attr("oldvalue",arr[0].EMMC);
@@ -593,7 +589,6 @@ function CommonDataInsert2(type,arr){
 		$("#lable4GitBranch").attr("oldvalue",arr[0].gitBranch);
 		$("#lable4Platform").attr("oldvalue",arr[0].platform);
 		
-		$("#lable4CoocaaVersion").attr("onchange","changeDevice(this)");
 		$("#lable4AndroidVersion").attr("onchange","changeDevice(this)");
         $("#lable4ChipMode").attr("onchange","changeDevice(this)");
         $("#lable4Emmc").attr("onchange","changeDevice(this)");
@@ -819,19 +814,17 @@ function getBaseValue(){
 	var _chip = $("#page4Modal1Table .inputstyle")[0].value;
 	var _model = $("#page4Modal1Table .inputstyle")[1].value;
 	var _tp = $("#page4Modal1Table .inputstyle")[2].value;
-	var _coocaa = $("#page4Modal1Table .inputstyle")[3].value;
-	var _android = $("#page4Modal1Table .inputstyle")[4].value;
-	var _soc = $("#page4Modal1Table .inputstyle")[5].value;
-	var _emmc = $("#page4Modal1Table .inputstyle")[6].value;
-	var _memory = $("#page4Modal1Table .inputstyle")[7].value;
-	var _branch = $("#page4Modal1Table .inputstyle")[8].value;
-	var _platform = $("#page4Modal1Table .inputstyle")[9].value;
+	var _android = $("#page4Modal1Table .inputstyle")[3].value;
+	var _soc = $("#page4Modal1Table .inputstyle")[4].value;
+	var _emmc = $("#page4Modal1Table .inputstyle")[5].value;
+	var _memory = $("#page4Modal1Table .inputstyle")[6].value;
+	var _branch = $("#page4Modal1Table .inputstyle")[7].value;
+	var _platform = $("#page4Modal1Table .inputstyle")[8].value;
 	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,
 		"model" : _model,
 		"targetProduct" : _tp,
-		"coocaaVersion" : _coocaa,
 		"androidVersion" : _android,
 		"soc" : _soc,
 		"EMMC" : _emmc,

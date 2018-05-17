@@ -1,6 +1,7 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
 var getdataArray = new Array();
+
 $(function() {
 	console.log("hello");
 	sendHTTPRequest("/home/getSummary", '{"data":""}', homePageInfoResult);

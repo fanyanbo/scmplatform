@@ -89,7 +89,6 @@ function handleTableData(arr) {
 			"model": arr[i].model,
 			"chip": arr[i].chip,
 			"target_product": arr[i].targetProduct,
-			"coocaaVersion": arr[i].coocaaVersion,
 			"AndroidVersion": arr[i].androidVersion,
 			"chipmodel": arr[i].soc,
 			"EMMC": arr[i].EMMC,
@@ -107,9 +106,9 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页的样子
 	$('#page2_table').CJJTable({
-		'title': ["单选框", "机型", "机芯", "TP", "酷开版本", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
-		'body': ["checkout", "model", "chip", "target_product", "coocaaVersion", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
-		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
+		'title': ["单选框", "机型", "机芯", "TP", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
+		'body': ["checkout", "model", "chip", "target_product", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
+		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
 		'url': data1 //数据源 必填
@@ -526,7 +525,6 @@ function page2Select() {
 	var oChip = document.getElementById('page2_chip').value;
 	var oModel = document.getElementById('page2_model').value;
 	var oTargetProduct = document.getElementById('page2_targetProduct').value;
-	var oCoocaaVersion = document.getElementById('page2_coocaaVersion').value;
 	var oAndroid = document.getElementById('page2_androidVersion').value;
 	var oChipid = document.getElementById('page2_chipid').value;
 	var oEmmc = document.getElementById('page2_EMMC').value;
@@ -536,7 +534,7 @@ function page2Select() {
 
 	var node = "";
 	if(oKeyWord == null || oKeyWord == "") {
-		node = '{"chip":"' + oChip + '","model":"' + oModel + '","version":"' + oCoocaaVersion + '","soc":"' + oChipid + '","memory":"' + oMemory + '"}';
+		node = '{"chip":"' + oChip + '","model":"' + oModel + '","soc":"' + oChipid + '","memory":"' + oMemory + '"}';
 		console.log(node);
 		sendHTTPRequest("/product/queryByRegEx", node, searchResource);
 	} else {
@@ -570,14 +568,13 @@ function page2Reset() {
 	document.getElementById("page2_chip").value = "";
 	document.getElementById("page2_model").value = "";
 	document.getElementById("page2_targetProduct").value = "";
-	document.getElementById("page2_coocaaVersion").value = "";
 	document.getElementById("page2_androidVersion").value = "";
 	document.getElementById("page2_chipid").value = "";
 	document.getElementById("page2_EMMC").value = "";
 	document.getElementById("page2_memory").value = "";
 	document.getElementById("page2_keyword").value = "";
 	document.getElementById("page2_gitbranch").value = "";
-	//	page2Select(); //重置时是否需要重新查询，这个需要分析
+	page2Select(); //重置时是否需要重新查询，这个需要分析
 }
 //新增、编辑、复制、预览 功能
 function page2AEC(number) {
@@ -617,7 +614,6 @@ function clearAllInfo() {
 	document.getElementById("lable2Chip").value = "";
 	document.getElementById("lable2Model").value = "";
 	document.getElementById("lable2TargetProduct").value = "";
-	document.getElementById("lable2CoocaaVersion").value = "";
 	document.getElementById("lable2AndroidVersion").value = "";
 	document.getElementById("lable2ChipMode").value = "";
 	document.getElementById("lable2Emmc").value = "";
@@ -640,7 +636,6 @@ function resetAllInfo(){
 	document.getElementById("lable2Chip").value = "";
 	document.getElementById("lable2Model").value = "";
 	document.getElementById("lable2TargetProduct").value = "";
-	document.getElementById("lable2CoocaaVersion").value = "";
 	document.getElementById("lable2AndroidVersion").value = "";
 	document.getElementById("lable2ChipMode").value = "";
 	document.getElementById("lable2Emmc").value = "";
@@ -717,7 +712,6 @@ function getDeleteProductInfo(){
 
 
 function CommonDataInsert(type,arr){
-	$("#lable2CoocaaVersion").val(arr[0].coocaaVersion);
 	$("#lable2AndroidVersion").val(arr[0].androidVersion);
 	$("#lable2ChipMode").val(arr[0].soc);
 	$("#lable2Emmc").val(arr[0].EMMC);
@@ -736,7 +730,6 @@ function CommonDataInsert(type,arr){
 		$("#lable2TargetProduct").attr("disabled","disabled");
 		
 		
-		$("#lable2CoocaaVersion").attr("oldvalue",arr[0].coocaaVersion);
 		$("#lable2AndroidVersion").attr("oldvalue",arr[0].androidVersion);
 		$("#lable2ChipMode").attr("oldvalue",arr[0].chipModel);
 		$("#lable2Emmc").attr("oldvalue",arr[0].EMMC);
@@ -744,7 +737,6 @@ function CommonDataInsert(type,arr){
 		$("#lable2GitBranch").attr("oldvalue",arr[0].gitBranch);
 		$("#lable2Platform").attr("oldvalue",arr[0].platform);
 		
-		$("#lable2CoocaaVersion").attr("onchange","changeDevice(this)");
 		$("#lable2AndroidVersion").attr("onchange","changeDevice(this)");
         $("#lable2ChipMode").attr("onchange","changeDevice(this)");
         $("#lable2Memory").attr("onchange","changeDevice(this)");
@@ -933,7 +925,7 @@ function page2Export() {
 	_newThead += "</tr></thead>";
 	console.log(_newThead);
 	for(var k = 0; k < data.length; k++) {
-		_newTbodyTr = "<tr><td>" + data[k].model + "</td><td>" + data[k].chip + "</td><td>" + data[k].target_product + "</td><td>" + data[k].chipmodel + "</td><td>" + data[k].coocaaVersion + "</td><td>" + data[k].AndroidVersion + "</td><td>" + data[k].memory + "</td><td>" + data[k].EMMC + "</td><td>" + data[k].author + "</td><td>" + data[k].time + "</td></tr>";
+		_newTbodyTr = "<tr><td>" + data[k].model + "</td><td>" + data[k].chip + "</td><td>" + data[k].target_product + "</td><td>" + data[k].chipmodel + "</td><td>" + data[k].AndroidVersion + "</td><td>" + data[k].memory + "</td><td>" + data[k].EMMC + "</td><td>" + data[k].author + "</td><td>" + data[k].time + "</td></tr>";
 		_newTbody += _newTbodyTr;
 	}
 	_newTbody += "</tbody>";
@@ -1075,19 +1067,17 @@ function getBaseValue(){
 	var _chip = $("#page2Modal1Table .inputstyle")[0].value;
 	var _model = $("#page2Modal1Table .inputstyle")[1].value;
 	var _tp = $("#page2Modal1Table .inputstyle")[2].value;
-	var _coocaa = $("#page2Modal1Table .inputstyle")[3].value;
-	var _android = $("#page2Modal1Table .inputstyle")[4].value;
-	var _soc = $("#page2Modal1Table .inputstyle")[5].value;
-	var _emmc = $("#page2Modal1Table .inputstyle")[6].value;
-	var _memory = $("#page2Modal1Table .inputstyle")[7].value;
-	var _branch = $("#page2Modal1Table .inputstyle")[8].value;
-	var _platform = $("#page2Modal1Table .inputstyle")[9].value;
+	var _android = $("#page2Modal1Table .inputstyle")[3].value;
+	var _soc = $("#page2Modal1Table .inputstyle")[4].value;
+	var _emmc = $("#page2Modal1Table .inputstyle")[5].value;
+	var _memory = $("#page2Modal1Table .inputstyle")[6].value;
+	var _branch = $("#page2Modal1Table .inputstyle")[7].value;
+	var _platform = $("#page2Modal1Table .inputstyle")[8].value;
 	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,
 		"model" : _model,
 		"targetProduct" : _tp,
-		"coocaaVersion" : _coocaa,
 		"androidVersion" : _android,
 		"soc" : _soc,
 		"EMMC" : _emmc,
