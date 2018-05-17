@@ -1,4 +1,5 @@
 var eventproxy = require('eventproxy');
+var async = require('async');
 var db = require('../common/db');
 var logger = require('../common/logger');
 var generator = require('../file/generate');
@@ -271,24 +272,59 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
 }
 
 /**
- * @param {更新时应该先清空某产品的临时表，再进行插入}
+ * @param {注意：更新时应该先清空某产品的临时表内容，再插入新数据}
  */
 ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, callback) {
   console.log(baseInfo);
   let baseInfoObj = JSON.parse(baseInfo);
-  console.log(baseInfoObj.chip);
-  console.log(baseInfoObj.auditState);
-  console.log(baseInfoObj.coocaaVersion);
-  console.log(configInfo.length);
-  console.log(configInfo[0].engName);
-  console.log(settingsInfo.length);
-  console.log(settingsInfo[0].engName);
+  let chip = baseInfoObj.chip;
+  let model = baseInfoObj.model;
+
+  async.parallel(
+    {
+      delConfigTemp: function(callback1){
+          let sql = 'DELETE FROM configdata_temp WHERE chip=? AND model=?';
+          db.conn.query(sql,[chip,model],function(err,rows,fields){
+            if (err) return callback1(err,null);
+            callback1(null,"delConfigTemp OK");
+          });
+      },
+      delSettingsTemp: function(callback1){
+        let sql = 'DELETE FROM settingsdata_temp WHERE chip=? AND model=?';
+        db.conn.query(sql,[chip,model],function(err,rows,fields){
+          if (err) return callback1(err,null);
+          callback1(null,"delSettingsTemp OK");
+        });
+      }
+  },
+  function(err, results) {
+      console.log(results);
+      if(err) return callback(err,null);
+      _update(baseInfo, configInfo, settingsInfo, callback);
+  })
+}
+
+function _update(baseInfo, configInfo, settingsInfo, callback) {
+
+  let baseInfoObj = JSON.parse(baseInfo);
+  let chip = baseInfoObj.chip;
+  let model = baseInfoObj.model;
+  let targetProduct = baseInfoObj.targetProduct;
+  let auditState = baseInfoObj.auditState;
+  let modifyState = baseInfoObj.modifyState;
+  let androidVersion = baseInfoObj.androidVersion;
+  let memorySize = baseInfoObj.memorySize;
+  let EMMC = baseInfoObj.EMMC;
+  let soc = baseInfoObj.soc;
+  let platform = baseInfoObj.platform;
+  let gitBranch = baseInfoObj.gitBranch;
+  let coocaaVersion = baseInfoObj.coocaaVersion;
+  let userName = baseInfoObj.userName;
 
   let ep = new eventproxy();
 
   ep.bind('error', function (err) {
       logger.error("ProductModel.prototype.update 捕获到错误-->" + err);
-      //卸掉所有的handler
       ep.unbind();
       callback(err,null);
   });
@@ -299,8 +335,9 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
       callback(null,null);
   });
 
-  let sql0 = "UPDATE products SET auditState=1,modifyState=1,androidVersion=?,memorySize=?,EMMC=?,targetProduct=?,soc=?,platform=?,gitBranch=?,coocaaVersion=? WHERE chip=? AND model=?";
-  let sql0_param = [baseInfoObj.androidVersion,baseInfoObj.memorySize,baseInfoObj.EMMC,baseInfoObj.targetProduct,baseInfoObj.soc,baseInfoObj.platform,baseInfoObj.gitBranch,baseInfoObj.coocaaVersion,baseInfoObj.chip,baseInfoObj.model];
+  let sql0 = "UPDATE products SET auditState=1,modifyState=1,androidVersion=?,memorySize=?,EMMC=?,targetProduct=?,soc=?,platform=?,gitBranch=?,coocaaVersion=? \
+  userName=? WHERE chip=? AND model=?";
+  let sql0_param = [androidVersion,memorySize,EMMC,targetProduct,soc,platform,gitBranch,coocaaVersion,userName,chip,model];
   console.log(sql0_param);
   db.conn.query(sql0,sql0_param,function(err,rows,fields){
     if (err) return ep.emit('error', err);
