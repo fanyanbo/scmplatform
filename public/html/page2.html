@@ -204,15 +204,12 @@
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2Emmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
 													<select id="lable2Emmc" name="EMMC" class="col-xs-6 col-xs-push-1 inputstyle text-left">
-														<option value="EMMC1">EMMC1</option>
-														<option value="EMMC2">EMMC2</option>
-														<option value="EMMC3">EMMC3</option>
-														<option value="EMMC4">EMMC4</option>
-														<option value="EMMC5">EMMC5</option>
-														<option value="EMMC6">EMMC6</option>
-														<option value="EMMC7">EMMC7</option>
-														<option value="EMMC8">EMMC8</option>
-														<option value="EMMC9">EMMC9</option>
+														<option value="1G">1G</option>
+														<option value="2G">2G</option>
+														<option value="3G">3G</option>
+														<option value="4G">4G</option>
+														<option value="5G">5G</option>
+														<option value="6G">6G</option>
 													</select>
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
@@ -234,6 +231,16 @@
 													<label for="lable2GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
 													<input type="text" value="" name="gitbranch" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
 													<div class="auto_hidden" id="page2_git_auto2"></div>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Platform" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">平台&nbsp;:</label>
+													<select id="lable2Platform" name="平台" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="Hisi">Hisi</option>
+														<option value="Mstar">Mstar</option>
+														<option value="Mstar">RTK</option>
+														<option value="Amlogic">Amlogic</option>
+														<option value="Noveteke">Noveteke</option>
+													</select>
 												</div>
 											</td>
 										</tr>
@@ -296,6 +303,23 @@
 											<div class="modal-footer">
 												<button type="button" class="btn btn-primary" id="myEditEnsure">确定</button>
 												<button type="button" class="btn btn-default" id="myEditCancle">取消</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-11" id="myAddEnsureDiv" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel">
+									<div class="modal-delete" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" aria-label="Close" id="myAddEnsureX"><span aria-hidden="true">×</span></button>
+												<h4 class="modal-title text-left" id="myAddModalLabel">关闭</h4>
+											</div>
+											<div class="modal-body">
+												<span>确定增加此项吗？</span>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" id="myAddEnsure">确定</button>
+												<button type="button" class="btn btn-default" id="myAddCancle">取消</button>
 											</div>
 										</div>
 									</div>

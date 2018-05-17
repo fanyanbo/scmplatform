@@ -353,7 +353,15 @@ function buttonInit() {
 		console.log("点击了确认框的确认按钮");
 		var _chip = $("#myDeleteModalEnsure").attr("chip");
 		var	_model = $("#myDeleteModalEnsure").attr("model");
-		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
+		var deleteObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"userName" : loginusername,
+		}
+		
+		var _delete = JSON.stringify(deleteObj);
+		var node = '{"data":' + _delete + '}';
+		console.log(node);
 		sendHTTPRequest("/product/delete", node, getDeleteProductInfo);
 	});
 	
@@ -428,12 +436,21 @@ function buttonInit() {
 		_base = JSON.stringify(_base);
 		_config = JSON.stringify(_config);
 		_sys = JSON.stringify(_sys);
-//		console.log(_base);
-//		console.log(_config);
-//		console.log(_sys);
 		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
 		console.log(node);
 		sendHTTPRequest("/product/update", node, productAddResult);
+	});
+	$("#myAddEnsure").click(function() {
+		console.log("新增提示框的确定按钮");
+		var _base = getBaseValue();
+		var _config = getConfigValue();
+		var _sys = getSysValue();
+		_base = JSON.stringify(_base);
+		_config = JSON.stringify(_config);
+		_sys = JSON.stringify(_sys);
+		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+		console.log(node);
+		sendHTTPRequest("/product/add", node, productAddResult);
 	});
 }
 
@@ -602,6 +619,7 @@ function clearAllInfo() {
 	document.getElementById("lable2Emmc").value = "";
 	document.getElementById("lable2Memory").value = "";
 	document.getElementById("lable2GitBranch").value = "";
+	document.getElementById("lable2Platform").value = "";
 	
 	document.getElementById("myConfigBox").innerHTML = "";
 	document.getElementById("mySysSettingBox").innerHTML = "";
@@ -624,6 +642,7 @@ function resetAllInfo(){
 	document.getElementById("lable2Emmc").value = "";
 	document.getElementById("lable2Memory").value = "";
 	document.getElementById("lable2GitBranch").value = "";
+	document.getElementById("lable2Platform").value = "";
 	
 	for (var i=0; i<$(".configitems").length; i++) {
 		if ($(".configitems")[i].getAttribute("typestr") == "enum") {
@@ -659,7 +678,7 @@ function getPointProductInfo(){
             	CommonDataInsert(_type,data.resultData[0]);
             	ConfigDataInsert(_type,data.resultData[1]);
             	MKDataInsert(_type,data.resultData[2]);
-//          	SysDataInsert(_type,data.resultData[3]);
+            	SysDataInsert(_type,data.resultData[3]);
             }
         };
     }
@@ -671,9 +690,22 @@ function getDeleteProductInfo(){
             var data = JSON.parse(this.responseText);
             console.log(data);
             if(data.resultCode == 0){
-            	console.log("数据返回成功");
-            	$('#myDeleteModal').modal('hide');
-				page2Fresh();
+            	console.log("数据返回成功,提交删除日志");
+            	var _chip = $("#myDeleteModalEnsure").attr("chip");
+				var	_model = $("#myDeleteModalEnsure").attr("model");
+				var historyObj = {
+					"chip" : _chip,
+					"model" : _model,
+					"reason" : "删除",
+					"state" : 1,
+					"userName" : loginusername,
+					"content" : "删除该产品"
+				}
+				
+				var _history = JSON.stringify(historyObj);
+				var node = '{"data":' + _history + '}';
+				$('#myDeleteModal').modal('hide');
+				sendHTTPRequest("/product/addHistory", node, productHistoryAdd);
             }
         };
     }
@@ -687,6 +719,7 @@ function CommonDataInsert(type,arr){
 	$("#lable2Emmc").val(arr[0].EMMC);
 	$("#lable2Memory").val(arr[0].memorySize);
 	$("#lable2GitBranch").val(arr[0].gitBranch);
+	$("#lable2Platform").val(arr[0].platform);
 	if (type == 2) {//编辑
 		$("#lable2Chip").val(arr[0].chip);
 		$("#lable2Chip").css("color","red");
@@ -705,13 +738,15 @@ function CommonDataInsert(type,arr){
 		$("#lable2Emmc").attr("oldvalue",arr[0].EMMC);
 		$("#lable2Memory").attr("oldvalue",arr[0].memorySize);
 		$("#lable2GitBranch").attr("oldvalue",arr[0].gitBranch);
+		$("#lable2Platform").attr("oldvalue",arr[0].platform);
 		
 		$("#lable2CoocaaVersion").attr("onchange","changeDevice(this)");
 		$("#lable2AndroidVersion").attr("onchange","changeDevice(this)");
         $("#lable2ChipMode").attr("onchange","changeDevice(this)");
         $("#lable2Memory").attr("onchange","changeDevice(this)");
-        $("#newEditDevice").attr("onchange","changeDevice(this)");
+        $("#lable2Emmc").attr("onchange","changeDevice(this)");
         $("#lable2GitBranch").attr("onchange","changeDevice(this)");
+        $("#lable2Platform").attr("onchange","changeDevice(this)");
 	}
 }
 function ConfigDataInsert(type, arr){
@@ -734,6 +769,17 @@ function MKDataInsert(type, arr){
 		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
 	}
 //	olrplayerid = arr[i].id;
+}
+function SysDataInsert(type, arr){
+	for (var i=0; i<arr.length; i++) {
+		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+	}
+	if (type == 2) {
+		for (var i=0; i<$(".sysitems").length; i++) {
+			$(".sysitems:eq("+i+")").attr("onchange","changeConfig(this)");
+			$(".sysitems:eq("+i+")").attr("oldvalue",$(".sysitems:eq("+i+")").attr("value"));
+		}
+	}
 }
 
 //点击预览
@@ -821,15 +867,7 @@ function getAndCheckAndSendAllData(){
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
 			if (type == 1|| type == 3) {
-				var _base = getBaseValue();
-				var _config = getConfigValue();
-				var _sys = getSysValue();
-				_base = JSON.stringify(_base);
-				_config = JSON.stringify(_config);
-				_sys = JSON.stringify(_sys);
-				var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
-				console.log(node);
-				sendHTTPRequest("/product/add", node, productAddResult);
+				document.getElementById("myAddEnsureDiv").style.display = "block";
 			} else{
 				//弹出确认框
 				console.log(changeAdd);
@@ -1039,6 +1077,7 @@ function getBaseValue(){
 	var _emmc = $("#page2Modal1Table .inputstyle")[6].value;
 	var _memory = $("#page2Modal1Table .inputstyle")[7].value;
 	var _branch = $("#page2Modal1Table .inputstyle")[8].value;
+	var _platform = $("#page2Modal1Table .inputstyle")[9].value;
 	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,
@@ -1052,7 +1091,8 @@ function getBaseValue(){
 		"gitBranch" : _branch,
 		"auditState" : 1,
 		"modifyState" : 2,
-		"platform" : "lll"
+		"platform" : _platform,
+		"userName" : loginusername
 	}
 	baseObj = JSON.stringify(baseObj);
 	return baseObj;
@@ -1095,31 +1135,30 @@ function productAddResult(){
 				var type = $("#lable1SubmitTwo").attr("catagory");
 				if(type == 1||type == 3){
 					console.log("新增或者复制");
-					$("#page2Modal1").modal('hide');
-					page2Fresh();
+					var _desc = "新增该产品";
+					var _reason = "新增";
 				}else if(type == 2){
 					console.log("编辑");
-					var _chip = $("#lable2Chip").val();
-					var _model = $("#lable2Model").val();
 					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
 					var _reason = document.getElementById("changeReason").innerHTML;
-					//0审核通过\1待审核\2审核未通过
-					var _state = "1";
-					var _author = loginusername;
-					
-					var historyObj = {
-						"chip" : _chip,
-						"model" : _model,
-						"reason" : _reason,
-						"state" : _state,
-						"userName" : _author,
-						"content" : _desc
-					}
-					
-					var _history = JSON.stringify(historyObj);
-					var node = '{"data":' + _history + '}';
-					sendHTTPRequest("/product/addHistory", node, productHistoryAdd);
 				}
+				var _chip = $("#lable2Chip").val();
+				var _model = $("#lable2Model").val();
+				//0审核通过\1待审核\2审核未通过
+				var _state = "1";
+				var _author = loginusername;
+				var historyObj = {
+					"chip" : _chip,
+					"model" : _model,
+					"reason" : _reason,
+					"state" : _state,
+					"userName" : _author,
+					"content" : _desc
+				}
+				$("#page2Modal1").modal('hide');
+				var _history = JSON.stringify(historyObj);
+				var node = '{"data":' + _history + '}';
+				sendHTTPRequest("/product/addHistory", node, productHistoryAdd);
 			}
 		}
 	}

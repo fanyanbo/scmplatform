@@ -59,6 +59,7 @@ router.post('/product/queryBytp', product.queryMKDataByTargetProduct);  //根据
 router.post('/product/queryAll', product.queryAll);
 router.post('/product/queryAllByMachine', product.queryAllByMachine);
 router.post('/product/preview', product.preview);
+router.post('/product/review', product.review);
 router.post('/product/delete', product.delete);
 router.post('/product/deleteRecovery', product.deleteRecovery);
 
