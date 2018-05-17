@@ -56,7 +56,7 @@ ConfigModel.prototype.addCategory = function (categoryName, callback) {
       let sql_param = [categoryName,_orderId];
       db.conn.query(sql,sql_param,function(err,rows,fields){
         if (err) return ep.emit('error', err);
-        return callback(null, "addModuleCategory OK");
+        return callback(null, "addconfigcategory OK");
       });
   });
 
