@@ -58,6 +58,7 @@ router.post('/product/queryByModule', product.queryByModule);    //查询配置�
 router.post('/product/queryBytp', product.queryMKDataByTargetProduct);  //根据targetproduct查询对应的所有modules
 router.post('/product/queryAll', product.queryAll);
 router.post('/product/queryAllByMachine', product.queryAllByMachine);
+router.post('/product/queryAllByMachineTemp', product.queryAllByMachineTemp);
 router.post('/product/preview', product.preview);
 router.post('/product/review', product.review);
 router.post('/product/delete', product.delete);

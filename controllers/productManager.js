@@ -88,7 +88,7 @@ exports.delete = function (req, res, next) {
 };
 
 /**
- * @param {进行审核}
+ * @param {进行审核操作}
  */
 exports.review = function (req, res, next) {
   let data = req.body.data;
@@ -204,5 +204,20 @@ exports.queryAllByMachine = function (req, res, next) {
       }
       console.log(results);
       output.success(req,res,"查询queryAllByMachine成功",results);
+    });
+};
+
+/**
+ * @param {注：查询某个机芯&机型的全部临时信息（之前有过修改，还处于待审核状态)}
+ */
+exports.queryAllByMachineTemp = function (req, res, next) {
+    let chip = req.body.chip;
+    let model = req.body.model;
+    productModel.queryAllByMachineTemp(chip, model, function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      console.log(results);
+      output.success(req,res,"查询queryAllByMachineTemp成功",results);
     });
 };

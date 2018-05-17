@@ -21,6 +21,8 @@ var baseinfo;							// 信息表(包括general_config)
 var targetinfo;							// 所有机型targetProduct表
 var tempdir = "";                       // 临时文件夹
 
+var version = "6.0";
+
 var i, j, k;
 var generator = new Generator();
 
@@ -31,14 +33,13 @@ function Generator()
 Generator.prototype.generate = function(
                                 chip,		    // 机芯
 								model,		    // 机型
-								version,		// 版本
 								callback		// 回调函数
 								)
 {
     generateFiles(chip, model, version, "gitpush", callback);
 }
 
-Generator.prototype.preview = function(chip, model, version, callback)
+Generator.prototype.preview = function(chip, model, callback)
 {
 	generateFiles(chip, model, version, "preview", callback);
 }
