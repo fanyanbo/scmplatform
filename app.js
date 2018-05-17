@@ -60,7 +60,7 @@ app.use(session({
 // app.use('/api/v1', cors(), apiRouterV1);
 
 app.use('/', signRouter);
-app.use('/', apiRouterV6_0);
+app.use('/v6.0', apiRouterV6_0);
 app.use('/v6.5', apiRouterV6_5);
 
 // catch 404 and forward to error handler
