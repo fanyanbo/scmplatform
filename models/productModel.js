@@ -27,7 +27,7 @@ ProductModel.prototype.queryByPage = function (offset, rows, callback) {
 
 ProductModel.prototype.queryByRegEx = function (data, callback) {
     console.log(data);
-    let _chip, _model, _verison, _memory, _soc, _EMMC, _targetProduct, _gitPath;
+    let _chip, _model, _verison, _memory, _soc, _EMMC, _targetProduct, _gitBranch;
     (data.chip == undefined) ? _chip = `chip like '%%'` : _chip = `chip like '%${data.chip}%'`;
     (data.model == undefined) ? _model = `model like '%%'` : _model = `model like '%${data.model}%'`;
     (data.version == undefined) ? _verison = `androidVersion like '%%'` : _verison = `androidVersion like '%${data.version}%'`;
@@ -35,7 +35,7 @@ ProductModel.prototype.queryByRegEx = function (data, callback) {
     (data.soc == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${data.soc}%'`;
     (data.EMMC == undefined) ? _EMMC = `EMMC like '%%'` : _EMMC = `EMMC like '%${data.EMMC}%'`;
     (data.targetProduct == undefined) ? _targetProduct = `targetProduct like '%%'` : _targetProduct = `targetProduct like '%${data.targetProduct}%'`;
-    (data.gitPath == undefined) ? _gitPath = `gitPath like '%%'` : _gitPath = `gitPath like '%${data.gitPath}%'`;
+    (data.gitBranch == undefined) ? _gitBranch = `gitBranch like '%%'` : _gitBranch = `gitBranch like '%${data.gitBranch}%'`;
 
     console.log(_chip);
     console.log(_model);
@@ -44,9 +44,9 @@ ProductModel.prototype.queryByRegEx = function (data, callback) {
     console.log(_soc);
     console.log(_EMMC);
     console.log(_targetProduct);
-    console.log(_gitPath);
+    console.log(_gitBranch);
 
-    var sql = `SELECT * FROM ${dbConfig.tables.products} WHERE ${_chip} AND ${_model} AND ${_verison} AND ${_memory} AND ${_soc} AND ${_EMMC} AND ${_targetProduct} AND ${_gitPath} order by operateTime desc`;
+    var sql = `SELECT * FROM ${dbConfig.tables.products} WHERE ${_chip} AND ${_model} AND ${_verison} AND ${_memory} AND ${_soc} AND ${_EMMC} AND ${_targetProduct} AND ${_gitBranch} order by operateTime desc`;
     console.log(sql);
     let sql_params = [];
     db.conn.query(sql,sql_params,function(err,rows,fields){
