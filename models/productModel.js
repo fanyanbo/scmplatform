@@ -42,13 +42,16 @@ ProductModel.prototype.queryByRegEx = function (data, soc, callback) {
     console.log(_verison);
     console.log(_memory);
     console.log(_soc);
+    console.log(_EMMC);
+    console.log(_targetProduct);
+    console.log(_gitPath);
 
     var sql = `SELECT * FROM ${dbConfig.tables.products} WHERE ${_chip} AND ${_model} AND ${_verison} AND ${_memory} AND ${_soc} AND ${_EMMC} AND ${_targetProduct} AND ${_gitPath} order by operateTime desc`;
     console.log(sql);
     let sql_params = [];
     db.conn.query(sql,sql_params,function(err,rows,fields){
       if (err) {
-        return callback(err);
+        return callback(err,null);
       }
       callback(null, rows);
     });
