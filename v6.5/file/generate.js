@@ -13,6 +13,7 @@ var fs = require('fs');
 var writer = require("./writer");
 var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
+var dbConfig = require('../models/dbConfig');
 
 var connection;							// 数据库连接
 var action_type;                        // 当前动作为预览还是git提交
@@ -132,7 +133,7 @@ function doit(	systemVersion,		// 系统版本
 function step_query_targetProduct(connection)
 {
 	var result = 0;
-	var sql = "select targetProduct from products where chip=\"" +
+	var sql = "select targetProduct from ${dbConfig.tables.products} where chip=\"" +
 				baseinfo.chip + "\"" +
 				" and model=\"" +
 				baseinfo.model + "\";";
@@ -174,7 +175,7 @@ function step_query_all_config(connection)
 
 	if (list[configid].type == "general_config")
 	{
-		sqltext = "select a.engName, a.curValue, b.descText from configdata a, configs b where a.engName=b.engName and a.chip=\"" +
+		sqltext = "select a.engName, a.curValue, b.descText from ${dbConfig.tables.configdata} a, configs b where a.engName=b.engName and a.chip=\"" +
 				baseinfo.chip + "\"" +
 				" and a.model=\"" +
 				baseinfo.model + "\";";
@@ -182,14 +183,14 @@ function step_query_all_config(connection)
 	else if (list[configid].type == "system_settings")
 	{
 		sqltext = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText "
-		        + " from settingsdata a, settings b where a.engName = b.engName and a.chip = \"" +
+		        + " from ${dbConfig.tables.settingsdata} a, settings b where a.engName = b.engName and a.chip = \"" +
 				baseinfo.chip + "\"" +
 				" and a.model=\"" +
 				baseinfo.model + "\";";
 	}
 	else if (list[configid].type == "prop")
 	{
-		sqltext = "select engName, curValue from propsdata where chip = \"" +
+		sqltext = "select engName, curValue from ${dbConfig.tables.propsdata} where chip = \"" +
 				baseinfo.chip + "\"" +
 				" and model=\"" +
 				baseinfo.model + "\";";
@@ -238,7 +239,7 @@ function step_query_mkdata_item(connection)
 	{
 		var curTargetProduct = targetinfo.name;
 		var result = 0;
-		var sql = "select a.engName,b.cnName,b.gitPath,b.category from mkdata a, modules b where a.engName = b.engName and a.targetProduct=\"" +
+		var sql = "select a.engName,b.cnName,b.gitPath,b.category from ${dbConfig.tables.mkdata} a, modules b where a.engName = b.engName and a.targetProduct=\"" +
 					curTargetProduct + "\";";
 
 		writerlog.w("开始查询: " + sql + "\n");
