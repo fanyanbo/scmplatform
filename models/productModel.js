@@ -25,7 +25,7 @@ ProductModel.prototype.queryByPage = function (offset, rows, callback) {
   });
 }
 
-ProductModel.prototype.queryByRegEx = function (data, soc, callback) {
+ProductModel.prototype.queryByRegEx = function (data, callback) {
     console.log(data);
     let _chip, _model, _verison, _memory, _soc, _EMMC, _targetProduct, _gitPath;
     (data.chip == undefined) ? _chip = `chip like '%%'` : _chip = `chip like '%${data.chip}%'`;
