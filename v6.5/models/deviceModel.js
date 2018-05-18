@@ -170,6 +170,42 @@ DeviceModel.prototype.addTargetProduct = function (name, arr, callback) {
 }
 
 /**
+ * @param {修改TP的内容，这会相应到已经配置好并且以来该TP的产品}
+ * @param {需要更新1个表，mkdata表，这时相关产品需要重新生成TP文件，并静默上传git仓库，不需要再进行审核步骤}
+ * @param {无法满足需要进行审核的步骤，主要是逻辑复杂，在提交是进一步确认是否修改即可}
+ */
+DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
+
+  console.log(name);
+  console.log(arr);
+  let ep = new eventproxy();
+  ep.bind('error', function (err) {
+      logger.error("updateTargetProduct 捕获到错误-->" + err);
+      ep.unbind();
+      callback(err,null);
+  });
+
+  ep.after('insert_result', arr.length, function (list) {
+      console.log(list);
+      callback(null,"updateTargetProductName OK");
+  });
+
+  let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
+  db.conn.query(sql,[name],function(err,rows,fields){
+    if (err) return callback(err,null);
+
+    for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
+        let sql = `UPDATE ${dbConfig.tables.mkdata} SET engName = ? WHERE targetProduct = ?`;
+        let sql_param = [arr[i].engName,name];
+        db.conn.query(sql,sql_param,function(err,rows,fields) {
+          if (err) return ep.emit('error', err);
+          ep.emit('insert_result', 'ok' + i);
+        });
+      }
+  });
+}
+
+/**
  * @param {修改TP的名称，这个情况很可能出现，在添加的时候失误输错一个字符等}
  * @param {需要更新三个表，产品表，mkdata表，targetproducts表，这时相关产品需要重新生成TP文件，并静默上传，不需要再进行审核步骤}
  * @param {无法满足需要进行审核的步骤，万一审核不通过，TP的名称事实上已改，无法恢复}
