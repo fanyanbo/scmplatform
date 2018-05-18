@@ -271,12 +271,11 @@ function convert_products_table(dbo)
 		{
 			var data = docs[i];
 
-			sqltext =  "insert into products ";
-			sqltext += "(chip, model, androidVersion, memorySize, EMMC, targetProduct, soc, gitBranch, operateTime) values \n    ";
+			sqltext =  "insert into v60_products ";
+			sqltext += "(chip, model, memorySize, EMMC, targetProduct, soc, gitBranch, operateTime) values \n    ";
 			sqltext += "(";
 			sqltext += '\"' + data.chip + '\", ';
 			sqltext += '\"' + data.model + '\", ';
-			sqltext += '\"' + data.androidVersion + '\", ';
 			sqltext += '\"' + data.memorySize + '\", ';
 			sqltext += '\"' + "4GB" + '\", ';
 			sqltext += '\"' + data.targetProduct + '\", ';

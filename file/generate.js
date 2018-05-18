@@ -24,6 +24,12 @@ var tempdir = "";                       // 临时文件夹
 
 var version = "6.0";
 
+var tab_products;
+var tab_configdata;
+var tab_settingsdata;
+var tab_propsdata;
+var tab_mkdata;
+
 var i, j, k;
 var generator = new Generator();
 
@@ -55,6 +61,12 @@ function generateFiles( chip,		    // 机芯
 
 	action_type = actionType;
 	mod_callback = callback;
+
+    tab_products = dbConfig.tables.products;
+    tab_configdata = dbConfig.tables.configdata;
+    tab_settingsdata = dbConfig.tables.settingsdata;
+    tab_propsdata = dbConfig.tables.propsdata;
+    tab_mkdata = dbConfig.tables.mkdata;
 
 	infoTxt = "";
 
@@ -133,7 +145,7 @@ function doit(	systemVersion,		// 系统版本
 function step_query_targetProduct(connection)
 {
 	var result = 0;
-	var sql = "select targetProduct from ${dbConfig.tables.products} where chip=\"" +
+	var sql = "select targetProduct from " + tab_products + " where chip=\"" +
 				baseinfo.chip + "\"" +
 				" and model=\"" +
 				baseinfo.model + "\";";
@@ -175,7 +187,7 @@ function step_query_all_config(connection)
 
 	if (list[configid].type == "general_config")
 	{
-		sqltext = "select a.engName, a.curValue, b.descText from ${dbConfig.tables.configdata} a, configs b where a.engName=b.engName and a.chip=\"" +
+		sqltext = "select a.engName, a.curValue, b.descText from " + tab_configdata + " a, configs b where a.engName=b.engName and a.chip=\"" +
 				baseinfo.chip + "\"" +
 				" and a.model=\"" +
 				baseinfo.model + "\";";
@@ -183,14 +195,14 @@ function step_query_all_config(connection)
 	else if (list[configid].type == "system_settings")
 	{
 		sqltext = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText "
-		        + " from ${dbConfig.tables.settingsdata} a, settings b where a.engName = b.engName and a.chip = \"" +
+		        + " from " + tab_settingsdata + " a, settings b where a.engName = b.engName and a.chip = \"" +
 				baseinfo.chip + "\"" +
 				" and a.model=\"" +
 				baseinfo.model + "\";";
 	}
 	else if (list[configid].type == "prop")
 	{
-		sqltext = "select engName, curValue from ${dbConfig.tables.propsdata} where chip = \"" +
+		sqltext = "select engName, curValue from " + tab_propsdata + " where chip = \"" +
 				baseinfo.chip + "\"" +
 				" and model=\"" +
 				baseinfo.model + "\";";
@@ -239,7 +251,7 @@ function step_query_mkdata_item(connection)
 	{
 		var curTargetProduct = targetinfo.name;
 		var result = 0;
-		var sql = "select a.engName,b.cnName,b.gitPath,b.category from ${dbConfig.tables.mkdata} a, modules b where a.engName = b.engName and a.targetProduct=\"" +
+		var sql = "select a.engName,b.cnName,b.gitPath,b.category from " + tab_mkdata + " a, modules b where a.engName = b.engName and a.targetProduct=\"" +
 					curTargetProduct + "\";";
 
 		writerlog.w("开始查询: " + sql + "\n");
@@ -482,8 +494,8 @@ function getTmpDir()
 
 
 
-//generator.generate("5S02", "15U", "Rel6.0", null);
-//generator.preview("5S02", "15U", "Rel6.0", show_preview_text_test);
+//generator.generate("5S02", "15U",  null);
+//generator.preview("5S02", "15U",  show_preview_text_test);
 
 
 function show_preview_text_test(errno, result)
