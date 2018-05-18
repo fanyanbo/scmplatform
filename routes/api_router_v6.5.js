@@ -60,6 +60,7 @@ router.post('/targetproduct/add', device.addTargetProduct);
 router.post('/targetproduct/query', device.queryTargetProduct);
 router.post('/targetproduct/queryByRegEx', device.queryTargetProductByRegEx);
 router.post('/targetproduct/update', device.updateTargetProduct);
+router.post('/targetproduct/updateName', device.updateTargetProductName);
 
 //机芯型号(soc)管理
 router.post('/soc/add', device.addSoc);

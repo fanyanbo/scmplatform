@@ -1,6 +1,7 @@
 var eventproxy = require('eventproxy');
 var db = require('../../common/db');
 var logger = require('../../common/logger');
+var dbConfig = require('./dbConfig');
 
 var DeviceModel = function() {};
 
@@ -168,16 +169,48 @@ DeviceModel.prototype.addTargetProduct = function (name, arr, callback) {
   }
 }
 
-DeviceModel.prototype.updateTargetProduct = function (newValue, oldValue, callback) {
-  var sql = "UPDATE targetProducts set name = ? WHERE name = ?";
-  let sql_params = [newValue,oldValue];
-  db.conn.query(sql,sql_params,function(err,rows,fields){
-    if (err) {
-        return callback(err);
-    }
-    callback(null, rows);
-  });
-}
+/**
+ * @param {修改TP的名称，这个情况很可能出现，在添加的时候失误输错一个字符等}
+ * @param {需要更新三个表，产品表，mkdata表，targetproducts表，这时相关产品需要重新生成TP文件，并静默上传，不需要再进行审核步骤}
+ * @param {无法满足需要进行审核的步骤，万一审核不通过，TP的名称事实上已改，无法恢复}
+ */
+ DeviceModel.prototype.updateTargetProductName = function (data, callback) {
+
+   let newValue = data.newValue;
+   let oldValue = data.oldValue;
+   let ep = new eventproxy();
+   ep.bind('error', function (err) {
+       logger.error("updateTargetProductName 捕获到错误-->" + err);
+       ep.unbind();
+       callback(err,null);
+   });
+
+   ep.after('update_result', 3, function (list) {
+       console.log(list);
+       callback(null,"updateTargetProductName OK");
+   });
+
+   var sql0 = `UPDATE ${dbConfig.tables.products} SET targetProduct = ? WHERE targetProduct = ?`;
+   let sql_params0 = [newValue,oldValue];
+   db.conn.query(sql0,sql_params0,function(err,rows,fields){
+     if (err) return ep.emit('error',error);
+     ep.emit('update_result',"UPDATE products OK");
+   });
+
+   var sql1 = "UPDATE targetProducts SET name = ? WHERE name = ?";
+   let sql_params1 = [newValue,oldValue];
+   db.conn.query(sql1,sql_params1,function(err,rows,fields){
+     if (err) return ep.emit('error',error);
+     ep.emit('update_result',"UPDATE targetProducts OK");
+   });
+
+   var sql2 = `UPDATE ${dbConfig.tables.mkdata} SET targetProduct = ? WHERE targetProduct = ?`;
+   let sql_params2 = [newValue,oldValue];
+   db.conn.query(sql2,sql_params2,function(err,rows,fields){
+     if (err) return ep.emit('error',error);
+     ep.emit('update_result',"UPDATE mkdata OK");
+   });
+ }
 
 DeviceModel.prototype.querySoc = function (callback) {
 

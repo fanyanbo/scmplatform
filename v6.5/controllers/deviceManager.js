@@ -49,13 +49,23 @@ exports.addTargetProduct = function (req, res, next) {
 
 exports.updateTargetProduct = function (req, res, next) {
 
-    let newValue = req.body.newValue;
-    let oldValue = req.body.oldValue;
-    deviceModel.updateTargetProduct(newValue,oldValue,function(err,results) {
+    let data = req.body.data;
+    deviceModel.updateTargetProduct(data,function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
-      output.success(req,res,"修改TargetProduct项成功",results);
+      output.success(req,res,"修改TargetProduct成功",results);
+    });
+};
+
+exports.updateTargetProductName = function (req, res, next) {
+
+    let data = req.body.data;
+    deviceModel.updateTargetProductName(data,function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"修改TargetProduct名称成功",results);
     });
 };
 
