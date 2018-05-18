@@ -33,9 +33,9 @@ ProductModel.prototype.queryByRegEx = function (data, soc, callback) {
     (data.version == undefined) ? _verison = `androidVersion like '%%'` : _verison = `androidVersion like '%${data.version}%'`;
     (data.memory == undefined) ? _memory = `memorySize like '%%'` : _memory = `memorySize like '%${data.memory}%'`;
     (data.soc == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${data.soc}%'`;
-    (data.EMMC == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${data.EMMC}%'`;
-    (data.targetProduct == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${data.targetProduct}%'`;
-    (data.gitPath == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${data.gitPath}%'`;
+    (data.EMMC == undefined) ? _EMMC = `EMMC like '%%'` : _EMMC = `EMMC like '%${data.EMMC}%'`;
+    (data.targetProduct == undefined) ? _targetProduct = `targetProduct like '%%'` : _targetProduct = `targetProduct like '%${data.targetProduct}%'`;
+    (data.gitPath == undefined) ? _gitPath = `gitPath like '%%'` : _gitPath = `gitPath like '%${data.gitPath}%'`;
 
     console.log(_chip);
     console.log(_model);
