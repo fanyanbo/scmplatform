@@ -51,6 +51,14 @@ Generator.prototype.preview = function(chip, model, callback)
 	generateFiles(chip, model, version, "preview", callback);
 }
 
+Generator.prototype.generateByTargetProduct = function(
+                                targetProduct,  // targetProduct
+								callback		// 回调函数
+								)
+{
+    //generateFiles(chip, model, version, "gitpush", callback);
+}
+
 function generateFiles( chip,		    // 机芯
                         model,          // 机型
                         version,		// 版本
