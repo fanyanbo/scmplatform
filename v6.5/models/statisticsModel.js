@@ -1,6 +1,7 @@
 var eventproxy = require('eventproxy');
 var db = require('../../common/db');
 var logger = require('../../common/logger');
+var dbConfig = require('./dbConfig');
 
 var StatisticsModel = function() {};
 
@@ -8,7 +9,7 @@ StatisticsModel.prototype.getSummaryByQuery = function(username, callback) {
 
   let ep = new eventproxy();
   let sql_list = [
-                  "SELECT count(*) AS count FROM products",
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products}`,
                   "SELECT count(*) AS count FROM chips",
                   "SELECT count(*) AS count FROM models",
                   "SELECT count(*) AS count FROM chips WHERE name like '%S%'",
