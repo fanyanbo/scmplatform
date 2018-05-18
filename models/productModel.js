@@ -25,14 +25,17 @@ ProductModel.prototype.queryByPage = function (offset, rows, callback) {
   });
 }
 
-ProductModel.prototype.queryByRegEx = function (chip, model, version, memory, soc, callback) {
-
-    let _chip, _model, _verison, _memory, _soc;
-    (chip == undefined) ? _chip = `chip like '%%'` : _chip = `chip like '%${chip}%'`;
-    (model == undefined) ? _model = `model like '%%'` : _model = `model like '%${model}%'`;
-    (version == undefined) ? _verison = `androidVersion like '%%'` : _verison = `androidVersion like '%${version}%'`;
-    (memory == undefined) ? _memory = `memorySize like '%%'` : _memory = `memorySize like '%${memory}%'`;
-    (soc == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${soc}%'`;
+ProductModel.prototype.queryByRegEx = function (data, soc, callback) {
+    console.log(data);
+    let _chip, _model, _verison, _memory, _soc, _EMMC, _targetProduct, _gitPath;
+    (data.chip == undefined) ? _chip = `chip like '%%'` : _chip = `chip like '%${data.chip}%'`;
+    (data.model == undefined) ? _model = `model like '%%'` : _model = `model like '%${data.model}%'`;
+    (data.version == undefined) ? _verison = `androidVersion like '%%'` : _verison = `androidVersion like '%${data.version}%'`;
+    (data.memory == undefined) ? _memory = `memorySize like '%%'` : _memory = `memorySize like '%${data.memory}%'`;
+    (data.soc == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${data.soc}%'`;
+    (data.EMMC == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${data.EMMC}%'`;
+    (data.targetProduct == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${data.targetProduct}%'`;
+    (data.gitPath == undefined) ? _soc = `soc like '%%'` : _soc = `soc like '%${data.gitPath}%'`;
 
     console.log(_chip);
     console.log(_model);
@@ -40,7 +43,7 @@ ProductModel.prototype.queryByRegEx = function (chip, model, version, memory, so
     console.log(_memory);
     console.log(_soc);
 
-    var sql = `SELECT * FROM ${dbConfig.tables.products} WHERE ${_chip} AND ${_model} AND ${_verison} AND ${_memory} AND ${_soc}  order by operateTime desc`;
+    var sql = `SELECT * FROM ${dbConfig.tables.products} WHERE ${_chip} AND ${_model} AND ${_verison} AND ${_memory} AND ${_soc} AND ${_EMMC} AND ${_targetProduct} AND ${_gitPath} order by operateTime desc`;
     console.log(sql);
     let sql_params = [];
     db.conn.query(sql,sql_params,function(err,rows,fields){
