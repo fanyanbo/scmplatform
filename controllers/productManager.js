@@ -173,6 +173,17 @@ exports.queryMKDataByTargetProduct = function (req, res, next) {
     });
 };
 
+exports.queryProductsByTargetProduct = function (req, res, next) {
+    let targetproduct = req.body.targetproduct;
+    console.log(targetproduct);
+    productModel.queryProductsByTargetProduct(targetproduct, function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"根据TargetProduct查询mkdata列表成功",results);
+    });
+};
+
 /**
  * @param {注：查询一切，一切...全部信息打包给前端}
  */

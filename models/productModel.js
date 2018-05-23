@@ -96,6 +96,17 @@ ProductModel.prototype.queryMKDataByTargetProduct = function (targetproduct, cal
   });
 }
 
+ProductModel.prototype.queryProductsByTargetProduct = function (targetproduct, callback) {
+  let sql = `SELECT * FROM ${dbConfig.tables.products} WHERE targetProduct = ?`;
+  let sql_params = [targetproduct];
+  db.conn.query(sql,sql_params,function(err,rows,fields){
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
 ProductModel.prototype.queryAll = function (callback) {
   let ep = new eventproxy();
   let sql_list = [
@@ -435,6 +446,9 @@ ProductModel.prototype.delete = function (data, callback) {
     });
 }
 
+/**
+ * @param {撤销删除操作}
+ */
 ProductModel.prototype.deleteRecovery = function (data, callback) {
     let chip = data.chip;
     let model = data.model;

@@ -54,7 +54,8 @@ router.post('/product/queryByPage', product.queryByPage);        //分页查询�
 router.post('/product/queryByRegEx', product.queryByRegEx);      //模糊查询产品信息
 router.post('/product/queryHistory', product.queryHistory);      //查询某产品的历史修改记录
 router.post('/product/queryByModule', product.queryByModule);    //查询配置有某个模块的所有产品
-router.post('/product/queryBytp', product.queryMKDataByTargetProduct);  //根据targetproduct查询对应的所有modules
+router.post('/product/queryProductsByTp', product.queryProductsByTargetProduct);//根据targetproduct查询所有配置该TP的产品
+router.post('/product/queryMKByTp', product.queryMKDataByTargetProduct);  //根据targetproduct查询对应的所有modules
 router.post('/product/queryAll', product.queryAll);
 router.post('/product/queryAllByMachine', product.queryAllByMachine);
 router.post('/product/queryAllByMachineTemp', product.queryAllByMachineTemp);
