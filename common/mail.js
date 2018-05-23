@@ -44,7 +44,7 @@ exports.sendMail = sendMail;
  * @param {String} token 重置用的token字符串
  * @param {String} name 接收人的用户名
  */
-exports.sendActiveMail = function (data, who, token, name, callback) {
+exports.sendActiveMail = function (data, callback) {
   let _from = data.from;
   let _to = data.to;
   let _subject = data.subject;
