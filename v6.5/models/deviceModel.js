@@ -174,10 +174,10 @@ DeviceModel.prototype.addTargetProduct = function (name, arr, callback) {
  * @param {需要更新1个表，mkdata表，这时相关产品需要重新生成TP文件，并静默上传git仓库，不需要再进行审核步骤}
  * @param {无法满足需要进行审核的步骤，主要是逻辑复杂，在提交是进一步确认是否修改即可}
  */
-DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
+DeviceModel.prototype.updateTargetProduct = function (data, callback) {
 
-  console.log(name);
-  console.log(arr);
+  console.log(data.name);
+  console.log(data.arr);
   let ep = new eventproxy();
   ep.bind('error', function (err) {
       logger.error("updateTargetProduct 捕获到错误-->" + err);
@@ -185,18 +185,18 @@ DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
       callback(err,null);
   });
 
-  ep.after('insert_result', arr.length, function (list) {
+  ep.after('insert_result', data.arr.length, function (list) {
       console.log(list);
       callback(null,"updateTargetProductName OK");
   });
 
   let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
-  db.conn.query(sql,[name],function(err,rows,fields){
+  db.conn.query(sql,[data.name],function(err,rows,fields){
     if (err) return callback(err,null);
 
-    for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
-        let sql = `UPDATE ${dbConfig.tables.mkdata} SET engName = ? WHERE targetProduct = ?`;
-        let sql_param = [arr[i].engName,name];
+    for (let i = 0; i < data.arr.length; i++) { //数据结果与调用顺序无关
+        let sql = `INSERT INTO ${dbConfig.tables.mkdata} (targetProduct,engName) values (?,?)`;
+        let sql_param = [data.name, data.arr[i].engName];
         db.conn.query(sql,sql_param,function(err,rows,fields) {
           if (err) return ep.emit('error', err);
           ep.emit('insert_result', 'ok' + i);
