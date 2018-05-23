@@ -1,6 +1,7 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
 var autoComplete3 = "";
+var tpArray = new Array();
 
 var tpName = "";
 var MKAddArray = new Array();
@@ -31,9 +32,9 @@ function QueryResult(){
 					}
 					tpObjItem.number = (i+1);
 					tpObjItem.target_product = '<span class="eachtpvalue">'+data.resultData[i].name+'</span>';
-					//tpObjItem.operate = '<a class="eachedit" href="#"><span class="glyphicon glyphicon-pencil"></span></a><a class="eachdelete" href="#"><span class="glyphicon glyphicon-remove"></span></a><a class="eachcopy" href="#"><span class="glyphicon glyphicon-copy"></span></a><a class="eachpreview" href="#"><span class="glyphicon glyphicon glyphicon-eye-open"></span></a>';
 					tpObjItem.operate = '<a class="eachedit" href="#">编辑</a><a class="eachcopy" href="#">复制</a><a class="eachpreview" href="#">预览</a>';
 					instantSearch.push(tpObjItem);
+					tpArray.push(data.resultData[i].name);
 				}
 				pageTableInit(instantSearch);
 			}
@@ -85,9 +86,11 @@ function buttonInitBefore(){
 		$("#myEditEnsureDiv").css("display","none");
 //		page3Fresh();
 	});
-	
+	$("#page3_tp_close").click(function(){
+		$("#page3Modal").modal("hide");
+		page3Fresh();
+	});
 }
-
 function buttonInitAfter(){
 	//编辑
 	$(".eachedit").click(function(){
@@ -119,7 +122,7 @@ function buttonInitAfter(){
 		console.log(thisEnName);
 		var node = '{"targetproduct":"' + thisEnName + '"}';
 		console.log(node);
-		//sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
+		sendHTTPRequest(coocaaVersion+"/product/queryMKByTp", node, getMKByTPResult);
 	});
 }
 
@@ -146,7 +149,7 @@ function eachOperate(index,num){
 	console.log(thisEnName);
 	document.getElementById("page3_TP").value = thisEnName;
 	var node = '{"targetproduct":"' + thisEnName + '"}';
-	sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
+	sendHTTPRequest(coocaaVersion+"/product/queryMKByTp", node, getMKByTPResult);
 }
 //查询功能
 function page3Select(){
@@ -202,8 +205,7 @@ function modelQueryResult(){
 				}
 			}
 		}
-		var node = '{}';
-		sendHTTPRequest(coocaaVersion+"/module/query", node, modelQueryResult2);
+		sendHTTPRequest(coocaaVersion+"/module/query", '{}', modelQueryResult2);
 	}
 }
 function modelQueryResult2(){
@@ -228,6 +230,7 @@ function modelQueryResult2(){
 			}
 		}
 		$('#page3Modal').attr("hasquery","true");
+//		sendHTTPRequest(coocaaVersion+"/module/query", node, modelQueryResult2);
 	}
 }
 function mkDataInsert(kk, obj, data) {
@@ -284,9 +287,16 @@ function tpsubmit(){
 			document.getElementById("page3Modal1ErrorInfo").innerHTML = "TargetProduct项不能为空！";
 			setTimeout("document.getElementById('page3Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
-			var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'}';
-			console.log(node);
-			sendHTTPRequest(coocaaVersion+"/targetproduct/add", node, addOrChangeResult);
+			console.log(tpArray.indexOf(_tpValue));
+			if (tpArray.indexOf(_tpValue) == "-1") {
+				var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'}';
+				console.log(node);
+				sendHTTPRequest(coocaaVersion+"/targetproduct/add", node, addOrChangeResult);
+			} else{
+				document.getElementById("page3Modal1ErrorInfo").style.display = "block";
+				document.getElementById("page3Modal1ErrorInfo").innerHTML = "TargetProduct项已经存在！";
+				setTimeout("document.getElementById('page3Modal1ErrorInfo').style.display = 'none';", 3000);
+			}
 		}
 	} else{
 		console.log("修改的提交");
@@ -310,7 +320,7 @@ function tpsubmit(){
 			//通过tp查找相关机芯机型
 			var node = '{"targetproduct":"'+_tpValue+'"}';
 			console.log(node);
-			sendHTTPRequest(coocaaVersion+"/product/queryByRegEx", node, searchResource2);
+			sendHTTPRequest(coocaaVersion+"/product/queryProductsByTp", node, searchResource2);
 		}
 	}
 }
@@ -320,7 +330,17 @@ function searchResource2() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				//$("#productName").innerHTML = "";
+				if (data.resultData.length == 0) {
+					$("#tptochipmodel").css("display","none");
+					document.getElementById("productName").innerHTML = "该TargetProduct还未配置产品。";
+				} else{
+					var inneritem = "";
+					for (var i=0; i<data.resultData.length; i++) {
+						inneritem += '<div>机芯：'+data.resultData[i].chip+',机型：'+data.resultData[i].model+'</div>'; 
+					}
+					$("#tptochipmodel").css("display","block");
+					document.getElementById("productName").innerHTML = inneritem;
+				}
 			}
 		}
 	}
@@ -341,7 +361,7 @@ function tpsubmit2(){
 		}
 	}
 	_mkArray = JSON.stringify(_mkArray);
-	var node = '{"name":"'+_tpValue+'","arr":"'+_mkArray+'"}';
+	var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'}';
 	console.log(node);
 	sendHTTPRequest(coocaaVersion+"/targetproduct/update", node, addOrChangeResult);
 }

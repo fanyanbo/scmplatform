@@ -245,3 +245,7 @@ body .modal-footer{
 	width: 100%;
 	resize: none;
 }
+#noChangeHistory{
+	text-align: center;
+    font-size: 26px;
+}
