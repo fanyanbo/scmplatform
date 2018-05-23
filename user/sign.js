@@ -39,6 +39,7 @@ exports.login = function (req, res, next) {
            req.session.username = loginname;
            req.session.logined = true;
            req.session.level = result[0].adminFlag;
+           req.session.email = result[0].email;
            return output.success(req,res,"登录成功!");
          }else{
            output.error(req,res,"密码有误!");
@@ -55,6 +56,7 @@ exports.verify = function (req, res, next) {
     resultData.username = req.session.username;
     resultData.logined = req.session.logined;
     resultData.level = req.session.level;
+    resultData.email = req.session.email;
     output.success(req,res,"验证成功!",resultData);
   }else{
     output.error(req,res,"验证失败!");
