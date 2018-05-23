@@ -124,6 +124,8 @@
             $(_this.$element.selector+ ' tbody tr').unbind('dblclick').dblclick(function(){
                   _this.options.dbTrclick($(this));
             });
+            console.log("绘完了");
+            reloadClick();
         },
         inputKeyup:function(e,maxpagenumberBox,json){
             var val = $(e.$element.selector+ " .tfootRight input").val();
@@ -268,6 +270,8 @@
             $(that.selector+ ' tbody tr').unbind('dblclick').dblclick(function(){
                   e.options.dbTrclick($(this));
             });
+            console.log("重绘完了");
+            reloadClick();
         }    
 
   }

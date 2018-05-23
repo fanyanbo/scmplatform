@@ -1,7 +1,13 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
 var autoComplete3 = "";
-var coocaaVersion = "/6.0";
+
+var tpName = "";
+var MKAddArray = new Array();
+var MKDeleteArray = new Array();
+var oldRadioName = "";
+var radioNameTemp = "";
+var coocaaVersion = "/v6.0";
 
 $(function() {
 	var node = '{}';
@@ -21,17 +27,17 @@ function QueryResult(){
 					var tpObjItem = {
 						"number": "",
 						"target_product": "",
-						"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
+						"operate": ""
 					}
 					tpObjItem.number = (i+1);
 					tpObjItem.target_product = '<span class="eachtpvalue">'+data.resultData[i].name+'</span>';
-					tpObjItem.operate = '<a class="eachedit" href="#"><span class="glyphicon glyphicon-pencil"></span></a><a class="eachdelete" href="#"><span class="glyphicon glyphicon-remove"></span></a><a class="eachcopy" href="#"><span class="glyphicon glyphicon-copy"></span></a><a class="eachpreview" href="#"><span class="glyphicon glyphicon glyphicon-eye-open"></span></a>';
+					//tpObjItem.operate = '<a class="eachedit" href="#"><span class="glyphicon glyphicon-pencil"></span></a><a class="eachdelete" href="#"><span class="glyphicon glyphicon-remove"></span></a><a class="eachcopy" href="#"><span class="glyphicon glyphicon-copy"></span></a><a class="eachpreview" href="#"><span class="glyphicon glyphicon glyphicon-eye-open"></span></a>';
+					tpObjItem.operate = '<a class="eachedit" href="#">编辑</a><a class="eachcopy" href="#">复制</a><a class="eachpreview" href="#">预览</a>';
 					instantSearch.push(tpObjItem);
 				}
 				pageTableInit(instantSearch);
 			}
 		}
-		buttonInitAfter();
 		var node = '{}';
 		sendHTTPRequest(coocaaVersion+"/module/queryCategory", node, modelQueryResult);
 	}
@@ -49,6 +55,10 @@ function pageTableInit(data){
 		'url': data //数据源 必填
 	});
 }
+function reloadClick(){
+	console.log("in reloadClick");
+	buttonInitAfter();
+}
 
 function buttonInitBefore(){
 	document.getElementById("page3_searchInfo").onclick = page3Select;
@@ -63,21 +73,36 @@ function buttonInitBefore(){
 		console.log("点击了TP的提交");
 		tpsubmit();
 	});
+	$("#myEditEnsure").click(function(){
+		console.log("点击了TP的提交");
+		tpsubmit2();
+	});
+	$("#myEditCancle").click(function(){
+		$("#myEditEnsureDiv").css("display","none");
+//		page3Fresh();
+	});
+	$("#myEditEnsureX").click(function(){
+		$("#myEditEnsureDiv").css("display","none");
+//		page3Fresh();
+	});
 	
 }
 
 function buttonInitAfter(){
 	//编辑
 	$(".eachedit").click(function(){
+		console.log("单项编辑");
 		var _eachtpAIndex = $(".eachedit").index($(this));
 		eachOperate(_eachtpAIndex, 0);
 	});
 	$(".eachcopy").click(function(){
+		console.log("单项复制");
 		var _eachtpAIndex = $(".eachcopy").index($(this));
 		eachOperate(_eachtpAIndex, 1);
 	});
 	
 	$(".eachpreview").click(function(){
+		console.log("单项预览");
 		var _eachtpAIndex = $(".eachpreview").index($(this));
 		eachOperate(_eachtpAIndex, 2);
 	});
@@ -101,7 +126,16 @@ function buttonInitAfter(){
 function eachOperate(index,num){
 	$('#page3Modal').modal();
 	$(".modal-backdrop").addClass("new-backdrop");
-	$('#page3Modal').attr("status","2");
+	$('#page3Modal').attr("status",num);
+	
+	if (num == 0) {
+		$("#page3_title").html("编辑tp的名称");
+	} else if(num==1){
+		$("#page3_title").html("复制tp的名称");
+	} else if(num==2){
+		$("#page3_title").html("预览tp的名称");
+	}
+	
 	var thisEnName = $(".eachtpvalue")[index].innerText;
 	var thisEnNameCut = "";
 	if(thisEnName.length>10){
@@ -113,17 +147,6 @@ function eachOperate(index,num){
 	document.getElementById("page3_TP").value = thisEnName;
 	var node = '{"targetproduct":"' + thisEnName + '"}';
 	sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
-	
-	if (num == 0) {
-		console.log("编辑");//不能修改tp名称
-		$("#page3_title").innerText = "编辑tp的名称";
-	} else if(num==1){
-		console.log("复制");//相当于新增
-		$("#page3_title").innerText = "复制tp的名称";
-	} else if(num==1){
-		console.log("预览");//不让修改、不让提交
-		$("#page3_title").innerText = "预览tp的名称";
-	} 
 }
 //查询功能
 function page3Select(){
@@ -151,6 +174,9 @@ function page3Add(){
 		sendHTTPRequest(coocaaVersion+"/module/queryCategory", node, modelQueryResult);
 	}else{
 		console.log("已经请求过了");
+		for (var i=0; i<$(".mkitems").length; i++) {
+			document.getElementsByClassName("mkitems")[i].removeAttribute('disabled');
+		}
 	}
 }
 function resetAllInfo(){
@@ -196,9 +222,9 @@ function modelQueryResult2(){
 						}
 					}
 				}
-				for (var i=0; i<$(".mkradio").length; i++) {
+//				for (var i=0; i<$(".mkradio").length; i++) {
 					document.getElementsByClassName("mkradio")[0].setAttribute('checked', 'true');
-				}
+//				}
 			}
 		}
 		$('#page3Modal').attr("hasquery","true");
@@ -206,9 +232,9 @@ function modelQueryResult2(){
 }
 function mkDataInsert(kk, obj, data) {
 	if (data[kk].category == "PlayerLibrary") {
-		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' value='' name='PlayerLibrary'><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' cnName='"+data[kk].cnName+"' type='radio' class='mkitems mkradio' value='' name='PlayerLibrary'><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	} else{
-		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox' class='mkitems' value=''><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
+		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' cnName='"+data[kk].cnName+"' type='checkbox' class='mkitems' value=''><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	}
 }
 //模糊查询
@@ -238,36 +264,86 @@ function searchResource(){
 }
 
 function tpsubmit(){
-	console.log($('#page3Modal').attr("status"));
-	if ($('#page3Modal').attr("status") == 1) {
-		console.log("新增+TP+提交");
-		var _tpValue = $("#page3_TP").val();;
-		console.log(_tpValue);
-		var _mkArray = [];
-		for (var i=0; i<$(".mkitems").length; i++) {
-			var _objItem = {
-				"engName":""
-			};
-			if ($(".mkitems")[i].checked == true) {
-				_objItem.engName =  $(".mkitems")[i].getAttribute("id");
-				_mkArray.push(_objItem);
-			}
+	var _tpValue = $("#page3_TP").val();;
+	var _mkArray = [];
+	for (var i=0; i<$(".mkitems").length; i++) {
+		var _objItem = {
+			"engName":""
+		};
+		if ($(".mkitems")[i].checked == true) {
+			_objItem.engName =  $(".mkitems")[i].getAttribute("id");
+			_mkArray.push(_objItem);
 		}
-		_mkArray = JSON.stringify(_mkArray);
-		console.log(_mkArray);
+	}
+	_mkArray = JSON.stringify(_mkArray);
+	if ($('#page3Modal').attr("status") == 1) {
+		console.log("新增或者复制的提交");
 		if (_tpValue == ""||_tpValue==null) {
 			console.log("新增TP名不能为空");
+			document.getElementById("page3Modal1ErrorInfo").style.display = "block";
+			document.getElementById("page3Modal1ErrorInfo").innerHTML = "TargetProduct项不能为空！";
+			setTimeout("document.getElementById('page3Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
 			var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'}';
 			console.log(node);
 			sendHTTPRequest(coocaaVersion+"/targetproduct/add", node, addOrChangeResult);
 		}
 	} else{
-		console.log("修改+TP+提交");
-		var node = '{"name":"'+_tpValue+'","oldValue":"'+_mkArray+'"}';
-		console.log(node);
-//		sendHTTPRequest("coocaaVersion+/targetproduct/update", node5, addOrChangeResult);
+		console.log("修改的提交");
+		for (var i=0; i<$(".mkradio").length; i++) {
+			if ($(".mkradio")[i].getAttribute('oldvalue') == 1) {
+				radioNameTemp = $(".mkradio")[i].getAttribute('cnname');
+				console.log(radioNameTemp);
+			}
+		}
+		console.log(MKAddArray);
+		console.log(MKDeleteArray);
+		console.log(radioNameTemp +"---"+ oldRadioName);
+		if (radioNameTemp == oldRadioName&&MKAddArray.length==0&&MKDeleteArray==0) {
+			console.log("未做修改");
+			$("#page3Modal1ErrorInfo").css("display","block");
+			$("#page3Modal1ErrorInfo").html("未做任何修改");
+			setTimeout("document.getElementById('page3Modal1ErrorInfo').style.display = 'none';", 3000);
+		} else{
+			console.log("做了修改");
+			$("#myEditEnsureDiv").css("display","block");
+			//通过tp查找相关机芯机型
+			var node = '{"targetproduct":"'+_tpValue+'"}';
+			console.log(node);
+			sendHTTPRequest(coocaaVersion+"/product/queryByRegEx", node, searchResource2);
+		}
 	}
+}
+function searchResource2() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				//$("#productName").innerHTML = "";
+			}
+		}
+	}
+}
+
+function tpsubmit2(){
+	console.log(MKAddArray);
+	console.log(MKDeleteArray);
+	var _tpValue = $("#page3_TP").val();;
+	var _mkArray = [];
+	for (var i=0; i<$(".mkitems").length; i++) {
+		var _objItem = {
+			"engName":""
+		};
+		if ($(".mkitems")[i].checked == true) {
+			_objItem.engName =  $(".mkitems")[i].getAttribute("id");
+			_mkArray.push(_objItem);
+		}
+	}
+	_mkArray = JSON.stringify(_mkArray);
+	var node = '{"name":"'+_tpValue+'","arr":"'+_mkArray+'"}';
+	console.log(node);
+	sendHTTPRequest(coocaaVersion+"/targetproduct/update", node, addOrChangeResult);
 }
 
 function getMKByTPResult() {
@@ -277,10 +353,92 @@ function getMKByTPResult() {
 			console.log(data);
 			if(data.resultCode == "0") {
 				resetAllInfo();
+				var type = $('#page3Modal').attr("status");
+				for (var i=0; i<$(".mkitems").length; i++) {
+					if (type == 0) {
+						$(".mkitems:eq("+i+")").removeAttr("disabled");
+						$(".mkitems:eq("+i+")").attr("oldvalue","0");
+						if($(".mkitems:eq("+i+")").attr("type") == "radio"){
+							$(".mkitems:eq("+i+")").attr("onchange","changeRadio(this)");
+						}else{
+							$(".mkitems:eq("+i+")").attr("onchange","changeMK(this)");
+						}
+					}else if(type == 1){
+						$(".mkitems:eq("+i+")").removeAttr("disabled");
+						$(".mkitems:eq("+i+")").removeAttr("onchange");
+					}else if (type == 2) {
+						$(".mkitems:eq("+i+")").attr("disabled","disabled");
+					}
+				}
 				for (var i=0; i<data.resultData.length; i++) {
 					document.getElementById(data.resultData[i].engName).setAttribute('checked', 'true');
+					if ($("#"+data.resultData[i].engName).attr("type") == "radio") {
+						oldRadioName = $("#"+data.resultData[i].engName).attr("cnname");
+						$("#"+data.resultData[i].engName).attr("oldvalue","1");
+						console.log(oldRadioName);
+					}
 				}
 			}
 		}
+	}
+}
+function addOrChangeResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$("#page3Modal").modal("hide");
+				page3Fresh();
+			}
+		}
+	}
+}
+
+function changeMK(obj){
+    if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
+    	console.log("增加");
+        obj.setAttribute("oldvalue","1");
+        MKAddArray.push(obj.getAttribute("cnName"));
+    }else if(!(obj.checked) && (obj.getAttribute("oldvalue") == '0')){
+    	console.log("删除");
+        obj.setAttribute("oldvalue","2");
+        MKDeleteArray.push(obj.getAttribute("cnName"));
+    }else{
+    	console.log("恢复");
+        obj.setAttribute("oldvalue","0");
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        MKDeleteArray.remove(obj.getAttribute("cnName"));
+        MKAddArray.remove(obj.getAttribute("cnName"));
+    }
+    console.log("增加"+MKAddArray);
+    console.log("删除"+MKDeleteArray);
+}
+function changeRadio(obj){
+	for (var i=0; i<$(".mkradio").length; i++) {
+		$(".mkradio")[i].setAttribute('oldvalue', '0');
+	}
+	obj.setAttribute("oldvalue","1");
+}
+
+//刷新功能
+function page3Fresh() {
+	var htmlObject = parent.document.getElementById("tab_userMenu3");
+	htmlObject.firstChild.src = "page3.html";
+	
+	var htmlObject2 = parent.document.getElementById("tab_userMenu2");
+	if (htmlObject2) {
+		htmlObject2.firstChild.src = "page2.html";
 	}
 }

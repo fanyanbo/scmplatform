@@ -4,7 +4,7 @@ var adminFlag = null; //访问session之后存取管理员标志位
 var loginusername = null; //访问session之后存取登录用户名
 var loginEmail = null; //当前用户的邮箱地址
 var loginStatus = null;
-var CoocaaVersion = "/6.5";
+var CoocaaVersion = "/v6.5";
 
 $(function() {
 	sendHTTPRequest("/verify", '{}', loginResult);

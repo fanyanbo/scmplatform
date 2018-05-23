@@ -1,6 +1,6 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
-var coocaaVersion = "/6.0";
+var coocaaVersion = "/v6.0";
 
 $(function() {
 	$(".page_boxes")[0].style.display = "block";
@@ -24,16 +24,16 @@ function QueryResult(){
 				var page6SocTd = document.getElementById("page6_soc_td");
 				
 				for (var i=0; i<data.resultData[0].length; i++) {
-					page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachtpa" part="1" name="'+data.resultData[0][i].name+'" title="'+data.resultData[0][i].name+'">'+data.resultData[0][i].name+'</a></div>';
+					page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachchipa" part="1" name="'+data.resultData[0][i].name+'" title="'+data.resultData[0][i].name+'">'+data.resultData[0][i].name+'</a></div>';
 				}
 				for (var i=0; i<data.resultData[1].length; i++) {
-					page6ModelTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachtpa" part="2" name="'+data.resultData[1][i].name+'" title="'+data.resultData[1][i].name+'">'+data.resultData[1][i].name+'</a></div>';
+					page6ModelTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachmodela" part="2" name="'+data.resultData[1][i].name+'" title="'+data.resultData[1][i].name+'">'+data.resultData[1][i].name+'</a></div>';
 				}
 				for (var i=0; i<data.resultData[2].length; i++) {
 					page6TpTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachtpa" part="4" name="'+data.resultData[2][i].name+'" title="'+data.resultData[2][i].name+'">'+data.resultData[2][i].name+'</a></div>';
 				}
 				for (var i=0; i<data.resultData[3].length; i++) {
-					page6SocTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachtpa" part="3" name="'+data.resultData[3][i].name+'" title="'+data.resultData[3][i].name+'">'+data.resultData[3][i].name+'</a></div>';
+					page6SocTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachsoca" part="3" name="'+data.resultData[3][i].name+'" title="'+data.resultData[3][i].name+'">'+data.resultData[3][i].name+'</a></div>';
 				}
 			}
 		}
@@ -131,23 +131,22 @@ function page6ButtonInitAfter(){
 	});
 	
 	$(".myeachtpa").click(function(){
-		var _eachtpAIndex = $(".myeachtpa").index($(this));
-		$('#page6Modal2').modal(); //显示新建与编辑机芯机型时的弹框
-		$(".modal-backdrop").addClass("new-backdrop");
-		$('#page6Modal2').attr("status","2");
-		var thisEnName = $(".myeachtpa")[_eachtpAIndex].title;
-		var thisEnNameCut = "";
-		if(thisEnName.length>10){
-			thisEnNameCut = thisEnName.substring(0,10)+"...";  
-		}else{
-			thisEnNameCut = thisEnName;
-		}
-		console.log(thisEnName);
-		document.getElementById("page6_TP").value = thisEnName;
-		
-		var node = '{"targetproduct":"' + thisEnName + '"}';
-		sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
+		var _index = $(".myeachtpa").index($(this));
+		editTPmodal(_index);
 	});
+	$(".myeachchipa").click(function(){
+		var _index = $(".myeachchipa").index($(this));
+		editChipmodal(_index);
+	});
+	$(".myeachmodela").click(function(){
+		var _index = $(".myeachmodela").index($(this));
+		editModelmodal(_index);
+	});
+	$(".myeachsoca").click(function(){
+		var _index = $(".myeachsoca").index($(this));
+		editSocmodal(_index);
+	});
+	
 	
 	$("#page6Submit").click(function(){
 		var _curPart2 = $("#page6Submit").attr("part1");
@@ -195,6 +194,8 @@ function page6ButtonInitAfter(){
 		}
 	});
 }
+
+
 
 function addOrChangeResult(){
 	if(this.readyState == 4) {
@@ -319,6 +320,42 @@ function resetAllInfo(){
 	}
 	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
 	document.getElementsByClassName("mkradio")[0].checked = true;
+}
+
+
+function editTPmodal(num){
+	$('#page6Modal2').modal(); //显示新建与编辑机芯机型时的弹框
+	$(".modal-backdrop").addClass("new-backdrop");
+	$('#page6Modal2').attr("status","2");
+	var thisEnName = $(".myeachtpa")[num].title;
+	var thisEnNameCut = "";
+	if(thisEnName.length>10){
+		thisEnNameCut = thisEnName.substring(0,10)+"...";  
+	}else{
+		thisEnNameCut = thisEnName;
+	}
+	console.log(thisEnName);
+	document.getElementById("page6_TP").value = thisEnName;
+	var node = '{"targetproduct":"' + thisEnName + '"}';
+	sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
+}
+
+function editChipmodal(num){
+	var thisEnName = $(".myeachchipa")[num].name;
+	console.log("修改"+thisEnName+"的基本信息");
+	
+}
+
+function editModelmodal(num){
+	var thisEnName = $(".myeachmodela")[num].name;
+	console.log("修改"+thisEnName+"的基本信息");
+	
+}
+
+function editSocmodal(num){
+	var thisEnName = $(".myeachsoca")[num].name;
+	console.log("修改"+thisEnName+"的基本信息");
+	
 }
 
 

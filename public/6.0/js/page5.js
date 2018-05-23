@@ -19,7 +19,7 @@ var changeReduce = [];
 var changeConf = [];
 var changeDev = [];
 
-var coocaaVersion = "/6.0";
+var coocaaVersion = "/v6.0";
 
 $(function() {
 	level = parent.adminFlag;
@@ -56,31 +56,29 @@ function handleTableData(arr) {
 	console.log("level= "+ level + "loginusername = " +loginusername + "fromEmail = " + fromEmail);
 	for(var i = 0; i < arr.length; i++) {
 		var eachItem2 = {
-			"number": "0",
-			"model": "G7200",
-			"chip": "8H81",
-			"target_product": "123123",
-			"chipmodel": "123",
-			"coocaaVersion": "1",
-			"AndroidVersion": "6.0",
-			"memory": "1.5G",
-			"type": "1",
-			"author": "林心旺",
+			"number": "",
+			"model": "",
+			"chip": "",
+			"target_product": "",
+			"chipmodel": "",
+			"AndroidVersion": "",
+			"memory": "",
+			"type": "",
+			"author": "",
 			"reason": "<span class='eachlook'>查看</a>",
-			"operate": "<span class='eachedit'>编辑</span><span class='eachaudit'>审核</span>"
+			"operate": ""
 		};
 		//auditState(0审核通过\1待审核\2审核未通过
 		//modifyState(0正常\1修改\2增加\3删除)
 		var operateType = arr[i].modifyState;
-		var	userName = "fanyanbo";
 		eachItem2.number = (i+1);
 		eachItem2.model = arr[i].model;
 		eachItem2.chip = arr[i].chip;
 		eachItem2.target_product = arr[i].targetProduct;
 		eachItem2.chipmodel = arr[i].soc;
-		eachItem2.coocaaVersion = arr[i].coocaaVersion;
 		eachItem2.AndroidVersion = arr[i].androidVersion;
 		eachItem2.memory = arr[i].memorySize;
+		eachItem2.author = arr[i].userName;
 		if (operateType == 0) {
 			eachItem2.type = "正常";
 		} else if(operateType == 1){
@@ -91,7 +89,7 @@ function handleTableData(arr) {
 			eachItem2.type = "删除";
 		}
 		if (level == 0) {
-            if (userName == loginusername) {
+            if (eachItem2.author == loginusername) {
                 if (operateType == 3) {
                 	//管理员&&是提交者&&删除
                 	eachItem2.operate = "<span class='eachaudit' onclick='review(this,1,3)'>审核</span><span class='eachedit' onclick='recover(this,"+operateType+")'>恢复</span>";
@@ -105,7 +103,7 @@ function handleTableData(arr) {
             }
             getdataArray2.push(eachItem2);
         }else{
-        	if (userName == loginusername) {
+        	if (eachItem2.author == loginusername) {
 		        if (operateType == 3) {
 		        	//非管理员&&是提交者&&删除
 		        	eachItem2.operate = "<span class='eachedit' onclick='recover(this,"+operateType+")'>恢复</span>";
@@ -126,14 +124,17 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页
 	$('#page5_table').CJJTable({
-		'title': ["序号", "机型", "机芯", "TP", "芯片型号", "酷开版本", "安卓版本", "内存", "类型", "提交者", "跟新原因", "操作"],
-		'body': ["number", "model", "chip", "target_product", "chipmodel", "coocaaVersion", "AndroidVersion", "memory", "type", "author", "reason", "operate"], //tbody td 取值的字段 必填
-		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
+		'title': ["序号", "机型", "机芯", "TP", "芯片型号", "安卓版本", "内存", "类型", "提交者", "跟新原因", "操作"],
+		'body': ["number", "model", "chip", "target_product", "chipmodel", "AndroidVersion", "memory", "type", "author", "reason", "operate"], //tbody td 取值的字段 必填
+		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
 		'url': data1 //数据源 必填
 	});
 	editStatusByLength(data1.length);
+}
+function reloadClick(){
+	console.log("in reloadClick");
 	buttonInitAfter();
 }
 function editStatusByLength(num){
@@ -161,6 +162,9 @@ function buttonInitBefore(){
 	});
 	$("#lable5GitBranch").keyup(function(event) {
 		autoComplete2.start(event);
+	});
+	$("#oButtonX").click(function() {
+		$("#mydialog").css("display","none");
 	});
 }
 function colorstatus(number){
@@ -580,7 +584,6 @@ function CommonDataInsert2(type,arr){
 	$("#lable5Chip").val(arr[0].chip);
 	$("#lable5Model").val(arr[0].model);
 	$("#lable5TP").val(arr[0].targetProduct);
-	$("#lable5CoocaaVersion").val(arr[0].coocaaVersion);
 	$("#lable5AndroidVersion").val(arr[0].androidVersion);
 	$("#lable5ChipMode").val(arr[0].soc);
 	$("#lable5Emmc").val(arr[0].EMMC);
@@ -588,7 +591,6 @@ function CommonDataInsert2(type,arr){
 	$("#lable5GitBranch").val(arr[0].gitBranch);
 	$("#lable5Platform").val(arr[0].platform);
 	if(type == 2){//编辑
-		$("#lable5CoocaaVersion").attr("oldvalue",arr[0].coocaaVersion);
 		$("#lable5AndroidVersion").attr("oldvalue",arr[0].androidVersion);
 		$("#lable5ChipMode").attr("oldvalue",arr[0].chipModel);
 		$("#lable5Emmc").attr("oldvalue",arr[0].EMMC);
@@ -596,7 +598,6 @@ function CommonDataInsert2(type,arr){
 		$("#lable5GitBranch").attr("oldvalue",arr[0].gitBranch);
 		$("#lable5Platform").attr("oldvalue",arr[0].platform);
 		
-		$("#lable5CoocaaVersion").attr("onchange","changeDevice(this)");
 		$("#lable5AndroidVersion").attr("onchange","changeDevice(this)");
         $("#lable5ChipMode").attr("onchange","changeDevice(this)");
         $("#lable5Emmc").attr("onchange","changeDevice(this)");
@@ -834,7 +835,6 @@ function getBaseValue(){
 		"chip" : _chip,
 		"model" : _model,
 		"targetProduct" : _tp,
-		"coocaaVersion" : _coocaa,
 		"androidVersion" : _android,
 		"soc" : _soc,
 		"EMMC" : _emmc,

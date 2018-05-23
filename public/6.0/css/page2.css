@@ -38,7 +38,7 @@
 
 .CJJ-Table thead{
     border-bottom: 1px solid #ccc;
-    background: #f2f2f2;
+    background: #42A3E7;
 }
 
 .CJJ-Table thead th{
@@ -48,10 +48,17 @@
 
 .CJJ-Table tbody td{
     text-align: center;
+    max-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .CJJ-Table tbody tr{
     border-bottom: 1px dashed #d9d9d9;
+}
+.CJJ-Table tbody tr:nth-child(even) {
+    background-color: #CFEEE9;
 }
 
 .CJJ-Table tbody tr:hover{
@@ -296,12 +303,44 @@
 }
 #myEditEnsureDiv,#myAddEnsureDiv{
 	position: absolute;
-    top: 100px;
+    top: 55px;
     padding-right: 0px;
     display: none;
-    max-height: 350px;
+    max-height: 370px;
     overflow: auto;
 }
 #txt1,#txt2,#txt3,#txt4{
 	display: none;
+}
+
+#noChangeHistory{
+	text-align: center;
+    font-size: 26px;
+}
+#page2 .modal-footer{
+	text-align: center;
+}
+.target_product{
+	max-width: 100px;
+}
+
+.changetitle{
+	font-size: 24px;
+    color: darkblue;
+}
+#changeContent{
+	font-size: 20px;
+}
+#changeContent,#changeReason{
+	background-color: lavender;
+}
+#changeReason{
+	width: 100%;
+	background-color: lavender;
+	resize: none;
+}
+#searchNoInfo,#areYouSure,#deleteInfo{
+	text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
 }
