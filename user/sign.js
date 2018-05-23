@@ -4,6 +4,7 @@ var utility = require('utility');
 var config = require('../config/config');
 var output = require('../common/output');
 var logger = require('../common/logger');
+var mailer = require('../common/mail');
 var userModel = require('./userModel');
 
 //var user = new User();
@@ -79,5 +80,14 @@ exports.logout = function (req, res, next) {
       //   req.session.logined = false;
       //   output.success(req,res,"登出成功!");
       // });
-    }
+   }
 };
+
+exports.sendMail = function (req, res, next) {
+  let data = req.body.data;
+  console.log(data);
+  mailer.sendActiveMail(data,function(err,data){
+    if (err) return output.error(req,res,"发送邮件失败!");
+    output.success(req,res,"发送邮件成功!");
+  });
+}

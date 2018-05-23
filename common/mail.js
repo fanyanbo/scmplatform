@@ -11,7 +11,7 @@ var async = require('async')
  * Send an email
  * @param {Object} data 邮件对象
  */
-var sendMail = function (data) {
+var sendMail = function (data, callback) {
   logger.info(data);
   // if (config.debug) {
   //   return;
@@ -30,9 +30,10 @@ var sendMail = function (data) {
     });
   }, function (err) {
     if (err) {
-      return logger.error('send mail finally error', err, data);
+      return callback(err, null);
     }
-    logger.info('send mail success', data)
+    //logger.info('send mail success', data)
+    callback(null,'send mail success');
   })
 };
 exports.sendMail = sendMail;
@@ -43,25 +44,31 @@ exports.sendMail = sendMail;
  * @param {String} token 重置用的token字符串
  * @param {String} name 接收人的用户名
  */
-exports.sendActiveMail = function (who, token, name) {
-  logger.info(who);
+exports.sendActiveMail = function (data, who, token, name, callback) {
+  let _from = data.from;
+  let _to = data.to;
+  let _subject = data.subject;
+  let _html = data.desc;
+
   var from    = util.format('%s <%s>', config.name, config.mail_opts.auth.user);
-  var to      = who;
-  var cc      = "fanyanbo@skyworth.com"; //add by fyb
-  var subject = config.name + '帐号激活';
-  var html    = '<p>您好：' + name + '</p>' +
-    '<p>我们收到您在' + config.name + '的注册信息，请点击下面的链接来激活帐户：</p>' +
-    '<a href  = "' + SITE_ROOT_URL + '/active_account?key=' + token + '&name=' + name + '">激活链接</a>' +
-    '<p>若您没有在' + config.name + '填写过注册信息，说明有人滥用了您的电子邮箱，请删除此邮件，我们对给您造成的打扰感到抱歉。</p>' +
-    '<p>' + config.name + ' 谨上。</p>';
+  var to      = _to;
+  var cc      = _from;
+  var subject = _subject;
+  var html    = _html;
+  // var subject = config.name + '帐号激活';
+  // var html    = '<p>您好：' + name + '</p>' +
+  //   '<p>我们收到您在' + config.name + '的注册信息，请点击下面的链接来激活帐户：</p>' +
+  //   '<a href  = "' + SITE_ROOT_URL + '/active_account?key=' + token + '&name=' + name + '">激活链接</a>' +
+  //   '<p>若您没有在' + config.name + '填写过注册信息，说明有人滥用了您的电子邮箱，请删除此邮件，我们对给您造成的打扰感到抱歉。</p>' +
+  //   '<p>' + config.name + ' 谨上。</p>';
 
   exports.sendMail({
     from: from,
     to: to,
-    cc: cc, // add by fyb
+    cc: cc,
     subject: subject,
     html: html
-  });
+  }, callback);
 };
 
 /**
@@ -88,4 +95,4 @@ exports.sendResetPassMail = function (who, token, name) {
   });
 };
 
-exports.sendActiveMail("linxinwang@skyworth.com","aaa","linxinwang");
+//exports.sendActiveMail("linxinwang@skyworth.com","aaa","linxinwang");

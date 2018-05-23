@@ -68,11 +68,11 @@ var config = {
     port: 465,
     auth: {
       user: 'fanyanbo@skyworth.com',
-      pass: 'fyb.1117'
+      pass: 'fyb.1119'
     },
     tls: {rejectUnauthorized: false},
     debug:true
-    //ignoreTLS: true,
+  //  ignoreTLS: true,
   },
 
   // oneapm 是个用来监控网站性能的服务
