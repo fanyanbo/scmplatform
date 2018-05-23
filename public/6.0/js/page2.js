@@ -54,8 +54,7 @@ function productQuery() {
 				handleTableData(arr);
 			}
 		}
-		var node1 = '{}';
-		sendHTTPRequest(coocaaVersion+"/device/queryAll", node1 , targetproductQueryResult);
+		sendHTTPRequest(coocaaVersion+"/device/queryAll", '{}' , targetproductQueryResult);
 	}
 }
 
@@ -324,7 +323,7 @@ function checkInArray(id,value){}
 function changeMKByTP(id, value) {
 	console.log(id + "-----" + value);
 	var node = '{"targetproduct":"' + value + '"}';
-	sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
+	sendHTTPRequest(coocaaVersion+"/product/queryMKByTp", node, getMKByTPResult);
 }
 
 function getMKByTPResult() {
@@ -450,37 +449,18 @@ function buttonInit() {
 		page2Fresh()
 	});
 	$("#myEditEnsure").click(function() {
-		console.log("修改提示框的确定按钮");
-		//获取基本项、config、MK、系统设置的值
-		var _base = getBaseValue();
-		var _config = getConfigValue();
-		var _sys = getSysValue();
-		_base = JSON.stringify(_base);
-		_config = JSON.stringify(_config);
-		_sys = JSON.stringify(_sys);
-		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
-		console.log(node);
-		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
+		console.log("修稿配置项的提交");
+		myEditorAddSubmit(1);
 	});
 	$("#myAddEnsure").click(function() {
-		console.log("新增提示框的确定按钮");
-		var _base = getBaseValue();
-		var _config = getConfigValue();
-		var _sys = getSysValue();
-		_base = JSON.stringify(_base);
-		_config = JSON.stringify(_config);
-		_sys = JSON.stringify(_sys);
-		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
-		console.log(node);
-		sendHTTPRequest(coocaaVersion+"/product/add", node, productAddResult);
+		console.log("新增配置项的提交");
+		myEditorAddSubmit(2);
 	});
 	
 	$("#myAddCancle").click(function(){
-		console.log("取消");
 		$("#myAddEnsureDiv").css("display","none");
 	});
 	$("#myAddEnsureX").click(function(){
-		console.log("取消");
 		$("#myAddEnsureDiv").css("display","none");
 	});
 }
@@ -545,6 +525,7 @@ function buttonInitAfter() {
 		//document.getElementById("loading").style.display = "block";
 	});
 	$("#page1_close1").click(function() {
+		document.getElementById("descriptTbody").innerHTML = "";
 		$("#page1_examine").modal('hide');
 	});
 	$("#page1_close2").click(function() {
@@ -1206,11 +1187,13 @@ function productHistoryAdd(){
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				console.log("日志数据提交成功");
+				console.log("日志数据提交成功,发送邮件");
 				document.getElementById("myEditEnsureDiv").style.display = "none";
-				page2Fresh();
+				//page2Fresh();
 			}
 		}
+		var type = $("#lable1SubmitTwo").attr("catagory");
+		console.log(type);
 	}
 }
 
@@ -1230,6 +1213,15 @@ function productHistoryQuery(){
 					$("#noChangeHistory").html(" ");
 					$("#noChangeHistory").css("display","none");
 					for (var i=0; i<data.resultData.length; i++) {
+						var _state = "";
+						if (data.resultData[i].state == 0) {
+							_state = "审核通过";
+						} else if(data.resultData[i].state == 1){
+							_state = "待审核";
+						} else if(data.resultData[i].state == 2){
+							_state = "审核不通过";
+						}
+						
 						var _row = document.getElementById("descriptTbody").insertRow(0);
 						var _cell0 = _row.insertCell(0);
 						_cell0.innerHTML = data.resultData[i].content;
@@ -1237,7 +1229,7 @@ function productHistoryQuery(){
 						_cell1.innerHTML = data.resultData[i].reason;
 						var _cell2 = _row.insertCell(2);
 						_cell2.style.textAlign = "center";
-						_cell2.innerHTML = data.resultData[i].state;
+						_cell2.innerHTML = _state;
 						var _cell3 = _row.insertCell(3);
 						_cell3.style.textAlign = "center";
 						_cell3.innerHTML = data.resultData[i].userName;
@@ -1340,7 +1332,22 @@ function changeDevice(obj){
     }
 }
 
-
+function myEditorAddSubmit(num){
+	//获取基本项、config、MK、系统设置的值
+	var _base = getBaseValue();
+	var _config = getConfigValue();
+	var _sys = getSysValue();
+	_base = JSON.stringify(_base);
+	_config = JSON.stringify(_config);
+	_sys = JSON.stringify(_sys);
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+	console.log(node);
+	if (num == 1) {
+		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
+	} else if(num == 2){
+		sendHTTPRequest(coocaaVersion+"/product/add", node, productAddResult);
+	}
+}
 
 
 

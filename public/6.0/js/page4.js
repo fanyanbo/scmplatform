@@ -166,6 +166,13 @@ function buttonInitBefore(){
 	$("#oButtonX").click(function() {
 		$("#mydialog").css("display","none");
 	});
+	$("#page4_close1").click(function() {
+		document.getElementById("descriptTbody").innerHTML = "";
+		$("#page4_examine").modal('hide');
+	});
+	$("#page4_close2").click(function() {
+		$("#page4_examine").modal('hide');
+	});
 }
 function colorstatus(number){
 	for(var k = 0; k < $(".page4_tabs").length; k++) {
@@ -183,6 +190,14 @@ function buttonInitAfter(){
 		console.log($("#page4_table2 .chip")[_Index].innerHTML);
 		console.log($("#page4_table2 .model")[_Index].innerHTML);
 		
+		
+		$("#page4_check_chip").html($("#page4_table2 .chip")[_Index].innerHTML);
+		$("#page4_check_model").html($("#page4_table2 .model")[_Index].innerHTML);
+		$("#page4_check_targetProduct").html($("#page4_table2 .target_product")[_Index].innerHTML);
+		$('#page4_examine').modal();
+		
+		var node = '{"chip":"'+$("#page4_table2 .chip")[_Index].innerHTML+'","model":"'+$("#page4_table2 .model")[_Index].innerHTML+'"}';
+		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
 	});
 	$("#ReviewCat").click(function() {
 		console.log("点击了审核页面的预览");
@@ -219,7 +234,7 @@ function buttonInitAfter(){
         console.log(_type +"----"+_state);
         if (_type == 1) {
         	if (level == 1) {
-		        freshReviewHtml(1);
+		        page4fresh(1);
 		    }else{
 		        document.getElementById("mydialog").style.display = "block";
 		        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
@@ -273,12 +288,12 @@ function buttonInitAfter(){
 	$("#myEditEnsureX").click(function() {
 		console.log("修改提示框的X按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		freshReviewHtml(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+		page4fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
 	});
 	$("#myEditCancle").click(function() {
 		console.log("修改提示框的取消按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		freshReviewHtml(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+		page4fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
 	});
 	$("#myEditEnsure").click(function() {
 		console.log("修改提示框的确定按钮");
@@ -304,7 +319,7 @@ function setreviewInfo(){
             	console.log("success");
             	$("#page4Modal1").modal('hide');
             	$("#mydialog").css("display","none");
-            	freshReviewHtml(2);
+            	page4fresh(2);
             }
 		};
 	}
@@ -550,7 +565,7 @@ function getRecoverProductInfo(){
             	console.log("数据返回成功");
             	document.getElementById("mydialog").style.display = "none";
 				document.getElementById("myDeleteModalLabel").style.display = "none";
-				freshReviewHtml(2);
+				page4fresh(2);
             }
         };
     }
@@ -790,6 +805,8 @@ function editIssue(){
 //点击编辑提交的函数
 function reviewEdit(){
 	console.log("lxw " + loginusername + "--" + level);
+	$("#page4Modal1").modal("hide");
+	page4fresh(2);
 }
 //点击预览
 function getPreviewInfo(){
@@ -1000,7 +1017,74 @@ function productHistoryAdd(){
 			console.log(data);
 			if(data.resultCode == "0") {
 				console.log("日志数据提交成功");
-				freshReviewHtml(1);
+				page4fresh(1);
+			}
+		}
+	}
+}
+function productHistoryQuery(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("数据查询成功");
+				if (data.resultData.length == 0) {
+					$("#contenttable").css("display","none");
+					$("#noChangeHistory").css("display","block");
+					$("#noChangeHistory").html("该产品没有修改历史。");
+				} else{
+					$("#contenttable").css("display","block");
+					$("#noChangeHistory").html(" ");
+					$("#noChangeHistory").css("display","none");
+					for (var i=0; i<data.resultData.length; i++) {
+						var _state = "";
+						if (data.resultData[i].state == 0) {
+							_state = "审核通过";
+						} else if(data.resultData[i].state == 1){
+							_state = "待审核";
+						} else if(data.resultData[i].state == 2){
+							_state = "审核不通过";
+						}
+						var _desc = "";
+						var _content = data.resultData[i].content;
+						_content = JSON.parse(_content);
+						var _devArray,_addArray,_deleteArray,_confArray = "";
+						
+						var _devArray = _content.changeDev;//.splice(",")
+						var _addArray = _content.changeAdd;//.splice(",")
+						var _deleteArray = _content.changeReduce;//.splice(",")
+						var _confArray = _content.changeConf;//.splice(",")
+						console.log(_content);
+						console.log(_devArray.length);
+						console.log(_addArray.length);
+						console.log(_deleteArray.length);
+						console.log(_confArray.length);
+						if (_devArray.length != 0) {
+							_desc += "<span>修改了基本项"+_devArray+"</span><br/>";
+						}if (_addArray.length != 0) {
+							_desc += "<span>新增了"+_addArray+"项</span><br/>";
+						}if (_deleteArray.length != 0) {
+							_desc += "<span>删除了"+_deleteArray+"项</span><br/>";
+						}if (_confArray.length != 0) {
+							_desc += "<span>修改了Config项"+_confArray+"</span><br/>";
+						}
+						var _row = document.getElementById("descriptTbody").insertRow(0);
+						var _cell0 = _row.insertCell(0);
+						_cell0.innerHTML = _desc;
+						var _cell1 = _row.insertCell(1);
+						_cell1.innerHTML = data.resultData[i].reason;
+						var _cell2 = _row.insertCell(2);
+						_cell2.style.textAlign = "center";
+						_cell2.innerHTML = _state;
+						var _cell3 = _row.insertCell(3);
+						_cell3.style.textAlign = "center";
+						_cell3.innerHTML = data.resultData[i].userName;
+						var _cell4 = _row.insertCell(4);
+						_cell4.style.textAlign = "center";
+						_cell4.innerHTML = data.resultData[i].modifyTime;
+					}
+				}
 			}
 		}
 	}
@@ -1192,7 +1276,7 @@ function scrollTopStyle(name){
 	parent.document.getElementById("homePage").scrollTop = 0;
 }
 //刷新当前iframe
-function freshReviewHtml(num) {
+function page4fresh(num) {
     var htmlObject = parent.document.getElementById("tab_userMenu4");
     var htmlObject2 = parent.document.getElementById("tab_userMenu5");
     var htmlObject3 = parent.document.getElementById("tab_userMenu2");

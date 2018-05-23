@@ -1,7 +1,5 @@
 var xmlhttp = null;
 function sendHTTPRequest(url, data, func) {
-	console.log(url);
-	console.log(data);
     if (xmlhttp == null) {
         if (window.XMLHttpRequest) {
             xmlhttp = new XMLHttpRequest();

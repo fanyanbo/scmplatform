@@ -177,4 +177,17 @@
 	display: block;
     margin: 0 auto;
 }
+.myModalErrorInfo{
+    margin-left: 20%;
+    margin-top: -30px;
+    width: 60%;
+    height: 30px;
+    font-size: 24px;
+    overflow: hidden;
+    text-align: center;
+    color: red;
+    line-height: 32px;
+    margin-bottom: 0px;
+    display: none;
+}
     

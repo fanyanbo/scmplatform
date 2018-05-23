@@ -1,6 +1,9 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
 var coocaaVersion = "/v6.0";
+var autoDataArray1 = new Array();
+var autoDataArray2 = new Array();
+var autoDataArray3 = new Array();
 
 $(function() {
 	$(".page_boxes")[0].style.display = "block";
@@ -25,15 +28,18 @@ function QueryResult(){
 				
 				for (var i=0; i<data.resultData[0].length; i++) {
 					page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachchipa" part="1" name="'+data.resultData[0][i].name+'" title="'+data.resultData[0][i].name+'">'+data.resultData[0][i].name+'</a></div>';
+					autoDataArray1.push(data.resultData[0][i].name);
 				}
 				for (var i=0; i<data.resultData[1].length; i++) {
 					page6ModelTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachmodela" part="2" name="'+data.resultData[1][i].name+'" title="'+data.resultData[1][i].name+'">'+data.resultData[1][i].name+'</a></div>';
+					autoDataArray2.push(data.resultData[1][i].name);
 				}
 				for (var i=0; i<data.resultData[2].length; i++) {
 					page6TpTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachtpa" part="4" name="'+data.resultData[2][i].name+'" title="'+data.resultData[2][i].name+'">'+data.resultData[2][i].name+'</a></div>';
 				}
 				for (var i=0; i<data.resultData[3].length; i++) {
 					page6SocTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachsoca" part="3" name="'+data.resultData[3][i].name+'" title="'+data.resultData[3][i].name+'">'+data.resultData[3][i].name+'</a></div>';
+					autoDataArray3.push(data.resultData[3][i].name);
 				}
 			}
 		}
@@ -75,7 +81,7 @@ function page6ButtonInitBefore() {
 				document.getElementById("lableText").innerHTML = "输入新增芯片型号名称：";
 			}
 			$('#page6Modal').modal();
-			$("#page6Submit").attr("oldValue"," ");
+			$("#page6Submit").attr("oldValue","");
 			document.getElementById("page6Container").value = "";
 		}
 		$(".modal-backdrop").addClass("new-backdrop");
@@ -102,100 +108,39 @@ function page6ButtonInitBefore() {
 		console.log("点击了TP的提交");
 		tpsubmit();
 	});
+	$("#page6ModeClose").click(function(){
+		document.getElementById("page6Container").value = "";
+		$("#page6Modal").modal("hide");
+	});
 }
 
 function page6ButtonInitAfter(){
 	var _eachAIndex = "";
 	var _curPart = "";
-	$(".myeacha").click(function(){
-		_eachAIndex = $(".myeacha").index($(this));
-		_curPart = $(".myeacha:eq(" + _eachAIndex + ")").attr("part");
-		console.log(_curPart);
-		$('#page6Modal').modal(); //显示新建与编辑机芯机型时的弹框
-		$(".modal-backdrop").addClass("new-backdrop");
-		$("#page6Submit").attr("oldValue",$(".myeacha:eq(" + _eachAIndex + ")").attr("name"));
-		var thisEnName = $(".myeacha")[_eachAIndex].title;
-		var thisEnNameCut = "";
-		if(thisEnName.length>10){
-			thisEnNameCut = thisEnName.substring(0,10)+"...";  
-		}else{
-			thisEnNameCut = thisEnName;
-		}
-		if(_curPart == 1){
-			$("#lableText").html("将机芯 <span title='"+thisEnName+"'>"+thisEnNameCut+"</span> 的名称改为：");
-		}else if(_curPart == 2){
-			$("#lableText").html("将机型 <span title='"+thisEnName+"'>"+thisEnNameCut+"</span> 的名称改为：");
-		}else if(_curPart == 3){
-			$("#lableText").html("将芯片型号 <span title='"+thisEnName+"'>"+thisEnNameCut+"</span> 的名称改为：");
-		}
-	});
-	
 	$(".myeachtpa").click(function(){
 		var _index = $(".myeachtpa").index($(this));
 		editTPmodal(_index);
 	});
 	$(".myeachchipa").click(function(){
 		var _index = $(".myeachchipa").index($(this));
-		editChipmodal(_index);
+		editpage4Modal(1,_index,$(".myeachchipa"),"机芯");
 	});
 	$(".myeachmodela").click(function(){
 		var _index = $(".myeachmodela").index($(this));
-		editModelmodal(_index);
+		editpage4Modal(2,_index,$(".myeachmodela"),"机型");
 	});
 	$(".myeachsoca").click(function(){
 		var _index = $(".myeachsoca").index($(this));
-		editSocmodal(_index);
+		editpage4Modal(3,_index,$(".myeachsoca"),"芯片型号");
 	});
-	
-	
 	$("#page6Submit").click(function(){
-		var _curPart2 = $("#page6Submit").attr("part1");
 		var _oldValue = $("#page6Submit").attr("oldValue");
 		var _newValue = $("#page6Container").val();
-		console.log(_oldValue+"-------------"+_newValue);
-		console.log(_curPart2+"-------------"+_oldValue.length);
-		var node5 = '';
-		if(_curPart2 == 1){
-			if (_oldValue.length>1) {
-				console.log("修改+机芯+提交");
-				node5 = '{"newValue":"'+_newValue+'","oldValue":"'+_oldValue+'"}';
-				console.log(node5);
-				sendHTTPRequest(coocaaVersion+"/chip/update", node5, addOrChangeResult);
-			} else{
-				console.log("新增+机芯+提交"+_newValue);
-				node5 = '{"name":"'+_newValue+'"}';
-				console.log(node5);
-				sendHTTPRequest(coocaaVersion+"/chip/add", node5, addOrChangeResult);
-			}
-		}else if(_curPart2 == 2){
-			if (_oldValue.length>1) {
-				console.log("修改+机型+提交");
-				node5 = '{"newValue":"'+_newValue+'","oldValue":"'+_oldValue+'"}';
-				console.log(node5);
-				sendHTTPRequest(coocaaVersion+"/model/update", node5, addOrChangeResult);
-			} else{
-				console.log("新增+机型+提交");
-				node5 = '{"name":"'+_newValue+'"}';
-				console.log(node5);
-				sendHTTPRequest(coocaaVersion+"/model/add", node5, addOrChangeResult);
-			}
-		}else if(_curPart2 == 3){
-			if (_oldValue.length>1) {
-				console.log("修改+芯片型号+提交");
-				node5 = '{"newValue":"'+_newValue+'","oldValue":"'+_oldValue+'"}';
-				console.log(node5);
-				sendHTTPRequest(coocaaVersion+"/soc/update", node5, addOrChangeResult);
-			} else{
-				console.log("新增+芯片型号+提交");
-				node5 = '{"name":"'+_newValue+'"}';
-				console.log(node5);
-				sendHTTPRequest(coocaaVersion+"/soc/add", node5, addOrChangeResult);
-			}
-		}
+		var _curPart1 = $("#page6Submit").attr("part1");
+		var _curPart2 = _oldValue.length;
+		page6SubmitState(_oldValue,_newValue,_curPart1,_curPart2);
 	});
 }
-
-
 
 function addOrChangeResult(){
 	if(this.readyState == 4) {
@@ -326,6 +271,7 @@ function resetAllInfo(){
 function editTPmodal(num){
 	$('#page6Modal2').modal(); //显示新建与编辑机芯机型时的弹框
 	$(".modal-backdrop").addClass("new-backdrop");
+	$('#page6Container').html("");
 	$('#page6Modal2').attr("status","2");
 	var thisEnName = $(".myeachtpa")[num].title;
 	var thisEnNameCut = "";
@@ -337,27 +283,68 @@ function editTPmodal(num){
 	console.log(thisEnName);
 	document.getElementById("page6_TP").value = thisEnName;
 	var node = '{"targetproduct":"' + thisEnName + '"}';
-	sendHTTPRequest(coocaaVersion+"/product/queryBytp", node, getMKByTPResult);
+	sendHTTPRequest(coocaaVersion+"/product/queryMKByTp", node, getMKByTPResult);
 }
 
-function editChipmodal(num){
-	var thisEnName = $(".myeachchipa")[num].name;
-	console.log("修改"+thisEnName+"的基本信息");
-	
+function editpage4Modal(type,num,obj,name){
+	$('#page6Modal').modal(); //显示新建与编辑机芯机型时的弹框
+	$(".modal-backdrop").addClass("new-backdrop");
+	$("#page6Submit").attr("oldValue",obj[num].title);
+	var thisEnName = obj[num].title;
+	var thisEnNameCut = "";
+	if(thisEnName.length>10){
+		thisEnNameCut = thisEnName.substring(0,10)+"...";  
+	}else{
+		thisEnNameCut = thisEnName;
+	}
+	$("#lableText").html("将"+name+"<span title='"+thisEnName+"'>"+thisEnNameCut+"</span> 的名称改为：");
+	$("#lableText").html("将"+name+"<span title='"+thisEnName+"'>"+thisEnNameCut+"</span> 的名称改为：");
+	$("#lableText").html("将"+name+"<span title='"+thisEnName+"'>"+thisEnNameCut+"</span> 的名称改为：");
 }
 
-function editModelmodal(num){
-	var thisEnName = $(".myeachmodela")[num].name;
-	console.log("修改"+thisEnName+"的基本信息");
-	
+function page6SubmitState(oValue,nValue,part1,part2){
+	var _index1 = autoDataArray1.indexOf(nValue);
+	var _index2 = autoDataArray2.indexOf(nValue);
+	var _index3 = autoDataArray3.indexOf(nValue);
+	console.log(_index1+"|||"+_index2+"|||"+_index3);
+	if (part2>0) {
+		if (oValue == nValue) {
+			$("#chipMangInfo").css("display","block");
+			$("#chipMangInfo").html("该名称前后未做更改。");
+			setTimeout("document.getElementById('chipMangInfo').style.display = 'none';", 3000);
+		}else{
+			if (_index1!=-1||_index2!=-1||_index3!=-1) {
+				$("#chipMangInfo").css("display","block");
+				$("#chipMangInfo").html("该名称已经存在。");
+				setTimeout("document.getElementById('chipMangInfo').style.display = 'none';", 3000);
+			} else{
+				var node = '{"newValue":"'+nValue+'","oldValue":"'+oValue+'"}';
+				if (part1 == 1) {
+					console.log("修改+机芯+提交");
+					sendHTTPRequest(coocaaVersion+"/chip/update", node, addOrChangeResult);
+				} else if(part1 == 2) {
+					console.log("修改+机型+提交");
+					sendHTTPRequest(coocaaVersion+"/model/update", node, addOrChangeResult);
+				} else if(part1 == 3){
+					console.log("修改+芯片型号+提交");
+					sendHTTPRequest(coocaaVersion+"/soc/update", node, addOrChangeResult);
+				}
+			}
+		}
+	} else{
+		var node = '{"name":"'+nValue+'"}';
+		if (part1 == 1) {
+			console.log("新增+机芯+提交");
+			sendHTTPRequest(coocaaVersion+"/chip/add", node, addOrChangeResult);
+		} else if(part1 == 2) {
+			console.log("新增+机型+提交");
+			sendHTTPRequest(coocaaVersion+"/model/add", node, addOrChangeResult);
+		} else if(part1 == 3){
+			console.log("新增+芯片型号+提交");
+			sendHTTPRequest(coocaaVersion+"/soc/add", node, addOrChangeResult);
+		}
+	}
 }
-
-function editSocmodal(num){
-	var thisEnName = $(".myeachsoca")[num].name;
-	console.log("修改"+thisEnName+"的基本信息");
-	
-}
-
 
 /*刷新页面*/
 function page6freshHtml() {

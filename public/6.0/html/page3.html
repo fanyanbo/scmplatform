@@ -52,7 +52,7 @@
 							<div class="modal-header">
 								<span id="page3_title" style="font-size: 18px;">新增TP的名称</span>&nbsp;<input id="page3_TP" type="text" value="">
 								<h4 id="page3Modal1ErrorInfo" class="myModalErrorInfo"></h4>
-								<button type="button" class="btn btn-primary" style="position: absolute;right: 10px;top: 9px;" data-dismiss="modal">关闭</button>
+								<button type="button" id="page3_tp_close" class="btn btn-primary" style="position: absolute;right: 10px;top: 9px;">关闭</button>
 								<button type="button" id="page3_tp_submit" class="btn btn-primary" style="position: absolute;right: 70px;top: 9px;">提交</button>
 							</div>
 							<div class="modal-body">
@@ -65,7 +65,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-xs-10" id="myEditEnsureDiv" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel">
+					<div class="col-xs-10 col-xs-push-1" id="myEditEnsureDiv" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel">
 						<div class="modal-delete" role="document">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -73,15 +73,8 @@
 									<h4 class="modal-title text-left" id="myAddModalLabel">编辑</h4>
 								</div>
 								<div class="modal-body">
-									<div>修改该TargetProduct项，会影响到如下产品，确认要修改吗？</div>
-									<div id="productName">
-										<div class="col-lg-4">1</div>
-										<div class="col-lg-4">2</div>
-										<div class="col-lg-4">3</div>
-										<div class="col-lg-4">4</div>
-										<div class="col-lg-4">5</div>
-										<div class="col-lg-4">6</div>
-									</div>
+									<div id="tptochipmodel">修改该TargetProduct项，会影响到如下产品，确认要修改吗？</div>
+									<div id="productName"></div>
 								</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-primary" id="myEditEnsure">确定</button>
@@ -91,6 +84,7 @@
 						</div>
 					</div>
 				</div>
+				
 				<!--<div id="noList">当前没有符合查询条件的文件！！</div>-->
 			</fieldset>
 		</div>
