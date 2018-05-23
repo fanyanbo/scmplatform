@@ -5,7 +5,7 @@ var _twoLevelLinkageArrayTwo = [[],[],[],[]];
 var _twoLevelLinkageArrayThree = [[],[],[],[]];
 var _myArray = [];
 
-var coocaaVersion = "/6.0";
+var coocaaVersion = "/v6.0";
 
 $(function() {
 	$(".page7_boxes")[0].style.display = "block";
@@ -28,7 +28,7 @@ function buttonInitBefore() {
 			$('#page7_config').modal();
 			$("#configSubmit").attr("hidedata", 1);
 			$("#configSubmit").attr("oldValue", "null");
-			clearConfigPart();
+			clearConfigPart(1);
 		} else if(_bIndex == 1 || _bIndex == 2 || _bIndex == 3 || _bIndex == 4) {
 			console.log("点击系统设置大项的新增按钮");
 			$('#page7_sys').modal();
@@ -131,7 +131,6 @@ function buttonInitAfter() {
 		_aIndex = $(".page7_a").index($(this));
 		_cHidedata = $(this).attr("hidedata");
 		_aPart = $(this).attr("part");
-		
 		eachPartChange(_aPart, _cHidedata);
 	});
 
@@ -198,14 +197,14 @@ function eachPartChange(part, data) {
 		$('#page7_config').modal();
 		$("#configSubmit").attr("hidedata", 2);
 		$("#configSubmit").attr("oldValue", data);
-		clearConfigPart();
+		clearConfigPart(2);
 		editConfigModel(data);
 	} else if(part == 1 || part == 2 || part == 3 || part == 4) {
 		console.log("系统设置子项的修改");
 		$('#page7_sys').modal();
-		$("#sysSubmit").attr("hidedata", 1);
+		$("#sysSubmit").attr("hidedata", 2);
 		$("#sysSubmit").attr("tabindex", part);
-		$("#sysSubmit").attr("oldValue", "null");
+		$("#sysSubmit").attr("oldValue", data);
 		editEachSelect(part);
 		clearSysPart(part);
 		editSysModel(part, data);
@@ -324,7 +323,17 @@ function editMKModel(data) {
 	};
 }
 
-function clearConfigPart() {
+function clearConfigPart(num) {
+//	if (num == 1) {
+//		
+//	} else if(num == 2){
+//		$("#configCName").attr("onchange","changeConfig(this)");
+//		$("#configCName").attr("oldvalue","0");
+//      $("#configInstr").attr("onchange","changeConfig(this)");
+//      $("#configInstr").attr("oldvalue","0");
+//      $("#configString").attr("onchange","changeConfig(this)");
+//		$("#configString").attr("oldvalue","0");
+//	}
 	document.getElementById("configCName").value = "";
 	document.getElementById("configEName").value = "";
 	document.getElementById("configEName").removeAttribute('disabled');
@@ -497,7 +506,7 @@ function saveInSys() {
 			//sendHTTPRequest(coocaaVersion+"/module/add", node, returnMKAddInfo);
 		} else {
 			console.log("lxw sys 修改");
-			_oldValue3 = JSON.parse(_oldValue3);
+			_oldValue2 = JSON.parse(_oldValue2);
 			var node = '{"engName":"' + newSysEName + '","cnName":"' + newSysCName + '","level1":"' + newSysSelect1 + '","level2":"' + newSysSelect2 + '","level3":"' + newSysSelect3 + '","desc":"' + newSysInstr + '"}';
 			console.log("lxw " + node);
 			//sendHTTPRequest(coocaaVersion+"/module/update", node, returnMKAddInfo);

@@ -4,7 +4,7 @@ var adminFlag = null; //访问session之后存取管理员标志位
 var loginusername = null; //访问session之后存取登录用户名
 var loginEmail = null; //当前用户的邮箱地址
 var loginStatus = null;
-var coocaaVersion = "/6.0";
+var coocaaVersion = "/v6.0";
 
 $(function() {
 	sendHTTPRequest("/verify", '{}', loginResult);
@@ -51,9 +51,12 @@ function loginResult() {
 				document.getElementById("indexUserName").innerHTML = loginusername;
 				if(data.resultData.level == "1") {
 					adminFlag = 1; //非管理员标志位                
-					$("#adminVisible")[0].style.display = "none";
+					$("#adminVisible1").css("display","none");
+					$("#adminVisible2").css("display","none");
 				} else if(data.resultData.level == "0") {
 					adminFlag = 0;
+					$("#adminVisible1").css("display","block");
+					$("#adminVisible2").css("display","block");
 				}
 			} else {
 				console.log("未登录");

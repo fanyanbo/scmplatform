@@ -19,7 +19,7 @@ var changeReduce = [];
 var changeConf = [];
 var changeDev = [];
 
-var coocaaVersion = "/6.0";
+var coocaaVersion = "/v6.0";
 
 $(function() {
 	level = parent.adminFlag;
@@ -55,22 +55,22 @@ function handleTableData(arr) {
 	console.log("level= "+ level + "loginusername = " +loginusername + "fromEmail = " + fromEmail);
 	for(var i = 0; i < arr.length; i++) {
 		var eachItem2 = {
-			"number": "0",
-			"model": "G7200",
-			"chip": "8H81",
-			"target_product": "123123",
-			"chipmodel": "123",
-			"AndroidVersion": "6.0",
-			"memory": "1.5G",
-			"type": "1",
-			"author": "林心旺",
+			"number": "",
+			"model": "",
+			"chip": "",
+			"target_product": "",
+			"chipmodel": "",
+			"AndroidVersion": "",
+			"memory": "",
+			"type": "",
+			"author": "",
 			"reason": "<span class='eachlook'>查看</a>",
-			"operate": "<span class='eachedit'>编辑</span><span class='eachaudit'>审核</span>"
+			"operate": ""
 		};
 		//auditState(0审核通过\1待审核\2审核未通过
 		//modifyState(0正常\1修改\2增加\3删除)
 		var operateType = arr[i].modifyState;
-		var	userName = "fanyanbo";
+		var	userName = loginusername;
 		eachItem2.number = (i+1);
 		eachItem2.model = arr[i].model;
 		eachItem2.chip = arr[i].chip;
@@ -78,6 +78,7 @@ function handleTableData(arr) {
 		eachItem2.chipmodel = arr[i].soc;
 		eachItem2.AndroidVersion = arr[i].androidVersion;
 		eachItem2.memory = arr[i].memorySize;
+		eachItem2.author = arr[i].userName;
 		if (operateType == 0) {
 			eachItem2.type = "正常";
 		} else if(operateType == 1){
@@ -88,7 +89,7 @@ function handleTableData(arr) {
 			eachItem2.type = "删除";
 		}
 		if (level == 0) {
-            if (userName == loginusername) {
+            if (eachItem2.author == loginusername) {
                 if (operateType == 3) {
                 	//管理员&&是提交者&&删除
                 	eachItem2.operate = "<span class='eachaudit' onclick='review(this,1,3)'>审核</span><span class='eachedit' onclick='recover(this,"+operateType+")'>恢复</span>";
@@ -102,7 +103,7 @@ function handleTableData(arr) {
             }
             getdataArray2.push(eachItem2);
         }else{
-        	if (userName == loginusername) {
+        	if (eachItem2.author == loginusername) {
 		        if (operateType == 3) {
 		        	//非管理员&&是提交者&&删除
 		        	eachItem2.operate = "<span class='eachedit' onclick='recover(this,"+operateType+")'>恢复</span>";
@@ -131,6 +132,9 @@ function pageTableInit(data1) {
 		'url': data1 //数据源 必填
 	});
 	editStatusByLength(data1.length);
+}
+function reloadClick(){
+	console.log("in reloadClick");
 	buttonInitAfter();
 }
 function editStatusByLength(num){
@@ -158,6 +162,9 @@ function buttonInitBefore(){
 	});
 	$("#lable4GitBranch").keyup(function(event) {
 		autoComplete2.start(event);
+	});
+	$("#oButtonX").click(function() {
+		$("#mydialog").css("display","none");
 	});
 }
 function colorstatus(number){

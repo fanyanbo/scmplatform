@@ -12,7 +12,8 @@ var autogitArray = ["a", "b", "c", "bb", "cb", "bvv", "ca", "bsd", "cfg", "bd", 
 var _twoLevelLinkageArrayOne = [[],[],[],[]];
 var _twoLevelLinkageArrayTwo = [[],[],[],[]];
 var _twoLevelLinkageArrayThree = [[],[],[],[]];
-var _myArray = [];
+
+var _myArray = [];//保存查询到的产品的信息
 
 var changeAdd = [];//保存新增模块信息
 var changeReduce = [];//保存删除模块信息
@@ -24,7 +25,7 @@ var fromEmail = null;
 var adminFlag = null;
 var loginusername = null;
 
-var coocaaVersion = "/6.0";
+var coocaaVersion = "/v6.0";
 
 $(function() {
 	fromEmail = parent.loginEmail;
@@ -49,6 +50,7 @@ function productQuery() {
 						arr.push(data.resultData[i]);
 					}
 				}
+				_myArray = arr;
 				handleTableData(arr);
 			}
 		}
@@ -115,7 +117,26 @@ function pageTableInit(data1) {
 		'pageLength': data1.length, //选填
 		'url': data1 //数据源 必填
 	});
+	editStatusByLength(data1.length);
+}
+function reloadClick(){
+	console.log("in reloadClick");
 	buttonInitAfter();
+}
+function editStatusByLength(num){
+	if (num == 0) {
+		console.log("查询结果为空");
+		$('#page2_table').css("display", "none");
+		$('#searchNoInfo').css("display", "block");
+	} else if (num < 11) {
+		console.log("查询结果个数小于11");
+		$('#page2_table').css("display", "block");
+		$('#searchNoInfo').css("display", "none");
+	}else{
+		console.log("查询结果个数大于11");
+		$('#page2_table').css("display", "block");
+		$('#searchNoInfo').css("display", "none");
+	}
 }
 
 function instantQuery(arr1, arr2, arr3, arr4, arr5) {
@@ -453,6 +474,15 @@ function buttonInit() {
 		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/add", node, productAddResult);
 	});
+	
+	$("#myAddCancle").click(function(){
+		console.log("取消");
+		$("#myAddEnsureDiv").css("display","none");
+	});
+	$("#myAddEnsureX").click(function(){
+		console.log("取消");
+		$("#myAddEnsureDiv").css("display","none");
+	});
 }
 
 function colorstatus(number){
@@ -493,7 +523,7 @@ function buttonInitAfter() {
 		$("#myDeleteModalLabel").text("单项删除");
 		$('#myDeleteModal').modal();
 		$(".modal-backdrop").addClass("new-backdrop");
-		
+		$("#deleteInfo").html("确定要删除"+$(".chip")[_aIndex].innerText+"-"+$(".model")[_aIndex].innerText+"的配置表吗？");
 	});
 	/*单项复制*/
 	$(".eachcopy").click(function() {
@@ -534,13 +564,23 @@ function page2Select() {
 	var oKeyWord = document.getElementById('page2_keyword').value;
 	var oGitBranch = document.getElementById('page2_gitbranch').value;
 
-	var node = "";
 	if(oKeyWord == null || oKeyWord == "") {
-		node = '{"chip":"' + oChip + '","model":"' + oModel + '","soc":"' + oChipid + '","memory":"' + oMemory + '"}';
+		var searchObj = {
+			"chip" : oChip,
+			"model" : oModel,
+			"targetProduct" : oTargetProduct,
+			"memory" : oMemory,
+			"version" : oAndroid,
+			"soc" : oChipid,
+			"EMMC" : oEmmc,
+			"gitBranch" : oGitBranch,
+		}
+		var _search = JSON.stringify(searchObj);
+		var node = '{"data":' + _search + '}';
 		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/queryByRegEx", node, searchResource);
 	} else {
-		node = '{"name":"' + oKeyWord + '"}';
+		var node = '{"name":"' + oKeyWord + '"}';
 		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/queryByModule", node, searchResource);
 	}
@@ -769,14 +809,15 @@ function MKDataInsert(type, arr){
 //	olrplayerid = arr[i].id;
 }
 function SysDataInsert(type, arr){
-	for (var i=0; i<arr.length; i++) {
-		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
-	}
 	if (type == 2) {
 		for (var i=0; i<$(".sysitems").length; i++) {
-			$(".sysitems:eq("+i+")").attr("onchange","changeConfig(this)");
-			$(".sysitems:eq("+i+")").attr("oldvalue",$(".sysitems:eq("+i+")").attr("value"));
+			$(".sysitems:eq("+i+")").attr("onchange","changeSettings(this)");
+			$(".sysitems:eq("+i+")").attr("oldvalue","0");
 		}
+	}
+	for (var i=0; i<arr.length; i++) {
+		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		document.getElementById(arr[i].engName).setAttribute('oldvalue', '1');
 	}
 }
 
@@ -926,8 +967,8 @@ function page2Export() {
 	}
 	_newThead += "</tr></thead>";
 	console.log(_newThead);
-	for(var k = 0; k < data.length; k++) {
-		_newTbodyTr = "<tr><td>" + data[k].model + "</td><td>" + data[k].chip + "</td><td>" + data[k].target_product + "</td><td>" + data[k].chipmodel + "</td><td>" + data[k].AndroidVersion + "</td><td>" + data[k].memory + "</td><td>" + data[k].EMMC + "</td><td>" + data[k].author + "</td><td>" + data[k].time + "</td></tr>";
+	for(var k = 0; k < _myArray.length; k++) {
+		_newTbodyTr = "<tr><td>" + _myArray[k].model + "</td><td>" + _myArray[k].chip + "</td><td>" + _myArray[k].targetProduct + "</td><td>" + _myArray[k].androidVersion + "</td><td>" + _myArray[k].soc + "</td><td>" + _myArray[k].memorySize + "</td><td>" + _myArray[k].EMMC + "</td><td>" + _myArray[k].userName + "</td><td>" + _myArray[k].operateTime + "</td></tr>";
 		_newTbody += _newTbodyTr;
 	}
 	_newTbody += "</tbody>";
@@ -1180,18 +1221,30 @@ function productHistoryQuery(){
 			console.log(data);
 			if(data.resultCode == "0") {
 				console.log("数据查询成功");
-				for (var i=0; i<data.resultData.length; i++) {
-					var _row = document.getElementById("descriptTbody").insertRow(0);
-					var _cell0 = _row.insertCell(0);
-					_cell0.innerHTML = data.resultData[i].content;
-					var _cell1 = _row.insertCell(1);
-					_cell1.innerHTML = data.resultData[i].reason;
-					var _cell2 = _row.insertCell(2);
-					_cell2.innerHTML = data.resultData[i].state;
-					var _cell3 = _row.insertCell(3);
-					_cell3.innerHTML = data.resultData[i].userName;
-					var _cell4 = _row.insertCell(4);
-					_cell4.innerHTML = data.resultData[i].modifyTime;
+				if (data.resultData.length == 0) {
+					$("#contenttable").css("display","none");
+					$("#noChangeHistory").css("display","block");
+					$("#noChangeHistory").html("该产品没有修改历史。");
+				} else{
+					$("#contenttable").css("display","block");
+					$("#noChangeHistory").html(" ");
+					$("#noChangeHistory").css("display","none");
+					for (var i=0; i<data.resultData.length; i++) {
+						var _row = document.getElementById("descriptTbody").insertRow(0);
+						var _cell0 = _row.insertCell(0);
+						_cell0.innerHTML = data.resultData[i].content;
+						var _cell1 = _row.insertCell(1);
+						_cell1.innerHTML = data.resultData[i].reason;
+						var _cell2 = _row.insertCell(2);
+						_cell2.style.textAlign = "center";
+						_cell2.innerHTML = data.resultData[i].state;
+						var _cell3 = _row.insertCell(3);
+						_cell3.style.textAlign = "center";
+						_cell3.innerHTML = data.resultData[i].userName;
+						var _cell4 = _row.insertCell(4);
+						_cell4.style.textAlign = "center";
+						_cell4.innerHTML = data.resultData[i].modifyTime;
+					}
 				}
 			}
 		}
@@ -1199,9 +1252,9 @@ function productHistoryQuery(){
 }
 
 function changeConfig(obj){
-    var x = obj.value;
+	var x = obj.value;
     console.log(x);
-    console.log(obj.getAttribute("oldvalue"))
+    console.log(obj.getAttribute("oldvalue"));
     if(x == obj.getAttribute("oldvalue")){
         Array.prototype.indexOf = function(val) {
             for (var i = 0; i < this.length; i++) {
@@ -1227,17 +1280,18 @@ function changeConfig(obj){
 }
 
 function changeSettings(obj){
+	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
     if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
         // obj.oldvalue = '1';
         obj.setAttribute("oldvalue","1");
-        changeAdd.push(obj.getAttribute("cvalue"));
+        changeAdd.push(obj.getAttribute("cnname"));
         console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
+        console.log("delete"+changeReduce);
     }else if(!(obj.checked) && (obj.getAttribute("oldvalue") == '0')){
         obj.setAttribute("oldvalue","2");
-        changeReduce.push(obj.getAttribute("cvalue"));
+        changeReduce.push(obj.getAttribute("cnname"));
         console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
+        console.log("delete"+changeReduce);
     }else{
         obj.setAttribute("oldvalue","0");
         Array.prototype.indexOf = function(val) {
@@ -1252,10 +1306,10 @@ function changeSettings(obj){
                 this.splice(index, 1);
             }
         };
-        changeReduce.remove(obj.getAttribute("name"));
-        changeAdd.remove(obj.getAttribute("name"));
+        changeReduce.remove(obj.getAttribute("cnname"));
+        changeAdd.remove(obj.getAttribute("cnname"));
         console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
+        console.log("delete"+changeReduce);
     }   
 }
 function changeDevice(obj){

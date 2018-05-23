@@ -1,11 +1,13 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
+var CoocaaVersion = "/v6.5";
+
 $(function() {
 	$(".page_boxes")[0].style.display = "block";
 	$(".page6_tab")[0].style.color = "blue";
 	
 	var node1 = '{}';
-	sendHTTPRequest("/device/queryAll", node1 , QueryResult);
+	sendHTTPRequest(CoocaaVersion+"/device/queryAll", node1 , QueryResult);
 	
 	page6ButtonInitBefore();
 });
@@ -37,7 +39,7 @@ function QueryResult(){
 		}
 		page6ButtonInitAfter();
 		var node = '{}';
-		sendHTTPRequest("/module/queryCategory", node, modelQueryResult);
+		sendHTTPRequest(CoocaaVersion+"/module/queryCategory", node, modelQueryResult);
 	}
 }
 
@@ -57,7 +59,7 @@ function page6ButtonInitBefore() {
 			console.log($('#page6Modal2').attr("hasquery"));
 			if ($('#page6Modal2').attr("hasquery") == "false") {
 				var node = '{}';
-				sendHTTPRequest("/module/queryCategory", node, modelQueryResult);
+				sendHTTPRequest(CoocaaVersion+"/module/queryCategory", node, modelQueryResult);
 			}else{
 				console.log("已经请求过了");
 			}
@@ -144,7 +146,7 @@ function page6ButtonInitAfter(){
 		document.getElementById("page6_TP").value = thisEnName;
 		
 		var node = '{"targetproduct":"' + thisEnName + '"}';
-		sendHTTPRequest("/product/queryBytp", node, getMKByTPResult);
+		sendHTTPRequest(CoocaaVersion+"/product/queryBytp", node, getMKByTPResult);
 	});
 	
 	$("#page6Submit").click(function(){
@@ -159,36 +161,36 @@ function page6ButtonInitAfter(){
 				console.log("修改+机芯+提交");
 				node5 = '{"newValue":"'+_newValue+'","oldValue":"'+_oldValue+'"}';
 				console.log(node5);
-				sendHTTPRequest("/chip/update", node5, addOrChangeResult);
+				sendHTTPRequest(CoocaaVersion+"/chip/update", node5, addOrChangeResult);
 			} else{
 				console.log("新增+机芯+提交"+_newValue);
 				node5 = '{"name":"'+_newValue+'"}';
 				console.log(node5);
-				sendHTTPRequest("/chip/add", node5, addOrChangeResult);
+				sendHTTPRequest(CoocaaVersion+"/chip/add", node5, addOrChangeResult);
 			}
 		}else if(_curPart2 == 2){
 			if (_oldValue.length>1) {
 				console.log("修改+机型+提交");
 				node5 = '{"newValue":"'+_newValue+'","oldValue":"'+_oldValue+'"}';
 				console.log(node5);
-				sendHTTPRequest("/model/update", node5, addOrChangeResult);
+				sendHTTPRequest(CoocaaVersion+"/model/update", node5, addOrChangeResult);
 			} else{
 				console.log("新增+机型+提交");
 				node5 = '{"name":"'+_newValue+'"}';
 				console.log(node5);
-				sendHTTPRequest("/model/add", node5, addOrChangeResult);
+				sendHTTPRequest(CoocaaVersion+"/model/add", node5, addOrChangeResult);
 			}
 		}else if(_curPart2 == 3){
 			if (_oldValue.length>1) {
 				console.log("修改+芯片型号+提交");
 				node5 = '{"newValue":"'+_newValue+'","oldValue":"'+_oldValue+'"}';
 				console.log(node5);
-				sendHTTPRequest("/soc/update", node5, addOrChangeResult);
+				sendHTTPRequest(CoocaaVersion+"/soc/update", node5, addOrChangeResult);
 			} else{
 				console.log("新增+芯片型号+提交");
 				node5 = '{"name":"'+_newValue+'"}';
 				console.log(node5);
-				sendHTTPRequest("/soc/add", node5, addOrChangeResult);
+				sendHTTPRequest(CoocaaVersion+"/soc/add", node5, addOrChangeResult);
 			}
 		}
 	});
@@ -225,7 +227,7 @@ function modelQueryResult(){
 			}
 		}
 		var node = '{}';
-		sendHTTPRequest("/module/query", node, modelQueryResult2);
+		sendHTTPRequest(CoocaaVersion+"/module/query", node, modelQueryResult2);
 	}
 }
 
@@ -282,12 +284,12 @@ function tpsubmit(){
 		console.log(_mkArray);
 		var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'}';
 		console.log(node);
-		sendHTTPRequest("/targetproduct/add", node, addOrChangeResult);
+		sendHTTPRequest(CoocaaVersion+"/targetproduct/add", node, addOrChangeResult);
 	} else{
 		console.log("修改+TP+提交");
 		var node = '{"name":"'+_tpValue+'","oldValue":"'+_mkArray+'"}';
 		console.log(node);
-//		sendHTTPRequest("/targetproduct/update", node5, addOrChangeResult);
+//		sendHTTPRequest(CoocaaVersion+"/targetproduct/update", node5, addOrChangeResult);
 	}
 }
 

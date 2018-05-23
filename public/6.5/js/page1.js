@@ -1,9 +1,10 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
+var CoocaaVersion = "/v6.5";
 var getdataArray = new Array();
 $(function() {
 	console.log("hello");
-	sendHTTPRequest("/home/getSummary", '{"data":""}', homePageInfoResult);
+	sendHTTPRequest(CoocaaVersion+"/home/getSummary", '{"data":""}', homePageInfoResult);
 });
 
 function homePageInfoResult() {
@@ -24,7 +25,7 @@ function homePageInfoResult() {
 				$(".infoitems span")[7].innerHTML = data.resultData.novaTotalNum;
 			}
 		}
-		sendHTTPRequest("/syslog/queryTotalNum", '{"data":""}', pageTableInit);
+		sendHTTPRequest(CoocaaVersion+"/syslog/queryTotalNum", '{"data":""}', pageTableInit);
 	}
 }
 
@@ -57,7 +58,7 @@ function getEachPagedata(offset,rows){
 	var startNum = (offset-1)*rows;
 	var numLength = rows;
 	var node = '{"offset":"' + startNum + '","rows":"' + numLength + '"}';
-	sendHTTPRequest("/syslog/queryByPage", node, syslogQuery);
+	sendHTTPRequest(CoocaaVersion+"/syslog/queryByPage", node, syslogQuery);
 }
 
 function syslogQuery(){

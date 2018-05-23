@@ -32,7 +32,7 @@
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_targetProduct" class="control-label col-xs-5 text-right">TP:</label>
-						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="匹配查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
 						<div class="auto_hidden" id="page2_tp_auto"></div>
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_chipid" class="control-label col-xs-5 text-right">芯片型号:</label>
-						<input type="text" id="page2_chipid" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<input type="text" id="page2_chipid" class="col-xs-6 inputstyle text-left" placeholder="匹配查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
 						<div class="auto_hidden" id="page2_soc_auto"></div>
 					</div>
 					<div class="col-xs-4 form-group">
@@ -92,11 +92,9 @@
 						<label for="page2_keyword" class="control-label col-xs-5 text-right">模块查询:</label>
 						<input type="text" value="" id="page2_keyword" class="col-xs-6 inputstyle">
 					</div>
-				</div>
-				<div class="row text-right">
 					<div class="col-xs-4 form-group">
 						<label for="page2_gitbranch" class="control-label col-xs-5 text-right">git分支:</label>
-						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" placeholder="匹配查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
 						<div class="auto_hidden" id="page2_git_auto"></div>
 					</div>
 				</div>
@@ -125,6 +123,7 @@
 				<!-- 表格开始 -->
 				<div id="page2_table"></div>
 				<a id="dlink" style="display:none;"></a>
+				<div id="searchNoInfo">未查询到该条件下的产品</div>
 				<!-- 表格结束 -->
 
 				<!--点击新增、编辑、复制弹出的modal-->
@@ -266,16 +265,14 @@
 											</div>
 											<div class="modal-body">
 												<span class="changetitle">修改内容</span>
-												<div id="changeContent" style="font-size: 16px;text-align: left;">
-													<span id="txt1">修改设备信息：<span id="txt11"></span></span><br/>
-													<span id="txt2">新增模块：<span id="txt22"></span></span><br/>
-													<span id="txt3">删除模块：<span id="txt33"></span></span><br/>
-													<span id="txt4">修改配置：<span id="txt44"></span></span><br/>
+												<div id="changeContent" style="font-size: 14px;text-align: left;">
+													<span id="txt1">修改设备信息：<span id="txt11"></span><br/></span>
+													<span id="txt2">新增模块：<span id="txt22"></span><br/></span>
+													<span id="txt3">删除模块：<span id="txt33"></span><br/></span>
+													<span id="txt4">修改配置：<span id="txt44"></span><br/></span>
 												</div>
-												<span class="changetitle">修改原因</span>
-												<textarea id="changeReason" rows="3">
-													
-												</textarea>
+												<span class="changetitle">修改原因</span><br/>
+												<textarea id="changeReason"></textarea>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-primary" id="myEditEnsure">确定</button>
@@ -292,7 +289,7 @@
 												<h4 class="modal-title text-left" id="myAddModalLabel">关闭</h4>
 											</div>
 											<div class="modal-body">
-												<span>确定增加此项吗？</span>
+												<div id="areYouSure">确定增加此项吗？</div>
 											</div>
 											<div class="modal-footer">
 												<button type="button" class="btn btn-primary" id="myAddEnsure">确定</button>
@@ -357,7 +354,7 @@
 								<h4 id="myDeleteModalErrorInfo" class="myModalErrorInfo"></h4>
 							</div>
 							<div class="modal-body">
-								<p style="font-size: 24px;text-align: center;">确认要删除吗？</p>
+								<div id="deleteInfo" style="font-size: 24px;text-align: center;">确认要删除吗？</div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-primary" id="myDeleteModalEnsure" style="display: block;margin: 0 auto;">确定</button>
@@ -404,7 +401,7 @@
 										<tr>
 											<th>修改内容</th>
 											<th>修改原因</th>
-											<th>状态</th>
+											<th style="min-width: 55px;">状态</th>
 											<th>提交者</th>
 											<th>提交时间</th>
 										</tr>
@@ -413,6 +410,7 @@
 										
 									</tbody>
 								</table>
+								<div id="noChangeHistory"></div>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-default" id="page1_close2">关闭</button>
