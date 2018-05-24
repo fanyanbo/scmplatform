@@ -47,7 +47,7 @@ function loginResult() {
 					ajax: false
 				});
 				loginusername = data.resultData.username;
-				//loginEmail = data.resultData.email;
+				loginEmail = data.resultData.email;
 				document.getElementById("indexUserName").innerHTML = loginusername;
 				if(data.resultData.level == "1") {
 					adminFlag = 1; //非管理员标志位                

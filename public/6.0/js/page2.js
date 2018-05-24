@@ -21,6 +21,9 @@ var changeConf = [];//保存修改配置信息
 var changeDev = [];//保存修改设备信息
 var olrplayerid = null;
 
+var deleteChip = null;
+var deleteModel = null;
+
 var fromEmail = null;
 var adminFlag = null;
 var loginusername = null;
@@ -363,7 +366,8 @@ function buttonInit() {
 		closePage2Model("myAddCloseDiv");
 	});
 	$("#page2_add").click(function() {
-		$("#lable1SubmitTwo").attr("catagory","1");//1-新增、2-修改、3-复制、4-预览
+		//1-新增、2-修改、3-复制、4-预览、5-删除
+		$("#lable1SubmitTwo").attr("catagory","1");
 		console.log("点击了新增");
 		resetAllInfo();//删除前面的操作痕迹
 		$("#page2Modal1").modal();
@@ -488,7 +492,7 @@ function buttonInitAfter() {
 	});
 	$(".eachedit").click(function() {
 		var _aIndex = $(".eachedit").index($(this));
-		//1-新增、2-修改、3-复制、4-预览
+		//1-新增、2-修改、3-复制、4-预览、5-删除
 		$("#lable1SubmitTwo").attr("catagory","2");
 		resetAllInfo();//删除前面的操作痕迹
 		$("#page2Modal1").modal();
@@ -498,6 +502,10 @@ function buttonInitAfter() {
 	});
 	$(".eachdelete").click(function() {
 		var _aIndex = $(".eachdelete").index($(this));
+		//1-新增、2-修改、3-复制、4-预览、5-删除
+		$("#lable1SubmitTwo").attr("catagory","5");
+		deleteChip = $(".chip")[_aIndex].innerText;
+		deleteModel = $(".model")[_aIndex].innerText;
 		$("#myDeleteModalEnsure").attr("chip",$(".chip")[_aIndex].innerText);
 		$("#myDeleteModalEnsure").attr("model",$(".model")[_aIndex].innerText);
 		$("#myDeleteModalLabel").text("单项删除");
@@ -508,7 +516,7 @@ function buttonInitAfter() {
 	/*单项复制*/
 	$(".eachcopy").click(function() {
 		var _aIndex = $(".eachcopy").index($(this));
-		//1-新增、2-修改、3-复制、4-预览
+		//1-新增、2-修改、3-复制、4-预览、5-删除
 		$("#lable1SubmitTwo").attr("catagory","3");
 		resetAllInfo();//删除前面的操作痕迹
 		page2AEC(_aIndex);
@@ -519,7 +527,7 @@ function buttonInitAfter() {
 	/*单项预览*/
 	$(".eachpreview").click(function() {
 		var _aIndex = $(".eachpreview").index($(this));
-		//1-新增、2-修改、3-复制、4-预览
+		//1-新增、2-修改、3-复制、4-预览、5-删除
 		$("#lable1SubmitTwo").attr("catagory","4");
 		page2AEC(_aIndex);
 		//document.getElementById("loading").style.display = "block";
@@ -974,6 +982,7 @@ function closePage2Model(objname) {
 
 function closeparentpage() {
 	document.getElementById("myAddCloseDiv").style.display = "none";
+	document.getElementById("myEditModalLabel").style.display = "none";
 	$("#page2Modal1").modal('hide');
 }
 
@@ -1192,8 +1201,7 @@ function productHistoryAdd(){
 				//page2Fresh();
 			}
 		}
-		var type = $("#lable1SubmitTwo").attr("catagory");
-		console.log(type);
+		sendEmail();
 	}
 }
 
@@ -1349,10 +1357,68 @@ function myEditorAddSubmit(num){
 	}
 }
 
+function sendEmail(){
+	var type = $("#lable1SubmitTwo").attr("catagory");
+	console.log(type);
+	if(type == 1||type == 3){
+		console.log("新增或者复制了产品");
+		var _chip = $("#lable2Chip").val();
+		var _model = $("#lable2Model").val();
+		console.log(_chip+"--------"+_model);
+		maildata = "用户："+loginusername+"<br/>新增了机芯："+_chip+",机型："+_model+"的配置文档，请审核";
+	    maildata += "<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>"
+	}else if(type == 2){
+		console.log("编辑了产品");
+		var _chip = $("#lable2Chip").val();
+		var _model = $("#lable2Model").val();
+		console.log(_chip+"--------"+_model);
+		var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
+		console.log(_desc);
+		var maildata = "用户："+loginusername+"<br/>针对机芯："+_chip+",机型："+_model+"做出了如下修改：";
+	    if(changeDev.length != 0) {
+	    	maildata += "<br/>修改设备信息："+ changeDev;
+	    }
+	    if(changeAdd.length != 0){
+	        maildata += "<br/>新增模块："+ changeAdd;
+	    }
+	    if (changeReduce.length != 0){
+	        maildata += "<br/>删除模块："+ changeReduce;
+	    }
+	    if (changeConf.length != 0){
+	        maildata += "<br/>修改配置："+ changeConf;
+	    }
+	    maildata += "<br/>请前往《待审核文件》菜单进行审核处理<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>";
+	}else if(type == 5){
+		console.log("删除了产品");
+		var _chip = deleteChip;
+		var _model = deleteModel;
+		console.log(_chip+"--------"+_model);
+		var maildata = "用户："+loginusername+"<br/>删除了机芯："+_chip+",机型："+_model+"的配置文档";
+		maildata += "<br/>请前往《待审核文件》菜单进行审核处理<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>";
+	}
+    var emailObj = {
+		"desc" : maildata,
+		"from" : fromEmail,
+		"to" : "SKY058689@skyworth.com",
+		"subject" : "软件配置平台通知-自动发送，请勿回复"
+	}
+	var _email = JSON.stringify(emailObj);
+	var node = '{"data":' + _email + '}';
+	console.log(node);
+    sendHTTPRequest("/sendMail", node, mailfun);
+}
 
-
-
-
+//邮件函数回调
+function mailfun(){
+	console.log("in mailfun");
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+		}
+		page2Fresh();
+	}
+}
 //滚动到最上面
 function scrollTopStyle(name){
 	var div = document.getElementById(name);
