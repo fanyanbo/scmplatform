@@ -1,7 +1,7 @@
 document.write("<script language=javascript src='../js/bootstrap.addtabs.js' charset=\"utf-8\"></script>");
 
-var adminFlag = null; //访问session之后存取管理员标志位
 var loginusername = null; //访问session之后存取登录用户名
+var loginlevel = null;
 var loginEmail = null; //当前用户的邮箱地址
 var loginStatus = null;
 var coocaaVersion = "/v6.0";
@@ -48,13 +48,12 @@ function loginResult() {
 				});
 				loginusername = data.resultData.username;
 				loginEmail = data.resultData.email;
+				loginlevel = data.resultData.level;
 				document.getElementById("indexUserName").innerHTML = loginusername;
-				if(data.resultData.level == "1") {
-					adminFlag = 1; //非管理员标志位                
+				if(loginlevel == "0") {
 					$("#adminVisible1").css("display","none");
 					$("#adminVisible2").css("display","none");
-				} else if(data.resultData.level == "0") {
-					adminFlag = 0;
+				} else if(loginlevel == "1") {
 					$("#adminVisible1").css("display","block");
 					$("#adminVisible2").css("display","block");
 				}

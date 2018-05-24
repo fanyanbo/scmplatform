@@ -96,6 +96,9 @@
 #page5{
 	min-width: 900px;
 }
+body .modal-footer{
+	text-align: center;
+}
 #page5_table,#page5_table2{
 	position: absolute;
 	width: 100%;
@@ -162,9 +165,6 @@
 }
 .page5_boxes{
 	display: none;
-}
-body .modal-footer{
-	text-align: center;
 }
 .modalwidth{
 	position: relative;
@@ -244,4 +244,8 @@ body .modal-footer{
 #changeReason{
 	width: 100%;
 	resize: none;
+}
+#noChangeHistory{
+	text-align: center;
+    font-size: 26px;
 }
