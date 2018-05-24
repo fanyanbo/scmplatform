@@ -97,6 +97,6 @@ exports.getUserInfo = function (req, res, next) {
   console.log(userName);
   userModel.getUserByQuery(userName, function(err,result){
     if(err) return output.error(req,res,err);
-    output.success(req,res,"获取用户信息成功!");
+    output.success(req,res,"获取用户信息成功!",result);
   });
 }
