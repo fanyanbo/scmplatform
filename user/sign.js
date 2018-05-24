@@ -90,4 +90,13 @@ exports.sendMail = function (req, res, next) {
     if (err) return output.error(req,res,"发送邮件失败!");
     output.success(req,res,"发送邮件成功!");
   });
+};
+
+exports.getUserInfo = function (req, res, next) {
+  let userName = req.body.userName;
+  console.log(userName);
+  userModel.getUserByQuery(loginname, function(err,result){
+    if(err) return output.error(req,res,err);
+    output.success(req,res,"获取用户信息成功!");
+  });
 }

@@ -11,5 +11,6 @@ router.post('/login', sign.login);
 router.post('/verify', sign.verify);
 router.post('/logout', sign.logout);
 router.post('/sendMail', sign.sendMail);
+router.post('/getUserInfo', sign.getUserInfo);
 
 module.exports = router;
