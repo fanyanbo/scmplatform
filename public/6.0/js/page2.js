@@ -304,8 +304,6 @@ function instantQuery(arr1, arr2, arr3, arr4, arr5) {
 	_$(document).onclick = function(e) {
 		var e = e || window.event; //浏览器兼容性 
 		var elem = e.target || e.srcElement;
-		
-		
 		var showArray = ["page2_chip_auto","page2_model_auto","page2_tp_auto","page2_soc_auto","page2_git_auto","page2_chip_auto2","page2_model_auto2","page2_tp_auto2","page2_soc_auto2","page2_git_auto2"];
 		var showBox = ["page2_chip","page2_model","page2_targetProduct","page2_chipid","page2_gitbranch","lable2Chip","lable2Model","lable2TargetProduct","lable2ChipMode","lable2GitBranch"];
 		eachShowObj(showArray,showBox);
@@ -704,7 +702,6 @@ function getPointProductInfo(){
             if(data.resultCode == 0){
             	console.log("数据返回成功");
             	var _type = $("#lable1SubmitTwo").attr("catagory");//2-编辑、3-复制
-            	
             	CommonDataInsert(_type,data.resultData[0]);
             	ConfigDataInsert(_type,data.resultData[1]);
             	SysDataInsert(_type,data.resultData[2]);
@@ -760,7 +757,6 @@ function CommonDataInsert(type,arr){
 		$("#lable2TargetProduct").css("color","red");
 		$("#lable2TargetProduct").attr("disabled","disabled");
 		
-		
 		$("#lable2AndroidVersion").attr("oldvalue",arr[0].androidVersion);
 		$("#lable2ChipMode").attr("oldvalue",arr[0].chipModel);
 		$("#lable2Emmc").attr("oldvalue",arr[0].EMMC);
@@ -795,7 +791,6 @@ function MKDataInsert(type, arr){
 	for (var i=0; i<arr.length; i++) {
 		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
 	}
-//	olrplayerid = arr[i].id;
 }
 function SysDataInsert(type, arr){
 	if (type == 2) {
@@ -984,6 +979,7 @@ function closeparentpage() {
 	document.getElementById("myAddCloseDiv").style.display = "none";
 	document.getElementById("myEditModalLabel").style.display = "none";
 	$("#page2Modal1").modal('hide');
+	page2Fresh();
 }
 
 function configQueryData(arr1,arr2) {
@@ -1405,7 +1401,7 @@ function sendEmail(){
 	var _email = JSON.stringify(emailObj);
 	var node = '{"data":' + _email + '}';
 	console.log(node);
-    sendHTTPRequest("/sendMail", node, mailfun);
+    //sendHTTPRequest("/sendMail", node, mailfun);
 }
 
 //邮件函数回调

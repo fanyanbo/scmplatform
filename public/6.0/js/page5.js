@@ -12,6 +12,8 @@ var _myArray = [];
 var level = null;
 var loginusername = null;
 var fromEmail = null;
+var toEmail = "SKY058689@skyworth.com";
+var _author = null;
 var adminControl = null;
 
 var changeAdd = [];
@@ -19,10 +21,13 @@ var changeReduce = [];
 var changeConf = [];
 var changeDev = [];
 
+var recoverChip = null;
+var recoverModel = null;
+
 var coocaaVersion = "/v6.0";
 
 $(function() {
-	level = parent.adminFlag;
+	level = parent.loginlevel;
     loginusername = parent.loginusername;
     fromEmail = parent.loginEmail;
 	
@@ -71,6 +76,7 @@ function handleTableData(arr) {
 		//auditState(0审核通过\1待审核\2审核未通过
 		//modifyState(0正常\1修改\2增加\3删除)
 		var operateType = arr[i].modifyState;
+		var	userName = loginusername;
 		eachItem2.number = (i+1);
 		eachItem2.model = arr[i].model;
 		eachItem2.chip = arr[i].chip;
@@ -88,7 +94,7 @@ function handleTableData(arr) {
 		}else if(operateType == 3){
 			eachItem2.type = "删除";
 		}
-		if (level == 0) {
+		if (level == 1) {
             if (eachItem2.author == loginusername) {
                 if (operateType == 3) {
                 	//管理员&&是提交者&&删除
@@ -166,6 +172,13 @@ function buttonInitBefore(){
 	$("#oButtonX").click(function() {
 		$("#mydialog").css("display","none");
 	});
+	$("#page5_close1").click(function() {
+		document.getElementById("descriptTbody").innerHTML = "";
+		$("#page5_examine").modal('hide');
+	});
+	$("#page5_close2").click(function() {
+		$("#page5_examine").modal('hide');
+	});
 }
 function colorstatus(number){
 	for(var k = 0; k < $(".page5_tabs").length; k++) {
@@ -182,7 +195,12 @@ function buttonInitAfter(){
 		console.log("点击的是第" + _Index + "个 查看项。");
 		console.log($("#page5_table2 .chip")[_Index].innerHTML);
 		console.log($("#page5_table2 .model")[_Index].innerHTML);
-		
+		$("#page5_check_chip").html($("#page5_table2 .chip")[_Index].innerHTML);
+		$("#page5_check_model").html($("#page5_table2 .model")[_Index].innerHTML);
+		$("#page5_check_targetProduct").html($("#page5_table2 .target_product")[_Index].innerHTML);
+		$('#page5_examine').modal();
+		var node = '{"chip":"'+$("#page5_table2 .chip")[_Index].innerHTML+'","model":"'+$("#page5_table2 .model")[_Index].innerHTML+'"}';
+		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
 	});
 	$("#ReviewCat").click(function() {
 		console.log("点击了审核页面的预览");
@@ -202,7 +220,6 @@ function buttonInitAfter(){
 	    document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
 	    document.getElementById("dialogword").innerHTML = "是否确认不通过该文件？";
 	    scrollTopStyle("page5Modal1");
-	    //sendHTTPRequest();
 	});
 	$("#reButton").click(function() {
 		passSubmit();
@@ -213,13 +230,13 @@ function buttonInitAfter(){
 	$("#closeReview").click(function() {
 		console.log("点击了审核页面的关闭");
 		console.log("用户等级："+level);
-		$("#mydialog").attr("buttontype","2");//点击审核不通过
+		$("#mydialog").attr("buttontype","2");//点击关闭
 		var _type = $("#myAddModalLabel").attr("num");//1-审核、2-编辑、3-恢复
 		var _state = $("#myAddModalLabel").attr("type");//(0正常\1修改\2增加\3删除)
         console.log(_type +"----"+_state);
         if (_type == 1) {
         	if (level == 1) {
-		        freshReviewHtml(1);
+		        page5fresh(1);
 		    }else{
 		        document.getElementById("mydialog").style.display = "block";
 		        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
@@ -238,24 +255,11 @@ function buttonInitAfter(){
 		
 		if (_type == 1) {
 			console.log("审核时确认框的确认键的点击");
-			var _chip = $("#lable5Chip").val();
-			var _model = $("#lable5Model").val();
-			var _flag = "";
-			if($("#mydialog").attr("buttontype") == 0||$("#mydialog").attr("buttontype") == 1){
-				_flag = $("#mydialog").attr("buttontype");
-			}
-			var recoveObj = {
-				"chip" : _chip,
-				"model" : _model,
-				"flag" : _flag
-			}
-			var _recove = JSON.stringify(recoveObj);
-			var node = '{"data":' + _recove + '}';
-			console.log(node);
-			sendHTTPRequest(coocaaVersion+"/product/review", node, setreviewInfo);
+			reviewSure();
 		} else if(_type == 2){
-			console.log("编辑时确认框的确认键的点击");
-			reviewEdit();
+			console.log("编辑时关闭确认框的的点击");
+			$("#page5Modal1").modal("hide");
+			page5fresh(2);
 		} else if(_type == 3){
 			console.log("恢复时确认框的确认键的点击");
 			recoverSure();
@@ -273,41 +277,18 @@ function buttonInitAfter(){
 	$("#myEditEnsureX").click(function() {
 		console.log("修改提示框的X按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		freshReviewHtml(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+		page5fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
 	});
 	$("#myEditCancle").click(function() {
 		console.log("修改提示框的取消按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		freshReviewHtml(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+		page5fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
 	});
 	$("#myEditEnsure").click(function() {
 		console.log("修改提示框的确定按钮");
-		//获取基本项、config、MK、系统设置的值
-		var _base = getBaseValue();
-		var _config = getConfigValue();
-		var _sys = getSysValue();
-		_base = JSON.stringify(_base);
-		_config = JSON.stringify(_config);
-		_sys = JSON.stringify(_sys);
-		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
-		console.log(node);
-		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
+		editSure();
 	});
 	
-}
-function setreviewInfo(){
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-            console.log(data);
-            if(data.resultCode == 0){
-            	console.log("success");
-            	$("#page5Modal1").modal('hide');
-            	$("#mydialog").css("display","none");
-            	freshReviewHtml(2);
-            }
-		};
-	}
 }
 
 function passSubmit(){
@@ -468,7 +449,7 @@ function sysDataInsert(i, obj, num, arr1){
 	}
 }
 
-//管理员点审核时的执行函数
+//审核
 function review(obj,adminControl,deleteFlag){
 	//document.getElementById("loading").style.display = "block";
     if (adminControl) {
@@ -491,11 +472,13 @@ function review(obj,adminControl,deleteFlag){
 	console.log(a+"||||"+b);
 	var _index = Math.abs(a)*Math.abs(b);
 	console.log(_index);
+	_author = $("#page5_table2 .author")[_index].innerHTML;
 	$("#myAddModalLabel").attr("num","1");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
 	var node = '{"chip":"'+$("#page5_table2 .chip")[_index].innerHTML+'","model":"'+$("#page5_table2 .model")[_index].innerHTML+'"}';
 	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 }
+//编辑
 function edit(obj,adminControl,deleteFlag){
 //	document.getElementById("loading").style.display = "block";
     $("#changeDescDiv").css("display","none");
@@ -507,27 +490,67 @@ function edit(obj,adminControl,deleteFlag){
 	console.log(a+"||||"+b);
 	var _index = Math.abs(a)*Math.abs(b);
 	console.log(_index);
+	_author = $("#page5_table2 .author")[_index].innerHTML;
 	var node = '{"chip":"'+$("#page5_table2 .chip")[_index].innerHTML+'","model":"'+$("#page5_table2 .model")[_index].innerHTML+'"}';
 	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 }
 //恢复
 function recover(obj,deleteFlag){
-	console.log("in recover");
 	var a = $(".eachaudit").index($(obj));
 	var b = $(".eachedit").index($(obj));
-	console.log(a+"||||"+b);
 	var _index = Math.abs(a)*Math.abs(b);
-	console.log(_index);
-	var chip = $("#page5_table2 .chip")[_index].innerHTML;
-	var model = $("#page5_table2 .model")[_index].innerHTML;
-	$("#reviewDialog").attr("ochip",chip);
-	$("#reviewDialog").attr("omodel",model);
+	recoverChip = $("#page5_table2 .chip")[_index].innerHTML;
+	recoverModel = $("#page5_table2 .model")[_index].innerHTML;
+	_author = $("#page5_table2 .author")[_index].innerHTML;
+	$("#reviewDialog").attr("ochip",recoverChip);
+	$("#reviewDialog").attr("omodel",recoverModel);
 	$("#myAddModalLabel").attr("num","3");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
     document.getElementById("mydialog").style.display = "block";
     document.getElementById("myDeleteModalLabel").innerHTML = "恢复操作";
-    document.getElementById("dialogword").innerHTML = "确认撤销删除吗？";   
+    document.getElementById("dialogword").innerHTML = "确认撤销删除吗？";
+    
+    console.log(level+"---"+loginusername);
+    if (_author != loginusername) {
+    	getCommitterEmail(_author);
+    }
 }
+
+//审核的提交
+function reviewSure(){
+	var _chip = $("#lable5Chip").val();
+	var _model = $("#lable5Model").val();
+	var _flag = "";
+	if($("#mydialog").attr("buttontype") == 0||$("#mydialog").attr("buttontype") == 1){
+		_flag = $("#mydialog").attr("buttontype");
+		var recoveObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"flag" : _flag
+		}
+		var _recove = JSON.stringify(recoveObj);
+		var node = '{"data":' + _recove + '}';
+		console.log(node);
+		sendHTTPRequest(coocaaVersion+"/product/review", node, setreviewInfo);
+	}else if($("#mydialog").attr("buttontype") == 2){
+    	$("#mydialog").css("display","none");
+    	$("#page5Modal1").modal('hide');
+	}
+}
+//编辑的提交
+function editSure(){
+	console.log("lxw " + loginusername + "--" + level);
+	var _base = getBaseValue();
+	var _config = getConfigValue();
+	var _sys = getSysValue();
+	_base = JSON.stringify(_base);
+	_config = JSON.stringify(_config);
+	_sys = JSON.stringify(_sys);
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+	console.log(node);
+	sendHTTPRequest(coocaaVersion+"/product/update", node, setEditInfo);
+}
+//恢复的提交
 function recoverSure(){
 	var chip = $("#reviewDialog").attr("ochip");
 	var model = $("#reviewDialog").attr("omodel");
@@ -539,9 +562,61 @@ function recoverSure(){
 	var _recove = JSON.stringify(recoveObj);
 	var node = '{"data":' + _recove + '}';
 	console.log(node);
-	sendHTTPRequest(coocaaVersion+"/product/deleteRecovery", node, getRecoverProductInfo);
+	sendHTTPRequest(coocaaVersion+"/product/deleteRecovery", node, setRecoverInfo);
 }
-function getRecoverProductInfo(){
+
+function setreviewInfo(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+            console.log(data);
+            if(data.resultCode == 0){
+            	console.log("success");
+            	$("#page5Modal1").modal('hide');
+            	$("#mydialog").css("display","none");
+            	console.log(level+"---"+loginusername+"--"+_author);
+			    if (_author != loginusername) {
+			    	console.log("111111111111111");
+			    	sendEmail();
+			    }else{
+			    	page5fresh(1);
+			    }
+            }
+		};
+	}
+}
+function setEditInfo(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("数据修改提交成功");
+				var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
+				var _reason = document.getElementById("changeReason").innerHTML;
+				var _chip = $("#lable5Chip").val();
+				var _model = $("#lable5Model").val();
+				//0审核通过\1待审核\2审核未通过
+				var _state = "1";
+				var _author = loginusername;
+				var historyObj = {
+					"chip" : _chip,
+					"model" : _model,
+					"reason" : _reason,
+					"state" : _state,
+					"userName" : _author,
+					"content" : _desc
+				}
+				$("#page5Modal1").modal('hide');
+				document.getElementById("myEditEnsureDiv").style.display = "none";
+				var _history = JSON.stringify(historyObj);
+				var node = '{"data":' + _history + '}';
+				sendHTTPRequest(coocaaVersion+"/product/addHistory", node, productHistoryAdd);
+			}
+		}
+	}
+}
+function setRecoverInfo(){
 	if(this.readyState == 4) {
         if(this.status == 200) {
             var data = JSON.parse(this.responseText);
@@ -550,10 +625,104 @@ function getRecoverProductInfo(){
             	console.log("数据返回成功");
             	document.getElementById("mydialog").style.display = "none";
 				document.getElementById("myDeleteModalLabel").style.display = "none";
-				freshReviewHtml(2);
+				
+				console.log(level+"---"+loginusername+"--"+_author);
+			    if (_author != loginusername) {
+			    	sendEmail();
+			    }else{
+			    	page5fresh(2);
+			    }
             }
         };
     }
+}
+function sendEmail(){
+	//1-审核、2-编辑、3-恢复
+	var _num = $("#myAddModalLabel").attr("num");
+	//(0正常\1修改\2增加\3删除)
+	var _type = $("#myAddModalLabel").attr("type");
+	console.log(_num);
+	if (_num == 1) {
+		var _chip = $("#lable5Chip").val();
+		var _model = $("#lable5Model").val();
+		console.log(_chip+"--------"+_model);
+		var _buttontype = $("#mydialog").attr("buttontype");
+		if (_type == 1) {
+			if (_buttontype == 0) {
+				//修改操作审核不通过
+				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
+			} else if(_buttontype == 1){
+				//修改操作审核通过
+				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
+			}
+		} else if (_type == 2) {
+			if (_buttontype == 0) {
+				//增加操作审核不通过
+				var maildata = "您增加的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
+			} else if(_buttontype == 1){
+				//增加操作审核通过
+				var maildata = "您增加的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
+			}
+		} else if(_type == 3){
+			if (_buttontype == 0) {
+				//删除操作审核不通过
+				var maildata = "您删除的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
+			} else if(_buttontype == 1){
+				//删除操作审核通过
+				var maildata = "您删除的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
+			}
+		}
+		
+	} else if(_num == 2){
+		console.log("编辑");
+		var _chip = $("#lable5Chip").val();
+		var _model = $("#lable5Model").val();
+		var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
+		console.log(_desc);
+		var maildata = "用户："+loginusername+"<br/>针对机芯："+_chip+",机型："+_model+"做出了如下修改：";
+	    if(changeDev.length != 0) {
+	    	maildata += "<br/>修改设备信息："+ changeDev;
+	    }
+	    if(changeAdd.length != 0){
+	        maildata += "<br/>新增模块："+ changeAdd;
+	    }
+	    if (changeReduce.length != 0){
+	        maildata += "<br/>删除模块："+ changeReduce;
+	    }
+	    if (changeConf.length != 0){
+	        maildata += "<br/>修改配置："+ changeConf;
+	    }
+	}else if(_num == 3){
+		console.log("恢复");
+		var _chip = recoverChip;
+		var _model = recoverModel;
+		console.log(_chip+"--------"+_model);
+		var maildata = "用户："+loginusername+"<br/>恢复删除机芯："+_chip+",机型："+_model+"的配置文档";
+	}
+	
+	maildata += "<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>";
+    var emailObj = {
+		"desc" : maildata,
+		"from" : fromEmail,
+		"to" : toEmail,
+		"subject" : "软件配置平台通知-自动发送，请勿回复"
+	}
+	var _email = JSON.stringify(emailObj);
+	var node = '{"data":' + _email + '}';
+	console.log(node);
+    //sendHTTPRequest("/sendMail", node, mailfun);
+    page5fresh(1);
+}
+//邮件函数回调
+function mailfun(){
+	console.log("in mailfun");
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+		}
+		page5fresh(1);
+	}
 }
 //管理员点审核、时的数据请求函数
 function getPointProductInfo(){
@@ -574,6 +743,11 @@ function getPointProductInfo(){
 				
 				$('#page5Modal1').modal();
 				$(".modal-backdrop").addClass("new-backdrop");
+				
+				console.log(level+"---"+loginusername);
+			    if (_author != loginusername) {
+			    	getCommitterEmail(_author);
+			    }
             }
         };
     }
@@ -627,7 +801,6 @@ function MKDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
 		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
 	}
-//	olrplayerid = arr[i].id;
 }
 function SysDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
@@ -787,10 +960,7 @@ function editIssue(){
 		}
 	}
 }
-//点击编辑提交的函数
-function reviewEdit(){
-	console.log("lxw " + loginusername + "--" + level);
-}
+
 //点击预览
 function getPreviewInfo(){
     if(this.readyState == 4) {
@@ -823,7 +993,6 @@ function getBaseValue(){
 	var _chip = $("#page5Modal1Table .inputstyle")[0].value;
 	var _model = $("#page5Modal1Table .inputstyle")[1].value;
 	var _tp = $("#page5Modal1Table .inputstyle")[2].value;
-	var _coocaa = $("#page5Modal1Table .inputstyle")[3].value;
 	var _android = $("#page5Modal1Table .inputstyle")[4].value;
 	var _soc = $("#page5Modal1Table .inputstyle")[5].value;
 	var _emmc = $("#page5Modal1Table .inputstyle")[6].value;
@@ -962,38 +1131,6 @@ function changeDevice(obj){
     }
 }
 
-function productAddResult(){
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			if(data.resultCode == "0") {
-				console.log("数据修改提交成功");
-				var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
-				var _reason = document.getElementById("changeReason").innerHTML;
-				var _chip = $("#lable5Chip").val();
-				var _model = $("#lable5Model").val();
-				//0审核通过\1待审核\2审核未通过
-				var _state = "1";
-				var _author = loginusername;
-				var historyObj = {
-					"chip" : _chip,
-					"model" : _model,
-					"reason" : _reason,
-					"state" : _state,
-					"userName" : _author,
-					"content" : _desc
-				}
-				$("#page5Modal1").modal('hide');
-				document.getElementById("myEditEnsureDiv").style.display = "none";
-				var _history = JSON.stringify(historyObj);
-				var node = '{"data":' + _history + '}';
-				sendHTTPRequest(coocaaVersion+"/product/addHistory", node, productHistoryAdd);
-			}
-		}
-	}
-}
-
 function productHistoryAdd(){
 	if(this.readyState == 4) {
 		if(this.status == 200) {
@@ -1001,13 +1138,103 @@ function productHistoryAdd(){
 			console.log(data);
 			if(data.resultCode == "0") {
 				console.log("日志数据提交成功");
-				freshReviewHtml(1);
+				console.log(level+"---"+loginusername+"--"+_author);
+			    if (level == 1&&_author != loginusername) {
+			    	sendEmail();
+			    }else{
+			    	page5fresh(1);
+			    }
+			}
+		}
+		page5fresh(1);
+	}
+}
+function productHistoryQuery(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("数据查询成功");
+				if (data.resultData.length == 0) {
+					$("#contenttable").css("display","none");
+					$("#noChangeHistory").css("display","block");
+					$("#noChangeHistory").html("该产品没有修改历史。");
+				} else{
+					$("#contenttable").css("display","block");
+					$("#noChangeHistory").html(" ");
+					$("#noChangeHistory").css("display","none");
+					for (var i=0; i<data.resultData.length; i++) {
+						var _state = "";
+						if (data.resultData[i].state == 0) {
+							_state = "审核通过";
+						} else if(data.resultData[i].state == 1){
+							_state = "待审核";
+						} else if(data.resultData[i].state == 2){
+							_state = "审核不通过";
+						}
+						var _desc = "";
+						var _content = data.resultData[i].content;
+						_content = JSON.parse(_content);
+						var _devArray,_addArray,_deleteArray,_confArray = "";
+						
+						var _devArray = _content.changeDev;//.splice(",")
+						var _addArray = _content.changeAdd;//.splice(",")
+						var _deleteArray = _content.changeReduce;//.splice(",")
+						var _confArray = _content.changeConf;//.splice(",")
+						console.log(_content);
+						console.log(_devArray.length);
+						console.log(_addArray.length);
+						console.log(_deleteArray.length);
+						console.log(_confArray.length);
+						if (_devArray.length != 0) {
+							_desc += "<span>修改了基本项"+_devArray+"</span><br/>";
+						}if (_addArray.length != 0) {
+							_desc += "<span>新增了"+_addArray+"项</span><br/>";
+						}if (_deleteArray.length != 0) {
+							_desc += "<span>删除了"+_deleteArray+"项</span><br/>";
+						}if (_confArray.length != 0) {
+							_desc += "<span>修改了Config项"+_confArray+"</span><br/>";
+						}
+						var _row = document.getElementById("descriptTbody").insertRow(0);
+						var _cell0 = _row.insertCell(0);
+						_cell0.innerHTML = _desc;
+						var _cell1 = _row.insertCell(1);
+						_cell1.innerHTML = data.resultData[i].reason;
+						var _cell2 = _row.insertCell(2);
+						_cell2.style.textAlign = "center";
+						_cell2.innerHTML = _state;
+						var _cell3 = _row.insertCell(3);
+						_cell3.style.textAlign = "center";
+						_cell3.innerHTML = data.resultData[i].userName;
+						var _cell4 = _row.insertCell(4);
+						_cell4.style.textAlign = "center";
+						_cell4.innerHTML = data.resultData[i].modifyTime;
+					}
+				}
 			}
 		}
 	}
 }
 
-
+function getCommitterEmail(author){
+	console.log("in getCommitterEmail");
+	var node = '{"userName":"' + author + '"}';
+	sendHTTPRequest("/getUserInfo", node, getEmailResult);
+}
+function getEmailResult(){
+	if(this.readyState == 4) {
+        if(this.status == 200) {
+            var data = JSON.parse(this.responseText);
+            console.log(data);
+            if(data.resultCode == 0) {
+            	console.log(data.resultData[0].email);
+            	toEmail = "linxinwang@skyworth.com";//测试用
+//          	toEmail = data.resultData[0].email;
+            }
+        };
+	}
+}
 
 
 
@@ -1193,7 +1420,7 @@ function scrollTopStyle(name){
 	parent.document.getElementById("homePage").scrollTop = 0;
 }
 //刷新当前iframe
-function freshReviewHtml(num) {
+function page5fresh(num) {
     var htmlObject = parent.document.getElementById("tab_userMenu5");
     var htmlObject2 = parent.document.getElementById("tab_userMenu4");
     var htmlObject3 = parent.document.getElementById("tab_userMenu2");
