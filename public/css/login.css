@@ -235,7 +235,8 @@ input[type="text"]:focus,input[type="Password"]:focus{
 
 .title{
 	width: 800px;
-	margin: 40px auto;
+	margin: 20px auto;
+    margin-top: 85px;
 	text-align: center;
 	font: bold 60px/1 "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color: #fff;

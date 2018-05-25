@@ -54,24 +54,23 @@
 
 .CJJ-Table .tfootRight input {
     width: 80px;
-    padding-left: 10px;
-    height: 25px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
+    text-align: center;
 }
 
 .CJJ-Table .tfootRight button {
     width: 60px;
-    height: 25px;
+    height: 31px;
     border: 1px solid #d9d9d9;
-    color: #FFFFFF;
     margin-left: 10px;
     cursor: pointer;
 }
 
 .CJJ-Table .tfootRight button:hover {
     background: #ff6666 !important;
-    height: 27px;
+    height: 31px;
     color: white !important;
     border: none !important;
 }

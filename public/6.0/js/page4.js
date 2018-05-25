@@ -64,13 +64,13 @@ function handleTableData(arr) {
 			"number": "",
 			"model": "",
 			"chip": "",
-			"target_product": "",
 			"chipmodel": "",
 			"AndroidVersion": "",
 			"memory": "",
 			"type": "",
 			"author": "",
 			"reason": "<span class='eachlook'>查看</a>",
+			"time" : "",
 			"operate": ""
 		};
 		//auditState(0审核通过\1待审核\2审核未通过
@@ -80,11 +80,11 @@ function handleTableData(arr) {
 		eachItem2.number = (i+1);
 		eachItem2.model = arr[i].model;
 		eachItem2.chip = arr[i].chip;
-		eachItem2.target_product = arr[i].targetProduct;
 		eachItem2.chipmodel = arr[i].soc;
 		eachItem2.AndroidVersion = arr[i].androidVersion;
 		eachItem2.memory = arr[i].memorySize;
 		eachItem2.author = arr[i].userName;
+		eachItem2.time = arr[i].operateTime;
 		if (operateType == 0) {
 			eachItem2.type = "正常";
 		} else if(operateType == 1){
@@ -130,8 +130,8 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页
 	$('#page4_table').CJJTable({
-		'title': ["序号", "机型", "机芯", "TP", "芯片型号", "安卓版本", "内存", "类型", "提交者", "跟新原因", "操作"],
-		'body': ["number", "model", "chip", "target_product", "chipmodel", "AndroidVersion", "memory", "type", "author", "reason", "operate"], //tbody td 取值的字段 必填
+		'title': ["序号", "机型", "机芯", "芯片型号", "安卓版本", "内存", "类型", "提交者", "跟新原因", "时间", "操作"],
+		'body': ["number", "model", "chip", "chipmodel", "AndroidVersion", "memory", "type", "author", "reason", "time", "operate"], //tbody td 取值的字段 必填
 		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填

@@ -25,7 +25,7 @@ var deleteChip = null;
 var deleteModel = null;
 
 var fromEmail = null;
-var adminFlag = null;
+var level = null;
 var loginusername = null;
 
 var coocaaVersion = "/v6.0";
@@ -33,8 +33,8 @@ var coocaaVersion = "/v6.0";
 $(function() {
 	fromEmail = parent.loginEmail;
 	loginusername = parent.loginusername;
-	adminFlag = parent.adminFlag;
-	console.log(fromEmail+"--"+loginusername+"--"+adminFlag);
+	level = parent.loginlevel;
+	console.log(fromEmail+"--"+loginusername+"--"+level);
 	var node = '{"offset":"-1","rows":"10"}';
 	sendHTTPRequest(coocaaVersion+"/product/queryByPage", node, productQuery);
 	buttonInit();
@@ -100,8 +100,8 @@ function handleTableData(arr) {
 			"EMMC": arr[i].EMMC,
 			"memory": arr[i].memorySize,
 			"gitbranch": arr[i].gitBranch,
-			"history": "<a class='eachcheck' href='#'>查看</a>",
-			"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
+			"history": "<button class='eachcheck btn-success' href='#'>查看</button>",
+			"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil' title='修改'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove' title='删除'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy' title='复制'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open' title='预览'></span></a>"
 		};
 		getdataArray2.push(eachItem2);
 	}
@@ -352,7 +352,7 @@ function clearMKLastWork(){
 function buttonInit() {
 	document.getElementById("page2_searchInfo").onclick = page2Select;
 	document.getElementById("page2_reset").onclick = page2Reset;
-	document.getElementById("page2_deleteMore").onclick = page2DeleteMore;
+//	document.getElementById("page2_deleteMore").onclick = page2DeleteMore;
 	document.getElementById("page2_export").onclick = page2Export;
 	document.getElementById("page2_fresh").onclick = page2Fresh;
 	document.getElementById("myEditEnsureModalEnsure").onclick = closeparentpage;
@@ -451,8 +451,16 @@ function buttonInit() {
 		page2Fresh()
 	});
 	$("#myEditEnsure").click(function() {
-		console.log("修稿配置项的提交");
-		myEditorAddSubmit(1);
+		console.log("修改配置项的提交");
+		var content = document.getElementById("changeReason").value;
+		content = content.replace(/\s*/g,"");
+		console.log(content +"---"+content.length);
+		if(content == null || content.length == 0){
+			document.getElementById("errorChangeInfo").style.display = "inline-block";
+			setTimeout("document.getElementById('errorChangeInfo').style.display = 'none';", 3000);
+		} else{
+			myEditorAddSubmit(1);
+		}
 	});
 	$("#myAddEnsure").click(function() {
 		console.log("新增配置项的提交");
@@ -531,7 +539,8 @@ function buttonInitAfter() {
 		//document.getElementById("loading").style.display = "block";
 	});
 	$("#page1_close1").click(function() {
-		document.getElementById("descriptTbody").innerHTML = "";
+		//document.getElementById("descriptTbody").innerHTML = "";
+		document.getElementById("contenttable").innerHTML = "";
 		$("#page1_examine").modal('hide');
 	});
 	$("#page1_close2").click(function() {
@@ -1213,9 +1222,11 @@ function productHistoryQuery(){
 					$("#noChangeHistory").css("display","block");
 					$("#noChangeHistory").html("该产品没有修改历史。");
 				} else{
-					$("#contenttable").css("display","block");
+					$("#contenttable").css("display","inline-table");
 					$("#noChangeHistory").html(" ");
 					$("#noChangeHistory").css("display","none");
+					
+					var _tableInnerHtml = "<thead><tr><th>修改内容</th><th>修改原因</th><th style='min-width: 55px;'>状态</th><th>提交者</th><th>提交时间</th></tr></thead>"
 					for (var i=0; i<data.resultData.length; i++) {
 						var _state = "";
 						if (data.resultData[i].state == 0) {
@@ -1225,22 +1236,9 @@ function productHistoryQuery(){
 						} else if(data.resultData[i].state == 2){
 							_state = "审核不通过";
 						}
-						
-						var _row = document.getElementById("descriptTbody").insertRow(0);
-						var _cell0 = _row.insertCell(0);
-						_cell0.innerHTML = data.resultData[i].content;
-						var _cell1 = _row.insertCell(1);
-						_cell1.innerHTML = data.resultData[i].reason;
-						var _cell2 = _row.insertCell(2);
-						_cell2.style.textAlign = "center";
-						_cell2.innerHTML = _state;
-						var _cell3 = _row.insertCell(3);
-						_cell3.style.textAlign = "center";
-						_cell3.innerHTML = data.resultData[i].userName;
-						var _cell4 = _row.insertCell(4);
-						_cell4.style.textAlign = "center";
-						_cell4.innerHTML = data.resultData[i].modifyTime;
+						_tableInnerHtml += "<tbody id='descriptTbody'><tr><td>"+data.resultData[i].content+"</td><td>"+data.resultData[i].reason+"</td><td>"+_state+"</td><td>"+data.resultData[i].userName+"</td><td>"+data.resultData[i].modifyTime+"</td></tr></tbody>";
 					}
+					document.getElementById("contenttable").innerHTML = _tableInnerHtml;
 				}
 			}
 		}
@@ -1402,6 +1400,7 @@ function sendEmail(){
 	var node = '{"data":' + _email + '}';
 	console.log(node);
     //sendHTTPRequest("/sendMail", node, mailfun);
+    page2Fresh();
 }
 
 //邮件函数回调

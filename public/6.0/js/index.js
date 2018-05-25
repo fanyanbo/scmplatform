@@ -17,12 +17,12 @@ function buttonInit() {
 		_focusIndex = $(".everyButton").index($(this));
 		console.log(_focusIndex);
 		if(_focusIndex != 0) {
-			if($(".everyDiv")[_focusIndex - 1].style.display == "none") {
-				$(".everyDiv").slideUp();
-			}
+//			if($(".everyDiv")[_focusIndex - 1].style.display == "none") {
+//				$(".everyDiv").slideUp();
+//			}
 			$(".everyDiv:eq(" + (_focusIndex - 1) + ")").slideToggle();
 		} else {
-			$(".everyDiv").slideUp();
+			//$(".everyDiv").slideUp();
 		}
 	});
 	$("#index_exit").click(function() {
