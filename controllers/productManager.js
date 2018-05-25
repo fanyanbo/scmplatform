@@ -227,3 +227,14 @@ exports.queryAllByMachineTemp = function (req, res, next) {
       output.success(req,res,"查询queryAllByMachineTemp成功",results);
     });
 };
+
+exports.queryAuditByUser = function (req, res, next) {
+    let data = req.body.data;
+    productModel.queryAuditByUser(data, function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      console.log(results);
+      output.success(req,res,"查询审核状态信息成功",results);
+    });
+};
