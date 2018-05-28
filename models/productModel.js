@@ -470,6 +470,8 @@ ProductModel.prototype.queryAuditByUser = function (data, callback) {
     let userName = data.userName;
     let level = data.level;
 
+    console.log(userName + level);
+
     let ep = new eventproxy();
     let sql_list0 = [
                     `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1`,
@@ -488,7 +490,7 @@ ProductModel.prototype.queryAuditByUser = function (data, callback) {
         callback(err,null);
     });
 
-    ep.after('query_result', sql_list.length, function (list) {
+    ep.after('query_result', 2, function (list) {
         // 所有查询的内容都存在list数组中
         let listObject = [];
         for(let i in list) {
