@@ -463,6 +463,30 @@ ProductModel.prototype.deleteRecovery = function (data, callback) {
     });
 }
 
+/**
+ * @param {获取待审核消息数和未审核消息数，这是要区分普通用户和管理员用户}
+ */
+ProductModel.prototype.queryAuditByUser = function (data, callback) {
+    let userName = data.userName;
+    let level = data.level;
+    let sql;
+    let sql_params;
+    if (level === 1) {
+      sql = `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1 OR auditState = 2`,
+      sql_params = [];
+    } else {
+      sql = `SELECT * FROM ${dbConfig.tables.products} WHERE (auditState = 1 OR auditState = 2) AND userName = ?`,
+      sql_params = [userName];
+    }
+    console.log(sql_params);
+    db.conn.query(sql,sql_params,function(err,rows,fields){
+      if (err) {
+        return callback(err);
+      }
+      callback(null, rows);
+    });
+}
+
 var productModel = new ProductModel();
 
 module.exports = productModel;
