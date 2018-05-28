@@ -469,22 +469,43 @@ ProductModel.prototype.deleteRecovery = function (data, callback) {
 ProductModel.prototype.queryAuditByUser = function (data, callback) {
     let userName = data.userName;
     let level = data.level;
-    let sql;
-    let sql_params;
-    if (level === 1) {
-      sql = `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1 OR auditState = 2`,
-      sql_params = [];
-    } else {
-      sql = `SELECT * FROM ${dbConfig.tables.products} WHERE (auditState = 1 OR auditState = 2) AND userName = ?`,
-      sql_params = [userName];
-    }
-    console.log(sql_params);
-    db.conn.query(sql,sql_params,function(err,rows,fields){
-      if (err) {
-        return callback(err);
-      }
-      callback(null, rows);
+    
+    let ep = new eventproxy();
+    let sql_list0 = [
+                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1`,
+                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 2`
+                  ];
+
+    let sql_list1 = [
+                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1 AND userName = ?`,
+                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 2 AND userName = ?`
+                  ];
+
+    ep.bind('error', function (err) {
+        logger.error("queryAuditByUser 捕获到错误-->" + err);
+        //卸掉所有的handler
+        ep.unbind();
+        callback(err,null);
     });
+
+    ep.after('query_result', sql_list.length, function (list) {
+        // 所有查询的内容都存在list数组中
+        let listObject = [];
+        for(let i in list){
+          listObject.push(list[i]);
+        }
+        callback(null,listObject);
+    });
+
+    if (level === 1) {
+      for (var i = 0; i < sql_list0.length; i++) { //数据结构与调用顺序有关
+        db.conn.query(sql_list0[i],[],ep.group('query_result'));
+      }
+    } else {
+      for (var i = 0; i < sql_list1.length; i++) { //数据结构与调用顺序有关
+        db.conn.query(sql_list1[i],[level],ep.group('query_result'));
+      }
+    }
 }
 
 var productModel = new ProductModel();
