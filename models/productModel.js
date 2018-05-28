@@ -469,7 +469,7 @@ ProductModel.prototype.deleteRecovery = function (data, callback) {
 ProductModel.prototype.queryAuditByUser = function (data, callback) {
     let userName = data.userName;
     let level = data.level;
-    
+
     let ep = new eventproxy();
     let sql_list0 = [
                     `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1`,
@@ -491,7 +491,7 @@ ProductModel.prototype.queryAuditByUser = function (data, callback) {
     ep.after('query_result', sql_list.length, function (list) {
         // 所有查询的内容都存在list数组中
         let listObject = [];
-        for(let i in list){
+        for(let i in list) {
           listObject.push(list[i]);
         }
         callback(null,listObject);
