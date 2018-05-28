@@ -44,16 +44,16 @@
 }
 
 .CJJ-Table .tfootRight input {
-    width: 80px;
-    padding-left: 10px;
-    height: 25px;
+    width: 65px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
+    text-align: center;
 }
 
 .CJJ-Table .tfootRight button {
     width: 60px;
-    height: 25px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
     margin-left: 10px;
@@ -62,7 +62,7 @@
 
 .CJJ-Table .tfootRight button:hover {
     background: #ff6666 !important;
-    height: 27px;
+    height: 31px;
     color: white !important;
     border: none !important;
 }
@@ -74,7 +74,7 @@
 
 .CJJ-Table thead{
     border-bottom: 1px solid #ccc;
-    background: #f2f2f2;
+    background: #42A3E7;
 }
 
 .CJJ-Table thead th{
@@ -93,10 +93,13 @@
 .CJJ-Table tbody tr:hover{
     background-color: #d5d5d5;
 }
+.CJJ-Table tbody tr:nth-child(even) {
+    background-color: #CFEEE9;
+}
 .CJJ-Table tfoot select{
     width: 80px;
     padding-left: 10px;
-    height: 26px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
 }
@@ -197,4 +200,17 @@
     left: 35%;
     text-align: center;
     color: red;
+}
+
+#page3_targetProduct{
+	margin-left: 0.5em;
+    height: 32px;
+    width: 182px;
+    text-align: center;
+    padding-left: 0px;
+    background-color: #FFFFFF;
+    border: 1px solid cadetblue;
+}
+#page3_add{
+	margin-left: 20px;
 }

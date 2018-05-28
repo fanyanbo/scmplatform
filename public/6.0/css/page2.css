@@ -67,7 +67,7 @@
 .CJJ-Table tfoot select{
     width: 80px;
     padding-left: 10px;
-    height: 26px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
 }
@@ -88,16 +88,16 @@
 }
 
 .CJJ-Table .tfootRight input {
-    width: 80px;
-    padding-left: 10px;
-    height: 25px;
+    width: 65px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
+    text-align: center;
 }
 
 .CJJ-Table .tfootRight button {
     width: 60px;
-    height: 25px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
     margin-left: 10px;
@@ -106,7 +106,7 @@
 
 .CJJ-Table .tfootRight button:hover {
     background: #ff6666 !important;
-    height: 27px;
+    height: 31px;
     color: white !important;
     border: none !important;
 }
@@ -343,4 +343,20 @@
 	text-align: center;
     font-size: 24px;
     margin-bottom: 10px;
+}
+#errorChangeInfo{
+	color: red;
+	display: none;
+}
+.eachcheck{
+	border-radius: 5px;
+    padding: 2px 5px;
+}
+#contenttable,#contenttable thead th{
+	text-align: center;
+}
+#contenttable thead th,#contenttable tbody td{
+	max-width: 300px;
+	word-wrap:break-word;
+	vertical-align: middle;
 }

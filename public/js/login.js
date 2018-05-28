@@ -20,11 +20,9 @@ function loginfun() {
     console.log(node);
     if (_username != "" && _password != "") {
         sendHTTPRequest("/login", node, loginresult);
-    }
-    else if(username == ""){
+    }else if(_username == ""){
         loginmsg.innerHTML += "请输入用户名！";
-    }
-    else{
+    }else{
         loginmsg.innerHTML += "请输入密码！";
     }
 }
