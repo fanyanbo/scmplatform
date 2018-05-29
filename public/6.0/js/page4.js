@@ -215,7 +215,7 @@ function buttonInitAfter(){
         var _type = $("#myAddModalLabel").attr("num");//1-审核、2-编辑、3-恢复
 		var _state = $("#myAddModalLabel").attr("type");//(0正常\1修改\2增加\3删除)
         console.log(_type +"----"+_state);
-        $("#mydialog").attr("buttontype","0");//点击审核不通过
+        $("#mydialog").attr("buttontype","1");//点击审核不通过
         document.getElementById("mydialog").style.display = "block";
 	    document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
 	    document.getElementById("dialogword").innerHTML = "是否确认不通过该文件？";
@@ -297,7 +297,7 @@ function passSubmit(){
     console.log(_type +"----"+_state);
     if (_type == 1) {
     	console.log("点击了审核页面的审核通过");
-    	$("#mydialog").attr("buttontype","1");//点击审核通过
+    	$("#mydialog").attr("buttontype","0");//点击审核通过
     	passIssue();
     } else if(_type == 2){
     	console.log("点击了审核页面的编辑操作的提交");

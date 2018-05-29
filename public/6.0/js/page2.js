@@ -1428,7 +1428,7 @@ function page2Fresh() {
 	var htmlObject = parent.document.getElementById("tab_userMenu2");
 	htmlObject.firstChild.src = "page2.html";
 	
-	var htmlObject5 = parent.document.getElementById("tab_userMenu4");
+	var htmlObject4 = parent.document.getElementById("tab_userMenu4");
 	var htmlObject5 = parent.document.getElementById("tab_userMenu5");
 	if (htmlObject4) {
 		htmlObject4.firstChild.src = "page4.html";
