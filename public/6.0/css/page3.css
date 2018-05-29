@@ -214,3 +214,9 @@
 #page3_add{
 	margin-left: 20px;
 }
+.eachedit,.eachcopy,.eachpreview{
+	border-radius: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding: 2px 7px;
+}

@@ -264,3 +264,25 @@ body .modal-footer{
 	border-radius: 5px;
 	text-align: center;
 }
+#contenttable{
+	margin: 0 auto; 
+}
+#page4_examine{
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 100px;
+}
+#contenttable,#contenttable thead th{
+	text-align: center;
+}
+#contenttable thead th,#contenttable tbody td{
+	max-width: 300px;
+	word-wrap:break-word;
+	vertical-align: middle;
+}
+.eachlook,.eachedit,.eachaudit{
+	border-radius: 5px;
+    padding: 2px 5px;
+    margin: 0px 5px;
+}
+ 

@@ -32,7 +32,7 @@
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_targetProduct" class="control-label col-xs-5 text-right">TP:</label>
-						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="匹配查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
 						<div class="auto_hidden" id="page2_tp_auto"></div>
 					</div>
 				</div>
@@ -51,7 +51,7 @@
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_chipid" class="control-label col-xs-5 text-right">芯片型号:</label>
-						<input type="text" id="page2_chipid" class="col-xs-6 inputstyle text-left" placeholder="匹配查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<input type="text" id="page2_chipid" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
 						<div class="auto_hidden" id="page2_soc_auto"></div>
 					</div>
 					<div class="col-xs-4 form-group">
@@ -94,8 +94,8 @@
 					</div>
 					<div class="col-xs-4 form-group">
 						<label for="page2_gitbranch" class="control-label col-xs-5 text-right">git分支:</label>
-						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" placeholder="匹配查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
-						<div class="auto_hidden" id="page2_git_auto"></div>
+						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" placeholder="模糊查询" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<!--<div class="auto_hidden" id="page2_git_auto"></div>-->
 					</div>
 				</div>
 				<div class="form-group text-center">
@@ -206,7 +206,7 @@
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
 													<input type="text" value="" name="gitbranch" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
-													<div class="auto_hidden" id="page2_git_auto2"></div>
+													<!--<div class="auto_hidden" id="page2_git_auto2"></div>-->
 												</div>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2Platform" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">平台&nbsp;:</label>
@@ -223,13 +223,13 @@
 										<tr>
 											<td style="padding: 0;">
 												<div class="btn-group">
-													<button class="page2_tabs" firstget="false">config文件</button>
-													<button class="page2_tabs" firstget="false">系统设置</button>
-													<button class="page2_tabs" firstget="false">信号源工具箱</button>
-													<button class="page2_tabs" firstget="false">卖场演示</button>
-													<button class="page2_tabs" firstget="false">中间件</button>
-													<button class="page2_tabs" firstget="false">MK</button>
-													<button class="page2_tabs" firstget="false">PROP</button>
+													<button class="page2_tabs btn-success" firstget="false">config文件</button>
+													<button class="page2_tabs btn-success" firstget="false">系统设置</button>
+													<button class="page2_tabs btn-success" firstget="false">信号源工具箱</button>
+													<button class="page2_tabs btn-success" firstget="false">卖场演示</button>
+													<button class="page2_tabs btn-success" firstget="false">中间件</button>
+													<button class="page2_tabs btn-success" firstget="false">MK</button>
+													<button class="page2_tabs btn-success" firstget="false">PROP</button>
 												</div>
 												<div class="col-xs-12 page2_boxes row">
 													<div id="myConfigBox" class="eachpartbox"></div>

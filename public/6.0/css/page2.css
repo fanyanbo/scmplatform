@@ -219,10 +219,13 @@
     float: left;
     margin-left: 5%;
 }
-.page2_tabs:nth-child(1) {
+/*.page2_tabs:nth-child(1) {
 	background-color: red;
+}*/
+.page2_tabs{
+	border-radius: 5px;
+    padding: 2px 4px;
 }
-
 .hidden{
 	display: none;
 }
@@ -270,7 +273,9 @@
 .eachpartbox{
 	position: relative;
 	width: 100%;
+	margin-top: 5px;
 	clear: both;
+	font-size: 18px;
 }
 .myModalErrorInfo{
     margin-left: 20%;
@@ -359,4 +364,14 @@
 	max-width: 300px;
 	word-wrap:break-word;
 	vertical-align: middle;
+}
+.page2_boxes{
+	margin: 0 auto;
+}
+#page2Modal1Table .sysitems{
+	margin-right: 5px;
+}
+#page2Modal1Table .configitems{
+	padding-right: 0px;
+	padding-left: 0px;
 }

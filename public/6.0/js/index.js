@@ -54,7 +54,7 @@ function loginResult() {
 					$("#adminVisible1").css("display","none");
 					$("#adminVisible2").css("display","none");
 				} else if(loginlevel == "1") {
-					$("#adminVisible1").css("display","block");
+					$("#adminVisible1").css("display","inline");
 					$("#adminVisible2").css("display","block");
 				}
 			} else {
@@ -84,16 +84,51 @@ function logOutResult(){
 function loginLogresult(){
 	if (this.readyState == 4) {
         console.log("this.responseText = " + this.responseText);
-        if (this.status == 200)
-        {
+        if (this.status == 200){
             var data = JSON.parse(this.responseText);
-            console.log(JSON.stringify(data));
+            console.log(data);
             if (data.resultCode == "0") {
             	console.log("push 111 success.");
-            }
-            else{
+            }else{
                 console.log("push 111 failure.");
 	    	};
         }
+        var statusObj = {
+			"userName" : loginusername,
+			"level" : loginlevel
+		}
+		var _status = JSON.stringify(statusObj);
+		var node = '{"data":' + _status + '}';
+		console.log(node);
+        sendHTTPRequest(coocaaVersion+"/product/queryAuditByUser", node, audioDataRresult);
     }
 }
+function audioDataRresult(){
+	if (this.readyState == 4) {
+        if (this.status == 200){
+            var data = JSON.parse(this.responseText);
+            console.log(data);
+            if (data.resultCode == "0") {
+            	console.log(data.resultData[0].length);
+            	console.log(data.resultData[1].length);
+        		if (data.resultData[0].length == 0) {
+            		document.getElementsByClassName("email")[1].style.display = "none";
+            	}else{
+            		document.getElementsByClassName("email")[1].style.display = "inline-block";
+            	}
+            	if (data.resultData[1].length == 0) {
+            		document.getElementsByClassName("email")[2].style.display = "none";
+            	}else{
+            		document.getElementsByClassName("email")[2].style.display = "inline-block";
+            	}
+            	if (data.resultData[0].length == 0&&data.resultData[0].length == 0) {
+            		document.getElementsByClassName("email")[0].style.display = "none";
+            	}else{
+            		document.getElementsByClassName("email")[0].style.display = "block";
+            	}
+            }
+        }
+    }
+	
+}
+	

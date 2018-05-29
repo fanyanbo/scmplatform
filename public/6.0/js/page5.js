@@ -64,13 +64,13 @@ function handleTableData(arr) {
 			"number": "",
 			"model": "",
 			"chip": "",
-			"target_product": "",
 			"chipmodel": "",
 			"AndroidVersion": "",
 			"memory": "",
 			"type": "",
 			"author": "",
-			"reason": "<span class='eachlook'>查看</a>",
+			"reason": "<button class='btn-success eachlook'>查看</button>",
+			"time" : "",
 			"operate": ""
 		};
 		//auditState(0审核通过\1待审核\2审核未通过
@@ -80,11 +80,11 @@ function handleTableData(arr) {
 		eachItem2.number = (i+1);
 		eachItem2.model = arr[i].model;
 		eachItem2.chip = arr[i].chip;
-		eachItem2.target_product = arr[i].targetProduct;
 		eachItem2.chipmodel = arr[i].soc;
 		eachItem2.AndroidVersion = arr[i].androidVersion;
 		eachItem2.memory = arr[i].memorySize;
 		eachItem2.author = arr[i].userName;
+		eachItem2.time = arr[i].operateTime;
 		if (operateType == 0) {
 			eachItem2.type = "正常";
 		} else if(operateType == 1){
@@ -98,24 +98,24 @@ function handleTableData(arr) {
             if (eachItem2.author == loginusername) {
                 if (operateType == 3) {
                 	//管理员&&是提交者&&删除
-                	eachItem2.operate = "<span class='eachaudit' onclick='review(this,1,3)'>审核</span><span class='eachedit' onclick='recover(this,"+operateType+")'>恢复</span>";
+                	eachItem2.operate = "<button class='btn-danger eachaudit' onclick='review(this,1,3)'>审核</button><button class='btn-danger eachedit' onclick='recover(this,"+operateType+")'>恢复</button>";
                 }else{
                 	//管理员&&是提交者&&编辑或者增加
-                	eachItem2.operate = "<span class='eachaudit' onclick='review(this,1,"+operateType+")'>审核</span><span class='eachedit' onclick='edit(this,1,0)'>编辑</span>";
+                	eachItem2.operate = "<button class='btn-danger eachaudit' onclick='review(this,1,"+operateType+")'>审核</button><button class='btn-danger eachedit' onclick='edit(this,1,0)'>编辑</button>";
                 }
             }else{
             	//管理员&&非提交者
-            	eachItem2.operate = "<span class='eachaudit' onclick='review(this,0,"+operateType+")'>审核</span>";
+            	eachItem2.operate = "<button class='btn-danger eachaudit' onclick='review(this,0,"+operateType+")'>审核</button>";
             }
             getdataArray2.push(eachItem2);
         }else{
         	if (eachItem2.author == loginusername) {
 		        if (operateType == 3) {
 		        	//非管理员&&是提交者&&删除
-		        	eachItem2.operate = "<span class='eachedit' onclick='recover(this,"+operateType+")'>恢复</span>";
+		        	eachItem2.operate = "<button class='btn-danger eachedit' onclick='recover(this,"+operateType+")'>恢复</button>";
 		        }else{
 		        	//非管理员&&是提交者&&新增或者编辑
-		        	eachItem2.operate = "<span class='eachedit' onclick='edit(this,1,"+operateType+")'>编辑</span>";
+		        	eachItem2.operate = "<button class='btn-danger eachedit' onclick='edit(this,1,"+operateType+")'>编辑</button>";
 		        }
 		        getdataArray2.push(eachItem2);
 		    }else{
@@ -130,8 +130,8 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页
 	$('#page5_table').CJJTable({
-		'title': ["序号", "机型", "机芯", "TP", "芯片型号", "安卓版本", "内存", "类型", "提交者", "跟新原因", "操作"],
-		'body': ["number", "model", "chip", "target_product", "chipmodel", "AndroidVersion", "memory", "type", "author", "reason", "operate"], //tbody td 取值的字段 必填
+		'title': ["序号", "机型", "机芯", "芯片型号", "安卓版本", "内存", "类型", "提交者", "跟新原因", "时间", "操作"],
+		'body': ["number", "model", "chip", "chipmodel", "AndroidVersion", "memory", "type", "author", "reason", "time", "operate"], //tbody td 取值的字段 必填
 		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
@@ -197,7 +197,7 @@ function buttonInitAfter(){
 		console.log($("#page5_table2 .model")[_Index].innerHTML);
 		$("#page5_check_chip").html($("#page5_table2 .chip")[_Index].innerHTML);
 		$("#page5_check_model").html($("#page5_table2 .model")[_Index].innerHTML);
-		$("#page5_check_targetProduct").html($("#page5_table2 .target_product")[_Index].innerHTML);
+//		$("#page5_check_targetProduct").html($("#page5_table2 .target_product")[_Index].innerHTML);
 		$('#page5_examine').modal();
 		var node = '{"chip":"'+$("#page5_table2 .chip")[_Index].innerHTML+'","model":"'+$("#page5_table2 .model")[_Index].innerHTML+'"}';
 		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
@@ -1161,7 +1161,7 @@ function productHistoryQuery(){
 					$("#noChangeHistory").css("display","block");
 					$("#noChangeHistory").html("该产品没有修改历史。");
 				} else{
-					$("#contenttable").css("display","block");
+					$("#contenttable").css("display","inline-table");
 					$("#noChangeHistory").html(" ");
 					$("#noChangeHistory").css("display","none");
 					for (var i=0; i<data.resultData.length; i++) {
@@ -1175,7 +1175,18 @@ function productHistoryQuery(){
 						}
 						var _desc = "";
 						var _content = data.resultData[i].content;
-						_content = JSON.parse(_content);
+						console.log(isJSON_test(_content));
+						if (isJSON_test(_content)) {
+							_content = JSON.parse(_content);
+						}else{
+							_content= {
+								changeDev : "",
+								changeAdd : "",
+								changeReduce: "",
+								changeConf : ""
+							};
+						}
+						console.log(_content);
 						var _devArray,_addArray,_deleteArray,_confArray = "";
 						
 						var _devArray = _content.changeDev;//.splice(",")
@@ -1216,6 +1227,19 @@ function productHistoryQuery(){
 		}
 	}
 }
+function isJSON_test(str) {
+    if (typeof str == 'string') {
+        try {
+            var obj=JSON.parse(str);
+            console.log('转换成功：'+obj);
+            return true;
+        } catch(e) {
+            console.log('error：'+str+'!!!'+e);
+            return false;
+        }
+    }
+    console.log('It is not a string!')
+ }　
 
 function getCommitterEmail(author){
 	console.log("in getCommitterEmail");
@@ -1282,7 +1306,6 @@ function instantQuery(arr1, arr2) {
 		setValue: function(_this) {
 			return function() {
 				_this.obj.value = this.seq;
-				//checkInArray(_this.obj.id,$("#"+_this.obj.id).val());
 				if (_this.obj.id == "lable2TargetProduct") {
 					changeMKByTP(_this.obj.id, _this.obj.value);
 				}
@@ -1346,7 +1369,6 @@ function instantQuery(arr1, arr2) {
 			//回车键
 			else if(event.keyCode == 13) {
 				this.autoObj.className = "auto_hidden";
-				//checkInArray(this.autoObj.id,document.getElementById(this.autoObj.id).childNodes[this.index].innerText);
 				if (this.autoObj.id == "page2_tp_auto2") {
 					changeMKByTP(this.curname, this.curvalue);
 				}

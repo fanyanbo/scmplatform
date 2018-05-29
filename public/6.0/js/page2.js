@@ -79,7 +79,7 @@ function targetproductQueryResult() {
 				for(var i = 0; i < data.resultData[3].length; i++) {
 					autoDataArray4.push(data.resultData[3][i].name);
 				}
-				instantQuery(autoDataArray1, autoDataArray2, autoDataArray3, autoDataArray4, autogitArray);
+				instantQuery(autoDataArray1, autoDataArray2, autoDataArray3, autoDataArray4);
 			}
 		}
 		clearAllInfo();
@@ -91,7 +91,8 @@ function handleTableData(arr) {
 	var getdataArray2 = new Array();
 	for(var i = 0; i < arr.length; i++) {
 		var eachItem2 = {
-			"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
+//			"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
+			"number" : (i+1),
 			"model": arr[i].model,
 			"chip": arr[i].chip,
 			"target_product": arr[i].targetProduct,
@@ -112,9 +113,9 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页的样子
 	$('#page2_table').CJJTable({
-		'title': ["单选框", "机型", "机芯", "TP", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
-		'body': ["checkout", "model", "chip", "target_product", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
-		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
+		'title': ["序号", "机型", "机芯", "TP", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
+		'body': ["number", "model", "chip", "target_product", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
+		'display': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
 		'url': data1 //数据源 必填
@@ -141,7 +142,7 @@ function editStatusByLength(num){
 	}
 }
 
-function instantQuery(arr1, arr2, arr3, arr4, arr5) {
+function instantQuery(arr1, arr2, arr3, arr4) {
 	var _$ = function(id) {
 		return "string" == typeof id ? document.getElementById(id) : id;
 	}
@@ -178,7 +179,6 @@ function instantQuery(arr1, arr2, arr3, arr4, arr5) {
 		setValue: function(_this) {
 			return function() {
 				_this.obj.value = this.seq;
-				//checkInArray(_this.obj.id,$("#"+_this.obj.id).val());
 				if (_this.obj.id == "lable2TargetProduct") {
 					changeMKByTP(_this.obj.id, _this.obj.value);
 				}
@@ -242,7 +242,6 @@ function instantQuery(arr1, arr2, arr3, arr4, arr5) {
 			//回车键
 			else if(event.keyCode == 13) {
 				this.autoObj.className = "auto_hidden";
-				//checkInArray(this.autoObj.id,document.getElementById(this.autoObj.id).childNodes[this.index].innerText);
 				if (this.autoObj.id == "page2_tp_auto2") {
 					changeMKByTP(this.curname, this.curvalue);
 				}
@@ -293,33 +292,28 @@ function instantQuery(arr1, arr2, arr3, arr4, arr5) {
 	autoComplete2 = new AutoComplete('page2_model', 'page2_model_auto', arr2);
 	autoComplete3 = new AutoComplete('page2_targetProduct', 'page2_tp_auto', arr3);
 	autoComplete4 = new AutoComplete('page2_chipid', 'page2_soc_auto', arr4);
-	autoComplete5 = new AutoComplete('page2_gitbranch', 'page2_git_auto', arr5);
 	
 	autoComplete12 = new AutoComplete('lable2Chip', 'page2_chip_auto2', arr1);
 	autoComplete22 = new AutoComplete('lable2Model', 'page2_model_auto2', arr2);
 	autoComplete32 = new AutoComplete('lable2TargetProduct', 'page2_tp_auto2', arr3);
 	autoComplete42 = new AutoComplete('lable2ChipMode', 'page2_soc_auto2', arr4);
-	autoComplete52 = new AutoComplete('lable2GitBranch', 'page2_git_auto2', arr5);
 	/* 点击空白出隐藏临时div */
 	_$(document).onclick = function(e) {
 		var e = e || window.event; //浏览器兼容性 
 		var elem = e.target || e.srcElement;
-		var showArray = ["page2_chip_auto","page2_model_auto","page2_tp_auto","page2_soc_auto","page2_git_auto","page2_chip_auto2","page2_model_auto2","page2_tp_auto2","page2_soc_auto2","page2_git_auto2"];
-		var showBox = ["page2_chip","page2_model","page2_targetProduct","page2_chipid","page2_gitbranch","lable2Chip","lable2Model","lable2TargetProduct","lable2ChipMode","lable2GitBranch"];
+		var showArray = ["page2_chip_auto","page2_model_auto","page2_tp_auto","page2_soc_auto","page2_chip_auto2","page2_model_auto2","page2_tp_auto2","page2_soc_auto2"];
+		var showBox = ["page2_chip","page2_model","page2_targetProduct","page2_chipid","lable2Chip","lable2Model","lable2TargetProduct","lable2ChipMode"];
 		eachShowObj(showArray,showBox);
 	}
 	function eachShowObj(arr,arr2){
 		for (var i=0; i<arr.length; i++) {
 			var _style = document.getElementById(arr[i]).getAttribute("class");
 			if(_style == "auto_show") {
-				//checkInArray(arr2[i],$("#"+arr2[i])[0].value);
 				document.getElementById(arr[i]).setAttribute("class", "auto_hidden")
 			}
 		}
 	}
 }
-
-function checkInArray(id,value){}
 
 function changeMKByTP(id, value) {
 	console.log(id + "-----" + value);
@@ -400,9 +394,6 @@ function buttonInit() {
 	$("#page2_chipid").keyup(function(event) {
 		autoComplete4.start(event);
 	});
-	$("#page2_gitbranch").keyup(function(event) {
-		autoComplete5.start(event);
-	});
 	$("#lable2Chip").keyup(function(event) {
 		autoComplete12.start(event);
 	});
@@ -414,9 +405,6 @@ function buttonInit() {
 	});
 	$("#lable2ChipMode").keyup(function(event) {
 		autoComplete42.start(event);
-	});
-	$("#lable2GitBranch").keyup(function(event) {
-		autoComplete52.start(event);
 	});
 	
 	
@@ -478,10 +466,10 @@ function buttonInit() {
 function colorstatus(number){
 	for(var k = 0; k < $(".page2_tabs").length; k++) {
 		$(".page2_boxes")[k].style.display = "none";
-		$(".page2_tabs")[k].style.backgroundColor = "buttonface";
+//		$(".page2_tabs")[k].style.backgroundColor = "buttonface";
 	}
 	$(".page2_boxes")[number].style.display = "block";
-	$(".page2_tabs")[number].style.backgroundColor = "red";
+//	$(".page2_tabs")[number].style.backgroundColor = "red";
 }
 
 function buttonInitAfter() {
@@ -1060,9 +1048,9 @@ function moduleQueryData(arr1,arr2) {
 
 function configDataInsert(kk, obj, data) {
 	if(data[kk].typeStr == "string") {
-		obj.innerHTML += "<div class='col-xs-6'><span title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
+		obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='col-xs-6 configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 	} else if(data[kk].typeStr == "enum") {
-		var _myAddselect = "<select class='configitems' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='" + data[kk].typeStr + "' defaultValue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
+		var _myAddselect = "<select class='col-xs-6 configitems' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='" + data[kk].typeStr + "' defaultValue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
 		var str2 = data[kk].options.replace(/"/g, '');
 		str2 = str2.replace("[", "");
 		str2 = str2.replace("]", "");
@@ -1074,7 +1062,7 @@ function configDataInsert(kk, obj, data) {
 				_myAddselect += "<option value='" + str2[k] + "'>" + str2[k] + "</option>";
 			}
 		}
-		_myAddselect = "<div class='col-xs-6'><span title='" + data[kk].descText + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
+		_myAddselect = "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='" + data[kk].descText + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
 		obj.innerHTML += _myAddselect;
 	}
 }

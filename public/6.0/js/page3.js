@@ -32,7 +32,7 @@ function QueryResult(){
 					}
 					tpObjItem.number = (i+1);
 					tpObjItem.target_product = '<span class="eachtpvalue">'+data.resultData[i].name+'</span>';
-					tpObjItem.operate = '<a class="eachedit" href="#">编辑</a><a class="eachcopy" href="#">复制</a><a class="eachpreview" href="#">预览</a>';
+					tpObjItem.operate = '<button class="btn-success eachedit">编辑</button><button class="btn-success eachcopy">复制</button><button class="btn-success eachpreview">预览</button>';
 					instantSearch.push(tpObjItem);
 					tpArray.push(data.resultData[i].name);
 				}
