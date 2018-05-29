@@ -345,10 +345,10 @@
 #changeContent{
 	font-size: 20px;
 }
-#changeContent,#changeReason{
+#changeContent,#changeReason,#changeReason2{
 	background-color: lavender;
 }
-#changeReason{
+#changeReason,#changeReason2{
 	width: 100%;
 	background-color: lavender;
 	resize: none;
@@ -358,7 +358,7 @@
     font-size: 24px;
     margin-bottom: 10px;
 }
-#errorChangeInfo{
+#errorChangeInfo,#errorChangeInfo2{
 	color: red;
 	display: none;
 }

@@ -130,7 +130,7 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页
 	$('#page4_table').CJJTable({
-		'title': ["序号", "机型", "机芯", "芯片型号", "安卓版本", "内存", "类型", "提交者", "跟新原因", "时间", "操作"],
+		'title': ["序号", "机型", "机芯", "芯片型号", "安卓版本", "内存", "类型", "提交者", "修改历史", "时间", "操作"],
 		'body': ["number", "model", "chip", "chipmodel", "AndroidVersion", "memory", "type", "author", "reason", "time", "operate"], //tbody td 取值的字段 必填
 		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
@@ -1178,12 +1178,14 @@ function productHistoryQuery(){
 						console.log(isJSON_test(_content));
 						if (isJSON_test(_content)) {
 							_content = JSON.parse(_content);
+							_content.deleteObj = "";
 						}else{
 							_content= {
 								changeDev : "",
 								changeAdd : "",
 								changeReduce: "",
-								changeConf : ""
+								changeConf : "",
+								deleteObj : data.resultData[i].content
 							};
 						}
 						console.log(_content);
@@ -1193,6 +1195,7 @@ function productHistoryQuery(){
 						var _addArray = _content.changeAdd;//.splice(",")
 						var _deleteArray = _content.changeReduce;//.splice(",")
 						var _confArray = _content.changeConf;//.splice(",")
+						var _deleteArray2 = _content.deleteObj;
 						console.log(_content);
 						console.log(_devArray.length);
 						console.log(_addArray.length);
@@ -1206,6 +1209,9 @@ function productHistoryQuery(){
 							_desc += "<span>删除了"+_deleteArray+"项</span><br/>";
 						}if (_confArray.length != 0) {
 							_desc += "<span>修改了Config项"+_confArray+"</span><br/>";
+						}
+						if (_deleteArray2.length != 0){
+							_desc += "<span>"+_deleteArray2+"</span><br/>";
 						}
 						var _row = document.getElementById("descriptTbody").insertRow(0);
 						var _cell0 = _row.insertCell(0);

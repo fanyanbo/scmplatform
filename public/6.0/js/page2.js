@@ -370,16 +370,23 @@ function buttonInit() {
 		console.log("点击了确认框的确认按钮");
 		var _chip = $("#myDeleteModalEnsure").attr("chip");
 		var	_model = $("#myDeleteModalEnsure").attr("model");
-		var deleteObj = {
-			"chip" : _chip,
-			"model" : _model,
-			"userName" : loginusername,
+		var content = document.getElementById("changeReason2").value;
+		content = content.replace(/\s*/g,"");
+		console.log(content +"---"+content.length);
+		if(content == null || content.length == 0){
+			document.getElementById("errorChangeInfo2").style.display = "inline-block";
+			setTimeout("document.getElementById('errorChangeInfo2').style.display = 'none';", 3000);
+		} else{
+			var deleteObj = {
+				"chip" : _chip,
+				"model" : _model,
+				"userName" : loginusername,
+			}
+			var _delete = JSON.stringify(deleteObj);
+			var node = '{"data":' + _delete + '}';
+			console.log(node);
+			sendHTTPRequest(coocaaVersion+"/product/delete", node, productAddResult);
 		}
-		
-		var _delete = JSON.stringify(deleteObj);
-		var node = '{"data":' + _delete + '}';
-		console.log(node);
-		sendHTTPRequest(coocaaVersion+"/product/delete", node, getDeleteProductInfo);
 	});
 	
 	$("#page2_chip").keyup(function(event) {
@@ -708,34 +715,6 @@ function getPointProductInfo(){
     }
 }
 
-function getDeleteProductInfo(){
-	if(this.readyState == 4) {
-        if(this.status == 200) {
-            var data = JSON.parse(this.responseText);
-            console.log(data);
-            if(data.resultCode == 0){
-            	console.log("数据返回成功,提交删除日志");
-            	var _chip = $("#myDeleteModalEnsure").attr("chip");
-				var	_model = $("#myDeleteModalEnsure").attr("model");
-				var historyObj = {
-					"chip" : _chip,
-					"model" : _model,
-					"reason" : "删除",
-					"state" : 1,
-					"userName" : loginusername,
-					"content" : "删除该产品"
-				}
-				
-				var _history = JSON.stringify(historyObj);
-				var node = '{"data":' + _history + '}';
-				$('#myDeleteModal').modal('hide');
-				sendHTTPRequest(coocaaVersion+"/product/addHistory", node, productHistoryAdd);
-            }
-        };
-    }
-}
-
-
 function CommonDataInsert(type,arr){
 	$("#lable2AndroidVersion").val(arr[0].androidVersion);
 	$("#lable2ChipMode").val(arr[0].soc);
@@ -899,9 +878,9 @@ function getAndCheckAndSendAllData(){
 				console.log(changeDev);
 				if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length == 0) {
 					console.log("未做任何修改");
+					document.getElementById("page2Modal1ErrorInfo").style.display = "block";
 					document.getElementById("page2Modal1ErrorInfo").innerHTML = "您未做任何修改。";
-					document.getElementById("MoreEditBack").style.display = "none";
-					setTimeout("document.getElementById('page2Modal1ErrorInfo').innerHTML='　'",3000);
+					setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 				} else{
 					console.log("做了修改");
 					document.getElementById("myEditEnsureDiv").style.display = "block";
@@ -1177,16 +1156,26 @@ function productAddResult(){
 				console.log("数据提交成功");
 				var type = $("#lable1SubmitTwo").attr("catagory");
 				if(type == 1||type == 3){
-					console.log("新增或者复制");
+					console.log("新增或者复制数据的日志提交");
 					var _desc = "新增该产品";
 					var _reason = "新增";
-				}else if(type == 2){
-					console.log("编辑");
-					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
-					var _reason = document.getElementById("changeReason").innerHTML;
-				}
-				var _chip = $("#lable2Chip").val();
+					var _chip = $("#lable2Chip").val();
 				var _model = $("#lable2Model").val();
+				}else if(type == 2){
+					console.log("编辑数据的日志提交");
+					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
+					var _reason = document.getElementById("changeReason").value;
+					var _chip = $("#lable2Chip").val();
+					var _model = $("#lable2Model").val();
+				}else if(type == 5){
+					console.log("删除数据的日志提交");
+					var _desc = '删除该机芯机型的配置表';
+					var _reason = document.getElementById("changeReason2").value;
+					console.log(_reason);
+					var _chip = $("#myDeleteModalEnsure").attr("chip");
+					var	_model = $("#myDeleteModalEnsure").attr("model");
+					$('#myDeleteModal').modal('hide');
+				}
 				//0审核通过\1待审核\2审核未通过
 				var _state = "1";
 				var _author = loginusername;
@@ -1201,6 +1190,7 @@ function productAddResult(){
 				$("#page2Modal1").modal('hide');
 				var _history = JSON.stringify(historyObj);
 				var node = '{"data":' + _history + '}';
+				console.log(node);
 				sendHTTPRequest(coocaaVersion+"/product/addHistory", node, productHistoryAdd);
 			}
 		}
@@ -1438,11 +1428,13 @@ function page2Fresh() {
 	var htmlObject = parent.document.getElementById("tab_userMenu2");
 	htmlObject.firstChild.src = "page2.html";
 	
-	var htmlObject2 = parent.document.getElementById("tab_userMenu5");
-	if (htmlObject2 == null) {
-		console.log("待审核页未被点击，不需要刷新。");
-	} else{
-		htmlObject2.firstChild.src = "page5.html";
+	var htmlObject5 = parent.document.getElementById("tab_userMenu4");
+	var htmlObject5 = parent.document.getElementById("tab_userMenu5");
+	if (htmlObject4) {
+		htmlObject4.firstChild.src = "page4.html";
+	}
+	if (htmlObject5) {
+		htmlObject5.firstChild.src = "page5.html";
 	}
 }
 

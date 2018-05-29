@@ -43,7 +43,6 @@ body{
 .everyList{
 	font-size: 20px;
 	padding-bottom: 5px;
-	display: inline;
 }
 .everyButton{
 	display: -webkit-inline-box;
@@ -84,4 +83,5 @@ body{
 .everyDiv li .email{
     top: 0px;
 }
+
 
