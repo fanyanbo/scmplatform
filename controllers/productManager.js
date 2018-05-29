@@ -134,6 +134,17 @@ exports.queryByRegEx = function (req, res, next) {
     });
 };
 
+exports.queryByChipModel = function (req, res, next) {
+
+    let data = req.body.data;
+    productModel.queryByChipModel(data,function(err,results) {
+      if(err) {
+        return output.error(req,res,err);
+      }
+      output.success(req,res,"根据机芯机型查询产品表成功",results);
+    });
+};
+
 /**
  * @param {注：模块名称为中文名，且需全匹配，暂不支持模糊查询}
  */
