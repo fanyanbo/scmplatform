@@ -144,7 +144,9 @@ body .modal-footer{
 .eachpartbox{
 	position: relative;
 	width: 100%;
+	margin-top: 5px;
 	clear: both;
+	font-size: 18px;
 }
 .close1 {
     float: right;
@@ -285,4 +287,7 @@ body .modal-footer{
     padding: 2px 5px;
     margin: 0px 5px;
 }
- 
+.page5_tabs{
+	border-radius: 5px;
+    padding: 2px 4px;
+}

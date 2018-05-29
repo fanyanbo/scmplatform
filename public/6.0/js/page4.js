@@ -1,8 +1,7 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
 var autoDataArray1 = new Array();
-var autogitArray = ["a", "b", "c", "bb", "cb", "bvv", "ca", "bsd", "cfg", "bd", "adfc", "bas", "asc"];
-var autoComplete1,autoComplete2 = "";
+var autoComplete1 = "";
 
 var _twoLevelLinkageArrayOne = [[],[],[],[]];
 var _twoLevelLinkageArrayTwo = [[],[],[],[]];
@@ -166,9 +165,6 @@ function buttonInitBefore(){
 	$("#lable4ChipMode").keyup(function(event) {
 		autoComplete1.start(event);
 	});
-	$("#lable4GitBranch").keyup(function(event) {
-		autoComplete2.start(event);
-	});
 	$("#oButtonX").click(function() {
 		$("#mydialog").css("display","none");
 	});
@@ -177,16 +173,15 @@ function buttonInitBefore(){
 		$("#page4_examine").modal('hide');
 	});
 	$("#page4_close2").click(function() {
+		document.getElementById("descriptTbody").innerHTML = "";
 		$("#page4_examine").modal('hide');
 	});
 }
 function colorstatus(number){
 	for(var k = 0; k < $(".page4_tabs").length; k++) {
 		$(".page4_boxes")[k].style.display = "none";
-		$(".page4_tabs")[k].style.backgroundColor = "buttonface";
 	}
 	$(".page4_boxes")[number].style.display = "block";
-	$(".page4_tabs")[number].style.backgroundColor = "red";
 }
 
 function buttonInitAfter(){
@@ -334,7 +329,7 @@ function targetproductQueryResult() {
 				for(var i = 0; i < data.resultData[3].length; i++) {
 					autoDataArray1.push(data.resultData[3][i].name);
 				}
-				instantQuery(autoDataArray1,autogitArray);
+				instantQuery(autoDataArray1);
 			}
 		}
 	}
@@ -409,9 +404,9 @@ function settingsQueryData(arr1,arr2) {
 
 function configDataInsert(kk, obj, data) {
 	if(data[kk].typeStr == "string") {
-		obj.innerHTML += "<div class='col-xs-6'><span title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
+		obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='col-xs-6 configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 	} else if(data[kk].typeStr == "enum") {
-		var _myAddselect = "<select class='configitems' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='" + data[kk].typeStr + "' defaultValue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
+		var _myAddselect = "<select class='col-xs-6 configitems' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='" + data[kk].typeStr + "' defaultValue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
 		var str2 = data[kk].options.replace(/"/g, '');
 		str2 = str2.replace("[", "");
 		str2 = str2.replace("]", "");
@@ -423,7 +418,7 @@ function configDataInsert(kk, obj, data) {
 				_myAddselect += "<option value='" + str2[k] + "'>" + str2[k] + "</option>";
 			}
 		}
-		_myAddselect = "<div class='col-xs-6'><span title='" + data[kk].descText + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
+		_myAddselect = "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='" + data[kk].descText + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
 		obj.innerHTML += _myAddselect;
 	}
 }
@@ -520,14 +515,17 @@ function recover(obj,deleteFlag){
 function reviewSure(){
 	var _chip = $("#lable4Chip").val();
 	var _model = $("#lable4Model").val();
-	var _flag = "";
+	var _flag = null;
 	if($("#mydialog").attr("buttontype") == 0||$("#mydialog").attr("buttontype") == 1){
 		_flag = $("#mydialog").attr("buttontype");
+		_flag = parseInt(_flag);
+		console.log(_flag);
 		var recoveObj = {
 			"chip" : _chip,
 			"model" : _model,
 			"flag" : _flag
 		}
+		console.log(recoveObj);
 		var _recove = JSON.stringify(recoveObj);
 		var node = '{"data":' + _recove + '}';
 		console.log(node);
@@ -908,20 +906,11 @@ function editIssue(){
 		console.log("没有空项");
 		var _errNum = 0;
 		var isTrueData0 = $("#page4Modal1Table .fuzzySearch")[3].value;
-		var isTrueData1 = $("#page4Modal1Table .fuzzySearch")[4].value;
-		console.log(isTrueData0+"-"+isTrueData1);
+		console.log(isTrueData0);
 		var index0 = autoDataArray1.indexOf(isTrueData0);
-		var index1 = autogitArray.indexOf(isTrueData1);
-		console.log(index0+"-"+index1);
-		if (index0 == "-1"||index1 == "-1") {
-			var _curInput = "";
-			if (index0 == "-1") {
-				_errNum = 3;
-			}
-			if (index1 == "-1") {
-				_errNum = 4;
-			}
-			var _curInput = $("#page4Modal1Table .fuzzySearch")[_errNum].getAttribute("name");
+		console.log(index0);
+		if (index0 == "-1") {
+			var _curInput = $("#page4Modal1Table .fuzzySearch")[3].getAttribute("name");
 			document.getElementById("page4Modal1ErrorInfo").style.display = "block";
 			document.getElementById("page4Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
 			setTimeout("document.getElementById('page4Modal1ErrorInfo').style.display = 'none';", 3000);
@@ -1202,13 +1191,13 @@ function productHistoryQuery(){
 						console.log(_deleteArray.length);
 						console.log(_confArray.length);
 						if (_devArray.length != 0) {
-							_desc += "<span>修改了基本项"+_devArray+"</span><br/>";
+							_desc += "<span>修改了基本项："+_devArray+"</span><br/>";
 						}if (_addArray.length != 0) {
-							_desc += "<span>新增了"+_addArray+"项</span><br/>";
+							_desc += "<span>新增了设置项："+_addArray+"</span><br/>";
 						}if (_deleteArray.length != 0) {
-							_desc += "<span>删除了"+_deleteArray+"项</span><br/>";
+							_desc += "<span>删除了设置项："+_deleteArray+"</span><br/>";
 						}if (_confArray.length != 0) {
-							_desc += "<span>修改了Config项"+_confArray+"</span><br/>";
+							_desc += "<span>修改了Config项："+_confArray+"</span><br/>";
 						}
 						if (_deleteArray2.length != 0){
 							_desc += "<span>"+_deleteArray2+"</span><br/>";
@@ -1216,6 +1205,7 @@ function productHistoryQuery(){
 						var _row = document.getElementById("descriptTbody").insertRow(0);
 						var _cell0 = _row.insertCell(0);
 						_cell0.innerHTML = _desc;
+						_cell0.style.textAlign = "left";
 						var _cell1 = _row.insertCell(1);
 						_cell1.innerHTML = data.resultData[i].reason;
 						var _cell2 = _row.insertCell(2);
@@ -1266,16 +1256,8 @@ function getEmailResult(){
 	}
 }
 
-
-
-
-
-
-
-
-function instantQuery(arr1, arr2) {
+function instantQuery(arr1) {
 	console.log(arr1);
-	console.log(arr2);
 	var _$ = function(id) {
 		return "string" == typeof id ? document.getElementById(id) : id;
 	}
@@ -1422,22 +1404,14 @@ function instantQuery(arr1, arr2) {
 		}
 	}
 	autoComplete1 = new AutoComplete('lable4ChipMode', 'page4_soc_auto2', arr1);
-	autoComplete2 = new AutoComplete('lable4GitBranch', 'page4_git_auto2', arr2);
 	
 	/* 点击空白出隐藏临时div */
 	_$(document).onclick = function(e) {
 		var e = e || window.event; //浏览器兼容性 
 		var elem = e.target || e.srcElement;
-		var showArray = ["page4_soc_auto2","page4_git_auto2"];
-		var showBox = ["lable4ChipMode","lable4ChipMode"];
-		eachShowObj(showArray,showBox);
-	}
-	function eachShowObj(arr,arr2){
-		for (var i=0; i<arr.length; i++) {
-			var _style = document.getElementById(arr[i]).getAttribute("class");
-			if(_style == "auto_show") {
-				document.getElementById(arr[i]).setAttribute("class", "auto_hidden")
-			}
+		var _style = document.getElementById("page4_soc_auto2").getAttribute("class");
+		if(_style == "auto_show") {
+			document.getElementById("page4_soc_auto2").setAttribute("class", "auto_hidden")
 		}
 	}
 }
