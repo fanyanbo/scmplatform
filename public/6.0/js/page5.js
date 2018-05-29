@@ -285,7 +285,15 @@ function buttonInitAfter(){
 	});
 	$("#myEditEnsure").click(function() {
 		console.log("修改提示框的确定按钮");
-		editSure();
+		var content = document.getElementById("changeReason").value;
+		content = content.replace(/\s*/g,"");
+		console.log(content +"---"+content.length);
+		if(content == null || content.length == 0){
+			document.getElementById("errorChangeInfo").style.display = "inline-block";
+			setTimeout("document.getElementById('errorChangeInfo').style.display = 'none';", 3000);
+		} else{
+			editSure();
+		}
 	});
 	
 }
@@ -987,12 +995,12 @@ function getBaseValue(){
 	var _chip = $("#page5Modal1Table .inputstyle")[0].value;
 	var _model = $("#page5Modal1Table .inputstyle")[1].value;
 	var _tp = $("#page5Modal1Table .inputstyle")[2].value;
-	var _android = $("#page5Modal1Table .inputstyle")[4].value;
-	var _soc = $("#page5Modal1Table .inputstyle")[5].value;
-	var _emmc = $("#page5Modal1Table .inputstyle")[6].value;
-	var _memory = $("#page5Modal1Table .inputstyle")[7].value;
-	var _branch = $("#page5Modal1Table .inputstyle")[8].value;
-	var _platform = $("#page5Modal1Table .inputstyle")[9].value;
+	var _android = $("#page5Modal1Table .inputstyle")[3].value;
+	var _soc = $("#page5Modal1Table .inputstyle")[4].value;
+	var _emmc = $("#page5Modal1Table .inputstyle")[5].value;
+	var _memory = $("#page5Modal1Table .inputstyle")[6].value;
+	var _branch = $("#page5Modal1Table .inputstyle")[7].value;
+	var _platform = $("#page5Modal1Table .inputstyle")[8].value;
 	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,

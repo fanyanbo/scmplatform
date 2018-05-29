@@ -291,3 +291,7 @@ body .modal-footer{
 	border-radius: 5px;
     padding: 2px 4px;
 }
+#errorChangeInfo{
+	color: red;
+	display: none;
+}

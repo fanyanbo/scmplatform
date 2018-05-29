@@ -285,7 +285,15 @@ function buttonInitAfter(){
 	});
 	$("#myEditEnsure").click(function() {
 		console.log("修改提示框的确定按钮");
-		editSure();
+		var content = document.getElementById("changeReason").value;
+		content = content.replace(/\s*/g,"");
+		console.log(content +"---"+content.length);
+		if(content == null || content.length == 0){
+			document.getElementById("errorChangeInfo").style.display = "inline-block";
+			setTimeout("document.getElementById('errorChangeInfo').style.display = 'none';", 3000);
+		} else{
+			editSure();
+		}
 	});
 	
 }
