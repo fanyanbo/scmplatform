@@ -593,7 +593,7 @@ function setEditInfo(){
 			if(data.resultCode == "0") {
 				console.log("数据修改提交成功");
 				var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
-				var _reason = document.getElementById("changeReason").innerHTML;
+				var _reason = document.getElementById("changeReason").value;
 				var _chip = $("#lable4Chip").val();
 				var _model = $("#lable4Model").val();
 				//0审核通过\1待审核\2审核未通过

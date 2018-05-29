@@ -52,7 +52,7 @@ img {
 /*end reset*/
 /****-----start-body----****/
 body {
-	background-color: #0091e6;
+	/*background-color: #0091e6;*/
 	background-image: url(../images/bg2.jpg);
 	background-size: 100%;
 	background-repeat: no-repeat;
