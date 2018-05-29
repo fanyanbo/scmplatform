@@ -857,15 +857,13 @@ function getAndCheckAndSendAllData(){
 		var isTrueData1 = $("#page2Modal1Table .fuzzySearch")[1].value;
 		var isTrueData2 = $("#page2Modal1Table .fuzzySearch")[2].value;
 		var isTrueData3 = $("#page2Modal1Table .fuzzySearch")[3].value;
-		var isTrueData4 = $("#page2Modal1Table .fuzzySearch")[4].value;
-		console.log(isTrueData0+"-"+isTrueData1+"-"+isTrueData2+"-"+isTrueData3+"-"+isTrueData4);
+		console.log(isTrueData0+"-"+isTrueData1+"-"+isTrueData2+"-"+isTrueData3);
 		var index0 = autoDataArray1.indexOf(isTrueData0);
 		var index1 = autoDataArray2.indexOf(isTrueData1);
 		var index2 = autoDataArray3.indexOf(isTrueData2);
 		var index3 = autoDataArray4.indexOf(isTrueData3);
-		var index4 = autogitArray.indexOf(isTrueData4);
-		console.log(index0+"-"+index1+"-"+index2+"-"+index3+"-"+index4);
-		if (index0 == "-1"||index2 == "-1"||index3 == "-1"||index3 == "-1"||index4 == "-1") {
+		console.log(index0+"-"+index1+"-"+index2+"-"+index3);
+		if (index0 == "-1"||index2 == "-1"||index3 == "-1"||index3 == "-1") {
 			if (index0 == "-1") {
 				_errNum = 0;
 			}
@@ -878,16 +876,21 @@ function getAndCheckAndSendAllData(){
 			if (index3 == "-1") {
 				_errNum = 3;
 			}
-			if (index4 == "-1") {
-				_errNum = 4;
-			}
 			var _curInput = $("#page2Modal1Table .fuzzySearch")[_errNum].getAttribute("name");
 			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
 			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
 			if (type == 1|| type == 3) {
-				document.getElementById("myAddEnsureDiv").style.display = "block";
+				//判断该机芯机型的产品是否已存在
+				var checkObj = {
+					"chip" : $("#lable2Chip").val(),
+					"model" : $("#lable2Model").val()
+				}
+				var _check = JSON.stringify(checkObj);
+				var node = '{"data":' + _check + '}';
+				console.log(node);
+				sendHTTPRequest(coocaaVersion+"/product/queryByChipModel", node, checkResultInfo);
 			} else{
 				//弹出确认框
 				console.log(changeAdd);
@@ -905,7 +908,6 @@ function getAndCheckAndSendAllData(){
 					if (changeDev.length != 0) {
 				        $("#txt1").css("display", "block");
 				        document.getElementById("txt11").innerHTML = changeDev;
-				    	
 					}
 				    if(changeAdd.length != 0){
 				        $("#txt2").css("display", "block");
@@ -924,6 +926,28 @@ function getAndCheckAndSendAllData(){
 			}
 		}
 	}
+}
+function checkResultInfo(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log(data.resultData.length);
+				if (data.resultData.length == 1) {
+					//已存在
+					document.getElementById("page2Modal1ErrorInfo").style.display = "block";
+					document.getElementById("page2Modal1ErrorInfo").innerHTML = "该机芯机型的配置项已经存在。";
+					setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
+				} else{
+					//不存在
+					document.getElementById("myAddEnsureDiv").style.display = "block";
+				}
+			}
+		}
+	}
+	
+	
 }
 
 //批量删除
@@ -1087,7 +1111,6 @@ function sysDataInsert(i, obj, num, arr1){
 		_twoLevelLinkageArrayOne[num].push(arr1[i].level2);
 	}
 }
-
 
 function getBaseValue(){
 	var _chip = $("#page2Modal1Table .inputstyle")[0].value;

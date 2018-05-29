@@ -240,7 +240,7 @@
     margin-right: 20%;
     z-index: 1051;
     height: 30%;
-    top: 15%;
+    top: 25%;
     font-size: 24px;
 }
 #page2Modal1{
@@ -298,9 +298,18 @@
 }
 .myheader{
 	padding-bottom: 5px;
+	border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #66AFE9;
 }
 .mybody{
 	padding-bottom: 0px;
+}
+.myfooter{
+	border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #66AFE9;
+    padding: 5px;
 }
 #myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree{
 	width: 100%;
@@ -374,4 +383,9 @@
 #page2Modal1Table .configitems{
 	padding-right: 0px;
 	padding-left: 0px;
+}
+#myPreviewModal .mybody textarea{
+	overflow:scroll;
+    background-color: palegoldenrod;
+    padding-left: 10px;
 }
