@@ -180,8 +180,12 @@ function buttonInitBefore(){
 function colorstatus(number){
 	for(var k = 0; k < $(".page4_tabs").length; k++) {
 		$(".page4_boxes")[k].style.display = "none";
+		$(".page4_tabs")[k].style.backgroundColor = "#337ab7";
+		$(".page4_tabs")[k].style.borderColor = "#2e6da4";
 	}
 	$(".page4_boxes")[number].style.display = "block";
+	$(".page4_tabs")[number].style.backgroundColor = "#5cb85c";
+	$(".page4_tabs")[number].style.borderColor = "#4cae4c";
 }
 
 function buttonInitAfter(){

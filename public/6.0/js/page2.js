@@ -473,10 +473,12 @@ function buttonInit() {
 function colorstatus(number){
 	for(var k = 0; k < $(".page2_tabs").length; k++) {
 		$(".page2_boxes")[k].style.display = "none";
-//		$(".page2_tabs")[k].style.backgroundColor = "buttonface";
+		$(".page2_tabs")[k].style.backgroundColor = "#337ab7";
+		$(".page2_tabs")[k].style.backgroundColor = "#2e6da4";
 	}
 	$(".page2_boxes")[number].style.display = "block";
-//	$(".page2_tabs")[number].style.backgroundColor = "red";
+	$(".page2_tabs")[number].style.backgroundColor = "#5cb85c";
+	$(".page2_tabs")[number].style.backgroundColor = "#4cae4c";
 }
 
 function buttonInitAfter() {

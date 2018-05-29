@@ -180,8 +180,12 @@ function buttonInitBefore(){
 function colorstatus(number){
 	for(var k = 0; k < $(".page5_tabs").length; k++) {
 		$(".page5_boxes")[k].style.display = "none";
+		$(".page5_tabs")[k].style.backgroundColor = "#337ab7";
+		$(".page5_tabs")[k].style.borderColor = "#2e6da4";
 	}
 	$(".page5_boxes")[number].style.display = "block";
+	$(".page5_tabs")[number].style.backgroundColor = "#5cb85c";
+	$(".page5_tabs")[number].style.borderColor = "#4cae4c";
 }
 
 function buttonInitAfter(){
@@ -210,7 +214,7 @@ function buttonInitAfter(){
         var _type = $("#myAddModalLabel").attr("num");//1-审核、2-编辑、3-恢复
 		var _state = $("#myAddModalLabel").attr("type");//(0正常\1修改\2增加\3删除)
         console.log(_type +"----"+_state);
-        $("#mydialog").attr("buttontype","0");//点击审核不通过
+        $("#mydialog").attr("buttontype","1");//点击审核不通过
         document.getElementById("mydialog").style.display = "block";
 	    document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
 	    document.getElementById("dialogword").innerHTML = "是否确认不通过该文件？";
@@ -515,14 +519,17 @@ function recover(obj,deleteFlag){
 function reviewSure(){
 	var _chip = $("#lable5Chip").val();
 	var _model = $("#lable5Model").val();
-	var _flag = "";
+	var _flag = null;
 	if($("#mydialog").attr("buttontype") == 0||$("#mydialog").attr("buttontype") == 1){
 		_flag = $("#mydialog").attr("buttontype");
+		_flag = parseInt(_flag);
+		console.log(_flag);
 		var recoveObj = {
 			"chip" : _chip,
 			"model" : _model,
 			"flag" : _flag
 		}
+		console.log(recoveObj);
 		var _recove = JSON.stringify(recoveObj);
 		var node = '{"data":' + _recove + '}';
 		console.log(node);
