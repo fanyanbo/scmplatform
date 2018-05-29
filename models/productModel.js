@@ -430,7 +430,7 @@ ProductModel.prototype.review = function (data, callback) {
     if(flag === 0){
       sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?`;
     }else {
-      sql = `UPDATE ${dbConfig.tables.products} set auditState = 2, modifyState = 3 WHERE chip = ? AND model = ?`;
+      sql = `UPDATE ${dbConfig.tables.products} set auditState = 2 WHERE chip = ? AND model = ?`;
     }
     console.log(sql);
     db.conn.query(sql,[chip, model],function(err,rows,fields){
