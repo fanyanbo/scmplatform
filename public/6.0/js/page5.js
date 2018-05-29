@@ -272,12 +272,12 @@ function buttonInitAfter(){
 	$("#myEditEnsureX").click(function() {
 		console.log("修改提示框的X按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		page5fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+		//page5fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
 	});
 	$("#myEditCancle").click(function() {
 		console.log("修改提示框的取消按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		page5fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+		//page5fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
 	});
 	$("#myEditEnsure").click(function() {
 		console.log("修改提示框的确定按钮");
