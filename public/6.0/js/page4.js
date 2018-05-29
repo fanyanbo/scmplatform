@@ -1440,9 +1440,9 @@ function page4fresh(num) {
     var htmlObject3 = parent.document.getElementById("tab_userMenu2");
     var htmlObject4 = parent.document.getElementById("tab_userMenu1");
     htmlObject.firstChild.src = "page4.html";
-//  if (htmlObject2) {
-//      htmlObject2.firstChild.src = "page5.html";
-//  }
+    if (htmlObject2) {
+        htmlObject2.firstChild.src = "page5.html";
+    }
     if (htmlObject3) {
     	htmlObject3.firstChild.src = "page2.html";
     }
