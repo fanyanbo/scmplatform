@@ -38,9 +38,9 @@ DeviceModel.prototype.queryAll = function (callback) {
 DeviceModel.prototype.queryChip = function (callback) {
 
   let sql = "SELECT * FROM chips";
-  let sql_params = [];
-  db.conn.query(sql,sql_params,function(err,rows,fields){
+  db.conn.query(sql,[],function(err,rows,fields){
     if (err) {
+        logger.error("查询机芯报错：" + err);
         return callback(err);
     }
     callback(null, rows);
@@ -53,20 +53,31 @@ DeviceModel.prototype.addChip = function (chip, callback) {
   let sql_params = [chip];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
+        logger.error("新增机芯报错：" + err);
         return callback(err);
     }
     callback(null, rows);
   });
 }
 
+/**
+ * @param {修改机芯，需要对影响到的产品重新生成文件，也需要默认提交，不经过审核}
+ */
 DeviceModel.prototype.updateChip = function (newValue, oldValue, callback) {
   var sql = "UPDATE chips set name = ? WHERE name = ?";
-  let sql_params = [newValue,oldValue];
-  db.conn.query(sql,sql_params,function(err,rows,fields){
+  db.conn.query(sql,[newValue,oldValue],function(err,rows,fields){
     if (err) {
+        logger.error("更新机芯报错：" + err);
         return callback(err);
     }
-    callback(null, rows);
+    let sql1 = `UPDATE ${dbConfig.tables.products} SET chip = ? WHERE chip = ?`;
+    db.conn.query(sql1,[newValue,oldValue],function(err,rows,fields){
+      if (err) {
+        logger.error("更新机芯，修改产品表的机芯值报错：" + err);
+        return callback(err);
+      }
+      callback(null, rows);
+    });
   });
 }
 
@@ -94,14 +105,24 @@ DeviceModel.prototype.addModel = function (value, callback) {
   });
 }
 
+/**
+ * @param {修改机型，需要对影响到的产品重新生成文件，也需要默认提交，不经过审核}
+ */
 DeviceModel.prototype.updateModel = function (newValue, oldValue, callback) {
   var sql = "UPDATE models SET name = ? WHERE name = ?";
-  let sql_params = [newValue,oldValue];
-  db.conn.query(sql,sql_params,function(err,rows,fields){
+  db.conn.query(sql,[newValue,oldValue],function(err,rows,fields){
     if (err) {
-        return callback(err);
+      logger.error("更新机型报错：" + err);
+      return callback(err);
     }
-    callback(null, rows);
+    let sql1 = `UPDATE ${dbConfig.tables.products} SET model = ? WHERE model = ?`;
+    db.conn.query(sql1,[newValue,oldValue],function(err,rows,fields){
+      if (err) {
+        logger.error("更新机型，修改产品表的机型值报错：" + err);
+        return callback(err);
+      }
+      callback(null, rows);
+    });
   });
 }
 
