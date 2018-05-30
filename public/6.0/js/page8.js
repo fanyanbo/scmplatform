@@ -68,13 +68,13 @@ function buttonInitAfter(){
 		if (_curId == 0) {
 			_node = '{"category":"' + _thisKey + '"}';
 			_ajaxUrl = coocaaVersion+"/config/queryByCategory";
-		} else if(_curId == 1||_curId == 2||_curId == 3||_curId == 4){
+		} else if(_curId == 1){
+			_node = '{"category":"' + _thisKey + '"}';
+			_ajaxUrl = coocaaVersion+"/module/queryByCategory";
+		} else if(_curId == 2||_curId == 3||_curId == 4||_curId == 5){
 			_thisLevel = $(".edit_box1")[_curIndex].getAttribute("level");
 			_node = '{"category":"' + _thisKey + '","level":"' + _thisLevel + '"}';
 			_ajaxUrl = coocaaVersion+"/settings/queryByCategory";
-		} else if(_curId == 5){
-			_node = '{"category":"' + _thisKey + '"}';
-			_ajaxUrl = coocaaVersion+"/module/queryByCategory";
 		}
 		console.log(_node);
 		sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
@@ -118,7 +118,7 @@ function addCategoryResult(){
 function editEachPage(num,array){
 	console.log(num+"--------"+array);
 	$(".page8_tabs:eq(" + (num) + ")").attr("hasvalue","true");
-	if(num==0||num==5){
+	if(num==0||num==1){
 		var insertTable = "";
 		var _eachTableItem = "";
 		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
@@ -126,15 +126,14 @@ function editEachPage(num,array){
 			_eachTableItem += "<tr><td class='col-xs-4'>"+(i+1)+"</td><td class='col-xs-4'>"+array[i].category+"</td><td class='col-xs-4'><a class='edit_box1' tablename = "+array[i].category+">编辑</a></td></tr>";
 		}
 		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
-	}else if(num==1||num==2||num==3||num==4){
-		
+	}else if(num==2||num==3||num==4||num==5){
 		var sysSettingArray = ["系统设置","信号源工具箱","卖场演示","中间件"];
 		var insertTable = "";
 		var _eachTableItem = "";
 		var kk = 0;
 		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
 		for (var i=0; i<array.length; i++) {
-			if (array[i].level1 == sysSettingArray[num-1]) {
+			if (array[i].level1 == sysSettingArray[num-2]) {
 				kk++;
 				console.log(array[i].level3 == "");
 				if (array[i].level3 == "") {
@@ -303,10 +302,10 @@ function tabsClick(num){
 		var ajaxUrl = "";
 		if (num == 0) {
 			ajaxUrl = coocaaVersion+"/config/queryCategory";
-		} else if(num == 1||num == 2||num == 3||num == 4){
-			ajaxUrl = coocaaVersion+"/settings/queryCategory";
-		} else if(num == 5){
+		} else if(num == 1){
 			ajaxUrl = coocaaVersion+"/module/queryCategory";
+		} else if(num == 2||num == 3||num == 4||num == 5){
+			ajaxUrl = coocaaVersion+"/settings/queryCategory";
 		}
 		sendHTTPRequest(ajaxUrl, node31, categoryQueryResult);
 	} else{

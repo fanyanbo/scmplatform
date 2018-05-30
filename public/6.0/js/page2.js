@@ -346,7 +346,6 @@ function clearMKLastWork(){
 function buttonInit() {
 	document.getElementById("page2_searchInfo").onclick = page2Select;
 	document.getElementById("page2_reset").onclick = page2Reset;
-//	document.getElementById("page2_deleteMore").onclick = page2DeleteMore;
 	document.getElementById("page2_export").onclick = page2Export;
 	document.getElementById("page2_fresh").onclick = page2Fresh;
 	document.getElementById("myEditEnsureModalEnsure").onclick = closeparentpage;

@@ -107,22 +107,18 @@
 .page6_tab{
     border-radius: 6px;
 }
-
 .page6AddBtns{
 	margin-bottom: 2px;
 }
 #page6ModalDiv{
-	height:250px;
-}
-#page6ModalDiv,#page6ModalDiv2{
-	background-color: #bcbcbc;
+	background-color: lightgrey;
+	color: crimson;
 }
 #lableText{
 	margin-left: 20%;
-	margin-bottom: 20px;
-	margin-top: 3%;
-	font-size: 24px;
-	color: #FFFFFF;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: dimgray;
 }
 #page6Container{
 	display: block;
@@ -134,11 +130,13 @@
 }
 #page6ModeClose{
 	display: block;
-	position: absolute;
-	right: 0;
-	top: 0;
-	height: 15%;
-	width: 10%;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border-radius: 5px;
+    height: 33px;
+    width: 63px;
+    background-color: ghostwhite;
 }
 #chipMangInfo{
 	text-align: center;
@@ -148,9 +146,10 @@
 }
 #page6Submit{
 	display: block;
-	width: 100px;
-	font-size: 20px;
-	margin:auto;
+    font-size: 16px;
+    padding: 5px 15px;
+    margin: 3px auto;
+    background-color: aliceblue;
 }
 .divitems{
 	padding-bottom: 5px;
@@ -173,10 +172,6 @@
 .modalwidth{
 	width: 730px;
 }
-#page6_tp_submit2{
-	display: block;
-    margin: 0 auto;
-}
 .myModalErrorInfo{
     margin-left: 20%;
     margin-top: -30px;
@@ -190,4 +185,18 @@
     margin-bottom: 0px;
     display: none;
 }
-    
+#page6Modal{
+	margin-top: 100px;
+}
+#page6Modal .myheader{
+	border-bottom: 0px solid #e5e5e5;
+}
+#page6Modal .mybody{
+	border-bottom: 0px solid #e5e5e5;
+	padding-bottom: 5px;
+	padding-top: 0px;
+}
+#page6Modal .myfooter{
+	border-bottom: 0px solid #e5e5e5;
+	padding: 5px;
+}

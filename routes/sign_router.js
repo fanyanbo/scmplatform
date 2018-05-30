@@ -5,7 +5,7 @@ var sign = require('../user/sign');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 //  res.send('respond with a resource');
-  res.redirect('http://172.20.5.239:3018/html/login.html');
+  res.redirect('http://localhost:3018/html/login.html');
 });
 
 router.post('/login', sign.login);

@@ -89,8 +89,8 @@ function moduleQueryResult() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(5)").attr("hasvalue","true");
-				editEachPage("5",data.resultData);
+				$(".page7_tabs:eq(1)").attr("hasvalue","true");
+				editEachPage("1",data.resultData);
 			}
 		}
 		buttonInitAfter();
@@ -103,11 +103,11 @@ function settingQueryResult() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(1)").attr("hasvalue","true");
 				$(".page7_tabs:eq(2)").attr("hasvalue","true");
 				$(".page7_tabs:eq(3)").attr("hasvalue","true");
 				$(".page7_tabs:eq(4)").attr("hasvalue","true");
-				editEachPage("1",data.resultData);
+				$(".page7_tabs:eq(5)").attr("hasvalue","true");
+				editEachPage("5",data.resultData);
 			}
 		}
 		buttonInitAfter();
@@ -634,11 +634,11 @@ function tabsClick(num) {
 		var ajaxUrl = "";
 		if(num == 0) {
 			ajaxUrl = coocaaVersion+"/config/queryCategory";
-		} else if(num == 1 || num == 2 || num == 3 || num == 4) {
-			ajaxUrl = coocaaVersion+"/settings/queryCategory";
-		} else if(num == 5) {
+		} else if(num == 1) {
 			ajaxUrl = coocaaVersion+"/module/queryCategory";
-		}
+		} else if(num == 2 || num == 3 || num == 4 || num == 5) {
+			ajaxUrl = coocaaVersion+"/settings/queryCategory";
+		} 
 		sendHTTPRequest(ajaxUrl, node31, categoryQueryResult);
 	} else {
 		console.log("已经获取过了");
@@ -662,7 +662,7 @@ function categoryQueryResult() {
 					}
 					var node = '{}';
 					sendHTTPRequest(coocaaVersion+"/config/query", node, configQueryResult);
-				}else if(_curId==1||_curId==2||_curId==3||_curId==4) {
+				}else if(_curId==2||_curId==3||_curId==4||_curId==5) {
 					console.log(data);
 					
 					var _mySysSettingTbody = document.getElementById("mySysSettingTbody");
@@ -730,7 +730,7 @@ function categoryQueryResult() {
 					console.log(_twoLevelLinkageArrayThree);
 					var node = '{}';
 					sendHTTPRequest(coocaaVersion+"/settings/query", node, settingQueryResult);
-				} else if(_curId==5){
+				} else if(_curId==1){
 					$("#moduleSelect").attr("hasvalue", "true");
 					var _myMKTbody = document.getElementById("myMKTbody");
 					for(var i = 0; i < data.resultData.length; i++) {
@@ -755,7 +755,7 @@ function editEachPage(num,array){
 				}
 			}
 		}
-	}else if(num==1){
+	}else if(num==5){
 		for (var j=0; j< $(".settingsitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
 				if(array[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
@@ -769,7 +769,7 @@ function editEachPage(num,array){
 				}
 			}
 		}
-	} else if(num==5){
+	} else if(num==1){
 		for (var j=0; j< $(".moduleitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
 				if(array[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {

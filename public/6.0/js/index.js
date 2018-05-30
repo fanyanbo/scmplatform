@@ -12,14 +12,13 @@ $(function() {
 });
 
 function buttonInit() {
-	var _focusIndex = "";
 	$(".everyButton").click(function() {
-		_focusIndex = $(".everyButton").index($(this));
+		var _focusIndex = $(".everyButton").index($(this));
 		console.log(_focusIndex);
 		if(_focusIndex != 0) {
-//			if($(".everyDiv")[_focusIndex - 1].style.display == "none") {
-//				$(".everyDiv").slideUp();
-//			}
+			//if($(".everyDiv")[_focusIndex - 1].style.display == "none") {
+				//$(".everyDiv").slideUp();
+			//}
 			$(".everyDiv:eq(" + (_focusIndex - 1) + ")").slideToggle();
 		} else {
 			//$(".everyDiv").slideUp();
@@ -28,6 +27,14 @@ function buttonInit() {
 	$("#index_exit").click(function() {
 		var node2 = '{"userName":"' + loginusername + '","action":"退出","detail":"0"}';
         sendHTTPRequest("/logout", node2, logOutResult);
+	});
+	$(".eachpage").click(function() {
+		var _focusIndex = $(".eachpage").index($(this));
+		console.log(_focusIndex);
+		for (var i=0; i<$(".glyphiconss").length; i++) {
+			$(".glyphiconss:eq(" + i + ")").css("color", "#0FB3D6");
+		}
+		$(".glyphiconss:eq(" + _focusIndex + ")").css("color", "orangered");
 	});
 }
 
