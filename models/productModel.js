@@ -427,7 +427,7 @@ ProductModel.prototype.preview = function (chip, model, callback) {
 
 /**
  * @param {进行审核，level 0表示审核通过，1 表示审核不通过}
- * @param {当审核通过时，修改历史列表的状态；当审核不通过时，还没有考虑好解决方案}
+ * @param {当审核通过时，修改历史列表的状态；当审核不通过时，也更新修改历史的状态，同时把审核不通过的原因发邮件告知}
  */
 ProductModel.prototype.review = function (data, callback) {
     console.log(data);
@@ -459,7 +459,11 @@ ProductModel.prototype.review = function (data, callback) {
           logger.error("调用审核不通过接口，更新产品表状态时错误" + err);
           return callback(err);
         }
-        callback(null, rows);
+        let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 2 WHERE chip = ? AND model = ? AND state = 1`;
+        db.conn.query(sql1,[chip, model],function(err,rows,fields){
+          if (err) return callback(err);
+          callback(null, result);
+        });
       });
     }
 }
