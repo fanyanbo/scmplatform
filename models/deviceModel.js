@@ -77,7 +77,13 @@ DeviceModel.prototype.updateChip = function (newValue, oldValue, callback) {
         logger.error("更新机芯，修改产品表的机芯值报错：" + err);
         return callback(err);
       }
-      callback(null, rows);
+      generator.generateByChip(newValue, function(err,result){
+        if(err){
+          logger.error("generateByChip" + err);
+          return callback(err);
+        }
+        callback(null,"generateByChip OK" + result);
+      });
     });
   });
 }
@@ -122,7 +128,13 @@ DeviceModel.prototype.updateModel = function (newValue, oldValue, callback) {
         logger.error("更新机型，修改产品表的机型值报错：" + err);
         return callback(err);
       }
-      callback(null, rows);
+      generator.generateByModel(newValue, function(err,result){
+        if(err){
+          logger.error("generateByModel" + err);
+          return callback(err);
+        }
+        callback(null,"generateByModel OK" + result);
+      });
     });
   });
 }
