@@ -109,11 +109,15 @@ ProductModel.prototype.queryMKDataByTargetProduct = function (targetproduct, cal
   });
 }
 
+/**
+ * @param {注：通过targetProduct查询产品项}
+ */
 ProductModel.prototype.queryProductsByTargetProduct = function (targetproduct, callback) {
   let sql = `SELECT * FROM ${dbConfig.tables.products} WHERE targetProduct = ?`;
   let sql_params = [targetproduct];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
+        logger.error("queryProductsByTargetProduct:"+err);
         return callback(err);
     }
     callback(null, rows);
@@ -421,6 +425,10 @@ ProductModel.prototype.preview = function (chip, model, callback) {
     });
 }
 
+/**
+ * @param {进行审核，level 0表示审核通过，1 表示审核不通过}
+ * @param {当审核通过时，修改历史列表的状态；当审核不通过时，还没有考虑好解决方案}
+ */
 ProductModel.prototype.review = function (data, callback) {
     console.log(data);
     let chip = data.chip;
@@ -429,16 +437,23 @@ ProductModel.prototype.review = function (data, callback) {
     let sql;
     if(flag === 0){
       sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?`;
+      db.conn.query(sql,[chip, model],function(err,rows,fields){
+        if (err) return callback(err);
+        let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 0 WHERE chip = ? AND model = ?`;
+        db.conn.query(sql1,[chip, model],function(err,rows,fields){
+          if (err) return callback(err);
+          callback(null, rows);
+        });
+      });
     }else {
       sql = `UPDATE ${dbConfig.tables.products} set auditState = 2 WHERE chip = ? AND model = ?`;
+      db.conn.query(sql,[chip, model],function(err,rows,fields){
+        if (err) {
+          return callback(err);
+        }
+        callback(null, rows);
+      });
     }
-    console.log(sql);
-    db.conn.query(sql,[chip, model],function(err,rows,fields){
-      if (err) {
-        return callback(err);
-      }
-      callback(null, rows);
-    });
 }
 
 /**
