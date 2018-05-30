@@ -2,6 +2,7 @@ var eventproxy = require('eventproxy');
 var db = require('../common/db');
 var logger = require('../common/logger');
 var dbConfig = require('./dbConfig');
+var generator = require('../file/generate');
 
 var DeviceModel = function() {};
 
@@ -209,7 +210,14 @@ DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
 
   ep.after('insert_result', arr.length, function (list) {
       console.log(list);
-      callback(null,"updateTargetProduct OK");
+      generator.generateByTargetProduct(name, function(err,result){
+        if(err){
+          logger.error("generateByTargetProduct错误：" + err);
+          return callback(err);
+        }
+        callback(null,"updateTargetProduct OK" + result);
+      });
+
   });
 
   let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;

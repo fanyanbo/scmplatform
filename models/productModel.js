@@ -442,13 +442,21 @@ ProductModel.prototype.review = function (data, callback) {
         let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 0 WHERE chip = ? AND model = ?`;
         db.conn.query(sql1,[chip, model],function(err,rows,fields){
           if (err) return callback(err);
-          callback(null, rows);
+          //当更新产品表和修改历史表成功后，执行生成文件的操作
+          generator.generate(chip, model, function(err,result){
+            if(err) {
+              logger.debug("在审核生成文件时出错：" + err);
+              return callback(err);
+            }
+            callback(null, result);
+          });
         });
       });
     }else {
       sql = `UPDATE ${dbConfig.tables.products} set auditState = 2 WHERE chip = ? AND model = ?`;
       db.conn.query(sql,[chip, model],function(err,rows,fields){
         if (err) {
+          logger.error("调用审核不通过接口，更新产品表状态时错误" + err);
           return callback(err);
         }
         callback(null, rows);
