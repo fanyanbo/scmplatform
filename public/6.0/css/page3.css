@@ -185,14 +185,6 @@
 	padding-top: 4%;
 	margin: 0;
 }
-#myEditEnsureDiv{
-	position: absolute;
-    top: 100px;
-    padding-right: 0px;
-    display: none;
-    max-height: 350px;
-    overflow: auto;
-}
 .myModalErrorInfo{
 	position: absolute;
     top: 6px;
@@ -219,4 +211,19 @@
     margin-left: 2px;
     margin-right: 2px;
     padding: 2px 7px;
+}
+#myEditEnsureDiv{
+	position: absolute;
+    top: 160px;
+    padding-right: 0px;
+    display: none;
+    max-height: 350px;
+    overflow: auto;
+}
+#myEditEnsureDiv .mybody{
+	font-size: 16px;
+}
+#productName{
+	text-align: center;
+	font-size: 18px;
 }

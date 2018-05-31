@@ -12,6 +12,7 @@ var level = null;
 var loginusername = null;
 var fromEmail = null;
 var toEmail = "SKY058689@skyworth.com";
+var emailReason = null;
 var _author = null;
 var adminControl = null;
 
@@ -196,7 +197,6 @@ function buttonInitAfter(){
 		console.log($("#page4_table2 .model")[_Index].innerHTML);
 		$("#page4_check_chip").html($("#page4_table2 .chip")[_Index].innerHTML);
 		$("#page4_check_model").html($("#page4_table2 .model")[_Index].innerHTML);
-		//$("#page4_check_targetProduct").html($("#page4_table2 .target_product")[_Index].innerHTML);
 		$('#page4_examine').modal();
 		var node = '{"chip":"'+$("#page4_table2 .chip")[_Index].innerHTML+'","model":"'+$("#page4_table2 .model")[_Index].innerHTML+'"}';
 		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
@@ -215,7 +215,10 @@ function buttonInitAfter(){
 		var _state = $("#myAddModalLabel").attr("type");//(0正常\1修改\2增加\3删除)
         console.log(_type +"----"+_state);
         $("#mydialog").attr("buttontype","1");//点击审核不通过
-        document.getElementById("mydialog").style.display = "block";
+        $("#mydialog").css("display","block");
+        $("#changetitle3").css("display","block");
+        $("#changeReason3").css("display","block");
+        document.getElementById("changeReason3").removeAttribute('disabled');
 	    document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
 	    document.getElementById("dialogword").innerHTML = "是否确认不通过该文件？";
 	    scrollTopStyle("page4Modal1");
@@ -254,7 +257,16 @@ function buttonInitAfter(){
 		
 		if (_type == 1) {
 			console.log("审核时确认框的确认键的点击");
-			reviewSure();
+			var content = document.getElementById("changeReason3").value;
+			content = content.replace(/\s*/g,"");
+			console.log(content +"---"+content.length);
+			if(content == null || content.length == 0){
+				document.getElementById("errorChangeInfo2").style.display = "inline-block";
+				setTimeout("document.getElementById('errorChangeInfo2').style.display = 'none';", 3000);
+			} else{
+				emailReason = content;
+				reviewSure();
+			}
 		} else if(_type == 2){
 			console.log("编辑时关闭确认框的的点击");
 			$("#page4Modal1").modal("hide");
@@ -463,17 +475,12 @@ function review(obj,adminControl,deleteFlag){
     	//是管理员、是提交者
         if (deleteFlag == "3") {
         	//删除
-            document.getElementById("changeDescDiv").style.display="none";
+        	document.getElementById("page4_firstTr").style.display="none";
         }else{
         	//新增或者修改
-            document.getElementById("changeDescDiv").style.display="block";
+        	document.getElementById("page4_firstTr").style.display="table-row";
         }       
     }
-    $("#newFileDesc").hide();
-    $("#changeDeviceDesc").hide();
-    $("#addModelDesc").hide();
-    $("#removeModelDesc").hide();
-    $("#changeConfigDesc").hide();
 	var a = $(".eachaudit").index($(obj));
 	var b = $(".eachedit").index($(obj));
 	console.log(a+"||||"+b);
@@ -660,7 +667,8 @@ function sendEmail(){
 		if (_type == 1) {
 			if (_buttontype == 0) {
 				//修改操作审核不通过
-				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
+				console.log(emailReason);
+				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，原因是："+emailReason+"请前往《审核未通过文件》菜单进行修改并再次提交";
 			} else if(_buttontype == 1){
 				//修改操作审核通过
 				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
@@ -887,7 +895,9 @@ function deleteIssue(){
 }
 //审核弹窗
 function passIssue(){
-    document.getElementById("mydialog").style.display = "block";
+    $("#mydialog").css("display","block");
+    $("#changetitle3").css("display","none");
+    $("#changeReason3").css("display","none");
     document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
     document.getElementById("dialogword").innerHTML = "确认通过审核吗？";
 }
@@ -1247,7 +1257,7 @@ function isJSON_test(str) {
         }
     }
     console.log('It is not a string!')
- }　
+}
 
 function getCommitterEmail(author){
 	console.log("in getCommitterEmail");

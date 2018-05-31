@@ -437,12 +437,12 @@ function buttonInit() {
 	$("#myEditEnsureX").click(function() {
 		console.log("修改提示框的X按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		page2Fresh()
+//		page2Fresh()
 	});
 	$("#myEditCancle").click(function() {
 		console.log("修改提示框的取消按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		page2Fresh()
+//		page2Fresh()
 	});
 	$("#myEditEnsure").click(function() {
 		console.log("修改配置项的提交");
@@ -1238,13 +1238,68 @@ function productHistoryQuery(){
 						} else if(data.resultData[i].state == 2){
 							_state = "审核不通过";
 						}
-						_tableInnerHtml += "<tbody id='descriptTbody'><tr><td>"+data.resultData[i].content+"</td><td>"+data.resultData[i].reason+"</td><td>"+_state+"</td><td>"+data.resultData[i].userName+"</td><td>"+data.resultData[i].modifyTime+"</td></tr></tbody>";
+						
+						var _desc = "";
+						var _content = data.resultData[i].content;
+						console.log(isJSON_test(_content));
+						if (isJSON_test(_content)) {
+							_content = JSON.parse(_content);
+							_content.deleteObj = "";
+						}else{
+							_content= {
+								changeDev : "",
+								changeAdd : "",
+								changeReduce: "",
+								changeConf : "",
+								deleteObj : data.resultData[i].content
+							};
+						}
+						console.log(_content);
+						var _devArray,_addArray,_deleteArray,_confArray = "";
+						
+						var _devArray = _content.changeDev;//.splice(",")
+						var _addArray = _content.changeAdd;//.splice(",")
+						var _deleteArray = _content.changeReduce;//.splice(",")
+						var _confArray = _content.changeConf;//.splice(",")
+						var _deleteArray2 = _content.deleteObj;
+						console.log(_content);
+						console.log(_devArray.length);
+						console.log(_addArray.length);
+						console.log(_deleteArray.length);
+						console.log(_confArray.length);
+						if (_devArray.length != 0) {
+							_desc += "<span>修改了基本项："+_devArray+"</span><br/>";
+						}if (_addArray.length != 0) {
+							_desc += "<span>新增了设置项："+_addArray+"</span><br/>";
+						}if (_deleteArray.length != 0) {
+							_desc += "<span>删除了设置项："+_deleteArray+"</span><br/>";
+						}if (_confArray.length != 0) {
+							_desc += "<span>修改了Config项："+_confArray+"</span><br/>";
+						}
+						if (_deleteArray2.length != 0){
+							_desc += "<span>"+_deleteArray2+"</span><br/>";
+						}
+						
+						_tableInnerHtml += "<tbody id='descriptTbody'><tr><td>"+_desc+"</td><td>"+data.resultData[i].reason+"</td><td>"+_state+"</td><td>"+data.resultData[i].userName+"</td><td>"+data.resultData[i].modifyTime+"</td></tr></tbody>";
 					}
 					document.getElementById("contenttable").innerHTML = _tableInnerHtml;
 				}
 			}
 		}
 	}
+}
+
+function isJSON_test(str) {
+    if (typeof str == 'string') {
+        try {
+            var obj=JSON.parse(str);
+            console.log('转换成功：'+obj);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    }
+    console.log('It is not a string!');
 }
 
 function changeConfig(obj){

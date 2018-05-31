@@ -49,18 +49,18 @@
 				<div class="modal fade " id="page3Modal" hasquery="false" tabindex="-1" role="dialog" aria-labelledby="mypage6ModalLabel2">
 					<div class="modalwidth" role="document">
 						<div class="modal-content" id="page6ModalDiv2">
-							<div class="modal-header">
+							<div class="modal-header myheader">
 								<span id="page3_title" style="font-size: 18px;">新增TP的名称</span>&nbsp;<input id="page3_TP" type="text" value="">
 								<h4 id="page3Modal1ErrorInfo" class="myModalErrorInfo"></h4>
 								<button type="button" id="page3_tp_close" class="btn btn-primary" style="position: absolute;right: 10px;top: 9px;">关闭</button>
 								<button type="button" id="page3_tp_submit" class="btn btn-primary" style="position: absolute;right: 70px;top: 9px;">提交</button>
 							</div>
-							<div class="modal-body">
+							<div class="modal-body mybody">
 								<table class="table table-bordered" id="page6MkTable">
 									<tbody id="page3MkTbody"></tbody>
 								</table>
 							</div>
-							<div class="modal-footer">
+							<div class="modal-footer myfooter">
 								<button type="button" id="page3_tp_submit2" class="btn btn-primary">提交</button>
 							</div>
 						</div>
@@ -68,15 +68,15 @@
 					<div class="col-xs-10 col-xs-push-1" id="myEditEnsureDiv" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel">
 						<div class="modal-delete" role="document">
 							<div class="modal-content">
-								<div class="modal-header">
+								<div class="modal-header myheader">
 									<button type="button" class="close" aria-label="Close" id="myEditEnsureX"><span aria-hidden="true">×</span></button>
 									<h4 class="modal-title text-left" id="myAddModalLabel">编辑</h4>
 								</div>
-								<div class="modal-body">
-									<div id="tptochipmodel">修改该TargetProduct项，会影响到如下产品，确认要修改吗？</div>
+								<div class="modal-body mybody">
+									<div id="tptochipmodel">此次修改会影响到如下产品，确认要修改吗？该变化不会显示在前端，相关产品不会进入待审核</div>
 									<div id="productName"></div>
 								</div>
-								<div class="modal-footer">
+								<div class="modal-footer myfooter">
 									<button type="button" class="btn btn-primary" id="myEditEnsure">确定</button>
 									<button type="button" class="btn btn-default" id="myEditCancle">取消</button>
 								</div>

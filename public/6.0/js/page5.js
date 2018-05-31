@@ -12,6 +12,7 @@ var level = null;
 var loginusername = null;
 var fromEmail = null;
 var toEmail = "SKY058689@skyworth.com";
+var emailReason = null;
 var _author = null;
 var adminControl = null;
 
@@ -196,7 +197,6 @@ function buttonInitAfter(){
 		console.log($("#page5_table2 .model")[_Index].innerHTML);
 		$("#page5_check_chip").html($("#page5_table2 .chip")[_Index].innerHTML);
 		$("#page5_check_model").html($("#page5_table2 .model")[_Index].innerHTML);
-//		$("#page5_check_targetProduct").html($("#page5_table2 .target_product")[_Index].innerHTML);
 		$('#page5_examine').modal();
 		var node = '{"chip":"'+$("#page5_table2 .chip")[_Index].innerHTML+'","model":"'+$("#page5_table2 .model")[_Index].innerHTML+'"}';
 		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
@@ -215,7 +215,9 @@ function buttonInitAfter(){
 		var _state = $("#myAddModalLabel").attr("type");//(0正常\1修改\2增加\3删除)
         console.log(_type +"----"+_state);
         $("#mydialog").attr("buttontype","1");//点击审核不通过
-        document.getElementById("mydialog").style.display = "block";
+        $("#mydialog").css("display","block");
+        $("#changetitle3").css("display","block");
+        $("#changeReason3").css("display","block");
 	    document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
 	    document.getElementById("dialogword").innerHTML = "是否确认不通过该文件？";
 	    scrollTopStyle("page5Modal1");
@@ -463,17 +465,12 @@ function review(obj,adminControl,deleteFlag){
     	//是管理员、是提交者
         if (deleteFlag == "3") {
         	//删除
-            document.getElementById("changeDescDiv").style.display="none";
+        	document.getElementById("page5_firstTr").style.display="none";
         }else{
         	//新增或者修改
-            document.getElementById("changeDescDiv").style.display="block";
+        	document.getElementById("page5_firstTr").style.display="table-row";
         }       
     }
-    $("#newFileDesc").hide();
-    $("#changeDeviceDesc").hide();
-    $("#addModelDesc").hide();
-    $("#removeModelDesc").hide();
-    $("#changeConfigDesc").hide();
 	var a = $(".eachaudit").index($(obj));
 	var b = $(".eachedit").index($(obj));
 	console.log(a+"||||"+b);
@@ -887,7 +884,9 @@ function deleteIssue(){
 }
 //审核弹窗
 function passIssue(){
-    document.getElementById("mydialog").style.display = "block";
+    $("#mydialog").css("display","block");
+    $("#changetitle3").css("display","none");
+    $("#changeReason3").css("display","none");
     document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
     document.getElementById("dialogword").innerHTML = "确认通过审核吗？";
 }
@@ -917,9 +916,8 @@ function editIssue(){
 	if (nullName == 0) {
 		console.log("没有空项");
 		var _errNum = 0;
-		var isTrueData0 = $("#page5Modal1Table .fuzzySearch")[3].value;
-		var isTrueData1 = $("#page5Modal1Table .fuzzySearch")[4].value;
-		console.log(isTrueData0+"-"+isTrueData1);
+		var isTrueData0 = $("#page4Modal1Table .fuzzySearch")[3].value;
+		console.log(isTrueData0);
 		var index0 = autoDataArray1.indexOf(isTrueData0);
 		console.log(index0);
 		if (index0 == "-1") {
@@ -1248,7 +1246,7 @@ function isJSON_test(str) {
         }
     }
     console.log('It is not a string!')
- }　
+}
 
 function getCommitterEmail(author){
 	console.log("in getCommitterEmail");

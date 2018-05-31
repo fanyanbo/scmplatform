@@ -36,18 +36,11 @@
 					<div class="modal-body">
 						<table class="table table-bordered " id="page5Modal1Table">
 							<tbody>
-								<tr>
+								<tr id="page4_firstTr">
 									<td>
 										<div class="col-xs-12" id="changeDescDiv">
 											<div class="col-xs-12 form-group text-left inputdiv">
-												<span id="changeDescTitle"><b>当前文件做了如下更改，请注意审核：</b>
-												</span>
-												<div id="newFileDesc" class="redDesc marginCenter">当前文件为新增配置，请仔细审核！</div>
-												<div id="changeFileDesc" class="redDesc marginCenter">当前文件因配置管理项添加(或修改)导致文件发生变化，请仔细审核！</div>
-												<div id="changeDeviceDesc" class="marginCenter">修改设备信息：<span id="changeInfo1" class="redDesc">fffsdfd</span></div>
-												<div id="addModelDesc" class="marginCenter">新增模块：<span span id="changeInfo2" class="redDesc">sdfsdgrty</span></div>
-												<div id="removeModelDesc" class="marginCenter">删除模块：<span span id="changeInfo3" class="redDesc">reyeryty</span></div>
-												<div id="changeConfigDesc" class="marginCenter">修改配置：<span span id="changeInfo4" class="redDesc">tryrt</span></div>
+												<span id="changeDescTitle"><b>当前文件做了如下更改，请注意审核：</b></span>
 											</div>
 										</div>
 									</td>
@@ -69,10 +62,10 @@
 											<input type="text" value="" id="lable5TP" name="TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
 											<div class="auto_hidden" id="page5_tp_auto2"></div>
 										</div>
-									</td>
+									<!--</td>
 								</tr>
 								<tr>
-									<td>
+									<td>-->
 										<div class="col-xs-4 text-left inputdiv">
 											<label for="lable5AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
 											<select id="lable5AndroidVersion" name="Android版本" class="col-xs-6 col-xs-push-1 inputstyle text-left">
@@ -136,13 +129,13 @@
 								<tr>
 									<td style="padding: 0;">
 										<div class="btn-group">
-											<button class="page5_tabs btn-success">config文件</button>
-											<button class="page5_tabs btn-success">MK</button>
-											<button class="page5_tabs btn-success">系统设置</button>
-											<button class="page5_tabs btn-success">信号源工具箱</button>
-											<button class="page5_tabs btn-success">卖场演示</button>
-											<button class="page5_tabs btn-success">中间件</button>
-											<button class="page5_tabs btn-success">PROP</button>
+											<button class="page5_tabs btn-success" style="color: black;">config文件</button>
+											<button class="page5_tabs">MK</button>
+											<button class="page5_tabs">系统设置</button>
+											<button class="page5_tabs">信号源工具箱</button>
+											<button class="page5_tabs">卖场演示</button>
+											<button class="page5_tabs">中间件</button>
+											<button class="page5_tabs">PROP</button>
 										</div>
 										<div class="col-xs-12 page5_boxes row">
 											<div id="myConfigBox" class="eachpartbox"></div>
@@ -245,6 +238,8 @@
 					</div>
 					<div class="modal-body">
 						<p style="font-size: 24px;text-align: center;" id="dialogword"></p>
+						<span id="changetitle3" class="changetitle">不通过原因</span><span id="errorChangeInfo">&nbsp;&nbsp;此项不能为空!</span><br/>
+						<textarea id="changeReason3"></textarea>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" id="myDeleteModalEnsure">确定</button>

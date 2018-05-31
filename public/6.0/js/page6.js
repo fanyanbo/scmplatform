@@ -8,7 +8,7 @@ var autoDataArray3 = new Array();
 $(function() {
 	$(".page_boxes")[0].style.display = "block";
 	$(".page6_tab")[0].style.color = "blue";
-	
+	$(".page6_tab")[0].style.backgroundColor = "lawngreen";
 	var node1 = '{}';
 	sendHTTPRequest(coocaaVersion+"/device/queryAll", node1 , QueryResult);
 	
@@ -62,6 +62,7 @@ function page6ButtonInitBefore() {
 		}
 		$('#page6Modal').modal();
 		$("#page6Submit").attr("oldValue","");
+		$("#myPreviewModalLabel").html("新增");
 		document.getElementById("page6Container").value = "";
 		$(".modal-backdrop").addClass("new-backdrop");
 	});
@@ -74,13 +75,26 @@ function page6ButtonInitBefore() {
 		for (var k=0;k<$(".page6_tab").length; k++) {
 			$(".page_boxes")[k].style.display = "none";
 			$(".page6_tab")[k].style.color = "black";
+			$(".page6_tab")[k].style.backgroundColor = "buttonface";
 		}
 		$(".page_boxes")[_curIndex].style.display = "block";
 		$(".page6_tab")[_curIndex].style.color = "blue";
+		$(".page6_tab")[_curIndex].style.backgroundColor = "lawngreen";
 	});
 	$("#page6ModeClose").click(function(){
 		document.getElementById("page6Container").value = "";
 		$("#page6Modal").modal("hide");
+	});
+	
+	$("#myEditEnsure").click(function(){
+		console.log("点击了修改后弹出确认框的提交");
+		changeEnsureFuc();
+	});
+	$("#myEditCancle").click(function(){
+		$("#myEditEnsureDiv").css("display","none");
+	});
+	$("#myEditEnsureX").click(function(){
+		$("#myEditEnsureDiv").css("display","none");
 	});
 }
 
@@ -102,11 +116,20 @@ function page6ButtonInitAfter(){
 		var _newValue = $("#page6Container").val();
 		var _curPart1 = $("#page6Submit").attr("part1");
 		var _curPart2 = _oldValue.length;
-		page6SubmitState(_oldValue,_newValue,_curPart1,_curPart2);
+		_newValue = _newValue.replace(/\s*/g,"");
+		console.log(_newValue);
+		if (_newValue == null ||_newValue.length == 0) {
+			console.log("输入项不能为空");
+			document.getElementById("editErrorInfo").style.display = "inline-block";
+			setTimeout("document.getElementById('editErrorInfo').style.display = 'none';", 3000);
+		} else{
+			page6SubmitState(_oldValue,_newValue,_curPart1,_curPart2);
+		}
 	});
 }
 
 function editpage4Modal(type,num,obj,name){
+	$("#myPreviewModalLabel").html("编辑");
 	$('#page6Modal').modal(); //显示新建与编辑机芯机型时的弹框
 	$(".modal-backdrop").addClass("new-backdrop");
 	$("#page6Submit").attr("oldValue",obj[num].title);
@@ -138,17 +161,28 @@ function page6SubmitState(oValue,nValue,part1,part2){
 				$("#chipMangInfo").html("该名称已经存在。");
 				setTimeout("document.getElementById('chipMangInfo').style.display = 'none';", 3000);
 			} else{
-				var node = '{"newValue":"'+nValue+'","oldValue":"'+oValue+'"}';
-				if (part1 == 1) {
-					console.log("修改+机芯+提交");
-					sendHTTPRequest(coocaaVersion+"/chip/update", node, addOrChangeResult);
-				} else if(part1 == 2) {
-					console.log("修改+机型+提交");
-					sendHTTPRequest(coocaaVersion+"/model/update", node, addOrChangeResult);
-				} else if(part1 == 3){
-					console.log("修改+芯片型号+提交");
-					sendHTTPRequest(coocaaVersion+"/soc/update", node, addOrChangeResult);
+				$("#myEditEnsureDiv").css("display","block");
+				var searchObj = {
+					"chip" : "",
+					"model" : "",
+					"targetProduct" : "",
+					"memory" : "",
+					"version" : "",
+					"soc" : "",
+					"EMMC" : "",
+					"gitBranch" : "",
 				}
+				if (part1 == 1) {
+					searchObj.chip = oValue;
+				}else if(part1 == 2) {
+					searchObj.model = oValue;
+				}else if(part1 == 3) {
+					searchObj.soc = oValue;
+				}
+				var _search = JSON.stringify(searchObj);
+				var node = '{"data":' + _search + '}';
+				console.log(node);
+				sendHTTPRequest(coocaaVersion+"/product/queryByRegEx", node, searchResource);
 			}
 		}
 	} else{
@@ -172,6 +206,50 @@ function page6SubmitState(oValue,nValue,part1,part2){
 	}
 }
 
+function searchResource() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$("#myEditEnsureDiv").css("display","block");
+				if (data.resultData.length == 0) {
+					$("#tptochipmodel").css("display","none");
+					document.getElementById("productName").innerHTML = "该TargetProduct还未配置产品。";
+				} else{
+					var inneritem = "";
+					for (var i=0; i<data.resultData.length; i++) {
+						inneritem += '<div>机芯：'+data.resultData[i].chip+',机型：'+data.resultData[i].model+'</div>'; 
+					}
+					$("#tptochipmodel").css("display","block");
+					document.getElementById("productName").innerHTML = inneritem;
+				}
+			}
+		}
+	}
+}
+
+function changeEnsureFuc(){
+	console.log("in changeEnsureFuc。");
+	var _oldValue = $("#page6Submit").attr("oldValue");
+	var _newValue = $("#page6Container").val();
+	var _curPart1 = $("#page6Submit").attr("part1");
+	console.log(_oldValue);
+	console.log(_newValue);
+	console.log(_curPart1);
+	var node = '{"newValue":"'+_newValue+'","oldValue":"'+_oldValue+'"}';
+	if (_curPart1 == 1) {
+		console.log("修改+机芯+提交");
+		sendHTTPRequest(coocaaVersion+"/chip/update", node, addOrChangeResult);
+	} else if(_curPart1 == 2) {
+		console.log("修改+机型+提交");
+		sendHTTPRequest(coocaaVersion+"/model/update", node, addOrChangeResult);
+	} else if(_curPart1 == 3){
+		console.log("修改+芯片型号+提交");
+		sendHTTPRequest(coocaaVersion+"/soc/update", node, addOrChangeResult);
+	}
+}
+
 function addOrChangeResult(){
 	if(this.readyState == 4) {
 		if(this.status == 200) {
@@ -179,7 +257,7 @@ function addOrChangeResult(){
 			console.log(data);
 			if(data.resultCode == "0") {
 				console.log("数据提交成功");
-				console.log("关闭弹窗，刷新父页面");
+				$("#myEditEnsureDiv").css("display","none");
 				$("#page6Modal").modal('hide');
 				page6freshHtml();
 			}else{
