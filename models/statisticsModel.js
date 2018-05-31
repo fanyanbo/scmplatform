@@ -6,6 +6,9 @@ var dbConfig = require('./dbConfig');
 
 var StatisticsModel = function() {};
 
+/**
+ * @param {首页的统计信息，不能根据机芯进行模糊匹配，应该根据platform进行匹配，后续修改}
+ */
 StatisticsModel.prototype.getSummaryByQuery = function(username, callback) {
 
   let ep = new eventproxy();
