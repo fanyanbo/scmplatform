@@ -13,14 +13,14 @@ StatisticsModel.prototype.getSummaryByQuery = function(username, callback) {
 
   let ep = new eventproxy();
   let sql_list = [
-                  `SELECT count(*) AS count FROM ${dbConfig.tables.products}`,
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE auditState = 0`,
                   "SELECT count(*) AS count FROM chips",
                   "SELECT count(*) AS count FROM models",
-                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%S%'`,
-                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%H%'`,
-                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%R%'`,
-                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%A%'`,
-                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%N%'`
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%S%' AND auditState = 0`,
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%H%' AND auditState = 0`,
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%R%' AND auditState = 0`,
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%A%' AND auditState = 0`,
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%N%' AND auditState = 0`
                 ];
 
   ep.bind('error', function (err) {
