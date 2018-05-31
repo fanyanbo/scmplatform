@@ -13,11 +13,11 @@ StatisticsModel.prototype.getSummaryByQuery = function(username, callback) {
                   `SELECT count(*) AS count FROM ${dbConfig.tables.products}`,
                   "SELECT count(*) AS count FROM chips",
                   "SELECT count(*) AS count FROM models",
-                  "SELECT count(*) AS count FROM chips WHERE name like '%S%'",
-                  "SELECT count(*) AS count FROM chips WHERE name like '%H%'",
-                  "SELECT count(*) AS count FROM chips WHERE name like '%R%'",
-                  "SELECT count(*) AS count FROM chips WHERE name like '%A%'",
-                  "SELECT count(*) AS count FROM chips WHERE name like '%N%'"
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%S%'`,
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%H%'`,
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%R%'`,
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%A%'`,
+                  `SELECT count(*) AS count FROM ${dbConfig.tables.products} WHERE chip like '%N%'`
                 ];
 
   ep.bind('error', function (err) {
