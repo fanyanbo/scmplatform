@@ -443,13 +443,14 @@ ProductModel.prototype.review = function (data, callback) {
         db.conn.query(sql1,[chip, model],function(err,rows,fields){
           if (err) return callback(err);
           //当更新产品表和修改历史表成功后，执行生成文件的操作
-          generator.generate(chip, model, function(err,result){
-            if(err) {
-              logger.debug("在审核生成文件时出错：" + err);
-              return callback(err);
-            }
-            callback(null, result);
-          });
+          // generator.generate(chip, model, function(err,result){
+          //   if(err) {
+          //     logger.debug("在审核生成文件时出错：" + err);
+          //     return callback(err);
+          //   }
+          //   callback(null, result);
+          // });
+          callback(null, rows);
         });
       });
     }else {
