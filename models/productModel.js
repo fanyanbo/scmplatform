@@ -463,7 +463,7 @@ ProductModel.prototype.review = function (data, callback) {
         let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 2 WHERE chip = ? AND model = ? AND state = 1`;
         db.conn.query(sql1,[chip, model],function(err,rows,fields){
           if (err) return callback(err);
-          callback(null, result);
+          callback(null, rows);
         });
       });
     }
