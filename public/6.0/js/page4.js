@@ -146,7 +146,7 @@ function reloadClick(){
 function editStatusByLength(num){
 	if (num == 0) {
 		console.log("查询结果为空");
-		$('#page5_table').css("display", "none");
+		$('#page4_table').css("display", "none");
 		$('#noList').css("display", "block");
 	} else if (num < 11) {
 		console.log("查询结果个数小于11");
