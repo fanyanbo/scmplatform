@@ -154,14 +154,13 @@ body .modal-footer{
     font-size: 13px;
     margin-top: -4px;
 }
-#mydialog{
-	text-align: center;
+#mydialog,#mydialog2{
     position: absolute;
     display: none;
     z-index: 1051;
     top: 0;
     font-size: 24px;
-    margin-top: 175px;
+    margin-top: 80px;
 }
 .myfooter button {
     position: relative;
@@ -241,18 +240,23 @@ body .modal-footer{
 	font-size: 24px;
     color: darkblue;
 }
-#changetitle3{
+#changetitle3,#changetitle2{
+	text-align: left;
+	float: left;
 	display: none;
 }
 #changeContent{
 	font-size: 20px;
 }
-#changeContent,#changeReason,#changeReason3{
+#changeContent,#changeReason,#changeReason2,#changeReason3{
 	background-color: lavender;
 }
-#changeReason,#changeReason3{
+#changeReason,#changeReason2,#changeReason3{
 	width: 100%;
 	resize: none;
+}
+#changeReason2{
+	display: none;
 }
 #noChangeHistory{
 	text-align: center;
@@ -291,7 +295,7 @@ body .modal-footer{
 	border-radius: 5px;
     padding: 2px 4px;
 }
-#errorChangeInfo{
+#errorChangeInfo,#errorChangeInfo2,#errorChangeInfo22{
 	color: red;
 	display: none;
 }

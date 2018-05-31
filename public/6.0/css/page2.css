@@ -378,6 +378,7 @@
 #page2Modal1Table .configitems{
 	padding-right: 0px;
 	padding-left: 0px;
+	background-color: white;
 }
 #myPreviewModal .mybody textarea{
 	overflow:scroll;

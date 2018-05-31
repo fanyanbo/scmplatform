@@ -216,9 +216,9 @@ function buttonInitAfter(){
         console.log(_type +"----"+_state);
         $("#mydialog").attr("buttontype","1");//点击审核不通过
         $("#mydialog").css("display","block");
+        $("#errorChangeInfo2").css("display","none");
         $("#changetitle3").css("display","block");
         $("#changeReason3").css("display","block");
-        document.getElementById("changeReason3").removeAttribute('disabled');
 	    document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
 	    document.getElementById("dialogword").innerHTML = "是否确认不通过该文件？";
 	    scrollTopStyle("page4Modal1");
@@ -241,11 +241,15 @@ function buttonInitAfter(){
 		        page4fresh(1);
 		    }else{
 		        document.getElementById("mydialog").style.display = "block";
+		        $("#errorChangeInfo2").css("display","none");
+		        $("#changeReason3").css("display","none");
 		        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
 		        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
 		    }
         } else{
         	document.getElementById("mydialog").style.display = "block";
+	        $("#errorChangeInfo2").css("display","none");
+	        $("#changeReason3").css("display","none");
 	        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
 	        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
         }
@@ -257,14 +261,17 @@ function buttonInitAfter(){
 		
 		if (_type == 1) {
 			console.log("审核时确认框的确认键的点击");
-			var content = document.getElementById("changeReason3").value;
-			content = content.replace(/\s*/g,"");
-			console.log(content +"---"+content.length);
-			if(content == null || content.length == 0){
-				document.getElementById("errorChangeInfo2").style.display = "inline-block";
-				setTimeout("document.getElementById('errorChangeInfo2').style.display = 'none';", 3000);
+			if (document.getElementById("changeReason3").style.display == "block") {
+				var content = document.getElementById("changeReason3").value;
+				content = content.replace(/\s*/g,"");
+				console.log(content +"---"+content.length);
+				if(content == null || content.length == 0){
+					document.getElementById("errorChangeInfo2").style.display = "inline-block";
+					setTimeout("document.getElementById('errorChangeInfo2').style.display = 'none';", 3000);
+				} else{
+					emailReason = content;
+				}
 			} else{
-				emailReason = content;
 				reviewSure();
 			}
 		} else if(_type == 2){
@@ -945,7 +952,6 @@ function editIssue(){
 			if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length == 0) {
 				console.log("未做任何修改");
 				document.getElementById("page4Modal1ErrorInfo").innerHTML = "您未做任何修改。";
-				document.getElementById("MoreEditBack").style.display = "none";
 				setTimeout("document.getElementById('page4Modal1ErrorInfo').innerHTML='　'",3000);
 			} else{
 				console.log("做了修改");

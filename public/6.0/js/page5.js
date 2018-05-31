@@ -169,6 +169,9 @@ function buttonInitBefore(){
 	$("#oButtonX").click(function() {
 		$("#mydialog").css("display","none");
 	});
+	$("#oButtonX2").click(function() {
+		$("#mydialog2").css("display","none");
+	});
 	$("#page5_close1").click(function() {
 		document.getElementById("descriptTbody").innerHTML = "";
 		$("#page5_examine").modal('hide');
@@ -216,6 +219,7 @@ function buttonInitAfter(){
         console.log(_type +"----"+_state);
         $("#mydialog").attr("buttontype","1");//点击审核不通过
         $("#mydialog").css("display","block");
+        $("#errorChangeInfo2").css("display","none");
         $("#changetitle3").css("display","block");
         $("#changeReason3").css("display","block");
 	    document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
@@ -240,11 +244,15 @@ function buttonInitAfter(){
 		        page5fresh(1);
 		    }else{
 		        document.getElementById("mydialog").style.display = "block";
+		        $("#errorChangeInfo2").css("display","none");
+		        $("#changeReason3").css("display","none");
 		        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
 		        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
 		    }
         } else{
         	document.getElementById("mydialog").style.display = "block";
+        	$("#errorChangeInfo2").css("display","none");
+        	$("#changeReason3").css("display","none");
 	        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
 	        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
         }
@@ -256,7 +264,19 @@ function buttonInitAfter(){
 		
 		if (_type == 1) {
 			console.log("审核时确认框的确认键的点击");
-			reviewSure();
+			if (document.getElementById("changeReason3").style.display == "block") {
+				var content = document.getElementById("changeReason3").value;
+				content = content.replace(/\s*/g,"");
+				console.log(content +"---"+content.length);
+				if(content == null || content.length == 0){
+					document.getElementById("errorChangeInfo2").style.display = "inline-block";
+					setTimeout("document.getElementById('errorChangeInfo2').style.display = 'none';", 3000);
+				} else{
+					emailReason = content;
+				}
+			} else{
+				reviewSure();
+			}
 		} else if(_type == 2){
 			console.log("编辑时关闭确认框的的点击");
 			$("#page5Modal1").modal("hide");
@@ -271,6 +291,10 @@ function buttonInitAfter(){
 	    changeDev.splice(0,changeDev.length);
 	    changeReduce.splice(0,changeReduce.length);
 	});
+	$("#myDeleteModalEnsure2").click(function() {
+		recoverSure();
+	});
+	
 	$("#myCopyModalClose").click(function() {
 		$("#myPreviewModal").css("display","none");
 	});
@@ -506,13 +530,13 @@ function recover(obj,deleteFlag){
 	recoverChip = $("#page5_table2 .chip")[_index].innerHTML;
 	recoverModel = $("#page5_table2 .model")[_index].innerHTML;
 	_author = $("#page5_table2 .author")[_index].innerHTML;
-	$("#reviewDialog").attr("ochip",recoverChip);
-	$("#reviewDialog").attr("omodel",recoverModel);
-	$("#myAddModalLabel").attr("num","3");//1-审核、2-编辑、3-恢复
-	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
-    document.getElementById("mydialog").style.display = "block";
-    document.getElementById("myDeleteModalLabel").innerHTML = "恢复操作";
-    document.getElementById("dialogword").innerHTML = "确认撤销删除吗？";
+	$("#reviewDialog2").attr("ochip",recoverChip);
+	$("#reviewDialog2").attr("omodel",recoverModel);
+	$("#myAddModalLabel2").attr("num","3");//1-审核、2-编辑、3-恢复
+	$("#myAddModalLabel2").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
+    document.getElementById("mydialog2").style.display = "block";
+    document.getElementById("myDeleteModalLabel2").innerHTML = "恢复操作";
+    document.getElementById("dialogword2").innerHTML = "确认撤销删除吗？";
     
     console.log(level+"---"+loginusername);
     if (_author != loginusername) {
@@ -559,8 +583,8 @@ function editSure(){
 }
 //恢复的提交
 function recoverSure(){
-	var chip = $("#reviewDialog").attr("ochip");
-	var model = $("#reviewDialog").attr("omodel");
+	var chip = $("#reviewDialog2").attr("ochip");
+	var model = $("#reviewDialog2").attr("omodel");
 	console.log(chip+"------"+model);
 	var recoveObj = {
 		"chip" : chip,
@@ -657,7 +681,8 @@ function sendEmail(){
 		if (_type == 1) {
 			if (_buttontype == 0) {
 				//修改操作审核不通过
-				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
+				console.log(emailReason);
+				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，原因是："+emailReason+"请前往《审核未通过文件》菜单进行修改并再次提交";
 			} else if(_buttontype == 1){
 				//修改操作审核通过
 				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
@@ -731,7 +756,7 @@ function mailfun(){
 		page5fresh(1);
 	}
 }
-//管理员点审核、时的数据请求函数
+//管理员点审核、恢复时的数据请求函数
 function getPointProductInfo(){
 	if(this.readyState == 4) {
         if(this.status == 200) {
@@ -916,7 +941,7 @@ function editIssue(){
 	if (nullName == 0) {
 		console.log("没有空项");
 		var _errNum = 0;
-		var isTrueData0 = $("#page4Modal1Table .fuzzySearch")[3].value;
+		var isTrueData0 = $("#page5Modal1Table .fuzzySearch")[3].value;
 		console.log(isTrueData0);
 		var index0 = autoDataArray1.indexOf(isTrueData0);
 		console.log(index0);
@@ -1414,7 +1439,7 @@ function instantQuery(arr1) {
 			});
 		}
 	}
-	autoComplete1 = new AutoComplete('lable4ChipMode', 'page4_soc_auto2', arr1);
+	autoComplete1 = new AutoComplete('lable5ChipMode', 'page5_soc_auto2', arr1);
 	
 	/* 点击空白出隐藏临时div */
 	_$(document).onclick = function(e) {

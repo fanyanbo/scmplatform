@@ -36,7 +36,7 @@
 					<div class="modal-body">
 						<table class="table table-bordered " id="page5Modal1Table">
 							<tbody>
-								<tr id="page4_firstTr">
+								<tr id="page5_firstTr">
 									<td>
 										<div class="col-xs-12" id="changeDescDiv">
 											<div class="col-xs-12 form-group text-left inputdiv">
@@ -177,12 +177,32 @@
 											<span id="txt3">删除模块：<span id="txt33"></span><br/></span>
 											<span id="txt4">修改配置：<span id="txt44"></span><br/></span>
 										</div>
-										<span class="changetitle">修改原因</span><span id="errorChangeInfo">&nbsp;&nbsp;此项不能为空!</span><br/>
+										<span class="changetitle">修改原因</span><span id="errorChangeInfo">&nbsp;&nbsp;此项不能为空!</span>
 										<textarea id="changeReason"></textarea>
 									</div>
 									<div class="modal-footer">
 										<button type="button" class="btn btn-primary" id="myEditEnsure">确定</button>
 										<button type="button" class="btn btn-default" id="myEditCancle">取消</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-10 col-lg-10 col-xs-push-1 col-lg-push-1" id="mydialog" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel">
+							<div class="modal-delete" role="document" id="reviewDialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" aria-label="Close" id="oButtonX"><span aria-hidden="true">×</span></button>
+										<h4 class="modal-title text-left" id="myDeleteModalLabel"></h4>
+									</div>
+									<div class="modal-body">
+										<p style="font-size: 24px;text-align: center;" id="dialogword"></p>
+										<span id="changetitle3" class="changetitle">不通过的原因:</span><span id="errorChangeInfo2">&nbsp;&nbsp;此项不能为空!</span>
+										<textarea id="changeReason3"></textarea>
+										<!--<input type="text" name="changeReason3" id="changeReason3" value="" />-->
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" id="myDeleteModalEnsure">确定</button>
+										<!--<button type="button" class="btn btn-default" id="oButtonCancle">取消</button>-->
 									</div>
 								</div>
 							</div>
@@ -195,6 +215,26 @@
 			</div>
 		</div>
 		
+		<div class="col-xs-10 col-lg-10 col-xs-push-1 col-lg-push-1" id="mydialog2" tabindex="-1" role="dialog">
+			<div class="modal-delete" role="document" id="reviewDialog2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" aria-label="Close" id="oButtonX2"><span aria-hidden="true">×</span></button>
+						<h4 class="modal-title text-left" id="myDeleteModalLabel2"></h4>
+					</div>
+					<div class="modal-body">
+						<p style="font-size: 24px;text-align: center;" id="dialogword2"></p>
+						<span id="changetitle2" class="changetitle">不通过的原因:</span><span id="errorChangeInfo22">&nbsp;&nbsp;此项不能为空!</span>
+						<textarea id="changeReason2"></textarea>
+						<!--<input type="text" name="changeReason3" id="changeReason3" value="" />-->
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="myDeleteModalEnsure2">确定</button>
+						<!--<button type="button" class="btn btn-default" id="oButtonCancle">取消</button>-->
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--点击预览弹出复制的modal-->
 		<div id="myPreviewModal" tabindex="-1" role="dialog" aria-labelledby="myPreviewModalLabel">
 			<div class="modalwidth" role="document">
@@ -229,25 +269,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-xs-10 col-lg-10 col-xs-push-1 col-lg-push-1" id="mydialog" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel">
-			<div class="modal-delete" role="document" id="reviewDialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" aria-label="Close" id="oButtonX"><span aria-hidden="true">×</span></button>
-						<h4 class="modal-title text-left" id="myDeleteModalLabel"></h4>
-					</div>
-					<div class="modal-body">
-						<p style="font-size: 24px;text-align: center;" id="dialogword"></p>
-						<span id="changetitle3" class="changetitle">不通过原因</span><span id="errorChangeInfo">&nbsp;&nbsp;此项不能为空!</span><br/>
-						<textarea id="changeReason3"></textarea>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-primary" id="myDeleteModalEnsure">确定</button>
-						<!--<button type="button" class="btn btn-default" id="oButtonCancle">取消</button>-->
-					</div>
-				</div>
-			</div>
-		</div>
+		
 		<!-- 点击查看 -->
 		<div class="modal fade" id="page5_examine" tabindex="-1" role="dialog" aria-labelledby="page5_examineLabel">
 			<div class="" role="document">
