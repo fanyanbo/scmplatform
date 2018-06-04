@@ -146,7 +146,7 @@ ModuleModel.prototype.queryCategory = function (callback) {
   });
 }
 
-ModuleModel.prototype.addCategoryOrderId = function (categoryName, callback) {
+ModuleModel.prototype.addCategory = function (categoryName, callback) {
 
   let ep = new eventproxy();
   let _orderId;
@@ -158,17 +158,16 @@ ModuleModel.prototype.addCategoryOrderId = function (categoryName, callback) {
   });
 
   ep.all('event1', 'event2', function (data1, data2) {
-      let sql = "INSERT INTO mkcategory(category,orderId) values (?,?)";
+      let sql = "INSERT INTO mkcategory(category, orderId) values (?,?)";
       let sql_param = [categoryName,_orderId];
       db.conn.query(sql,sql_param,function(err,rows,fields){
-        if (err) return ep.emit('error', err);
-        return callback(null, "addModuleCategory OK");
+        if (err) return callback(err, null);
+        callback(null, "addModuleCategory OK");
       });
   });
 
   let sql1 = "SELECT orderId FROM mkcategory order by orderId desc limit 0,1";
-  let sql1_param = [];
-  db.conn.query(sql1,sql1_param,function(err,rows,fields){
+  db.conn.query(sql1,[],function(err,rows,fields){
     if (err) {
         return ep.emit('error', err);
     }
@@ -179,8 +178,7 @@ ModuleModel.prototype.addCategoryOrderId = function (categoryName, callback) {
   });
 
   let sql2 = "SELECT * FROM mkcategory WHERE category = ?";
-  let sql2_param = [categoryName];
-  db.conn.query(sql2,sql2_param,function(err,rows,fields){
+  db.conn.query(sql2,[categoryName],function(err,rows,fields){
     if (err) {
         return ep.emit('error', err);
     }
