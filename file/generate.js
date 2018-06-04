@@ -17,9 +17,16 @@ var dbConfig = require('../models/dbConfig');
 
 var connection;							// 数据库连接
 var action_type;                        // 当前动作为预览还是git提交
-var mod_callback;
-var baseinfo;							// 信息表(包括general_config)
-var targetinfo;							// 所有机型targetProduct表
+var mod_callback;                       // 
+
+var allInfos;
+var infoTotal;
+var infoCnt;
+
+var allTargets;
+var targetTotal;
+var targetCnt;
+
 var tempdir = "";                       // 临时文件夹
 
 var version = "6.0";
@@ -30,61 +37,14 @@ var tab_settingsdata;
 var tab_propsdata;
 var tab_mkdata;
 
+var infoTxt = "";
+
 var i, j, k;
 var generator = new Generator();
 
 function Generator()
 {
 }
-
-Generator.prototype.generate = function(
-                                chip,		    // 机芯
-								model,		    // 机型
-								callback		// 回调函数
-								)
-{
-    generateFiles(chip, model, version, "gitpush", callback);
-}
-
-Generator.prototype.preview = function(chip, model, callback)
-{
-	generateFiles(chip, model, version, "preview", callback);
-}
-
-Generator.prototype.generateByTargetProduct = function(
-                                targetProduct,  // targetProduct
-								callback		// 回调函数
-								)
-{
-    //generateFiles(chip, model, version, "gitpush", callback);
-}
-
-function generateFiles( chip,		    // 机芯
-                        model,          // 机型
-                        version,		// 版本
-                        actionType,     // 动作类型(preview为预览)
-                        callback		// 回调函数
-                        )
-{
-
-	action_type = actionType;
-	mod_callback = callback;
-
-    tab_products = dbConfig.tables.products;
-    tab_configdata = dbConfig.tables.configdata;
-    tab_settingsdata = dbConfig.tables.settingsdata;
-    tab_propsdata = dbConfig.tables.propsdata;
-    tab_mkdata = dbConfig.tables.mkdata;
-
-	infoTxt = "";
-
-	writerlog.checkLogFile();
-
-	//console.log("machines param type = " + type + "\n");
-    baseinfo = CreateInfo(chip, model);
-    return doit(version, actionType);
-}
-
 
 function CreateInfo(chip, model)
 {
@@ -139,125 +99,257 @@ function targetArrayIndex(arr, targetProduct)
 	return -1;
 }
 
-function doit(	systemVersion,		// 系统版本
-				callback  			// 回调函数
-								)
+function generateFiles( 
+                        chip,		    // 机芯
+                        model,          // 机型
+                        actionType,     // 动作类型(preview为预览)
+                        callback		// 回调函数
+                        )
 {
-	connection = mysql.createConnection(dbparam);
+	action_type = actionType;
+	mod_callback = callback;
 
+    tab_products = dbConfig.tables.products;
+    tab_configdata = dbConfig.tables.configdata;
+    tab_settingsdata = dbConfig.tables.settingsdata;
+    tab_propsdata = dbConfig.tables.propsdata;
+    tab_mkdata = dbConfig.tables.mkdata;
+
+	infoTxt = "";
+	writerlog.checkLogFile();
+	
+	allInfos = new Array();
+	infoTotal = 0;
+	infoCnt = 0;
+	allTargets = new Array();
+	targetTotal = 0;
+    targetCnt = 0;
+
+    connection = mysql.createConnection(dbparam);
 	connection.connect();
+	
+    if (action_type == "chip_and_model" || action_type == "preview")
+    {
+        allInfos[infoTotal] = CreateInfo(chip, model);
+        infoTotal++;
+        doit(connection, actionType);
+    }
+    else if (action_type == "chip_only")
+    {
+        var result = 0;
+        var sql = "select model from " + tab_products + " where chip=\"" +
+        			chip + "\";";
+        
+        writerlog.w("开始查询: " + sql + "\n");
+        
+        connection.query(sql, function (err, result) {
+        	if(err){
+        		console.log('[SELECT ERROR] - ', err.message);
+        		writerlog.w("查询出错: " + err.message + "\n");
+        		return;
+        	}
+        
+        	writerlog.w("SQL查询成功 0 \n");
+        	console.log(result);
+        
+            for (var i in result)
+            {
+                var curValue = result[i].model;
+                allInfos[infoTotal] = CreateInfo(chip, curValue);
+                infoTotal++;
+            }
+            doit(connection, actionType);
+        });
+    }
+    else if (action_type == "model_only")
+    {
+        var result = 0;
+        var sql = "select chip from " + tab_products + " where model=\"" +
+        			model + "\";";
+        
+        writerlog.w("开始查询: " + sql + "\n");
+        
+        connection.query(sql, function (err, result) {
+        	if(err){
+        		console.log('[SELECT ERROR] - ', err.message);
+        		writerlog.w("查询出错: " + err.message + "\n");
+        		return;
+        	}
+        
+        	writerlog.w("SQL查询成功 0 \n");
+        	console.log(result);
+        
+            for (var i in result)
+            {
+                var curValue = result[i].chip;
+                allInfos[infoTotal] = CreateInfo(curValue, model);
+                infoTotal++;
+            }
+            doit(connection, actionType);
+        });
+    }
+    else if (action_type == "targetProduct")
+    {
+    }
+}
 
+function doit(connection, callback)
+{
+    infoCnt = 0;
 	step_query_targetProduct(connection);
 }
 
 function step_query_targetProduct(connection)
 {
-	var result = 0;
-	var sql = "select targetProduct from " + tab_products + " where chip=\"" +
-				baseinfo.chip + "\"" +
-				" and model=\"" +
-				baseinfo.model + "\";";
-
-	writerlog.w("开始查询: " + sql + "\n");
-
-	connection.query(sql, function (err, result){
-		if(err){
-			console.log('[SELECT ERROR] - ', err.message);
-			writerlog.w("查询出错: " + err.message + "\n");
-			return;
-		}
-
-		writerlog.w("SQL查询成功 1 \n");
-
-		console.log(result);
-
-		var curTargetProduct = result[0].targetProduct;
-		if (typeof(curTargetProduct) == "undefined" || curTargetProduct == "")
-		{
-			// 打印错误信息
-			return;
-		}
-
-		targetinfo = CreateTarget(curTargetProduct);
-
-		step_query_all_config(connection);
-
-	});
+    if (action_type == "targetProduct")
+    {
+        allTargets[targetTotal] = CreateTarget(curTargetProduct);
+        targetTotal++;
+    }
+    else
+    {
+        if (infoCnt >= infoTotal)
+        {
+            infoCnt = 0;
+            step_query_all_config(connection);
+        }
+        else 
+        {
+            var result = 0;
+        	var sql = "select targetProduct from " + tab_products + " where chip=\"" +
+        				allInfos[infoCnt].chip + "\"" +
+        				" and model=\"" +
+        				allInfos[infoCnt].model + "\";";
+        
+        	writerlog.w("开始查询: " + sql + "\n");
+        
+        	connection.query(sql, function (err, result) {
+        		if(err){
+        			console.log('[SELECT ERROR] - ', err.message);
+        			writerlog.w("查询出错: " + err.message + "\n");
+        			//return;
+        			infoCnt = 0;
+                    step_query_all_config(connection);
+        		}
+        
+        		writerlog.w("SQL查询成功 1 \n");
+        
+        		console.log(result);
+        
+        		var curTargetProduct = result[0].targetProduct;
+        		if (typeof(curTargetProduct) == "undefined" || curTargetProduct == "")
+        		{
+        			// 打印错误信息
+        			//return;
+        			infoCnt = 0;
+                    step_query_all_config(connection);
+        		}
+        		
+        		var findIdx = targetArrayIndex(allTargets, curTargetProduct);
+        		console.log("findIdx = " + findIdx + ", name = " + curTargetProduct);
+                if (findIdx < 0)
+                {
+        		    allTargets[targetTotal] = CreateTarget(curTargetProduct);
+        		    targetTotal++;
+        	    }
+        
+                infoCnt++;
+        		step_query_targetProduct(connection);
+        	});
+        }
+    }
 }
 
 function step_query_all_config(connection)
-{
-	var chip = baseinfo.chip;
-	var model = baseinfo.model;
-	var configid = baseinfo.curConfigId;
-	var list = baseinfo.list;
-	var sqltext;
-
-	if (list[configid].type == "general_config")
-	{
-		sqltext = "select a.engName, a.curValue, b.descText from " + tab_configdata + " a, configs b where a.engName=b.engName and a.chip=\"" +
-				baseinfo.chip + "\"" +
-				" and a.model=\"" +
-				baseinfo.model + "\";";
-	}
-	else if (list[configid].type == "system_settings")
-	{
-		sqltext = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText "
-		        + " from " + tab_settingsdata + " a, settings b where a.engName = b.engName and a.chip = \"" +
-				baseinfo.chip + "\"" +
-				" and a.model=\"" +
-				baseinfo.model + "\";";
-	}
-	else if (list[configid].type == "prop")
-	{
-		sqltext = "select engName, curValue from " + tab_propsdata + " where chip = \"" +
-				baseinfo.chip + "\"" +
-				" and model=\"" +
-				baseinfo.model + "\";";
-	}
-	else
-		return;
-
-    writerlog.w("开始查询: " + sqltext + "\n");
-
-	connection.query(sqltext, function (err, result) {
-		if(err)
-		{
-			console.log('[SELECT ERROR] - ', err.message);
-			writerlog.w("查询出错: " + err.message + "\n");
-			return;
-		}
-
-		writerlog.w("SQL查询成功 2 \n");
-
-		baseinfo.list[configid].result = result;
-
-		//console.log(result);
-
-		console.log(typeof(result));
-
-		baseinfo.curConfigId++;
-		if (baseinfo.curConfigId >= 3)
-		{
-			baseinfo.curConfigId = 0;
-			step_query_mkdata(connection);
-		}
-		else
-		    step_query_all_config(connection);
-	});
-
+{    
+    if (action_type == "targetProduct")
+    {
+        targetCnt = 0;
+        step_query_mkdata(connection);
+        return;
+    }
+    
+    if (infoCnt >= infoTotal)
+    {
+        infoCnt = 0;
+        targetCnt = 0;
+        step_query_mkdata(connection);
+    }
+    else
+    {
+    	var chip = allInfos[infoCnt].chip;
+    	var model = allInfos[infoCnt].model;
+    	var configid = allInfos[infoCnt].curConfigId;
+    	var list = allInfos[infoCnt].list;
+    	var sqltext;
+    
+    	if (list[configid].type == "general_config")
+    	{
+    		sqltext = "select a.engName, a.curValue, b.descText from " + tab_configdata + " a, configs b where a.engName=b.engName and a.chip=\"" +
+    				allInfos[infoCnt].chip + "\"" +
+    				" and a.model=\"" +
+    				allInfos[infoCnt].model + "\";";
+    	}
+    	else if (list[configid].type == "system_settings")
+    	{
+    		sqltext = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText "
+    		        + " from " + tab_settingsdata + " a, settings b where a.engName = b.engName and a.chip = \"" +
+    				allInfos[infoCnt].chip + "\"" +
+    				" and a.model=\"" +
+    				allInfos[infoCnt].model + "\";";
+    	}
+    	else if (list[configid].type == "prop")
+    	{
+    		sqltext = "select engName, curValue from " + tab_propsdata + " where chip = \"" +
+    				allInfos[infoCnt].chip + "\"" +
+    				" and model=\"" +
+    				allInfos[infoCnt].model + "\";";
+    	}
+    	else
+    		return;
+    
+        writerlog.w("开始查询: " + sqltext + "\n");
+    
+    	connection.query(sqltext, function (err, result) {
+    		if(err)
+    		{
+    			console.log('[SELECT ERROR] - ', err.message);
+    			writerlog.w("查询出错: " + err.message + "\n");
+    			return;
+    		}
+    
+    		writerlog.w("SQL查询成功 2 \n");
+    
+    		allInfos[infoCnt].list[configid].result = result;
+    
+    		//console.log(result);
+    
+    		console.log(typeof(result));
+    
+    		allInfos[infoCnt].curConfigId++;
+    		if (allInfos[infoCnt].curConfigId >= 3)
+    		{
+    			allInfos[infoCnt].curConfigId = 0;
+    			infoCnt++;
+    			step_query_all_config(connection);
+    		}
+    		else
+    		    step_query_all_config(connection);
+    	});
+    }
 }
 
 function step_query_mkdata(connection)
 {
+    targetCnt = 0;
 	step_query_mkdata_item(connection);
 }
 
 function step_query_mkdata_item(connection)
 {
-	if (true)
+	if (targetCnt < targetTotal)
 	{
-		var curTargetProduct = targetinfo.name;
+		var curTargetProduct = allTargets[targetCnt].name;
 		var result = 0;
 		var sql = "select a.engName,b.cnName,b.gitPath,b.category from " + tab_mkdata + " a, modules b where a.engName = b.engName and a.targetProduct=\"" +
 					curTargetProduct + "\";";
@@ -273,91 +365,102 @@ function step_query_mkdata_item(connection)
 
 			writerlog.w("SQL查询成功 3 \n");
 
+            console.log("AAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB: " + curTargetProduct);
+
 			for (j in result)
 			{
-                targetinfo.mklist[j] = result[j];
+                allTargets[targetCnt].mklist[j] = result[j];
 			}
 
-			//console.log(result[j]);
-
-			console.log("***********************\n");
-		    connection.end();
-		    generate_files();
+		    targetCnt++;
+		    step_query_mkdata_item(connection)
 		});
 	}
 	else
 	{
-
+	    console.log("***********************\n");
+	    connection.end();
+        generate_files();
 	}
 }
 
 function generate_files()
 {
-	var randValue = Math.ceil(1000 * Math.random());
+    infoCnt = 0;
+    while (infoCnt < infoTotal)
+    {
+        writerlog.w("开始生成临时文件\n");
 
-	writerlog.w("开始生成临时文件\n");
-
-	writerlog.w("机芯 = " + baseinfo.chip + ", 机型 = " + baseinfo.model + "\n");
-
-	var temp_config_filename = getTempGernalConfigFileName(baseinfo.chip, baseinfo.model);
-
-	var list = baseinfo.list;
-	for (var L in list)
+    	writerlog.w("机芯 = " + allInfos[infoCnt].chip + ", 机型 = " + allInfos[infoCnt].model + "\n");
+    
+    	var temp_config_filename = getTempGernalConfigFileName(allInfos[infoCnt].chip, allInfos[infoCnt].model);
+    
+    	var list = allInfos[infoCnt].list;
+    	for (var L in list)
+    	{
+    		var curitem = list[L];
+    		var result = curitem.result;
+    
+    		if (curitem.type == "general_config")
+    		{
+    			//console.log(result);
+    			writerlog.w("生成临时的general_config \n");
+    
+    			writer.writeGeneralConfigStart(temp_config_filename);
+    			for (var M in result)
+    			{
+    				writer.writeGeneralConfigItem(temp_config_filename, result[M].engName, result[M].curValue, result[M].descText);
+    			}
+    			writer.writeGeneralConfigEnd(temp_config_filename);
+    
+    		}
+    		else if (curitem.type == "system_settings")
+    		{
+    		    writerlog.w("生成临时的setting文件 \n");
+    		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, curitem, getTmpDir());
+    		}
+    		else if (curitem.type == "prop")
+    		{
+    		    writerlog.w("生成临时的prop文件 \n");
+    		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, curitem, getTmpDir());
+    		}
+    		else
+    			continue;
+    
+    	}
+    	
+        infoCnt++;
+    }
+    
+    console.log("");
+	
+    targetCnt = 0;
+	if (targetCnt < targetTotal)
 	{
-		var curitem = list[L];
-		var result = curitem.result;
-
-		if (curitem.type == "general_config")
-		{
-			//console.log(result);
-			writerlog.w("生成临时的general_config \n");
-
-			writer.writeGeneralConfigStart(temp_config_filename);
-			for (var M in result)
-			{
-				writer.writeGeneralConfigItem(temp_config_filename, result[M].engName, result[M].curValue, result[M].descText);
-			}
-			writer.writeGeneralConfigEnd(temp_config_filename);
-
-		}
-		else if (curitem.type == "system_settings")
-		{
-		    writerlog.w("生成临时的setting文件 \n");
-		    settingfiles.generate(baseinfo.chip, baseinfo.model, curitem, getTmpDir());
-		}
-		else if (curitem.type == "prop")
-		{
-		    writerlog.w("生成临时的prop文件 \n");
-		    settingfiles.generate(baseinfo.chip, baseinfo.model, curitem, getTmpDir());
-		}
-		else
-			continue;
-
-	}
-
-	if (true)
-	{
-		var curtarget = targetinfo;
-
-		console.log(curtarget);
+		var curtarget = allTargets[targetCnt];
+		console.log("AAAAA 2 : " + curtarget.name);
 		generateMkFile(curtarget);
+        targetCnt++;
 	}
 
 	if (action_type == "preview")
 	{
 	    console.log("preview");
-	    var content1 = fs.readFileSync(getTempGernalConfigFileName(baseinfo.chip, baseinfo.model), "utf-8");
-        var content2 = fs.readFileSync(getTempMkFileName(targetinfo.name), "utf-8");
-        var content4 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-build.prop", "utf-8");
+	    infoCnt = 0;
+	    targetCnt = 0;
+	    
+	    var content1 = fs.readFileSync(getTempGernalConfigFileName(allInfos[infoCnt].chip, allInfos[infoCnt].model), "utf-8");
+        var content2 = fs.readFileSync(getTempMkFileName(allTargets[targetCnt].name), "utf-8");
+        var content4 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-build.prop", "utf-8");
 
-        var content3_1 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_main.xml", "utf-8");
-        var content3_2 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_guide.xml", "utf-8");
-        var content3_3 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_connect.xml", "utf-8");
-        var content3_4 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-market_show_configuration.xml", "utf-8");
-        var content3_5 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_general.xml", "utf-8");
-        var content3_6 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-ssc_item.xml", "utf-8");
-        var content3_7 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-setting_picture_sound.xml", "utf-8");
-        var content3_8 = fs.readFileSync(getTmpDir() + baseinfo.chip + "_" + baseinfo.model + "-driverbase_net_config.ini", "utf-8");
+        var content3_1 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_main.xml", "utf-8");
+        var content3_2 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_guide.xml", "utf-8");
+        var content3_3 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_connect.xml", "utf-8");
+        var content3_4 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-market_show_configuration.xml", "utf-8");
+        var content3_5 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_general.xml", "utf-8");
+        var content3_6 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-ssc_item.xml", "utf-8");
+        var content3_7 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_picture_sound.xml", "utf-8");
+        var content3_8 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-driverbase_net_config.ini", "utf-8");
 
         var content3 = content3_1 + content3_2 + content3_3 + content3_4 + content3_5 + content3_6 + content3_7 + content3_8 ;
         if (mod_callback != null)
@@ -377,11 +480,11 @@ function generate_files()
 }
 
 
-function generateMkFile(targetinfo)
+function generateMkFile(target_info)
 {
     let playerType = "";
-    let targetName = targetinfo.name;
-    let mkList = targetinfo.mklist;
+    let targetName = target_info.name;
+    let mkList = target_info.mklist;
 
     var mk_filename = getTempMkFileName(targetName);
 
@@ -500,9 +603,39 @@ function getTmpDir()
 	return tempdir;
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////        API           //////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+Generator.prototype.generate = function(chip, model, callback)
+{
+    generateFiles(chip, model, "chip_and_model", callback);
+}
+
+Generator.prototype.preview = function(chip, model, callback)
+{
+	generateFiles(chip, model, "preview", callback);
+}
+
+Generator.prototype.generateByTargetProduct = function(targetProduct, callback)
+{
+    generateFiles("", targetProduct, "targetProduct", callback);
+}
+
+Generator.prototype.generateByChip = function(chip, callback)
+{
+    generateFiles(chip, "", "chip_only", callback);
+}
+
+Generator.prototype.generateByModel = function(model, callback)
+{
+    generateFiles("", model, "model_only", callback);
+}
 
 //generator.generate("5S02", "15U",  null);
+//generator.generateByModel("E6000", null);
 //generator.preview("5S02", "15U",  show_preview_text_test);
 
 
