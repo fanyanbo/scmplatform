@@ -4,11 +4,10 @@ var coocaaVersion = "/v6.0";
 var autoDataArray1 = new Array();
 var autoDataArray2 = new Array();
 var autoDataArray3 = new Array();
+var freshNumber = "-1";
 
 $(function() {
-//	$(".page_boxes")[0].style.display = "block";
-	var node1 = '{}';
-	sendHTTPRequest(coocaaVersion+"/device/queryAll", node1 , QueryResult);
+	sendHTTPRequest(coocaaVersion+"/device/queryAll", '{}' , QueryResult);
 	
 	page6ButtonInitBefore();
 });
@@ -22,18 +21,42 @@ function QueryResult(){
 				var page6ChipTd = document.getElementById("page6_chip_td");
 				var page6ModelTd = document.getElementById("page6_model_td");
 				var page6SocTd = document.getElementById("page6_soc_td");
-				
-				for (var i=0; i<data.resultData[0].length; i++) {
-					page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachchipa" part="1" name="'+data.resultData[0][i].name+'" title="'+data.resultData[0][i].name+'">'+data.resultData[0][i].name+'</a></div>';
-					autoDataArray1.push(data.resultData[0][i].name);
-				}
-				for (var i=0; i<data.resultData[1].length; i++) {
-					page6ModelTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachmodela" part="2" name="'+data.resultData[1][i].name+'" title="'+data.resultData[1][i].name+'">'+data.resultData[1][i].name+'</a></div>';
-					autoDataArray2.push(data.resultData[1][i].name);
-				}
-				for (var i=0; i<data.resultData[3].length; i++) {
-					page6SocTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachsoca" part="3" name="'+data.resultData[3][i].name+'" title="'+data.resultData[3][i].name+'">'+data.resultData[3][i].name+'</a></div>';
-					autoDataArray3.push(data.resultData[3][i].name);
+				console.log(freshNumber);
+				if (freshNumber == -1) {
+					page6ChipTd .innerHTML = "";
+					page6ModelTd .innerHTML = "";
+					page6SocTd .innerHTML = "";
+					
+					for (var i=0; i<data.resultData[0].length; i++) {
+						page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachchipa" part="1" name="'+data.resultData[0][i].name+'" title="'+data.resultData[0][i].name+'">'+data.resultData[0][i].name+'</a></div>';
+						autoDataArray1.push(data.resultData[0][i].name);
+					}
+					for (var i=0; i<data.resultData[1].length; i++) {
+						page6ModelTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachmodela" part="2" name="'+data.resultData[1][i].name+'" title="'+data.resultData[1][i].name+'">'+data.resultData[1][i].name+'</a></div>';
+						autoDataArray2.push(data.resultData[1][i].name);
+					}
+					for (var i=0; i<data.resultData[3].length; i++) {
+						page6SocTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachsoca" part="3" name="'+data.resultData[3][i].name+'" title="'+data.resultData[3][i].name+'">'+data.resultData[3][i].name+'</a></div>';
+						autoDataArray3.push(data.resultData[3][i].name);
+					}
+				} else if (freshNumber == 0) {
+					page6ChipTd .innerHTML = "";
+					for (var i=0; i<data.resultData[0].length; i++) {
+						page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachchipa" part="1" name="'+data.resultData[0][i].name+'" title="'+data.resultData[0][i].name+'">'+data.resultData[0][i].name+'</a></div>';
+						autoDataArray1.push(data.resultData[0][i].name);
+					}
+				} else if (freshNumber == 1) {
+					page6ModelTd .innerHTML = "";
+					for (var i=0; i<data.resultData[1].length; i++) {
+						page6ModelTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachmodela" part="2" name="'+data.resultData[1][i].name+'" title="'+data.resultData[1][i].name+'">'+data.resultData[1][i].name+'</a></div>';
+						autoDataArray2.push(data.resultData[1][i].name);
+					}
+				} else if (freshNumber == 2) {
+					page6SocTd .innerHTML = "";
+					for (var i=0; i<data.resultData[3].length; i++) {
+						page6SocTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachsoca" part="3" name="'+data.resultData[3][i].name+'" title="'+data.resultData[3][i].name+'">'+data.resultData[3][i].name+'</a></div>';
+						autoDataArray3.push(data.resultData[3][i].name);
+					}
 				}
 			}
 		}
@@ -255,7 +278,10 @@ function addOrChangeResult(){
 				console.log("数据提交成功");
 				$("#myEditEnsureDiv").css("display","none");
 				$("#page6Modal").modal('hide');
-				page6freshHtml();
+				var _curPart1 = $("#page6Submit").attr("part1");
+				freshNumber == _curPart1;
+				sendHTTPRequest(coocaaVersion+"/device/queryAll", '{}' , QueryResult);
+				page6freshHtml(1);
 			}else{
 				document.getElementById("chipMangInfo").innerHTML = "修改失败！该机型或已存在。";
 				setTimeout("document.getElementById('chipMangInfo').innerHTML='　'",3000);
@@ -265,26 +291,26 @@ function addOrChangeResult(){
 }
 
 /*刷新页面*/
-function page6freshHtml() {
-	var htmlObject = parent.document.getElementById("tab_userMenu6");
-	console.log("lxw " + htmlObject.firstChild.src);
-	htmlObject.firstChild.src = "page6.html";
-	
-	var htmlObject1 = parent.document.getElementById("tab_userMenu1");
-    var htmlObject2 = parent.document.getElementById("tab_userMenu2");
-    var htmlObject4 = parent.document.getElementById("tab_userMenu4");
-    var htmlObject5 = parent.document.getElementById("tab_userMenu5");
-    if (htmlObject1) {
-        htmlObject1.firstChild.src = "page1.html";
-    }
-    if (htmlObject2) {
-    	htmlObject2.firstChild.src = "page2.html";
-    }
-    if (htmlObject4) {
-    	htmlObject4.firstChild.src = "page4.html";
-    }
-     if (htmlObject5) {
-    	htmlObject5.firstChild.src = "page5.html";
-    }
-   
+function page6freshHtml(num) {
+	if (num == 0) {
+		var htmlObject = parent.document.getElementById("tab_userMenu6");
+		htmlObject.firstChild.src = "page6.html";
+	}else{
+		var htmlObject1 = parent.document.getElementById("tab_userMenu1");
+	    var htmlObject2 = parent.document.getElementById("tab_userMenu2");
+	    var htmlObject4 = parent.document.getElementById("tab_userMenu4");
+	    var htmlObject5 = parent.document.getElementById("tab_userMenu5");
+	    if (htmlObject1) {
+	        htmlObject1.firstChild.src = "page1.html";
+	    }
+	    if (htmlObject2) {
+	    	htmlObject2.firstChild.src = "page2.html";
+	    }
+	    if (htmlObject4) {
+	    	htmlObject4.firstChild.src = "page4.html";
+	    }
+	     if (htmlObject5) {
+	    	htmlObject5.firstChild.src = "page5.html";
+	    }
+	}
 }

@@ -84,4 +84,8 @@ body{
     top: 0px;
 }
 
-
+#homePage .close-tab{
+	right: 3px;
+    top: 3px;
+    padding-left: 0; 
+}
