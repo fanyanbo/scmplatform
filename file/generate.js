@@ -477,6 +477,9 @@ function generate_files()
 	{
 
 	}
+	
+	if (mod_callback != null)
+	    mod_callback(0, "");
 }
 
 
