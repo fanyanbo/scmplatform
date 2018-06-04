@@ -146,6 +146,9 @@ ModuleModel.prototype.queryCategory = function (callback) {
   });
 }
 
+/**
+ * @param {注：新增模块分类，这里注意，一定得进行去重判断}
+ */
 ModuleModel.prototype.addCategory = function (categoryName, callback) {
 
   let ep = new eventproxy();
@@ -173,7 +176,7 @@ ModuleModel.prototype.addCategory = function (categoryName, callback) {
     }
     if(rows.length == 0) return ep.emit('error', "模块类别不存在!");
     _orderId = rows[0].orderId + 1; //当新类别中没有任何模块是判断
-    console.log(_orderId);
+    console.log("_orderId = " + _orderId);
     ep.emit('event1',"event1 OK");
   });
 

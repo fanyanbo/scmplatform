@@ -32,7 +32,7 @@ var config = {
     database: 'scm', // 数据库
     host: '172.20.5.239', // host
     port: 3306, // 端口
-    checkExpirationInterval: 60*60*1000, // How frequently expired sessions will be cleared; milliseconds
+    checkExpirationInterval: 2*60*1000, // How frequently expired sessions will be cleared; milliseconds
     connectionLimit: 1, // 连接池的连接个数，默认为 1
   //  prefix: 'scm_', // 数据表前缀，如果一个数据库里有多个项目，那项目之间的数据表可以通过前缀来区分
     dateStrings:true, // 强制timestamp,datetime,data类型以字符串类型返回，默认为false
@@ -52,7 +52,7 @@ var config = {
 
   session_secret: 'scmp_ladygaga', // 务必修改
   cookie_name: 'scmp_sid',
-  cookie_maxAge: 60*60*1000,     //60分钟
+  cookie_maxAge: 2*60*1000,     //60分钟
 
   log_dir: path.join(__dirname, '../logs'),
 
