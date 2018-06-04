@@ -66,7 +66,7 @@ function loginResult() {
 				}
 			} else {
 				console.log("未登录");
-				document.location.href = "login.html";
+				document.location.href="../../html/login.html";
 			}
 		}
 		if(loginStatus == 0){
