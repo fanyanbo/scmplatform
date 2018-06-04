@@ -228,9 +228,9 @@ function addSubmit(){
 	var _curIndex3 = $("#page8Submit").attr("clickid");
 	if (_curIndex3 == 0) {
 		ajaxUrl3 = coocaaVersion+"/config/addCategory";
-	} else if(_curIndex3 == 1||_curIndex3 == 2||_curIndex3 == 3||_curIndex3 == 4){
+	} else if(_curIndex3 == 2||_curIndex3 == 3||_curIndex3 == 4||_curIndex3 == 5){
 		ajaxUrl3 = coocaaVersion+"/sys/addCategory";
-	} else if(_curIndex3 == 5){
+	} else if(_curIndex3 == 1){
 		ajaxUrl3 = coocaaVersion+"/module/addCategory";
 	}
 	var _category = $("#page8Container").val();
