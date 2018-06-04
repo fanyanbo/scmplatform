@@ -108,6 +108,9 @@
     border-radius: 6px;
     padding: 0 10px;
 }
+.page6_tab:nth-child(1){
+	background-color: darkturquoise;
+}
 .page6AddBtns{
 	margin-bottom: 2px;
 }

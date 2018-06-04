@@ -292,7 +292,7 @@ function tabsClick(num){
 		$(".page8_tabs")[k].style.backgroundColor = "buttonface";
 	}
 	$(".page8_boxes")[num].style.display = "block";
-	$(".page8_tabs")[num].style.backgroundColor = "red";
+	$(".page8_tabs")[num].style.backgroundColor = "darkturquoise";
 	$("#tabClickIndex").attr("curId",num);
 	
 	var _hasValue = $(".page8_tabs:eq(" + (num) + ")").attr("hasvalue");

@@ -6,9 +6,7 @@ var autoDataArray2 = new Array();
 var autoDataArray3 = new Array();
 
 $(function() {
-	$(".page_boxes")[0].style.display = "block";
-	$(".page6_tab")[0].style.color = "blue";
-	$(".page6_tab")[0].style.backgroundColor = "lawngreen";
+//	$(".page_boxes")[0].style.display = "block";
 	var node1 = '{}';
 	sendHTTPRequest(coocaaVersion+"/device/queryAll", node1 , QueryResult);
 	
@@ -74,12 +72,10 @@ function page6ButtonInitBefore() {
 		$("#page6Submit").attr("part1",(_curIndex+1));
 		for (var k=0;k<$(".page6_tab").length; k++) {
 			$(".page_boxes")[k].style.display = "none";
-			$(".page6_tab")[k].style.color = "black";
 			$(".page6_tab")[k].style.backgroundColor = "buttonface";
 		}
 		$(".page_boxes")[_curIndex].style.display = "block";
-		$(".page6_tab")[_curIndex].style.color = "blue";
-		$(".page6_tab")[_curIndex].style.backgroundColor = "lawngreen";
+		$(".page6_tab")[_curIndex].style.backgroundColor = "darkturquoise";
 	});
 	$("#page6ModeClose").click(function(){
 		document.getElementById("page6Container").value = "";

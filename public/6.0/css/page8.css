@@ -11,12 +11,21 @@
 	overflow: auto;
 }
 .page8_tabs{
-    border-radius: 5px;
+    /*border-radius: 5px;
     padding: 2px 4px;
+    background-color: buttonface;*/
+   	display: inline-table;
+	padding: 0px 5px;
+	border-radius: 6px;
     background-color: buttonface;
 }
 .page8_tabs:nth-child(1){
-	background-color: red;
+	background-color: darkturquoise;
+}
+
+.page8_boxes button {
+    font-size: 16px;
+    /*margin-bottom: 15px;*/
 }
 .sequence,.sequence_value{
 	width: 12.5%;
