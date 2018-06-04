@@ -25,7 +25,7 @@ function buttonInitBefore(){
 	$(".page8_boxes .btn").click(function() {
 		_bIndex = $(".page8_boxes .btn").index($(this));
 		$('#page8Modal').modal();
-		document.getElementById("page8Container").innerHTML = "";
+		document.getElementById("page8Container").value = "";
 		$("#page8Submit").attr("clickid",_bIndex);
 		$(".modal-backdrop").addClass("new-backdrop");
 	});
