@@ -45,6 +45,7 @@ function loginResult() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			loginStatus = data.resultCode;
+			resultCodeState(data.resultCode,data.resultDesc);
 			if(data.resultCode == "0") {
 				document.getElementById('homePage').style.display = "block";
 				Addtabs.add({
@@ -85,6 +86,7 @@ function logOutResult(){
 			if(data.resultCode == "0") {
 				document.location.href="../../html/login.html";
 			}
+			resultCodeState(data.resultCode,data.resultDesc);
 		}
 	}
 }
@@ -99,6 +101,7 @@ function loginLogresult(){
             }else{
                 console.log("push 111 failure.");
 	    	};
+	    	resultCodeState(data.resultCode,data.resultDesc);
         }
         var statusObj = {
 			"userName" : loginusername,
@@ -115,6 +118,7 @@ function audioDataRresult(){
         if (this.status == 200){
             var data = JSON.parse(this.responseText);
             console.log(data);
+            resultCodeState(data.resultCode,data.resultDesc);
             if (data.resultCode == "0") {
             	console.log(data.resultData[0].length);
             	console.log(data.resultData[1].length);
@@ -136,6 +140,13 @@ function audioDataRresult(){
             }
         }
     }
-	
+}
+
+function resultCodeState(num,str){
+	var _str = str.substr(str.length-4);
+	console.log(num == -1 && _str == "拒绝访问");
+	if (num == -1 && _str == "拒绝访问") {
+		console.log("session失效");
+	}
 }
 	
