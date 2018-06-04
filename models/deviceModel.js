@@ -77,14 +77,14 @@ DeviceModel.prototype.updateChip = function (newValue, oldValue, callback) {
         logger.error("更新机芯，修改产品表的机芯值报错：" + err);
         return callback(err);
       }
-      // generator.generateByChip(newValue, function(err,result){
-      //   if(err){
-      //     logger.error("generateByChip" + err);
-      //     return callback(err);
-      //   }
-      //   callback(null,"generateByChip OK" + result);
-      // });
-      callback(null,rows);
+      generator.generateByChip(newValue, function(err,result){
+        if(err){
+          logger.error("generateByChip" + err);
+          return callback(err);
+        }
+        callback(null,"generateByChip OK" + result);
+      });
+      //callback(null,rows);
     });
   });
 }
@@ -129,14 +129,14 @@ DeviceModel.prototype.updateModel = function (newValue, oldValue, callback) {
         logger.error("更新机型，修改产品表的机型值报错：" + err);
         return callback(err);
       }
-      // generator.generateByModel(newValue, function(err,result){
-      //   if(err){
-      //     logger.error("generateByModel" + err);
-      //     return callback(err);
-      //   }
-      //   callback(null,"generateByModel OK" + result);
-      // });
-      callback(null,rows);
+      generator.generateByModel(newValue, function(err,result){
+        if(err){
+          logger.error("generateByModel" + err);
+          return callback(err);
+        }
+        callback(null,"generateByModel OK" + result);
+      });
+      //callback(null,rows);
     });
   });
 }
@@ -231,7 +231,6 @@ DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
         }
         callback(null,"updateTargetProduct OK" + result);
       });
-
   });
 
   let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
@@ -270,7 +269,14 @@ DeviceModel.prototype.updateTargetProductName = function (data, callback) {
 
   ep.after('update_result', 3, function (list) {
       console.log(list);
-      callback(null,"updateTargetProductName OK");
+      generator.generateByTargetProduct(name, function(err,result){
+        if(err){
+          logger.error("updateTargetProductName" + err);
+          return callback(err);
+        }
+        callback(null,"updateTargetProductName OK" + result);
+      });
+      //callback(null,"updateTargetProductName OK");
   });
 
   let sql0 = `UPDATE ${dbConfig.tables.products} SET targetProduct = ? WHERE targetProduct = ?`;

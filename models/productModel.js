@@ -193,7 +193,6 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
 
   ep.bind('error', function (err) {
       logger.error("queryAllByMachine 捕获到错误-->" + err);
-      //卸掉所有的handler
       ep.unbind();
       callback(err,null);
   });
@@ -246,10 +245,10 @@ ProductModel.prototype.queryAllByMachineTemp = function (chip, model, callback) 
 }
 
 ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callback) {
+
   console.log(baseInfo);
   console.log(configInfo);
   console.log(settingsInfo);
-  let baseInfoObj = JSON.parse(baseInfo);
   console.log(configInfo.length);
   console.log(settingsInfo.length);
 
@@ -267,6 +266,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
       callback(null,null);
   });
 
+  let baseInfoObj = JSON.parse(baseInfo);
   let chip = baseInfoObj.chip;
   let model = baseInfoObj.model;
   let targetProduct = baseInfoObj.targetProduct;
@@ -402,9 +402,6 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
 
 ProductModel.prototype.addHistory = function (data, callback) {
   console.log(data);
-  console.log(data.chip);
-  console.log(data.model);
-
   let sql = `INSERT INTO ${dbConfig.tables.modifyhistory}(chip,model,state,userName,content,reason) values (?,?,?,?,?,?)`;
   let sql_param = [data.chip,data.model,data.state,data.userName,data.content,data.reason];
   console.log(sql_param);
@@ -414,6 +411,9 @@ ProductModel.prototype.addHistory = function (data, callback) {
   });
 }
 
+/**
+ * @param {预览某产品生成的文件}
+ */
 ProductModel.prototype.preview = function (chip, model, callback) {
     console.log("preview chip:" + chip);
     console.log("preview model:" + model);
@@ -427,7 +427,8 @@ ProductModel.prototype.preview = function (chip, model, callback) {
 
 /**
  * @param {进行审核，level 0表示审核通过，1 表示审核不通过}
- * @param {当审核通过时，修改历史列表的状态；当审核不通过时，也更新修改历史的状态，同时把审核不通过的原因发邮件告知}
+ * @param {当审核通过时，需要修改历史表，产品表，调用临时数据同步到正式表的过程，最后在调用生成文件的接口}
+ * @param {当审核不通过时，也更新修改历史的状态，同时把审核不通过的原因发邮件告知用户}
  */
 ProductModel.prototype.review = function (data, callback) {
     console.log(data);
@@ -441,16 +442,19 @@ ProductModel.prototype.review = function (data, callback) {
         if (err) return callback(err);
         let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 0 WHERE chip = ? AND model = ?`;
         db.conn.query(sql1,[chip, model],function(err,rows,fields){
-          if (err) return callback(err);
+          if (err) {
+            logger.debug("更新历史表时出错：" + err);
+            return callback(err);
+          }
           //当更新产品表和修改历史表成功后，执行生成文件的操作
-          // generator.generate(chip, model, function(err,result){
-          //   if(err) {
-          //     logger.debug("在审核生成文件时出错：" + err);
-          //     return callback(err);
-          //   }
-          //   callback(null, result);
-          // });
-          callback(null, rows);
+          generator.generate(chip, model, function(err,result){
+            if(err) {
+              logger.debug("在审核生成文件时出错：" + err);
+              return callback(err);
+            }
+            callback(null, result);
+          });
+          // callback(null, rows);
         });
       });
     }else {
@@ -470,7 +474,7 @@ ProductModel.prototype.review = function (data, callback) {
 }
 
 /**
- * @param {auditState 0->正常 1->待审核 2->审核未通过；modifyState 0->正常 1->修改 2->增加 3->删除}
+ * @param {删除某产品，auditState 0->正常 1->待审核 2->审核未通过；modifyState 0->正常 1->修改 2->增加 3->删除}
  */
 ProductModel.prototype.delete = function (data, callback) {
     let chip = data.chip;
@@ -505,7 +509,7 @@ ProductModel.prototype.deleteRecovery = function (data, callback) {
 }
 
 /**
- * @param {获取待审核消息数和未审核消息数，这是要区分普通用户和管理员用户}
+ * @param {获取待审核消息数和未审核消息数。这里要区分普通用户和管理员用户，普通用户只需获取自己的消息数，管理员用户需要获取全部的消息数}
  */
 ProductModel.prototype.queryAuditByUser = function (data, callback) {
     let userName = data.userName;
