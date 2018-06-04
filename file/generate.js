@@ -458,13 +458,13 @@ function generate_files()
         infoCnt++;
     }
     
-    console.log("");
+    //console.log("targetTotal = " + targetTotal);
 	
     targetCnt = 0;
-	if (targetCnt < targetTotal)
+	while (targetCnt < targetTotal)
 	{
 		var curtarget = allTargets[targetCnt];
-		console.log("AAAAA 2 : " + curtarget.name);
+		//console.log("AAAAA 2 : " + curtarget.name);
 		generateMkFile(curtarget);
         targetCnt++;
 	}
