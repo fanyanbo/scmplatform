@@ -38,6 +38,7 @@ var tab_propsdata;
 var tab_mkdata;
 
 var infoTxt = "";
+var sql = ";";
 
 var i, j, k;
 var generator = new Generator();
@@ -128,11 +129,36 @@ function generateFiles(
     connection = mysql.createConnection(dbparam);
 	connection.connect();
 	
-    if (action_type == "chip_and_model" || action_type == "preview")
+    if (action_type ==  "preview")
     {
         allInfos[infoTotal] = CreateInfo(chip, model);
         infoTotal++;
-        doit(connection, actionType);
+        doit(connection, action_type);
+    }
+    else if (action_type == "chip_and_model")
+    {
+        allInfos[infoTotal] = CreateInfo(chip, model);
+        infoTotal++;
+        
+        if (version == "6.0")
+            sql = "call v60_copy_temp_to_data(\"" + chip + "\", \"" + model + "\");";
+        else if (version == "6.5")
+            sql = "call v65_copy_temp_to_data(\"" + chip + "\", \"" + model + "\");";
+        
+        console.log("同步临时数据到正式数据");
+        writerlog.w("同步临时data到正式data : " + sql + "\n");
+            
+        connection.query(sql, function (err, result) {
+        	if(err){
+        		console.log('[SELECT ERROR] - ', err.message);
+        		writerlog.w("查询出错: " + err.message + "\n");
+        		return;
+        	}
+        
+        	writerlog.w("SQL查询成功  \n");
+        	console.log(result);
+            doit(connection, action_type);
+        });
     }
     else if (action_type == "chip_only")
     {
@@ -158,7 +184,7 @@ function generateFiles(
                 allInfos[infoTotal] = CreateInfo(chip, curValue);
                 infoTotal++;
             }
-            doit(connection, actionType);
+            doit(connection, action_type);
         });
     }
     else if (action_type == "model_only")
@@ -185,7 +211,7 @@ function generateFiles(
                 allInfos[infoTotal] = CreateInfo(curValue, model);
                 infoTotal++;
             }
-            doit(connection, actionType);
+            doit(connection, action_type);
         });
     }
     else if (action_type == "targetProduct")
@@ -606,11 +632,11 @@ function getTmpDir()
 	return tempdir;
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////        API           //////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////                    //////////////////////////////////////////////////
+//////////////////////////////////////////        API         //////////////////////////////////////////////////
+//////////////////////////////////////////                    //////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Generator.prototype.generate = function(chip, model, callback)
 {
@@ -637,9 +663,8 @@ Generator.prototype.generateByModel = function(model, callback)
     generateFiles("", model, "model_only", callback);
 }
 
-//generator.generate("5S02", "15U",  null);
-//generator.generateByModel("E6000", null);
-//generator.preview("5S02", "15U",  show_preview_text_test);
+
+
 
 
 function show_preview_text_test(errno, result)
@@ -651,4 +676,14 @@ function show_preview_text_test(errno, result)
 }
 
 
+//generator.generate("6S57", "K5S",  null);
+//generator.generateByModel("E6000", null);
+//generator.preview("5S02", "15U",  show_preview_text_test);
+
+
+
+
+
+
 module.exports = generator;
+
