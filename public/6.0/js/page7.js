@@ -29,7 +29,13 @@ function buttonInitBefore() {
 			$("#configSubmit").attr("hidedata", 1);
 			$("#configSubmit").attr("oldValue", "null");
 			clearConfigPart(1);
-		} else if(_bIndex == 1 || _bIndex == 2 || _bIndex == 3 || _bIndex == 4) {
+		}  else if(_bIndex == 1) {
+			console.log("点击MK的新增按钮");
+			$('#page7_module').modal();
+			$("#moduleSubmit").attr("hidedata", 1);
+			$("#moduleSubmit").attr("oldValue", "null");
+			clearMKPart();
+		} else if(_bIndex == 2 || _bIndex == 3 || _bIndex == 4 || _bIndex == 5) {
 			console.log("点击系统设置大项的新增按钮");
 			$('#page7_sys').modal();
 			$("#sysSubmit").attr("hidedata", 1);
@@ -37,12 +43,6 @@ function buttonInitBefore() {
 			$("#sysSubmit").attr("oldValue", "null");
 			editEachSelect(_bIndex);
 			clearSysPart(_bIndex);
-		} else if(_bIndex == 5) {
-			console.log("点击MK的新增按钮");
-			$('#page7_module').modal();
-			$("#moduleSubmit").attr("hidedata", 1);
-			$("#moduleSubmit").attr("oldValue", "null");
-			clearMKPart();
 		} else if(_bIndex == 6) {
 			console.log("点击Prop的新增按钮");
 //			$('#page7_prop').modal();
@@ -836,7 +836,7 @@ function editEachPage(num,array){
 		for (var j=0; j< $(".moduleitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
 				if(array[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
-					$(".moduleitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='5' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+					$(".moduleitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 				}
 			}
 		}
@@ -845,10 +845,10 @@ function editEachPage(num,array){
 			for(var i = 0; i < array.length; i++) {
 				if(array[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
 					if (array[i].level3 === null || array[i].level3 == "") {
-						$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+						$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 					} else{
 						if (array[i].level3 == $(".settingsitems:eq(" + (j) + ")").attr("level3")) {
-							$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+							$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 						}
 					}
 				}
