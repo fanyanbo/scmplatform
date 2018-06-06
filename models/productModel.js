@@ -130,8 +130,10 @@ ProductModel.prototype.queryAll = function (callback) {
                   "SELECT * FROM configs",
                   "SELECT * FROM modules",
                   "SELECT * FROM settings",
+                  "SELECT * FROM props",
                   "SELECT * FROM configcategory order by orderId",
-                  "SELECT * FROM mkcategory order by orderId"
+                  "SELECT * FROM mkcategory order by orderId",
+                  "SELECT * FROM propscategory order by orderId"
                   //预留设置部分分类查询
                 ];
 
