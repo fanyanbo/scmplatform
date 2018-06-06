@@ -28,6 +28,7 @@ var logger = require('../common/logger');
  };
 
  exports.add = function (req, res, next) {
+   
    let engName = validator.trim(req.body.engName);
    let cnName = validator.trim(req.body.cnName);
    let category = validator.trim(req.body.category);

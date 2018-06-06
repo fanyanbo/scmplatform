@@ -41,6 +41,9 @@ ConfigModel.prototype.queryCategory = function (callback) {
   });
 }
 
+/**
+ * @param {新增config的分类，config的分类名唯一，同时保证增加的分类orderId值最大}
+ */
 ConfigModel.prototype.addCategory = function (categoryName, callback) {
 
   let ep = new eventproxy();
@@ -62,30 +65,33 @@ ConfigModel.prototype.addCategory = function (categoryName, callback) {
   });
 
   let sql1 = "SELECT orderId FROM configcategory order by orderId desc limit 0,1";
-  let sql1_param = [];
-  db.conn.query(sql1,sql1_param,function(err,rows,fields){
+  db.conn.query(sql1,[],function(err,rows,fields){
     if (err) {
-        return ep.emit('error', err);
+      logger.error("查询configcategory表中最大orderId发生错误：" + err);
+      return ep.emit('error', err);
     }
     if(rows.length == 0) return ep.emit('error', "模块类别不存在!");
     _orderId = rows[0].orderId + 1; //当新类别中没有任何模块是判断
-    console.log(_orderId);
+    console.log("新增的config分类的orderId = " + _orderId);
     ep.emit('event1',"event1 OK");
   });
 
   let sql2 = "SELECT * FROM configcategory WHERE category = ?";
-  let sql2_param = [categoryName];
-  db.conn.query(sql2,sql2_param,function(err,rows,fields){
+  db.conn.query(sql2,[categoryName],function(err,rows,fields){
     if (err) {
-        return ep.emit('error', err);
+      logger.error("查询configcategory表发生错误：" + err);
+      return ep.emit('error', err);
     }
     if(rows.length == 0) return ep.emit('event2',"event2 OK");
     ep.emit('error', "categoryName必须唯一!");
   });
 }
 
+/**
+ * @param {更新config分类的排序}
+ */
 ConfigModel.prototype.updateCategoryOrderId = function (arr, callback) {
-  console.log("enter updateCategoryOrderId model");
+
   if(arr.length == 0) return callback("updateCategory参数为空",null);
 
   let ep = new eventproxy();
@@ -96,26 +102,30 @@ ConfigModel.prototype.updateCategoryOrderId = function (arr, callback) {
       callback(err,null);
   });
 
-  ep.after('update_result', arr.length, function (list) { // 所有查询的内容都存在list数组中
+  ep.after('update_result', arr.length, function (list) {
       for(let j in list){
         console.log(list[j]);
       }
       callback(null,"updateCategory OK");
   });
 
-  for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
+  for (let i = 0; i < arr.length; i++) {
     let sql = "UPDATE configcategory SET orderId = ? WHERE category = ?";
     let sql_param = [arr[i].orderId,arr[i].category];
     db.conn.query(sql,sql_param,function(err,rows,fields) {
-      if(err) return ep.emit('error', err);
+      if(err) {
+        logger.error("更新configcategory表的orderId发生错误:" + err);
+        return ep.emit('error', err);
+      }
       ep.emit('update_result', 'ok' + i);
     });
   }
 }
 
+/**
+ * @param {更新分类里子项的排序}
+ */
 ConfigModel.prototype.updateItemsOrderId = function (arr, callback) {
-
-  console.log("enter updateItemsOrderId model");
 
   if(arr.length == 0) return callback("updateConfigItemsOrderId参数为空!",null);
 
@@ -127,43 +137,53 @@ ConfigModel.prototype.updateItemsOrderId = function (arr, callback) {
       callback(err,null);
   });
 
-  ep.after('update_result', arr.length, function (list) { // 所有查询的内容都存在list数组中
+  ep.after('update_result', arr.length, function (list) {
       callback(null,"updateCategory OK");
   });
 
-  for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
+  for (let i = 0; i < arr.length; i++) {
     let sql = "UPDATE configs SET orderId = ? WHERE engName = ?";
     let sql_param = [arr[i].orderId,arr[i].engName];
     db.conn.query(sql,sql_param,function(err,rows,fields) {
-      if (err) return ep.emit('error', err);
+      if (err) {
+        logger.error("更新configs表的orderId发生错误:" + err);
+        return ep.emit('error', err);
+      }
       ep.emit('update_result', 'ok' + i);
     });
   }
 }
 
+/**
+ * @param {新增模块项，新增的模块项在所属分类里orderId默认为最大值}
+ * @param {这里进行插入操作时容易出错，要明确哪些字段是不能重复的}
+ */
 ConfigModel.prototype.add = function (engName, cnName, category, type, options, defaultValue, desc, callback) {
   //SELECT orderId FROM configs WHERE category = '广告配置' order by orderId desc limit 0,1
   let sql_order = "SELECT orderId FROM configs WHERE category = ? order by orderId desc limit 0,1";
-  let sql_order_param = [category];
-  db.conn.query(sql_order,sql_order_param,function(err,rows,fields){
+  db.conn.query(sql_order,[category],function(err,rows,fields){
     if (err) {
-        return callback(err);
+      logger.error("查询configs表的orderId发生错误:" + err);
+      return callback(err);
     }
-    console.log(rows);
     let _orderId = (rows.length == 0) ? 1 : rows[0].orderId + 1; //当新类别中没有任何模块是判断
-    console.log(_orderId);
+    console.log("新增的mk模块的orderId：" + _orderId);
     let sql = "INSERT INTO configs(engName,cnName,category,typeStr,options,defaultValue,descText,orderId) VALUES (?,?,?,?,?,?,?,?)";
     let sql_params = [engName,cnName,category,type,options,defaultValue,desc,_orderId];
-    logger.debug(sql_params);
     db.conn.query(sql,sql_params,function(err,rows,fields){
       if (err) {
-          return callback(err);
+        logger.error("新增configs表发生错误:" + err);
+        return callback(err);
       }
       callback(null, rows);
     });
   });
 }
 
+/**
+ * @param {更新模块项}
+ * @param {要明确哪些字段是不能重复的，目前只有engName不能改}
+ */
 ConfigModel.prototype.update = function (engName, cnName, category, type, options, defaultValue, desc, orderId, callback) {
 
   let sql_category_count = "SELECT max(orderId) AS count FROM modules WHERE category = ?"; //当修改类别时需要同步修改orderId,以免在新分类中造成冲突
