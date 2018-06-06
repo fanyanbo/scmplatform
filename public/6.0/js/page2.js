@@ -7,7 +7,6 @@ var autoDataArray1 = new Array();
 var autoDataArray2 = new Array();
 var autoDataArray3 = new Array();
 var autoDataArray4 = new Array();
-var autogitArray = ["a", "b", "c", "bb", "cb", "bvv", "ca", "bsd", "cfg", "bd", "adfc", "bas", "asc"];
 
 var _twoLevelLinkageArrayOne = [[],[],[],[]];
 var _twoLevelLinkageArrayTwo = [[],[],[],[]];
@@ -634,9 +633,10 @@ function allQueryResult() {
 			var data = JSON.parse(this.responseText);
             console.log(data);
             if(data.resultCode == 0){
-            	configQueryData(data.resultData[3],data.resultData[0]);
-				moduleQueryData(data.resultData[4],data.resultData[1]);
-				settingsQueryData(data.resultData[5],data.resultData[2]);
+            	configQueryData(data.resultData[4],data.resultData[0]);
+				moduleQueryData(data.resultData[5],data.resultData[1]);
+				settingsQueryData(data.resultData[7],data.resultData[2]);
+				propQueryData(data.resultData[6],data.resultData[3]);
             }
 			colorstatus(0);
 		};
@@ -1050,6 +1050,22 @@ function moduleQueryData(arr1,arr2) {
 	document.getElementsByClassName("mkradio")[0].setAttribute('checked', 'true');
 }
 
+function propQueryData(arr1,arr2) {
+	var _myPropBox = document.getElementById("myPropBox");
+	for(var i = 0; i < arr1.length; i++) {
+		_myPropBox.innerHTML += '<div class="propitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
+	}
+	var kk = 0;
+	for (var j=0; j< $(".propitems").length; j++) {
+		for(var i = 0; i < arr2.length; i++) {
+			if(arr2[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
+				kk = i;
+				propDataInsert(kk, $(".propitems")[j], arr2);
+			}
+		}
+	}
+}
+
 function configDataInsert(kk, obj, data) {
 	if(data[kk].typeStr == "string") {
 		obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='col-xs-6 configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
@@ -1090,6 +1106,9 @@ function sysDataInsert(i, obj, num, arr1){
 	if (_twoLevelLinkageArrayOne[num].indexOf(arr1[i].level2)== -1) {
 		_twoLevelLinkageArrayOne[num].push(arr1[i].level2);
 	}
+}
+function propDataInsert(kk, obj, data) {
+	obj.innerHTML += "<div class='col-xs-6'><input id='"+data[kk].engName+"' type='checkbox' class='propitems' category='" + data[kk].category + '" descText="'+data[kk].desc+"' engName='"+data[kk].engName+"' value=''><span title='" + data[kk].desc + "'>" + data[kk].engName + "</span></div>";
 }
 
 function getBaseValue(){
