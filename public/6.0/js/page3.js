@@ -88,11 +88,10 @@ function buttonInitBefore(){
 	});
 	$("#page3_tp_close").click(function(){
 		$("#page3Modal").modal("hide");
-		page3Fresh();
+		//page3Fresh();
 	});
 }
 function buttonInitAfter(){
-	//编辑
 	$(".eachedit").click(function(){
 		console.log("单项编辑");
 		var _eachtpAIndex = $(".eachedit").index($(this));
@@ -120,6 +119,7 @@ function buttonInitAfter(){
 			thisEnNameCut = thisEnName;
 		}
 		console.log(thisEnName);
+		resetAllInfo();
 		var node = '{"targetproduct":"' + thisEnName + '"}';
 		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/queryMKByTp", node, getMKByTPResult);
@@ -148,6 +148,8 @@ function eachOperate(index,num){
 	}
 	console.log(thisEnName);
 	document.getElementById("page3_TP").value = thisEnName;
+	
+	resetAllInfo();
 	var node = '{"targetproduct":"' + thisEnName + '"}';
 	sendHTTPRequest(coocaaVersion+"/product/queryMKByTp", node, getMKByTPResult);
 }
@@ -184,11 +186,8 @@ function page3Add(){
 }
 function resetAllInfo(){
 	for (var k=0; k<$(".mkitems").length; k++) {
-		if ($(".mkitems")[k].getAttribute("type") == "checkbox") {
-			document.getElementsByClassName("mkitems")[k].removeAttribute('checked');
-		} else if($(".mkitems")[k].getAttribute("type") == "radio"){
-			document.getElementsByClassName("mkitems")[k].removeAttribute('checked');
-		}
+		document.getElementsByClassName("mkitems")[k].setAttribute("checked","");
+		document.getElementsByClassName("mkitems")[k].checked = false;
 	}
 	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
 	document.getElementsByClassName("mkradio")[0].checked = true;
@@ -252,7 +251,7 @@ function searchResource(){
 					var tpObjItem = {
 						"number": "",
 						"target_product": "",
-						"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
+						"operate": ""
 					}
 					tpObjItem.number = (i+1);
 					tpObjItem.target_product = '<span class="eachtpvalue">'+data.resultData[i].name+'</span>';
@@ -372,8 +371,8 @@ function getMKByTPResult() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				resetAllInfo();
 				var type = $('#page3Modal').attr("status");
+				//0-编辑、1-复制、2-预览
 				for (var i=0; i<$(".mkitems").length; i++) {
 					if (type == 0) {
 						$(".mkitems:eq("+i+")").removeAttr("disabled");
@@ -391,7 +390,8 @@ function getMKByTPResult() {
 					}
 				}
 				for (var i=0; i<data.resultData.length; i++) {
-					document.getElementById(data.resultData[i].engName).setAttribute('checked', 'true');
+					document.getElementById(data.resultData[i].engName).setAttribute("checked","");
+					document.getElementById(data.resultData[i].engName).checked = true;
 					if ($("#"+data.resultData[i].engName).attr("type") == "radio") {
 						oldRadioName = $("#"+data.resultData[i].engName).attr("cnname");
 						$("#"+data.resultData[i].engName).attr("oldvalue","1");
