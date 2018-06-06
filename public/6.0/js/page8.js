@@ -31,6 +31,16 @@ function buttonInitBefore(){
 	});
 	//新增页面确定按钮的点击
 	$("#page8Submit").click(function() {
+		var _newValue = $("#page8Container").val();
+		_newValue = _newValue.replace(/\s*/g,"");
+		console.log(_newValue);
+		if (_newValue == null ||_newValue.length == 0) {
+			console.log("输入项不能为空");
+			document.getElementById("editErrorInfo").style.display = "inline-block";
+			setTimeout("document.getElementById('editErrorInfo').style.display = 'none';", 3000);
+		} else{
+			page6SubmitState(_oldValue,_newValue,_curPart1,_curPart2);
+		}
 		addSubmit();
 	});
 	//修改页面确定按钮的点击
@@ -280,8 +290,8 @@ function updateCategoryResult(){
 				freshModuleAddHtml();
 			}else{
 				console.log(data.resultDesc);
-//				$("#chipMangInfo")[0].innerHTML = "数据添加失败！";
-//				setTimeout('$("#chipMangInfo")[0].innerHTML = "　"',3000);
+				$("#chipMangInfo")[0].innerHTML = "数据添加失败！";
+				setTimeout('$("#chipMangInfo")[0].innerHTML = "　"',3000);
 			}
 		}
 	}

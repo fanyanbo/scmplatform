@@ -77,13 +77,7 @@
 						<button type="button" class="btn btn-default" id="page7_Prop_add">新增</button>
 						<div class="col-xs-12">
 							<table class="table table-bordered" id="myPropTable">
-								<tbody>
-									<tr><td id="myAddModalConfigTableTdBase"><div title="base">基础功能：</div></td></tr>
-									<tr><td id="myAddModalConfigTableTdServerip"><div title="serverip">服务器IP配置：</div></td></tr>
-									<tr><td id="myAddModalConfigTableTdAd"><div title="ad"> 广告配置：</div></td></tr>
-									<tr><td id="myAddModalConfigTableTdChannel"><div title="channel">TV通道：</div></td></tr>
-									<tr><td id="myAddModalConfigTableTdLocalmedia"><div title="localmedia">本地媒体：</div></td></tr>
-								</tbody>
+								<tbody id="myPropTbody"></tbody>
 							</table>
 						</div>
 					</div>
@@ -174,6 +168,45 @@
 						<select id="selectSecond" class="sysSelect2" name="二级"></select>
 						<button type="button" hidedata="0" class="btn" id="sysSubmit">保存</button>
 						<div id="sysErrorInfo"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--属性新增和编辑-->
+		<div class="modal fade" id="page7_prop" tabindex="-1" role="dialog" aria-labelledby="mypropLabel">
+			<div class="modalwidth" role="document">
+				<div class="modal-content" id="page7_prop_border">
+					<div class="modal-body">
+						<button type="button" id="propClose" data-dismiss="modal">关闭</button>
+						<label for="propEName" class="control-label" style="margin-bottom: 0px;">属性英文名：</label><br/>
+						<input type="text" value="" id="propEName"><br/>
+						<label for="propDefaulted" class="control-label configlable">默认参考值：</label><br/>
+						<div id="propDefaulted">
+							<button class="defaultOption" boxone="configString" boxtwo="configTableBoxEnum">字符串</button>
+							<button class="defaultOption" boxone="configTableBoxEnum" boxtwo="configString">枚举</button>
+							<textarea id="propString" rows="3" cols="" class="configtextarea"></textarea><br/>
+							<div class="tableBox" id="propTableBoxEnum">
+								<div class="ADCSAction2">
+									<span class="menuEdit glyphicon glyphicon-plus"></span>
+									<span class="menuEdit glyphicon glyphicon-remove"></span>
+									<span class="menuEdit glyphicon glyphicon-remove-circle"></span>
+								</div>
+								<div class="ADCSEfficient2">
+									<div class="menuUnit">
+										<input type="text" class="menuUnitInput" value="" placeholder="Value">
+									</div>
+									<div class="menuUnit">
+										<input type="text" class="menuUnitInput" value="" placeholder="Value">
+									</div>
+								</div>
+							</div>
+						</div>
+						<label for="propInstr" class="control-label" style="margin-bottom: 0px;">描述：</label><br/>
+						<textarea id="propInstr" rows="2" cols="" class="configtextarea"></textarea><br/>
+						<label for="propSelect" class="control-label">所属分类：</label><br/>
+						<select id="propSelect" hasvalue="false" class="moduleSelect"></select>
+						<button type="button" hidedata="0" class="btn" id="propSubmit">保存</button>
+						<div id="propErrorInfo"></div>
 					</div>
 				</div>
 			</div>
