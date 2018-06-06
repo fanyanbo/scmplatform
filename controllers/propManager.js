@@ -12,6 +12,37 @@ var logger = require('../common/logger');
      if(err) {
        return output.error(req,res,err);
      }
-     output.success(req,res,"查询Prop列表成功",results);
+     output.success(req,res,"查询props列表成功",results);
+   });
+ };
+
+ exports.queryCategory = function (req, res, next) {
+   propModel.queryCategory(function(err,results) {
+     if(err) {
+       return output.error(req,res,err);
+     }
+     output.success(req,res,"查询props分类列表成功",results);
+   });
+ };
+
+ exports.add = function (req, res, next) {
+
+   console.log(req.body.data);
+   propModel.add(data, function(err,results) {
+     if(err) {
+       return output.error(req,res,err);
+     }
+     output.success(req,res,"新增props项成功",results);
+   });
+ };
+
+ exports.update = function (req, res, next) {
+
+   console.log(req.body.data);
+   propModel.update(data, function(err,results) {
+     if(err) {
+       return output.error(req,res,err);
+     }
+     output.success(req,res,"修改props项成功",results);
    });
  };

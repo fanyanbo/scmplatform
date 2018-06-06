@@ -119,6 +119,12 @@ router.post('/settings/queryCategory', settings.queryCategory);
 router.post('/settings/updateItemsOrderId', settings.updateItemsOrderId);
 router.post('/settings/queryByCategory', settings.queryItemsByCategory);
 
+// prop项管理
+router.post('/prop/add', props.add);
+router.post('/prop/query', props.query);
+router.post('/prop/update', props.update);
+router.post('/prop/queryCategory', props.queryCategory);
+
 // 操作记录管理
 router.post('/home/getSummary',function(req,res,next){
   console.log("test");
