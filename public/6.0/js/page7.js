@@ -122,6 +122,7 @@ function propQueryResult() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
+				$(".page7_tabs:eq(6)").attr("hasvalue","true");
 				editEachPage("6",data.resultData);
 			}
 		}
