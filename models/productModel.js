@@ -190,6 +190,7 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
                   `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?`,
                   `SELECT * FROM ${dbConfig.tables.configdata} WHERE chip = ? AND model = ?`,
                   `SELECT * FROM ${dbConfig.tables.settingsdata} WHERE chip = ? AND model = ?`,
+                  `SELECT * FROM ${dbConfig.tables.propsdata} WHERE chip = ? AND model = ?`,
                   `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?)`
                 ];
 
