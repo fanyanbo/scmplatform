@@ -124,6 +124,7 @@ router.post('/prop/add', props.add);
 router.post('/prop/query', props.query);
 router.post('/prop/update', props.update);
 router.post('/prop/queryCategory', props.queryCategory);
+router.post('/prop/addCategory', props.addCategory);
 
 // 操作记录管理
 router.post('/home/getSummary',function(req,res,next){
