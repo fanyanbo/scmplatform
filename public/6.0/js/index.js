@@ -36,6 +36,13 @@ function buttonInit() {
 		}
 		$(".glyphiconss:eq(" + _focusIndex + ")").css("color", "orangered");
 	});
+	$("#index_branch").hover(function(){
+	    $("#CoocaaVersionFlag").css("color","red");
+	    $("#CoocaaVersion").css("color","red");
+	    },function(){
+	    $("#CoocaaVersionFlag").css("color","white");
+	    $("#CoocaaVersion").css("color","white");
+	});
 }
 
 function loginResult() {

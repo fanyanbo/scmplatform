@@ -615,13 +615,16 @@ function page2AEC(number) {
 	var _chip = $(".chip")[number].innerText;
 	var	_model = $(".model")[number].innerText;
 	var	_target = $(".target_product")[number].innerText;
-	if(_type == 2 || _type == 3) {
-		console.log("点击了编辑 或者是复制" + number);
-		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
+	
+	var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
+	console.log(node);
+	
+	console.log(_type);
+	if (_type == 2||_type == 3) {
+		console.log("点击了编辑或者复制" + number);
 		sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 	} else if(_type == 4) {
 		console.log("点击了预览" + number);
-		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
 		sendHTTPRequest(coocaaVersion+"/product/preview", node, getPreviewInfo);
 	}
 }
@@ -747,6 +750,10 @@ function CommonDataInsert(type,arr){
         $("#lable2Emmc").attr("onchange","changeDevice(this)");
         $("#lable2GitBranch").attr("onchange","changeDevice(this)");
         $("#lable2Platform").attr("onchange","changeDevice(this)");
+	}else{
+		document.getElementById("lable2Chip").removeAttribute('checked');
+		document.getElementById("lable2Model").removeAttribute('checked');
+		document.getElementById("lable2TargetProduct").removeAttribute('checked');
 	}
 }
 function ConfigDataInsert(type, arr){
@@ -980,7 +987,7 @@ function closeparentpage() {
 	document.getElementById("myAddCloseDiv").style.display = "none";
 	document.getElementById("myEditModalLabel").style.display = "none";
 	$("#page2Modal1").modal('hide');
-	page2Fresh();
+	//page2Fresh();
 }
 
 function configQueryData(arr1,arr2) {

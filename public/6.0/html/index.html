@@ -20,18 +20,46 @@
 	</head>
 
 	<body id="homePage">
-		<nav class="navbar containerp" role="navigation">
-			<a class="navbar-brand">
+		<!--<nav class="navbar containerp" role="navigation">
+			<a class="navbar-brand blcakitems">
 				<span style="font-size:30px">配置信息管理平台&nbsp;V3.0</span>
 			</a>
-			<a class="navbar-brand" style="float:right">
+			<a class="navbar-brand blcakitems" style="float:right">
 				<span class="glyphicon glyphicon-user" style="font-size:15px;margin-right: 10px;"></span><span id="indexUserName"></span>
 				<span id="index_exit">退出</span>
 			</a>
-			<a class="navbar-brand" style="float:right;margin-right: 20px">
-				<span class="glyphicon glyphicon-flag" style="font-size:15px;"></span><span id="CoocaaVersion"></span>
-				<span id="index_exit">Coocaa 6.0</span>
+			<a id="index_branch" class="navbar-brand" style="float:right;margin-right: 20px">
+				<span id="CoocaaVersionFlag" class="glyphicon glyphicon-flag" style="font-size:15px;"></span>
+				<span id="CoocaaVersion">Coocaa 6.0</span>
 			</a>
+		</nav>-->
+		<nav class="navbar navbar-default" role="navigation">
+		    <div class="container-fluid">
+			    <div class="navbar-header">
+			        <a class="navbar-brand" href="javascript:void(0)">配置信息管理平台&nbsp;V3.0</a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="ccollapse">
+			        <ul id="index_branch" class="nav navbar-nav">
+			            <li class="dropdown">
+			                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+			                	<span id="CoocaaVersionFlag" class="glyphicon glyphicon-flag" style="font-size:15px;"></span>
+								<span id="CoocaaVersion">Coocaa 6.0</span>
+			                	<b class="caret"></b>
+			                </a>
+			                <ul class="dropdown-menu">
+			                    <li><a href="javascript:void(0)">Coocaa 6.0</a></li>
+			                    <li><a href="javascript:void(0)">Coocaa 6.5</a></li>
+			                </ul>
+			            </li>
+			            <li>
+			            	<a class="navbar-brand blcakitems" style="float:right">
+								<span class="glyphicon glyphicon-user" style="font-size:15px;margin-right: 10px;"></span><span id="indexUserName"></span>
+								<span id="index_exit">退出</span>
+							</a>
+			            </li>
+			        </ul>
+			    </div>
+		    </div>
 		</nav>
 		<div class="containerp">
 			<div class="row">

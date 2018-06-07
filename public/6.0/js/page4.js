@@ -237,15 +237,15 @@ function buttonInitAfter(){
 		var _state = $("#myAddModalLabel").attr("type");//(0正常\1修改\2增加\3删除)
         console.log(_type +"----"+_state);
         if (_type == 1) {
-        	if (level == 1) {
-		        page4fresh(1);
-		    }else{
+//      	if (level == 1) {
+//		        page4fresh(1);
+//		    }else{
 		        document.getElementById("mydialog").style.display = "block";
 		        $("#errorChangeInfo2").css("display","none");
 		        $("#changeReason3").css("display","none");
 		        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
 		        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
-		    }
+//		    }
         } else{
         	document.getElementById("mydialog").style.display = "block";
 	        $("#errorChangeInfo2").css("display","none");
@@ -277,7 +277,7 @@ function buttonInitAfter(){
 		} else if(_type == 2){
 			console.log("编辑时关闭确认框的的点击");
 			$("#page4Modal1").modal("hide");
-			page4fresh(2);
+			//page4fresh(2);
 		} else if(_type == 3){
 			console.log("恢复时确认框的确认键的点击");
 			recoverSure();
@@ -341,9 +341,10 @@ function allQueryResult() {
 			var data = JSON.parse(this.responseText);
             console.log(data);
             if(data.resultCode == 0){
-            	configQueryData(data.resultData[3],data.resultData[0]);
-				moduleQueryData(data.resultData[4],data.resultData[1]);
-				settingsQueryData(data.resultData[5],data.resultData[2]);
+            	configQueryData(data.resultData[4],data.resultData[0]);
+				moduleQueryData(data.resultData[5],data.resultData[1]);
+				settingsQueryData(data.resultData[7],data.resultData[2]);
+				propQueryData(data.resultData[6],data.resultData[3]);
             }
 			colorstatus(0);
 		};
@@ -432,6 +433,21 @@ function settingsQueryData(arr1,arr2) {
 		}
 	}
 }
+function propQueryData(arr1,arr2) {
+	var _myPropBox = document.getElementById("myPropBox");
+	for(var i = 0; i < arr1.length; i++) {
+		_myPropBox.innerHTML += '<div class="propitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
+	}
+	var kk = 0;
+	for (var j=0; j< $(".propitems").length; j++) {
+		for(var i = 0; i < arr2.length; i++) {
+			if(arr2[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
+				kk = i;
+				propDataInsert(kk, $(".propitems")[j], arr2);
+			}
+		}
+	}
+}
 
 function configDataInsert(kk, obj, data) {
 	if(data[kk].typeStr == "string") {
@@ -473,6 +489,9 @@ function sysDataInsert(i, obj, num, arr1){
 	if (_twoLevelLinkageArrayOne[num].indexOf(arr1[i].level2)== -1) {
 		_twoLevelLinkageArrayOne[num].push(arr1[i].level2);
 	}
+}
+function propDataInsert(kk, obj, data) {
+	obj.innerHTML += "<div class='col-xs-6'><input id='"+data[kk].engName+"' type='checkbox' class='propitems' category='" + data[kk].category + '" descText="'+data[kk].desc+"' engName='"+data[kk].engName+"' value=''><span title='" + data[kk].desc + "'>" + data[kk].engName + "</span></div>";
 }
 
 //审核
@@ -763,7 +782,8 @@ function getPointProductInfo(){
             	CommonDataInsert2(_type,data.resultData[0]);
             	ConfigDataInsert2(_type,data.resultData[1]);
             	SysDataInsert2(_type,data.resultData[2]);
-            	MKDataInsert2(_type,data.resultData[3]);
+            	MKDataInsert2(_type,data.resultData[4]);
+            	PropDataInsert2(_type,data.resultData[3]);
 				buttonstyle(_type,_state);
 				
 				$('#page4Modal1').modal();
@@ -838,6 +858,16 @@ function SysDataInsert2(type, arr){
 		}
 	}
 }
+
+function PropDataInsert2(type, arr){
+	console.log(type);
+	if (type == 2) {
+		for (var i=0; i<arr.length; i++) {
+			document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		}
+	}
+}
+
 function buttonstyle(type,state){
 	if(type == 1){
 		console.log("点击的是审核");
