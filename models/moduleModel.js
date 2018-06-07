@@ -1,4 +1,3 @@
-var eventproxy = require('eventproxy');
 var db = require('../common/db');
 var logger = require('../common/logger');
 var config = require('../config/config');
@@ -35,6 +34,10 @@ ModuleModel.prototype.queryByCategory = function (category, callback) {
   });
 }
 
+/**
+ * @param {新增mk项，新增的mk项在所属分类里orderId默认为最大值}
+ * @param {这里进行插入操作时容易出错，要明确哪些字段是不能重复的：英文名，中文名，gitBranch}
+ */
 ModuleModel.prototype.add = function (engName, cnName, category, gitPath, desc, callback) {
 
   let ep = new eventproxy();
@@ -47,9 +50,7 @@ ModuleModel.prototype.add = function (engName, cnName, category, gitPath, desc, 
   });
 
   ep.all('event1', 'event2', function (data1, data2) {
-
       let sql = "INSERT INTO modules(engName,cnName,category,gitPath,descText,orderId) values (?,?,?,?,?,?)";
-      console.log(sql);
       let sql_param = [engName,cnName,category,gitPath,desc,_orderId];
       console.log(sql_param);
       db.conn.query(sql,sql_param,function(err,rows,fields){
@@ -58,68 +59,61 @@ ModuleModel.prototype.add = function (engName, cnName, category, gitPath, desc, 
       });
   });
 
-  // let sql_category_count = "SELECT max(orderId) AS count FROM modules WHERE category = ?";
-  // let sql_category_count_param = [category];
-  // connection.query(sql_category_count,sql_category_count_param,function(err,rows,fields){
-  //   if (err) {
-  //       return ep.emit('error', err);
-  //       // logger.debug(err);
-  //       // return callback(err);
-  //   }
-  //   if(rows.length == 0) return callback("模块类别不存在!");
-  //   logger.debug(rows[0].count + 1);
-  //   //let sql = "INSERT INTO modules(engName,cnName,category,gitPath,descText,orderId) values (?,?,?,?,?,?)";
-  //   //let sql = "INSERT INTO modules SET ?";
-  //   //let sql_params = [engName,cnName,category,gitPath,desc,rows[0].count+1];
-  //   //let sql_params = {'engName':engName,'cnName':cnName,'category':category,'gitPath':gitPath,'descText':desc,'orderId':rows[0].count+1};
-  //   let sql = ""
-  //   connection.query(sql,sql_params,function(err,rows,fields){
-  //     if (err) {
-  //         return ep.emit('error', err);
-  //     }
-  //     callback(null, rows);
-  //   });
-  // });
-  let sql1 = "SELECT max(orderId) AS maxIndex FROM modules WHERE category = ?";
-  let sql1_param = [category];
-  db.conn.query(sql1,sql1_param,function(err,rows,fields){
+  let sql1 = "SELECT orderId FROM modules WHERE category = ? order by orderId desc limit 0,1";
+  db.conn.query(sql1,[category],function(err,rows,fields){
     if (err) {
         return ep.emit('error', err);
     }
-    if(rows.length == 0) return ep.emit('error', "模块类别不存在!");
-    _orderId = rows[0].maxIndex + 1; //当新类别中没有任何模块是判断
-    console.log(_orderId);
+    // if(rows.length == 0) return ep.emit('error', "模块类别不存在!");
+    _orderId = (rows.length == 0) ? 1 : rows[0].orderId + 1; //当新类别中没有任何模块是判断
+    console.log("获取该模块所属分类里的orderId：" + _orderId);
     ep.emit('event1',"event1 OK");
   });
 
-  let sql2 = "SELECT * FROM modules WHERE engName = ?";
-  let sql2_param = [engName];
+  let sql2 = "SELECT * FROM modules WHERE engName = ? OR cnName = ? OR gitPath = ?";
+  let sql2_param = [engName,cnName,gitPath];
   db.conn.query(sql2,sql2_param,function(err,rows,fields){
     if (err) {
         return ep.emit('error', err);
     }
     if(rows.length == 0) return ep.emit('event2',"event2 OK");
-    ep.emit('error', "engName必须唯一!");
+    ep.emit('error', "engNam or cnName or gitPath 必须唯一!");
   });
 }
 
+/**
+ * @param {更新mk项}
+ * @param {这里进行更新操作时容易出错，要明确哪些字段是不能重复的：英文名，中文名，gitBranch}
+ */
 ModuleModel.prototype.update = function (engName, cnName, category, gitPath, desc, orderId, callback) {
 
   //*******************************下面这条语句导致TCP协议抛异常：ECONNRESET****************************************
   // let sql_category_count = "SELECT max(orderId) AS count FROM modules WHERE category = ?"; //当修改类别时需要同步修改orderId,以免在新分类中造成冲突
-  let sql_order = "SELECT orderId FROM modules WHERE category = ? order by orderId desc limit 0,1";
-  let sql_order_param = [category];
-  db.conn.query(sql_order,sql_order_param,function(err,rows,fields){
+
+  let sql0 = "SELECT * FROM modules WHERE category = ? AND engName = ?";
+  db.conn.query(sql0,[],function(err,rows,fields){
     if (err) return callback(err);
-    let _orderId = (rows.length == 0) ? 1 : rows[0].orderId + 1; //当新类别中没有任何模块是判断
-    logger.debug('updateModuleData _orderId = ' + _orderId);
-    let sql = "UPDATE modules SET cnName = ?, category = ?, gitPath = ?, descText = ?, orderId = ? WHERE engName = ?";
-    let sql_params = [cnName,category,gitPath,desc,_orderId,engName];
-    logger.debug(sql_params);
-    db.conn.query(sql,sql_params,function(err,rows,fields){
-      if (err) return callback(err);
-      callback(null, rows);
-    });
+    console.log("更新mk项，rows.length = " + rows.length);
+    if(rows.length == 0){ //分类已经修改
+      let sql1 = "SELECT orderId FROM modules WHERE category = ? order by orderId desc limit 0,1";
+      db.conn.query(sql1,[category],function(err,rows,fields){
+        if (err) return callback(err);
+        let _orderId = (rows.length == 0) ? 1 : rows[0].orderId + 1; //当新类别中没有任何模块的判断
+        var sql2 = "UPDATE modules SET cnName = ?, category = ?, gitPath = ?, descText = ?, orderId = ? WHERE engName = ?";
+        let sql_params = [cnName,category,gitPath,desc,_orderId,engName];
+        logger.debug(sql_params);
+        db.conn.query(sql2,sql_params,function(err,rows,fields){
+          if (err) return callback(err);
+          callback(null, rows);
+        });
+      });
+    }else{
+      let sql = "UPDATE modules SET cnName = ?, gitPath = ?, descText = ? WHERE engName = ?";
+      db.conn.query(sql,[cnName,gitPath,desc,engName],function(err,rows,fields){
+        if (err) return callback(err);
+        callback(null, rows);
+      });
+    }
   });
 }
 
