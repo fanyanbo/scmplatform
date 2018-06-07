@@ -188,8 +188,21 @@ function convert_config_table(dbo)
 			sqltext += '\"' + data.value + '\", ';
 			sqltext += '\"' + data.cnName + '\", ';
 			sqltext += '\"' + data.type + '\", ';
-			sqltext += '\"' + data.category + '\", ';
-			var optionStr = "{\\\"options\\\": [";
+			
+			if (data.category == "base")
+			    sqltext += '\"' + "基础功能" + '\", ';
+			else if (data.category == "serverip")
+			    sqltext += '\"' + "服务器IP配置" + '\", ';
+			else if (data.category == "ad")
+			    sqltext += '\"' + "广告配置" + '\", ';
+			else if (data.category == "channel")
+			    sqltext += '\"' + "TV通道" + '\", ';
+			else if (data.category == "localmedia")
+			    sqltext += '\"' + "本地媒体" + '\", ';
+			else if (data.category == "other")
+			    sqltext += '\"' + "其他功能" + '\", ';
+			
+			var optionStr = "[";
 			for (var M in data.options)
 			{
 				if (M != 0)
@@ -259,6 +272,9 @@ function convert_modules_table(dbo)
 function convert_products_table(dbo)
 {
 	var collection = dbo.collection('products');
+	
+	var product_sql_list = new Array();
+	var product_sql_cnt = 0;
 
 	collection.find({}).toArray(function(err, docs) {
 		if (err)
@@ -284,15 +300,16 @@ function convert_products_table(dbo)
 			sqltext += "current_timestamp() ";
 
 			sqltext += ");\n";
-
-			fs.appendFileSync(sqlname, sqltext);
-
+			
+			product_sql_list[product_sql_cnt] = sqltext;
+			product_sql_cnt++;
+			
 			for (var j in data.configFile)
 			{
 				var key = data.configFile[j].configKey;
 				var value = data.configFile[j].value;
 
-				sqltext =  "insert into configdata ";
+				sqltext =  "insert into v60_configdata ";
 				sqltext += "(chip, model, engName, curValue) values \n    ";
 				sqltext += "(";
 				sqltext += '\"' + data.chip + '\", ';
@@ -318,7 +335,7 @@ function convert_products_table(dbo)
 
 				for (var k in data.mkFile)
 				{
-					sqltext =  "insert into mkdata ";
+					sqltext =  "insert into v60_mkdata ";
 					sqltext += "(targetProduct, engName) values \n    ";
 					sqltext += "(";
 					sqltext += '\"' + data.targetProduct + '\", ';
@@ -335,6 +352,9 @@ function convert_products_table(dbo)
 		}
 		fs.appendFileSync(sqlname, "\n");
 
+        fs.appendFileSync(sqlname, "-- ======================================================================\n");
+		fs.appendFileSync(sqlname, "-- ======================================================================\n");
+
 		for (var L in targets)
 		{
 			sqltext =  "insert into targetProducts ";
@@ -344,6 +364,14 @@ function convert_products_table(dbo)
 
 			fs.appendFileSync(sqlname, sqltext);
 		}
+		
+		fs.appendFileSync(sqlname, "-- ======================================================================\n");
+		fs.appendFileSync(sqlname, "-- ======================================================================\n");
+
+        for (var L in product_sql_list)
+        {
+            fs.appendFileSync(sqlname, product_sql_list[L]);
+        }
 
 		fs.appendFileSync(sqlname, "-- ======================================================================\n");
 		fs.appendFileSync(sqlname, "-- ======================================================================\n");
@@ -351,6 +379,7 @@ function convert_products_table(dbo)
 
 		console.log("all finish!");
 
+        //dbo.close();
 	});
 }
 

@@ -40,6 +40,10 @@ var tab_mkdata;
 var infoTxt = "";
 var sql = ";";
 
+var filelist;
+var filecnt = 0;
+var shellFileName;
+
 var i, j, k;
 var generator = new Generator();
 
@@ -100,6 +104,17 @@ function targetArrayIndex(arr, targetProduct)
 	return -1;
 }
 
+function CreateFileInfo(tempName, finalName, chip, model, typeStr)
+{
+	var fileInfo = new Object;
+    fileInfo.tempName = tempName;                   // 临时文件名
+    fileInfo.finalName = finalName;                 // 最终文件名
+    fileInfo.chip = chip;
+    fileInfo.model = model;
+    fileInfo.typeStr = typeStr;
+    return fileInfo;
+}
+
 function generateFiles( 
                         chip,		    // 机芯
                         model,          // 机型
@@ -125,6 +140,9 @@ function generateFiles(
 	allTargets = new Array();
 	targetTotal = 0;
     targetCnt = 0;
+    
+    filelist = new Array();
+    filecnt = 0;
 
     connection = mysql.createConnection(dbparam);
 	connection.connect();
@@ -439,16 +457,23 @@ function generate_files()
     			}
     			writer.writeGeneralConfigEnd(temp_config_filename);
     
+                filelist[filecnt++] = CreateFileInfo(temp_config_filename, "general_config.xml", allInfos[infoCnt].chip, allInfos[infoCnt].model, "general_config");
     		}
     		else if (curitem.type == "system_settings")
     		{
     		    writerlog.w("生成临时的setting文件 \n");
-    		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, curitem, getTmpDir());
+    		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, curitem, getTmpDir(), 
+    		        function(tempName, finalName, chip, model, typeStr){
+    		            filelist[filecnt++] = CreateFileInfo(tempName, finalName, chip, model, typeStr);
+    		        });
     		}
     		else if (curitem.type == "prop")
     		{
     		    writerlog.w("生成临时的prop文件 \n");
-    		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, curitem, getTmpDir());
+    		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, curitem, getTmpDir(), 
+    		        function(tempName, finalName, chip, model, typeStr){
+    		            filelist[filecnt++] = CreateFileInfo(tempName, finalName, chip, model, typeStr);
+    		        });
     		}
     		else
     			continue;
@@ -499,15 +524,16 @@ function generate_files()
             mod_callback(0, preview_result);
         }
 	}
-	else
+	else        // 非预览则复制并提交文件到git
 	{
-
+        var pushret = copyFileAndCommit();
+        if (pushret)
+        ;
 	}
 	
 	if (mod_callback != null)
 	    mod_callback(0, "");
 }
-
 
 function generateMkFile(target_info)
 {
@@ -543,6 +569,7 @@ function generateMkFile(target_info)
 	}
 	writer.writeAndroidmkEnd(mk_filename);
 
+    filelist[filecnt++] = CreateFileInfo(mk_filename, targetName + ".mk", null, null, "mk");
 }
 
 
@@ -554,6 +581,102 @@ function getTempGernalConfigFileName(chip, model)
 function getTempMkFileName(targetProductName)
 {
     return getTmpDir() + targetProductName + ".mk";
+}
+
+function copyFileAndCommit()
+{
+    //var filelist;
+    //var filecnt = 0;
+    
+    shellFileName =  getTmpDir() + "shell_script.sh";
+    
+    var cmd;
+	var shcmd = "#!/bin/sh\n\n";
+	
+	var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限 
+	
+	cmd = "cd " + gitdir + " \n";
+	shcmd += "echo " + cmd;
+	shcmd += cmd;
+	
+	cmd = "git pull \n";
+	shcmd += "echo " + cmd;
+	shcmd += cmd;
+	
+    shcmd += "\n";
+	
+	fs.writeFileSync(shellFileName, shcmd);
+	
+	for (var i in filelist)
+	{
+	    var config_dir_relpath;
+	    var config_file_relpath;
+	    var fileinfo = filelist[i];
+	    
+	    shcmd = "";
+	    
+	    if (fileinfo.typeStr == "general_config")
+	    {
+	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/config/";
+    	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
+	    }
+	    else if (fileinfo.typeStr == "build.prop")
+	    {
+	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/prop/";
+    	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
+	    }
+	    else if (fileinfo.typeStr == "mk")
+	    {
+	        config_dir_relpath = "";
+    	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
+	    }
+	    else
+	    {
+	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/settings/";
+    	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
+	    }
+	    
+    	
+        if (config_dir_relpath != "")
+        {
+    	    cmd = "mkdir -p " + config_dir_relpath + "\n";
+    	    shcmd += "echo " + cmd;
+    	    shcmd += cmd;
+        }
+    	
+        cmd = "cp -f " + fileinfo.tempName + '  ' + config_file_relpath + "\n";
+    	shcmd += "echo " + cmd;
+    	shcmd += cmd;
+    	
+    	cmd = "git add " + config_file_relpath + "\n";
+    	shcmd += "echo " + cmd;
+    	shcmd += cmd;
+    	
+    	shcmd += "\n";
+    	
+    	fs.appendFileSync(shellFileName, shcmd);
+	}
+	
+	shcmd = "";
+	var gitbranch = getGitBranch(version);
+	
+	cmd = "git commit -m  '\n";
+	cmd += "some_message"; //commit_msg;
+	cmd += "'\n";
+	
+	//shcmd += "echo " + cmd;
+	shcmd += cmd;
+	
+    // cmd = "git push origin HEAD:refs/for/" + gitbranch + "  \n\n";
+    cmd = "git push 1 HEAD:refs/for/" + gitbranch + "  \n\n";
+	shcmd += "echo " + cmd;
+	shcmd += cmd;
+	
+	shcmd += "\n";
+	
+	fs.appendFileSync(shellFileName, shcmd);
+	
+	
 }
 
 function gitpush(
@@ -575,7 +698,7 @@ function gitpush(
 function getGitDir(systemVersion)
 {
 	var gitdir;
-	if (systemVersion == "Rel6.0")
+	if (systemVersion == "6.0")
         gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
     else
         gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
@@ -585,10 +708,10 @@ function getGitDir(systemVersion)
 function getGitBranch(systemVersion)
 {
 	var gitbranch;
-	if (systemVersion == "Rel6.0")
+	if (systemVersion == "6.0")
         gitbranch = "CCOS/Rel6.0";
-	else
-        gitbranch = "CCOS/Rel6.0";
+	else if (systemVersion == "6.0")
+        gitbranch = "CCOS/Rel6.5";
     return gitbranch;
 }
 
@@ -662,9 +785,6 @@ Generator.prototype.generateByModel = function(model, callback)
 {
     generateFiles("", model, "model_only", callback);
 }
-
-
-
 
 
 function show_preview_text_test(errno, result)

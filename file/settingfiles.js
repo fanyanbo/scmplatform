@@ -5,7 +5,7 @@ function SettingFiles(){}
 
 ////  测试时
 
-SettingFiles.prototype.generate = function(chip, model, obj, tmpdir)
+SettingFiles.prototype.generate = function(chip, model, obj, tmpdir, genFileCallBack)
 {
     let x,y,z;
     
@@ -16,23 +16,23 @@ SettingFiles.prototype.generate = function(chip, model, obj, tmpdir)
     
     if (obj.type == "system_settings")
     {
-        write_setting_main_xml(obj.result, chip, model, tmpdir);
-        write_setting_guide_xml(obj.result, chip, model, tmpdir);
-        write_setting_connect_xml(obj.result, chip, model, tmpdir);
-        write_market_show_configuration_xml(obj.result, chip, model, tmpdir);
-        write_setting_general_xml(obj.result, chip, model, tmpdir);
-        write_ssc_item_xml(obj.result, chip, model, tmpdir);
-        setting_picture_sound(obj.result, chip, model, tmpdir);
-        write_midware_ini(obj.result, chip, model, tmpdir);
+        write_setting_main_xml(obj.result, chip, model, tmpdir, genFileCallBack);
+        write_setting_guide_xml(obj.result, chip, model, tmpdir, genFileCallBack);
+        write_setting_connect_xml(obj.result, chip, model, tmpdir, genFileCallBack);
+        write_market_show_configuration_xml(obj.result, chip, model, tmpdir, genFileCallBack);
+        write_setting_general_xml(obj.result, chip, model, tmpdir, genFileCallBack);
+        write_ssc_item_xml(obj.result, chip, model, tmpdir, genFileCallBack);
+        setting_picture_sound(obj.result, chip, model, tmpdir, genFileCallBack);
+        write_midware_ini(obj.result, chip, model, tmpdir, genFileCallBack);
     }
     else if (obj.type == "prop")
     {
-        write_prop_file(obj.result, chip, model, tmpdir);
+        write_prop_file(obj.result, chip, model, tmpdir, genFileCallBack);
     }
 }
 
 // setting_main.xml
-function write_setting_main_xml(sqlresult, chip, model, tmpdir)
+function write_setting_main_xml(sqlresult, chip, model, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
@@ -69,10 +69,12 @@ function write_setting_main_xml(sqlresult, chip, model, tmpdir)
         fs.appendFileSync(tmpFileName, "\n");
     }
     fs.appendFileSync(tmpFileName, "</Setting>\n");
+    
+    genFileCallBack(tmpFileName, "setting_main.xml", chip, model, "setting_main");
 }
 
 // setting_guide.xml
-function write_setting_guide_xml(sqlresult, chip, model, tmpdir)
+function write_setting_guide_xml(sqlresult, chip, model, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
@@ -134,10 +136,12 @@ function write_setting_guide_xml(sqlresult, chip, model, tmpdir)
     fs.appendFileSync(tmpFileName, '<!-- pageName="BT" 只有产品标配蓝牙遥控器才配置此项，此项配置的前提是内置蓝牙--> \n');
     fs.appendFileSync(tmpFileName, '<!--在需要配置此项的时候，需要确认标配蓝牙遥控器是否支持按语音键进行一键配对，如支持需要增加配置参数isSupportVoiceKeyPair="true"，不支持的话不需要配置此参数--> \n');
     fs.appendFileSync(tmpFileName, '<!--注意同机芯-机型不同尺寸标配蓝牙遥控器可能有所不同，如不清楚请找项目经理进行详细确认--> \n');
+    
+    genFileCallBack(tmpFileName, "setting_guide.xml", chip, model, "setting_guide");
 }
 
 // setting_connect.xml
-function write_setting_connect_xml(sqlresult, chip, model, tmpdir)
+function write_setting_connect_xml(sqlresult, chip, model, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
@@ -174,10 +178,12 @@ function write_setting_connect_xml(sqlresult, chip, model, tmpdir)
         fs.appendFileSync(tmpFileName, "\n");
     }
     fs.appendFileSync(tmpFileName, "</Setting>\n");
+    
+    genFileCallBack(tmpFileName, "setting_connect.xml", chip, model, "setting_connect");
 }
 
 // market_show_configuration.xml
-function write_market_show_configuration_xml(sqlresult, chip, model, tmpdir)
+function write_market_show_configuration_xml(sqlresult, chip, model, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
@@ -214,10 +220,12 @@ function write_market_show_configuration_xml(sqlresult, chip, model, tmpdir)
         fs.appendFileSync(tmpFileName, "\n");
     }
     fs.appendFileSync(tmpFileName, "</Config>\n");
+    
+    genFileCallBack(tmpFileName, "market_show_configuration.xml", chip, model, "market_show_configuration");
 }
 
 // setting_general.xml
-function write_setting_general_xml(sqlresult, chip, model, tmpdir)
+function write_setting_general_xml(sqlresult, chip, model, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
@@ -266,11 +274,13 @@ function write_setting_general_xml(sqlresult, chip, model, tmpdir)
     }
     fs.appendFileSync(tmpFileName, "    </SettingItem>\n");
     fs.appendFileSync(tmpFileName, "</SettingItem>  \n\n\n\n\n");
+    
+    genFileCallBack(tmpFileName, "setting_general.xml", chip, model, "setting_general");
 }
 
 
 // ssc_item.xml
-function write_ssc_item_xml(sqlresult, chip, model, tmpdir)
+function write_ssc_item_xml(sqlresult, chip, model, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
@@ -320,10 +330,12 @@ function write_ssc_item_xml(sqlresult, chip, model, tmpdir)
     }
     fs.appendFileSync(tmpFileName, '    </' + curClass + '>\n\n');
     fs.appendFileSync(tmpFileName, "</Source>  \n\n\n\n\n");
+    
+    genFileCallBack(tmpFileName, "ssc_item.xml", chip, model, "ssc_item");
 }
 
 // setting_picture_sound.xml
-function setting_picture_sound(sqlresult, chip, model, tmpdir)
+function setting_picture_sound(sqlresult, chip, model, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
@@ -479,10 +491,12 @@ function setting_picture_sound(sqlresult, chip, model, tmpdir)
     fs.appendFileSync(tmpFileName, '        </SettingItem>   \n');
     fs.appendFileSync(tmpFileName, '    </SettingItem>  \n');
     fs.appendFileSync(tmpFileName, "</SettingItem>  \n\n\n\n\n");
+    
+    genFileCallBack(tmpFileName, "setting_picture_sound.xml", chip, model, "setting_picture_sound");
 }
 
 // driverbase_net_config.ini
-function write_midware_ini(sqlresult, chip, model, tmpdir)
+function write_midware_ini(sqlresult, chip, model, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
@@ -526,10 +540,11 @@ function write_midware_ini(sqlresult, chip, model, tmpdir)
         fs.appendFileSync(tmpFileName, fileinfo[i].engName + ' = true\n');
     }
     
+    genFileCallBack(tmpFileName, "driverbase_net_config.ini", chip, model, "driverbase_net_config");
 }
 
 // build.prop
-function write_prop_file(sqlresult, chip, model, tmpdir)
+function write_prop_file(sqlresult, chip, model, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
@@ -546,6 +561,8 @@ function write_prop_file(sqlresult, chip, model, tmpdir)
     }
     
     fs.appendFileSync(tmpFileName, '\n\n\n\n');
+    
+    genFileCallBack(tmpFileName, "build.prop", chip, model, "build.prop");
 }
 
 
