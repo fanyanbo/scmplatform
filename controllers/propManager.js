@@ -25,6 +25,18 @@ var logger = require('../common/logger');
    });
  };
 
+ exports.addCategory = function (req, res, next) {
+
+   let category = validator.trim(req.body.category);
+
+   propModel.addCategory(category, function(err,results) {
+     if(err) {
+       return output.error(req,res,err);
+     }
+     output.success(req,res,"新增props分类列表成功",results);
+   });
+ };
+
  exports.add = function (req, res, next) {
 
    console.log(req.body.data);
