@@ -127,8 +127,8 @@ ProductModel.prototype.queryProductsByTargetProduct = function (targetproduct, c
 ProductModel.prototype.queryAll = function (callback) {
   let ep = new eventproxy();
   let sql_list = [
-                  "SELECT * FROM configs order by orderId desc, category desc",
-                  "SELECT * FROM modules",
+                  "SELECT * FROM configs order by category,orderId",
+                  "SELECT * FROM modules order by category,orderId",
                   "SELECT * FROM settings",
                   "SELECT * FROM props",
                   "SELECT * FROM configcategory order by orderId",
