@@ -198,7 +198,7 @@ ConfigModel.prototype.update = function (engName, cnName, category, type, option
       db.conn.query(sql1,[category],function(err,rows,fields){
         if (err) return callback(err);
         let _orderId = (rows.length == 0) ? 1 : rows[0].orderId + 1; //当新类别中没有任何模块的判断
-        var sql2 = "UPDATE configs SET cnName = ?, category = ?, typeStr = ?, options = ?, defaultValue = ?, descText = ?, orderId = ? WHERE engName = ?";
+        let sql2 = "UPDATE configs SET cnName = ?, category = ?, typeStr = ?, options = ?, defaultValue = ?, descText = ?, orderId = ? WHERE engName = ?";
         let sql_params = [cnName,category,type,options,defaultValue,desc,_orderId,engName];
         logger.debug(sql_params);
         db.conn.query(sql2,sql_params,function(err,rows,fields){
