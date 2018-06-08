@@ -501,7 +501,7 @@ function sysDataInsert(i, obj, num, arr1){
 	}
 }
 function propDataInsert(kk, obj, data) {
-	obj.innerHTML += "<div class='col-xs-6'><input id='"+data[kk].engName+"' type='checkbox' class='propitems' category='" + data[kk].category + '" descText="'+data[kk].desc+"' engName='"+data[kk].engName+"' value=''><span title='" + data[kk].desc + "'>" + data[kk].engName + "</span></div>";
+	obj.innerHTML += "<div class='col-xs-6'><input id='"+data[kk].engName+"' type='checkbox' class='propitem' category='" + data[kk].category + '" descText="'+data[kk].desc+"' engName='"+data[kk].engName+"' value=''><span title='" + data[kk].desc + "'>" + data[kk].engName + "</span></div>";
 }
 
 //审核
@@ -526,7 +526,7 @@ function review(obj,adminControl,deleteFlag){
 	$("#myAddModalLabel").attr("num","1");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
 	var node = '{"chip":"'+$("#page4_table2 .chip")[_index].innerHTML+'","model":"'+$("#page4_table2 .model")[_index].innerHTML+'"}';
-	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
+	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachineTemp", node, getPointProductInfo);
 }
 //编辑
 function edit(obj,adminControl,deleteFlag){
@@ -542,7 +542,7 @@ function edit(obj,adminControl,deleteFlag){
 	console.log(_index);
 	_author = $("#page4_table2 .author")[_index].innerHTML;
 	var node = '{"chip":"'+$("#page4_table2 .chip")[_index].innerHTML+'","model":"'+$("#page4_table2 .model")[_index].innerHTML+'"}';
-	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
+	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachineTemp", node, getPointProductInfo);
 }
 //恢复
 function recover(obj,deleteFlag){
@@ -874,7 +874,7 @@ function PropDataInsert2(type, arr){
 	}
 	if (type == 2) {
 		for (var i=0; i<$(".propitems").length; i++) {
-			$(".propitems:eq("+i+")").attr("onchange","changeSettings(this)");
+			$(".propitems:eq("+i+")").attr("onchange","changeProp(this)");
 		}
 	}
 }
@@ -1132,7 +1132,39 @@ function changeConfig(obj){
 function changeSettings(obj){
 	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
     if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
-        // obj.oldvalue = '1';
+        obj.setAttribute("oldvalue","1");
+        changeAdd.push(obj.getAttribute("cnname"));
+        console.log("add"+changeAdd);
+        console.log("changeReduce"+changeReduce);
+    }else if(!(obj.checked) && (obj.getAttribute("oldvalue") == '0')){
+        obj.setAttribute("oldvalue","2");
+        changeReduce.push(obj.getAttribute("cnname"));
+        console.log("add"+changeAdd);
+        console.log("changeReduce"+changeReduce);
+    }else{
+        obj.setAttribute("oldvalue","0");
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeReduce.remove(obj.getAttribute("cnname"));
+        changeAdd.remove(obj.getAttribute("cnname"));
+        console.log("add"+changeAdd);
+        console.log("changeReduce"+changeReduce);
+    }   
+}
+
+function changeProp(obj){
+	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
+    if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
         obj.setAttribute("oldvalue","1");
         changeAdd.push(obj.getAttribute("cnname"));
         console.log("add"+changeAdd);

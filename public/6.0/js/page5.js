@@ -31,6 +31,7 @@ $(function() {
     loginusername = parent.loginusername;
     fromEmail = parent.loginEmail;
 	
+	console.log("hello");
 	var node = '{"offset":"-1","rows":"10"}';
 	sendHTTPRequest(coocaaVersion+"/product/queryByPage", node, productQuery);
 	
@@ -526,7 +527,7 @@ function review(obj,adminControl,deleteFlag){
 	$("#myAddModalLabel").attr("num","1");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
 	var node = '{"chip":"'+$("#page5_table2 .chip")[_index].innerHTML+'","model":"'+$("#page5_table2 .model")[_index].innerHTML+'"}';
-	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
+	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachineTemp", node, getPointProductInfo);
 }
 //编辑
 function edit(obj,adminControl,deleteFlag){
@@ -542,7 +543,7 @@ function edit(obj,adminControl,deleteFlag){
 	console.log(_index);
 	_author = $("#page5_table2 .author")[_index].innerHTML;
 	var node = '{"chip":"'+$("#page5_table2 .chip")[_index].innerHTML+'","model":"'+$("#page5_table2 .model")[_index].innerHTML+'"}';
-	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
+	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachineTemp", node, getPointProductInfo);
 }
 //恢复
 function recover(obj,deleteFlag){
