@@ -586,6 +586,7 @@ function reviewSure(state){
 	if($("#mydialog").attr("buttontype") == 0||$("#mydialog").attr("buttontype") == 1){
 		_flag = $("#mydialog").attr("buttontype");
 		_flag = parseInt(_flag);
+		state = parseInt(state);
 		console.log(_flag);
 		var recoveObj = {
 			"chip" : _chip,

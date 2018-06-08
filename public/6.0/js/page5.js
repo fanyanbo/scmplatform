@@ -585,6 +585,7 @@ function reviewSure(state){
 		_flag = $("#mydialog").attr("buttontype");
 		_flag = parseInt(_flag);
 		console.log(_flag);
+		state = parseInt(state);
 		var recoveObj = {
 			"chip" : _chip,
 			"model" : _model,
