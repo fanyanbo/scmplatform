@@ -26,6 +26,7 @@ var infoCnt;
 var allTargets;
 var targetTotal;
 var targetCnt;
+var targetProductParam;
 
 var tempdir = "";                       // 临时文件夹
 
@@ -234,6 +235,9 @@ function generateFiles(
     }
     else if (action_type == "targetProduct")
     {
+        console.log("only targetProduct");
+        targetProductParam = model;
+        doit(connection, action_type);
     }
 }
 
@@ -247,8 +251,9 @@ function step_query_targetProduct(connection)
 {
     if (action_type == "targetProduct")
     {
-        allTargets[targetTotal] = CreateTarget(curTargetProduct);
+        allTargets[targetTotal] = CreateTarget(targetProductParam);
         targetTotal++;
+        step_query_all_config(connection);
     }
     else
     {
@@ -795,11 +800,15 @@ function show_preview_text_test(errno, result)
     console.log(result.text4);
 }
 
+function show_callback(errno, result)
+{
+    console.log("$$$$$$$$$$$$$$$$$$$$");
+}
 
 //generator.generate("6S57", "K5S",  null);
 //generator.generateByModel("E6000", null);
 //generator.preview("5S02", "15U",  show_preview_text_test);
-
+//generator.generateByTargetProduct("p201", show_callback);
 
 
 
