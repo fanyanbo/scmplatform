@@ -240,19 +240,21 @@ function buttonInitAfter(){
 		var _state = $("#myAddModalLabel").attr("type");//(0正常\1修改\2增加\3删除)
         console.log(_type +"----"+_state);
         if (_type == 1) {
-        	if (level == 1) {
-		        page5fresh(1);
-		    }else{
+//      	if (level == 1) {
+//		        page5fresh(1);
+//		    }else{
 		        document.getElementById("mydialog").style.display = "block";
 		        $("#errorChangeInfo2").css("display","none");
 		        $("#changeReason3").css("display","none");
+		        $("#changetitle3").css("display","none");
 		        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
 		        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
-		    }
+//		    }
         } else{
         	document.getElementById("mydialog").style.display = "block";
         	$("#errorChangeInfo2").css("display","none");
         	$("#changeReason3").css("display","none");
+        	$("#changetitle3").css("display","none");
 	        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
 	        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
         }
@@ -279,8 +281,9 @@ function buttonInitAfter(){
 			}
 		} else if(_type == 2){
 			console.log("编辑时关闭确认框的的点击");
+			$("#mydialog").css("display","none");
 			$("#page5Modal1").modal("hide");
-			page5fresh(2);
+//			page5fresh(2);
 		} else if(_type == 3){
 			console.log("恢复时确认框的确认键的点击");
 			recoverSure();
@@ -531,7 +534,7 @@ function edit(obj,adminControl,deleteFlag){
     $("#changeDescDiv").css("display","none");
     $("#myAddModalLabel").attr("num","2");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
-	
+	resetAllInfo();//删除前面的操作痕迹
 	var a = $(".eachaudit").index($(obj));
 	var b = $(".eachedit").index($(obj));
 	console.log(a+"||||"+b);
@@ -942,6 +945,7 @@ function passIssue(){
     $("#mydialog").css("display","block");
     $("#changetitle3").css("display","none");
     $("#changeReason3").css("display","none");
+    $("#errorChangeInfo2").css("display","none");
     document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
     document.getElementById("dialogword").innerHTML = "确认通过审核吗？";
 }
@@ -989,7 +993,6 @@ function editIssue(){
 			if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length == 0) {
 				console.log("未做任何修改");
 				document.getElementById("page2Modal1ErrorInfo").innerHTML = "您未做任何修改。";
-				document.getElementById("MoreEditBack").style.display = "none";
 				setTimeout("document.getElementById('page2Modal1ErrorInfo').innerHTML='　'",3000);
 			} else{
 				console.log("做了修改");
@@ -1289,6 +1292,44 @@ function productHistoryQuery(){
 		}
 	}
 }
+
+function resetAllInfo(){
+	colorstatus(0);//焦点落在第一个tabs上
+	
+	document.getElementById("lable5Chip").value = "";
+	document.getElementById("lable5Model").value = "";
+	document.getElementById("lable5TP").value = "";
+	document.getElementById("lable5AndroidVersion").value = "";
+	document.getElementById("lable5ChipMode").value = "";
+	document.getElementById("lable5Emmc").value = "";
+	document.getElementById("lable5Memory").value = "";
+	document.getElementById("lable5GitBranch").value = "";
+	document.getElementById("lable5Platform").value = "";
+	
+	for (var i=0; i<$(".configitems").length; i++) {
+		if ($(".configitems")[i].getAttribute("typestr") == "enum") {
+			$(".configitems")[i].value = $(".configitems")[i].getAttribute("defaultvalue");
+		} else{
+			$(".configitems")[i].value = $(".configitems")[i].getAttribute("defaultvalue");
+		}
+	}
+	for (var j=0; j<$(".sysitems").length; j++) {
+		$(".sysitems")[j].checked = false;
+	}
+	for (var k=0; k<$(".mkitems").length; k++) {
+		if ($(".mkitems")[k].getAttribute("type") == "checkbox") {
+			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
+			document.getElementsByClassName("mkitems")[k].checked = false;
+		} else if($(".mkitems")[k].getAttribute("type") == "radio"){
+			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
+			document.getElementsByClassName("mkitems")[k].checked = false;
+		}
+	}
+	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
+	document.getElementsByClassName("mkradio")[0].checked = true;
+}
+
+
 function isJSON_test(str) {
     if (typeof str == 'string') {
         try {

@@ -692,9 +692,11 @@ function resetAllInfo(){
 	}
 	for (var k=0; k<$(".mkitems").length; k++) {
 		if ($(".mkitems")[k].getAttribute("type") == "checkbox") {
-			document.getElementsByClassName("mkitems")[k].removeAttribute('checked');
+			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
+			document.getElementsByClassName("mkitems")[k].checked = false;
 		} else if($(".mkitems")[k].getAttribute("type") == "radio"){
-			document.getElementsByClassName("mkitems")[k].removeAttribute('checked');
+			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
+			document.getElementsByClassName("mkitems")[k].checked = false;
 		}
 	}
 	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
@@ -991,6 +993,7 @@ function closeparentpage() {
 }
 
 function configQueryData(arr1,arr2) {
+	//console.log(arr2);
 	var _myConfigBox = document.getElementById("myConfigBox");
 	for(var i = 0; i < arr1.length; i++) {
 		_myConfigBox.innerHTML += '<div class="configitems1 eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';

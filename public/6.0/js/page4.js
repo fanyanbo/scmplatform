@@ -169,6 +169,9 @@ function buttonInitBefore(){
 	$("#oButtonX").click(function() {
 		$("#mydialog").css("display","none");
 	});
+	$("#oButtonX2").click(function() {
+		$("#mydialog2").css("display","none");
+	});
 	$("#page4_close1").click(function() {
 		document.getElementById("descriptTbody").innerHTML = "";
 		$("#page4_examine").modal('hide');
@@ -243,13 +246,15 @@ function buttonInitAfter(){
 		        document.getElementById("mydialog").style.display = "block";
 		        $("#errorChangeInfo2").css("display","none");
 		        $("#changeReason3").css("display","none");
+		        $("#changetitle3").css("display","none");
 		        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
 		        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
 //		    }
         } else{
         	document.getElementById("mydialog").style.display = "block";
-	        $("#errorChangeInfo2").css("display","none");
-	        $("#changeReason3").css("display","none");
+        	$("#errorChangeInfo2").css("display","none");
+        	$("#changeReason3").css("display","none");
+        	$("#changetitle3").css("display","none");
 	        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
 	        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
         }
@@ -276,6 +281,7 @@ function buttonInitAfter(){
 			}
 		} else if(_type == 2){
 			console.log("编辑时关闭确认框的的点击");
+			$("#mydialog").css("display","none");
 			$("#page4Modal1").modal("hide");
 			//page4fresh(2);
 		} else if(_type == 3){
@@ -288,6 +294,10 @@ function buttonInitAfter(){
 	    changeDev.splice(0,changeDev.length);
 	    changeReduce.splice(0,changeReduce.length);
 	});
+	$("#myDeleteModalEnsure2").click(function() {
+		recoverSure();
+	});
+	
 	$("#myCopyModalClose").click(function() {
 		$("#myPreviewModal").css("display","none");
 	});
@@ -295,12 +305,12 @@ function buttonInitAfter(){
 	$("#myEditEnsureX").click(function() {
 		console.log("修改提示框的X按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		page4fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+		//page4fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
 	});
 	$("#myEditCancle").click(function() {
 		console.log("修改提示框的取消按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		page4fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
+		//page4fresh(1);//1-本身、2-本身+第一页第二页、3-本身+第五页
 	});
 	$("#myEditEnsure").click(function() {
 		console.log("修改提示框的确定按钮");
@@ -524,7 +534,7 @@ function edit(obj,adminControl,deleteFlag){
     $("#changeDescDiv").css("display","none");
     $("#myAddModalLabel").attr("num","2");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
-	
+	resetAllInfo();//删除前面的操作痕迹
 	var a = $(".eachaudit").index($(obj));
 	var b = $(".eachedit").index($(obj));
 	console.log(a+"||||"+b);
@@ -542,13 +552,13 @@ function recover(obj,deleteFlag){
 	recoverChip = $("#page4_table2 .chip")[_index].innerHTML;
 	recoverModel = $("#page4_table2 .model")[_index].innerHTML;
 	_author = $("#page4_table2 .author")[_index].innerHTML;
-	$("#reviewDialog").attr("ochip",recoverChip);
-	$("#reviewDialog").attr("omodel",recoverModel);
-	$("#myAddModalLabel").attr("num","3");//1-审核、2-编辑、3-恢复
-	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
-    document.getElementById("mydialog").style.display = "block";
-    document.getElementById("myDeleteModalLabel").innerHTML = "恢复操作";
-    document.getElementById("dialogword").innerHTML = "确认撤销删除吗？";
+	$("#reviewDialog2").attr("ochip",recoverChip);
+	$("#reviewDialog2").attr("omodel",recoverModel);
+	$("#myAddModalLabel2").attr("num","3");//1-审核、2-编辑、3-恢复
+	$("#myAddModalLabel2").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
+    document.getElementById("mydialog2").style.display = "block";
+    document.getElementById("myDeleteModalLabel2").innerHTML = "恢复操作";
+    document.getElementById("dialogword2").innerHTML = "确认撤销删除吗？";
     
     console.log(level+"---"+loginusername);
     if (_author != loginusername) {
@@ -595,8 +605,8 @@ function editSure(){
 }
 //恢复的提交
 function recoverSure(){
-	var chip = $("#reviewDialog").attr("ochip");
-	var model = $("#reviewDialog").attr("omodel");
+	var chip = $("#reviewDialog2").attr("ochip");
+	var model = $("#reviewDialog2").attr("omodel");
 	console.log(chip+"------"+model);
 	var recoveObj = {
 		"chip" : chip,
@@ -935,6 +945,7 @@ function passIssue(){
     $("#mydialog").css("display","block");
     $("#changetitle3").css("display","none");
     $("#changeReason3").css("display","none");
+    $("#errorChangeInfo2").css("display","none");
     document.getElementById("myDeleteModalLabel").innerHTML = "审核操作";
     document.getElementById("dialogword").innerHTML = "确认通过审核吗？";
 }
@@ -1281,6 +1292,44 @@ function productHistoryQuery(){
 		}
 	}
 }
+
+function resetAllInfo(){
+	colorstatus(0);//焦点落在第一个tabs上
+	
+	document.getElementById("lable4Chip").value = "";
+	document.getElementById("lable4Model").value = "";
+	document.getElementById("lable4TP").value = "";
+	document.getElementById("lable4AndroidVersion").value = "";
+	document.getElementById("lable4ChipMode").value = "";
+	document.getElementById("lable4Emmc").value = "";
+	document.getElementById("lable4Memory").value = "";
+	document.getElementById("lable4GitBranch").value = "";
+	document.getElementById("lable4Platform").value = "";
+	
+	for (var i=0; i<$(".configitems").length; i++) {
+		if ($(".configitems")[i].getAttribute("typestr") == "enum") {
+			$(".configitems")[i].value = $(".configitems")[i].getAttribute("defaultvalue");
+		} else{
+			$(".configitems")[i].value = $(".configitems")[i].getAttribute("defaultvalue");
+		}
+	}
+	for (var j=0; j<$(".sysitems").length; j++) {
+		$(".sysitems")[j].checked = false;
+	}
+	for (var k=0; k<$(".mkitems").length; k++) {
+		if ($(".mkitems")[k].getAttribute("type") == "checkbox") {
+			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
+			document.getElementsByClassName("mkitems")[k].checked = false;
+		} else if($(".mkitems")[k].getAttribute("type") == "radio"){
+			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
+			document.getElementsByClassName("mkitems")[k].checked = false;
+		}
+	}
+	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
+	document.getElementsByClassName("mkradio")[0].checked = true;
+}
+
+
 function isJSON_test(str) {
     if (typeof str == 'string') {
         try {

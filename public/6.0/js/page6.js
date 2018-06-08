@@ -277,6 +277,7 @@ function addOrChangeResult(){
 			if(data.resultCode == "0") {
 				console.log("数据提交成功");
 				$("#myEditEnsureDiv").css("display","none");
+				document.getElementById("page6Container").value = "";
 				$("#page6Modal").modal('hide');
 				var _curPart1 = $("#page6Submit").attr("part1");
 				freshNumber == _curPart1;

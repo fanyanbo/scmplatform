@@ -108,7 +108,6 @@
 										<div class="col-xs-4 text-left inputdiv">
 											<label for="lable4GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
 											<input type="text" value="" name="gitBranch" id="lable4GitBranch" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
-											<!--<div class="auto_hidden" id="page4_git_auto2"></div>-->
 										</div>
 										<div class="col-xs-4 text-left inputdiv">
 											<label for="lable4Platform" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">平台&nbsp;:</label>
@@ -173,7 +172,7 @@
 											<span id="txt3">删除模块：<span id="txt33"></span><br/></span>
 											<span id="txt4">修改配置：<span id="txt44"></span><br/></span>
 										</div>
-										<span class="changetitle">修改原因</span><span id="errorChangeInfo">&nbsp;&nbsp;此项不能为空!</span><br/>
+										<span class="changetitle">修改原因</span><span id="errorChangeInfo">&nbsp;&nbsp;此项不能为空!</span>
 										<textarea id="changeReason"></textarea>
 									</div>
 									<div class="modal-footer">
@@ -210,6 +209,22 @@
 			</div>
 		</div>
 		
+		<div class="col-xs-10 col-lg-10 col-xs-push-1 col-lg-push-1" id="mydialog2" tabindex="-1" role="dialog">
+			<div class="modal-delete" role="document" id="reviewDialog2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" aria-label="Close" id="oButtonX2"><span aria-hidden="true">×</span></button>
+						<h4 class="modal-title text-left" id="myDeleteModalLabel2"></h4>
+					</div>
+					<div class="modal-body">
+						<p style="font-size: 24px;text-align: center;" id="dialogword2"></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="myDeleteModalEnsure2">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!--点击预览弹出复制的modal-->
 		<div id="myPreviewModal" tabindex="-1" role="dialog" aria-labelledby="myPreviewModalLabel">
 			<div class="modalwidth" role="document">

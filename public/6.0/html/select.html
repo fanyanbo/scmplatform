@@ -164,6 +164,51 @@
 				e.options.length = 1;
 			}
 		</script>
+		
+		<script>
+		
+		
+			var arr =  [{id:1,name:'B'},{id:2,name:'C'},{id:3,name:'A'},{id:3,name:'B'},{id:1,name:'C'},{id:1,name:'A'}];
+ 
+			var c = arr.sort(function(a,b){
+				if (a.name >b.name) {
+					return a.name >b.name;
+				} else if(a.name == b.name){
+					return a.id >b.id;
+				}
+			});
+			
+			console.log(c);
+			
+			
+		
+			var arr1 = [
+			    {"name":"B","id":2},
+			    {"name":"C","id":1},
+			    {"name":"A","id":3},
+			    {"name":"B","id":1},
+			    {"name":"C","id":3},
+			    {"name":"A","id":2},
+			    {"name":"B","id":3},
+			    {"name":"C","id":2},
+			    {"name":"A","id":1}
+			];
+			
+			function sortBy(field1,field2) {
+		    	return function(a,b) {
+		        	if(a.field1 == b.field1) return a.field2 - b.field2;
+		        	return a.field1 - b.field1;
+		    	}
+		    }
+			function sortBy(field1,field2) {
+		    	return function(a,b) {
+		        	if(a.field1 == b.field1) return a.field2 - b.field2;
+		        	return a.field1 - b.field1;
+		    	}
+		    }
+//			arr1.sort(sortBy("name","id"));
+//			console.log(arr1);
+		</script>
 	</body>
 
 </html>

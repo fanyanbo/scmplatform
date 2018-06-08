@@ -64,6 +64,13 @@
 	font-size: 16px;
 	color: #FFFFFF;
 }
+.proplable{
+	width: 60%;
+	margin-bottom: 0px;
+	margin-top: -8%;
+	font-size: 16px;
+	color: #FFFFFF;
+}
 .configinput{
 	display: block;
 	width: 80%;
@@ -72,7 +79,7 @@
 	margin-bottom: -8px;
 	font-size: 20px;
 }
-.defaultOption{
+.defaultOption,.defaultOption2{
 	height: 25px;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -83,6 +90,12 @@
 	margin-left: 10.3%;
 }
 .defaultOption:focus{
+	background-color: red;
+}
+.defaultOption2:nth-child(1){
+	margin-left: 10.3%;
+}
+.defaultOption2:focus{
 	background-color: red;
 }
 .configtextarea{
@@ -105,14 +118,14 @@
 	overflow-y: auto;
 	font-size: 20px;
 }
-.menuUnitInput{
+.menuUnitInput,.menuUnitInput2{
     display: block;
     float: left;
     height: 32px;
     width: 100%;
     padding-left: 3%;
 }
-.configselect,.moduleSelect,.sysSelect{
+.configselect,.moduleSelect,.sysSelect,.propSelect{
 	display: block;
 	width: 80%;
 	height: 35px;
@@ -133,7 +146,7 @@
 	display: none;
 }
 
-#page7_config_border,#page7_module_border,#page7_sys_border{
+#page7_config_border,#page7_module_border,#page7_sys_border,#page7_prop_border{
 	background-color: #bcbcbc;
 	height: 100%;
 	width: 60%;
@@ -161,7 +174,7 @@
 	width: 39%;
 	margin-left: 51%;
 }
-#configClose,#moduleClose,#sysClose{
+#configClose,#moduleClose,#sysClose,#propClose{
 	display: block;
 	position: absolute;
 	right: 0;
@@ -169,7 +182,7 @@
 	height: 35px;
 	width: 45px;
 }
-#configSubmit,#moduleSubmit,#sysSubmit{
+#configSubmit,#moduleSubmit,#sysSubmit,#propSubmit{
 	display: block;
 	width: 150px;
 	margin:auto;
@@ -181,7 +194,7 @@
     clear: both;
     margin-top: 50px;
 }
-#configErrorInfo,#moduleErrorInfo,#sysErrorInfo{
+#configErrorInfo,#moduleErrorInfo,#sysErrorInfo,#propErrorInfo{
 	text-align: center;
 	color: red;
 	margin-top: 2%;
@@ -189,13 +202,13 @@
 }
 
 /*module*/
-#page7_module_border label,#page7_sys_border label{
+#page7_module_border label,#page7_sys_border,#page7_prop_border label{
 	margin-left: 10%;
 	font-size: 24px;
 	color: #FFFFFF;
 	margin-bottom: 0px;
 }
-#page7_module_border input,#page7_sys_border input{
+#page7_module_border input,#page7_sys_border,#page7_prop_border input{
 	display: block;
 	width: 80%;
 	height: 35px;

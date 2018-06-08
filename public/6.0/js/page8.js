@@ -6,18 +6,16 @@ var coocaaVersion = "/v6.0";
 
 $(function() {
 	$(".page8_boxes")[0].style.display = "block";
-	$("#tabClickIndex").attr("curId");
+	$("#tabClickIndex").attr("curId","0");
 	
 	buttonInitBefore();
-	var node1 = '{}';
-	sendHTTPRequest(coocaaVersion+"/config/queryCategory", node1, categoryQueryResult);
+	sendHTTPRequest(coocaaVersion+"/config/queryCategory", '{}', categoryQueryResult);
 });
 
 function buttonInitBefore(){
 	//大分类的点击
 	$(".page8_tabs").click(function(){
-		var _curIndex1 = "";
-		_curIndex1 = $(".page8_tabs").index($(this));
+		var _curIndex1 = $(".page8_tabs").index($(this));
 		tabsClick(_curIndex1);
 	});
 	
@@ -36,10 +34,11 @@ function buttonInitBefore(){
 		console.log(_newValue);
 		if (_newValue == null ||_newValue.length == 0) {
 			console.log("输入项不能为空");
-			document.getElementById("editErrorInfo").style.display = "inline-block";
-			setTimeout("document.getElementById('editErrorInfo').style.display = 'none';", 3000);
+			document.getElementById("chipMangInfo").style.display = "inline-block";
+			document.getElementById("chipMangInfo").innerHTML = "此项不能为空";
+			setTimeout("document.getElementById('chipMangInfo').style.display = 'none';", 3000);
 		} else{
-			page6SubmitState(_oldValue,_newValue,_curPart1,_curPart2);
+			//page8SubmitState(_oldValue,_newValue,_curPart1,_curPart2);
 		}
 		addSubmit();
 	});
@@ -238,10 +237,12 @@ function addSubmit(){
 	var _curIndex3 = $("#page8Submit").attr("clickid");
 	if (_curIndex3 == 0) {
 		ajaxUrl3 = coocaaVersion+"/config/addCategory";
-	} else if(_curIndex3 == 2||_curIndex3 == 3||_curIndex3 == 4||_curIndex3 == 5){
-		ajaxUrl3 = coocaaVersion+"/sys/addCategory";
 	} else if(_curIndex3 == 1){
 		ajaxUrl3 = coocaaVersion+"/module/addCategory";
+	} else if(_curIndex3 == 2||_curIndex3 == 3||_curIndex3 == 4||_curIndex3 == 5){
+		ajaxUrl3 = coocaaVersion+"/sys/addCategory";
+	} else if(_curIndex3 == 6){
+		ajaxUrl3 = coocaaVersion+"/prop/addCategory";
 	}
 	var _category = $("#page8Container").val();
 	var node33 = '{"category":"' + _category + '"}';
@@ -251,17 +252,19 @@ function addSubmit(){
 
 function changeSubmit(){
 	var _curId = $("#tabClickIndex").attr("curId");
+	console.log(_curId);
 	var _ajaxUrl = "";
 	if (_curId == 0) {
 		_ajaxUrl = coocaaVersion+"/config/updateItemsOrderId";
-	} else if(_curId == 1||_curId == 2||_curId == 3||_curId == 4){
-		_ajaxUrl = coocaaVersion+"/settings/updateItemsOrderId";
-	} else if(_curId == 5){
+	} else if(_curId == 1){
 		_ajaxUrl = coocaaVersion+"/module/updateItemsOrderId";
+	} else if(_curId == 2||_curId == 3||_curId == 4||_curId == 5){
+		_ajaxUrl = coocaaVersion+"/settings/updateItemsOrderId";
+	} else if(_curId == 6){
+		_ajaxUrl = coocaaVersion+"/prop/updateItemsOrderId";
 	}
 	
 	var _node = [];
-	var _node2 = "";
 	for (var i=0; i<$(".sequence_value").length; i++) {
 		var _objItem = {
 			"engName":"",
@@ -272,9 +275,8 @@ function changeSubmit(){
 		
 		_node.push(_objItem);
 	}
-	console.log(_node);
 	_node = JSON.stringify(_node);
-	_node2 = '{"arr":' + _node + '}';
+	var _node2 = '{"arr":' + _node + '}';
 	console.log(_node2);
 	sendHTTPRequest(_ajaxUrl, _node2, updateCategoryResult);
 }
@@ -308,7 +310,6 @@ function tabsClick(num){
 	var _hasValue = $(".page8_tabs:eq(" + (num) + ")").attr("hasvalue");
 	console.log(_hasValue);
 	if (_hasValue == "false") {
-		var node31 = '{}';
 		var ajaxUrl = "";
 		if (num == 0) {
 			ajaxUrl = coocaaVersion+"/config/queryCategory";
@@ -316,8 +317,10 @@ function tabsClick(num){
 			ajaxUrl = coocaaVersion+"/module/queryCategory";
 		} else if(num == 2||num == 3||num == 4||num == 5){
 			ajaxUrl = coocaaVersion+"/settings/queryCategory";
+		} else if(num == 6){
+			ajaxUrl = coocaaVersion+"/prop/queryCategory";
 		}
-		sendHTTPRequest(ajaxUrl, node31, categoryQueryResult);
+		sendHTTPRequest(ajaxUrl, '{}', categoryQueryResult);
 	} else{
 		console.log("已经获取过了");
 	}
