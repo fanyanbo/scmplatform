@@ -122,6 +122,7 @@ function generateFiles(
                         chip,		    // 机芯
                         model,          // 机型
                         actionType,     // 动作类型(preview为预览)
+                        tempflag,       // 是否使用临时表
                         callback		// 回调函数
                         )
 {
@@ -129,9 +130,18 @@ function generateFiles(
 	mod_callback = callback;
 
     tab_products = dbConfig.tables.products;
-    tab_configdata = dbConfig.tables.configdata;
-    tab_settingsdata = dbConfig.tables.settingsdata;
-    tab_propsdata = dbConfig.tables.propsdata;
+    if (tempflag != 0)
+    {
+        tab_configdata = dbConfig.tables.configdata_temp;
+        tab_settingsdata = dbConfig.tables.settingsdata_temp;
+        tab_propsdata = dbConfig.tables.propsdata_temp;
+    }
+    else
+    {
+        tab_configdata = dbConfig.tables.configdata;
+        tab_settingsdata = dbConfig.tables.settingsdata;
+        tab_propsdata = dbConfig.tables.propsdata;
+    }
     tab_mkdata = dbConfig.tables.mkdata;
 
 	infoTxt = "";
@@ -807,27 +817,27 @@ function getTmpDir()
 
 Generator.prototype.generate = function(chip, model, callback)
 {
-    generateFiles(chip, model, "chip_and_model", callback);
+    generateFiles(chip, model, "chip_and_model", 0, callback);
 }
 
-Generator.prototype.preview = function(chip, model, callback)
+Generator.prototype.preview = function(chip, model, tempflag, callback)
 {
-	generateFiles(chip, model, "preview", callback);
+	generateFiles(chip, model, "preview", tempflag, callback);
 }
 
 Generator.prototype.generateByTargetProduct = function(targetProduct, callback)
 {
-    generateFiles("", targetProduct, "targetProduct", callback);
+    generateFiles("", targetProduct, "targetProduct", 0, callback);
 }
 
 Generator.prototype.generateByChip = function(chip, callback)
 {
-    generateFiles(chip, "", "chip_only", callback);
+    generateFiles(chip, "", "chip_only", 0, callback);
 }
 
 Generator.prototype.generateByModel = function(model, callback)
 {
-    generateFiles("", model, "model_only", callback);
+    generateFiles("", model, "model_only", 0, callback);
 }
 
 
