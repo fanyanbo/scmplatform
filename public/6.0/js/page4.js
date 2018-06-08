@@ -276,6 +276,7 @@ function buttonInitAfter(){
 					setTimeout("document.getElementById('errorChangeInfo2').style.display = 'none';", 3000);
 				} else{
 					emailReason = content;
+					reviewSure();
 				}
 			} else{
 				reviewSure();
@@ -519,6 +520,7 @@ function review(obj,adminControl,deleteFlag){
         	document.getElementById("page4_firstTr").style.display="table-row";
         }       
     }
+    resetAllInfo();//删除前面的操作痕迹
 	var a = $(".eachaudit").index($(obj));
 	var b = $(".eachedit").index($(obj));
 	console.log(a+"||||"+b);
