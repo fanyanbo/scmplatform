@@ -224,13 +224,15 @@ DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
 
   ep.after('insert_result', arr.length, function (list) {
       console.log(list);
-      generator.generateByTargetProduct(name, function(err,result){
-        if(err){
-          logger.error("generateByTargetProduct错误：" + err);
-          return callback(err);
-        }
-        callback(null,"updateTargetProduct OK" + result);
-      });
+      // 这个接口有问题
+      // generator.generateByTargetProduct(name, function(err,result){
+      //   if(err){
+      //     logger.error("generateByTargetProduct错误：" + err);
+      //     return callback(err);
+      //   }
+      //   callback(null,"updateTargetProduct OK" + result);
+      // });
+      callback(null,"updateTargetProduct OK");
   });
 
   let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
