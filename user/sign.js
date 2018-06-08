@@ -31,9 +31,10 @@ exports.login = function (req, res, next) {
          return output.error(req,res,err);
        }
        if(result.length == 0) {
+         logger.error("用户名不存在:" + loginname);
          return output.error(req,res,"用户不存在!");
        }
-       logger.debug("result = " + result[0]);
+       logger.debug("result = " + JSON.stringify(result[0]));
        if(result.length == 1) {
          let passStored = result[0].password;
          if(passStored == pass){
@@ -45,6 +46,9 @@ exports.login = function (req, res, next) {
          }else{
            output.error(req,res,"密码有误!");
          }
+       }else{
+         logger.error("用户名查询长度大于1");
+         output.error(req,res,"用户名查询长度大于1，数据库有误!");
        }
      });
 };
