@@ -805,8 +805,8 @@ function SysDataInsert2(type, arr){
 }
 function PropDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
-		$("#"+arr[i].engName).val(arr[i].curValue);
-		$("#"+arr[i].engName).attr("value",arr[i].curValue);
+		console.log(arr[i].engName+"---"+arr[i].curValue);
+		document.getElementById(arr[i].engName).value = arr[i].curValue;
 	}
 	if (type == 2) {
 		for (var i=0; i<$(".propitem").length; i++) {
