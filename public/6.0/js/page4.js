@@ -249,16 +249,12 @@ function buttonInitAfter(){
 		var _state = $("#myAddModalLabel").attr("type");//(0正常\1修改\2增加\3删除)
         console.log(_type +"----"+_state);
         if (_type == 1) {
-//      	if (level == 1) {
-//		        page4fresh(1);
-//		    }else{
-		        document.getElementById("mydialog").style.display = "block";
-		        $("#errorChangeInfo2").css("display","none");
-		        $("#changeReason3").css("display","none");
-		        $("#changetitle3").css("display","none");
-		        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
-		        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
-//		    }
+	        document.getElementById("mydialog").style.display = "block";
+	        $("#errorChangeInfo2").css("display","none");
+	        $("#changeReason3").css("display","none");
+	        $("#changetitle3").css("display","none");
+	        document.getElementById("myDeleteModalLabel").innerHTML = "关闭操作";
+	        document.getElementById("dialogword").innerHTML = "当前操作未保存，是否确认退出？";
         } else{
         	document.getElementById("mydialog").style.display = "block";
         	$("#errorChangeInfo2").css("display","none");
@@ -818,14 +814,80 @@ function getPointProductInfo(){
 				$('#page4Modal1').modal();
 				$(".modal-backdrop").addClass("new-backdrop");
 				
-				console.log(level+"---"+loginusername);
-			    if (_author != loginusername) {
-			    	getCommitterEmail(_author);
-			    }
+				var node = '{"chip":"'+$("#lable4Chip").val()+'","model":"'+$("#lable4Model").val()+'"}';
+				console.log(node);
+				sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery2);
             }
         };
     }
 }
+
+function productHistoryQuery2(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log("数据查询成功");
+				if (data.resultData.length == 0) {
+					$("#changeDescDiv").css("display","none");
+					$("#addDescDiv").css("display","block");
+				} else{
+					$("#changeDescDiv").css("display","block");
+					$("#addDescDiv").css("display","none");
+					
+					var _desc = "";
+					var _reason = data.resultData[data.resultData.length-1].reason;
+					var _content = data.resultData[data.resultData.length-1].content;
+					console.log(isJSON_test(_content));
+					if (isJSON_test(_content)) {
+						_content = JSON.parse(_content);
+						_content.deleteObj = "";
+					}else{
+						_content= {
+							changeDev : "",
+							changeAdd : "",
+							changeReduce: "",
+							changeConf : "",
+							changeProp: "",
+							deleteObj : data.resultData[data.resultData.length-1].content
+						};
+					}
+					console.log(_content);
+					var _devArray,_addArray,_deleteArray,_confArray,_propsArray = "";
+					
+					var _devArray = _content.changeDev;//.splice(",")
+					var _addArray = _content.changeAdd;//.splice(",")
+					var _deleteArray = _content.changeReduce;//.splice(",")
+					var _confArray = _content.changeConf;//.splice(",")
+					var _propsArray = _content.changeProp;//.splice(",")
+					var _deleteArray2 = _content.deleteObj;
+					if (_devArray.length != 0) {
+						_desc += "<span>修改了基本项："+_devArray+"</span><br/>";
+					}if (_addArray.length != 0) {
+						_desc += "<span>新增了设置项："+_addArray+"</span><br/>";
+					}if (_deleteArray.length != 0) {
+						_desc += "<span>删除了设置项："+_deleteArray+"</span><br/>";
+					}if (_confArray.length != 0) {
+						_desc += "<span>修改了Config项："+_confArray+"</span><br/>";
+					}if (_propsArray.length != 0) {
+						_desc += "<span>修改了Config项："+_propsArray+"</span><br/>";
+					}
+					if (_deleteArray2.length != 0){
+						_desc += "<span>"+_deleteArray2+"</span><br/>";
+					}
+					$("#reviewContent").html(_desc);
+					$("#reviewReason").html(_reason);
+				}
+			}
+		}
+		console.log(level+"---"+loginusername);
+	    if (_author != loginusername) {
+	    	getCommitterEmail(_author);
+	    }
+	}
+}
+
 function CommonDataInsert2(type,arr){
 	console.log(type);
 	console.log(arr);
@@ -1316,6 +1378,7 @@ function productHistoryQuery(){
 								changeAdd : "",
 								changeReduce: "",
 								changeConf : "",
+								changeProp : "",
 								deleteObj : data.resultData[i].content
 							};
 						}
@@ -1328,12 +1391,6 @@ function productHistoryQuery(){
 						var _confArray = _content.changeConf;//.splice(",")
 						var _propsArray = _content.changeProp;//.splice(",")
 						var _deleteArray2 = _content.deleteObj;
-						console.log(_content);
-						console.log(_devArray.length);
-						console.log(_addArray.length);
-						console.log(_deleteArray.length);
-						console.log(_confArray.length);
-						console.log(_propsArray.length);
 						if (_devArray.length != 0) {
 							_desc += "<span>修改了基本项："+_devArray+"</span><br/>";
 						}if (_addArray.length != 0) {

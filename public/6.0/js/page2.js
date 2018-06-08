@@ -1361,12 +1361,6 @@ function productHistoryQuery(){
 						var _confArray = _content.changeConf;//.splice(",")
 						var _propsArray = _content.changeProp;//.splice(",")
 						var _deleteArray2 = _content.deleteObj;
-						console.log(_content);
-						console.log(_devArray.length);
-						console.log(_addArray.length);
-						console.log(_deleteArray.length);
-						console.log(_confArray.length);
-						console.log(_propsArray.length);
 						if (_devArray.length != 0) {
 							_desc += "<span>修改了基本项："+_devArray+"</span><br/>";
 						}if (_addArray.length != 0) {
@@ -1486,7 +1480,7 @@ function changeSettings(obj){
                 this.splice(index, 1);
             }
         };
-        changeReduce.remove(obj.getAttribute("cnname"));
+        changeReduce.push(obj.getAttribute("cnname"));
         changeAdd.remove(obj.getAttribute("cnname"));
         console.log("add"+changeAdd);
         console.log("delete"+changeReduce);

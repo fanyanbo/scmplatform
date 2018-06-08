@@ -102,5 +102,10 @@ body{
 	background-color: rgba(0,0,0,0);
 }
 #logoImg{
-	
+	position: relative;
+    display: inline-block;
+    height: 25px;
+    float: left;
+    top: 12px;
+    margin-right: 10px;
 }

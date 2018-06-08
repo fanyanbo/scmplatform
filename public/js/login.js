@@ -30,13 +30,11 @@ function loginfun() {
 function loginresult() {
     if (this.readyState == 4) {
         console.log("this.responseText = " + this.responseText);
-        
         if (this.status == 200)
         {
             var data = JSON.parse(this.responseText);
             console.log(JSON.stringify(data));
             if (data.resultCode == "0") {
-              	//document.location.href="index.html";
               	document.location.href="version.html";
             }
             else{
