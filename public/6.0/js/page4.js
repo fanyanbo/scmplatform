@@ -353,10 +353,10 @@ function allQueryResult() {
 			var data = JSON.parse(this.responseText);
             console.log(data);
             if(data.resultCode == 0){
-            	configQueryData(data.resultData[4],data.resultData[0]);
-				moduleQueryData(data.resultData[5],data.resultData[1]);
-				settingsQueryData(data.resultData[7],data.resultData[2]);
-				propQueryData(data.resultData[6],data.resultData[3]);
+            	configQueryData1(data.resultData[4],data.resultData[0]);
+				moduleQueryData1(data.resultData[5],data.resultData[1]);
+				settingsQueryData1(data.resultData[7],data.resultData[2]);
+				propQueryData1(data.resultData[6],data.resultData[3]);
             }
 			colorstatus(0);
 		};
@@ -379,7 +379,7 @@ function targetproductQueryResult() {
 	}
 }
 
-function configQueryData(arr1,arr2) {
+function configQueryData1(arr1,arr2) {
 	var _myConfigBox = document.getElementById("myConfigBox");
 	for(var i = 0; i < arr1.length; i++) {
 		_myConfigBox.innerHTML += '<div class="configitems1 eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
@@ -389,12 +389,12 @@ function configQueryData(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].category == $(".configitems1:eq(" + (j) + ")").attr("category")) {
 				kk = i;
-				configDataInsert(kk, $(".configitems1")[j], arr2);
+				configDataInsert1(kk, $(".configitems1")[j], arr2);
 			}
 		}
 	}
 }
-function moduleQueryData(arr1,arr2) {
+function moduleQueryData1(arr1,arr2) {
 	var _myMKBox = document.getElementById("myMkBox");
 	for(var i = 0; i < arr1.length; i++) {
 		_myMKBox.innerHTML += '<div class="moduleitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
@@ -404,13 +404,13 @@ function moduleQueryData(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
 				kk = i;
-				mkDataInsert(kk, $(".moduleitems")[j], arr2);
+				mkDataInsert1(kk, $(".moduleitems")[j], arr2);
 			}
 		}
 	}
 	document.getElementsByClassName("mkradio")[0].setAttribute('checked', 'true');
 }
-function settingsQueryData(arr1,arr2) {
+function settingsQueryData1(arr1,arr2) {
 	var _mySysSettingBox = document.getElementById("mySysSettingBox");
 	var _mySourceBoxBox = document.getElementById("mySourceBoxBox");
 	var _myMarketShowBox = document.getElementById("myMarketShowBox");
@@ -419,16 +419,16 @@ function settingsQueryData(arr1,arr2) {
 	for(var i = 0; i < arr1.length; i++) {
 		if (arr1[i].level1 == "系统设置") {
 			kk = i;
-			sysDataInsert(kk,_mySysSettingBox,0,arr1);
+			sysDataInsert1(kk,_mySysSettingBox,0,arr1);
 		} else if(arr1[i].level1 == "信号源工具箱"){
 			kk = i;
-			sysDataInsert(kk,_mySourceBoxBox,1,arr1);
+			sysDataInsert1(kk,_mySourceBoxBox,1,arr1);
 		}else if(arr1[i].level1 == "卖场演示"){
 			kk = i;
-			sysDataInsert(kk,_myMarketShowBox,2,arr1);
+			sysDataInsert1(kk,_myMarketShowBox,2,arr1);
 		}else if(arr1[i].level1 == "中间件"){
 			kk = i;
-			sysDataInsert(kk,_myMiddlewareBox,3,arr1);
+			sysDataInsert1(kk,_myMiddlewareBox,3,arr1);
 		}
 	}
 	for (var j=0; j< $(".settingsitems").length; j++) {
@@ -445,7 +445,7 @@ function settingsQueryData(arr1,arr2) {
 		}
 	}
 }
-function propQueryData(arr1,arr2) {
+function propQueryData1(arr1,arr2) {
 	var _myPropBox = document.getElementById("myPropBox");
 	for(var i = 0; i < arr1.length; i++) {
 		_myPropBox.innerHTML += '<div class="propitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
@@ -455,13 +455,13 @@ function propQueryData(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
 				kk = i;
-				propDataInsert(kk, $(".propitems")[j], arr2);
+				propDataInsert1(kk, $(".propitems")[j], arr2);
 			}
 		}
 	}
 }
 
-function configDataInsert(kk, obj, data) {
+function configDataInsert1(kk, obj, data) {
 	if(data[kk].typeStr == "string") {
 		obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='col-xs-6 configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 	} else if(data[kk].typeStr == "enum") {
@@ -481,14 +481,14 @@ function configDataInsert(kk, obj, data) {
 		obj.innerHTML += _myAddselect;
 	}
 }
-function mkDataInsert(kk, obj, data) {
+function mkDataInsert1(kk, obj, data) {
 	if (data[kk].category == "PlayerLibrary") {
 		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].category + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	} else{
 		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox' class='mkitems' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='"+data[kk].gitPath+"' name='"+data[kk].category+"' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	}
 }
-function sysDataInsert(i, obj, num, arr1){
+function sysDataInsert1(i, obj, num, arr1){
 	if(arr1[i].level3 != ""){
 		obj.innerHTML += '<div class="settingsitems eachpartbox" level2="'+arr1[i].level2+'" level3="'+arr1[i].level3+'"><div class="grouptitle" title="'+arr1[i].level2+"-"+arr1[i].level3+'">'+arr1[i].level2+"-"+arr1[i].level3+'</div></div>';
 		if (_twoLevelLinkageArrayTwo[num].indexOf(arr1[i].level3)== -1) {
@@ -502,7 +502,7 @@ function sysDataInsert(i, obj, num, arr1){
 		_twoLevelLinkageArrayOne[num].push(arr1[i].level2);
 	}
 }
-function propDataInsert(kk, obj, data) {
+function propDataInsert1(kk, obj, data) {
 	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 }
 
@@ -598,10 +598,12 @@ function editSure(){
 	var _base = getBaseValue();
 	var _config = getConfigValue();
 	var _sys = getSysValue();
+	var _prop = getPropValue();
 	_base = JSON.stringify(_base);
 	_config = JSON.stringify(_config);
 	_sys = JSON.stringify(_sys);
-	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+	_prop = JSON.stringify(_prop);
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + ',"propsInfo":' + _prop + '}';
 	console.log(node);
 	sendHTTPRequest(coocaaVersion+"/product/update", node, setEditInfo);
 }
@@ -733,7 +735,7 @@ function sendEmail(){
 		console.log("编辑");
 		var _chip = $("#lable4Chip").val();
 		var _model = $("#lable4Model").val();
-		var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
+		var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'","changeProp":"'+changeProp+'"}';
 		console.log(_desc);
 		var maildata = "用户："+loginusername+"<br/>针对机芯："+_chip+",机型："+_model+"做出了如下修改：";
 	    if(changeDev.length != 0) {
@@ -854,17 +856,18 @@ function ConfigDataInsert2(type, arr){
 	}
 }
 function MKDataInsert2(type, arr){
-	console.log(type);
 	for (var j=0; j<$(".mkradio").length; j++) {
 		document.getElementsByClassName("mkradio")[j].removeAttribute('checked');
 	}
 	for (var i=0; i<arr.length; i++) {
-		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		document.getElementById(arr[i].engName).setAttribute('checked', '');
+		document.getElementById(arr[i].engName).checked = true;
 	}
 }
 function SysDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
-		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		document.getElementById(arr[i].engName).setAttribute('checked', '');
+		document.getElementById(arr[i].engName).checked = true;
 	}
 	if (type == 2) {
 		for (var i=0; i<$(".sysitems").length; i++) {
@@ -875,12 +878,11 @@ function SysDataInsert2(type, arr){
 
 function PropDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
-		$("#"+arr[i].engName).val(arr[i].curValue);
-		$("#"+arr[i].engName).attr("value",arr[i].curValue);
+		document.getElementById(arr[i].engName).value = arr[i].curValue;
 	}
 	if (type == 2) {
 		for (var i=0; i<$(".propitem").length; i++) {
-			$(".propitem:eq("+i+")").attr("onchange","changeProp(this)");
+			$(".propitem:eq("+i+")").attr("onchange","changeProps(this)");
 			$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
 		}
 	}
@@ -1102,16 +1104,32 @@ function getConfigValue(){
 		configData.push(oAconfigInfo);
 	}
 	return configData;
-	
+}
+function getPropValue(){
+	var propData = [];
+	console.log($(".propitem").length);
+	for (var i=0; i<$(".propitem").length; i++) {
+		var oApropInfo = {
+			"engName": "",
+			"curValue": ""
+		};
+		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
+		oApropInfo.curValue = $(".propitem")[i].value;
+		propData.push(oApropInfo);
+	}
+	return propData;
 }
 function getSysValue(){
 	var sysData = [];
 	for (var i=0; i<$(".sysitems").length; i++) {
-		var oAsysInfo = {
-			"engName": "",
-		};
-		oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
-		sysData.push(oAsysInfo);
+		var curId = $(".sysitems")[i].id;
+		if (document.getElementById(curId).checked) {
+			var oAsysInfo = {
+				"engName": "",
+			};
+			oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
+			sysData.push(oAsysInfo);
+		}
 	}
 	return sysData;
 }
@@ -1140,6 +1158,33 @@ function changeConfig(obj){
         if (changeConf.indexOf(obj.getAttribute("cnname")) == -1){
             changeConf.push(obj.getAttribute("cnname"));
             console.log("changeConf= "+changeConf);
+        }
+    }
+}
+function changeProps(obj){
+	var x = obj.value;
+    console.log(x);
+    console.log(obj.getAttribute("oldvalue"));
+    if(x == obj.getAttribute("oldvalue")){
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeProp.remove(obj.getAttribute("id"));
+        console.log("changeProp= "+changeProp);
+    }
+    else{
+        if (changeProp.indexOf(obj.getAttribute("id")) == -1){
+            changeProp.push(obj.getAttribute("id"));
+            console.log("changeProp= "+changeProp);
         }
     }
 }
@@ -1176,33 +1221,6 @@ function changeSettings(obj){
     }   
 }
 
-function changeProp(obj){
-    var x = obj.value;
-    console.log(x);
-    console.log(obj.getAttribute("oldvalue"))
-    if(x == obj.getAttribute("oldvalue")){
-        Array.prototype.indexOf = function(val) {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i] == val) return i;
-            }
-            return -1;
-        };
-        Array.prototype.remove = function(val) {
-            var index = this.indexOf(val);
-            if (index > -1) {
-                this.splice(index, 1);
-            }
-        };
-        changeProp.remove(obj.getAttribute("id"));
-        console.log("changeProp= "+changeProp);
-    }
-    else{
-        if (changeProp.indexOf(obj.getAttribute("id")) == -1){
-            changeProp.push(obj.getAttribute("id"));
-            console.log("changeProp= "+changeProp);
-        }
-    }
-}
 function changeDevice(obj){
     var x = obj.value;
     console.log(x);
@@ -1227,33 +1245,6 @@ function changeDevice(obj){
         if (changeDev.indexOf(obj.getAttribute("name")) == -1) {
             changeDev.push(obj.getAttribute("name"));
             console.log("changeDev = "+changeDev);
-        }
-    }
-}
-function changeProp(obj){
-    var x = obj.value;
-    console.log(x);
-    console.log(obj.getAttribute("oldvalue"))
-    if(x == obj.getAttribute("oldvalue")){
-        Array.prototype.indexOf = function(val) {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i] == val) return i;
-            }
-            return -1;
-        };
-        Array.prototype.remove = function(val) {
-            var index = this.indexOf(val);
-            if (index > -1) {
-                this.splice(index, 1);
-            }
-        };
-        changeDev.remove(obj.getAttribute("name"));
-        console.log("changeProp = "+changeProp);
-    }
-    else{
-        if (changeDev.indexOf(obj.getAttribute("name")) == -1) {
-            changeDev.push(obj.getAttribute("name"));
-            console.log("changeProp = "+changeProp);
         }
     }
 }
@@ -1316,18 +1307,20 @@ function productHistoryQuery(){
 							};
 						}
 						console.log(_content);
-						var _devArray,_addArray,_deleteArray,_confArray = "";
+						var _devArray,_addArray,_deleteArray,_confArray,_propsArray = "";
 						
 						var _devArray = _content.changeDev;//.splice(",")
 						var _addArray = _content.changeAdd;//.splice(",")
 						var _deleteArray = _content.changeReduce;//.splice(",")
 						var _confArray = _content.changeConf;//.splice(",")
+						var _propsArray = _content.changeProp;//.splice(",")
 						var _deleteArray2 = _content.deleteObj;
 						console.log(_content);
 						console.log(_devArray.length);
 						console.log(_addArray.length);
 						console.log(_deleteArray.length);
 						console.log(_confArray.length);
+						console.log(_propsArray.length);
 						if (_devArray.length != 0) {
 							_desc += "<span>修改了基本项："+_devArray+"</span><br/>";
 						}if (_addArray.length != 0) {
@@ -1336,6 +1329,8 @@ function productHistoryQuery(){
 							_desc += "<span>删除了设置项："+_deleteArray+"</span><br/>";
 						}if (_confArray.length != 0) {
 							_desc += "<span>修改了Config项："+_confArray+"</span><br/>";
+						}if (_propsArray.length != 0) {
+							_desc += "<span>修改了Config项："+_propsArray+"</span><br/>";
 						}
 						if (_deleteArray2.length != 0){
 							_desc += "<span>"+_deleteArray2+"</span><br/>";

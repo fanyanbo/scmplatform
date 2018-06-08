@@ -49,8 +49,9 @@ exports.update = function (req, res, next) {
   let baseInfo = req.body.baseInfo;
   let configInfo = req.body.configInfo;
   let settingsInfo = req.body.settingsInfo;
+  let propsInfo = req.body.propsInfo;
 
-  productModel.update(baseInfo, configInfo, settingsInfo, function(err,results) {
+  productModel.update(baseInfo, configInfo, settingsInfo, propsInfo, function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }
@@ -219,7 +220,6 @@ exports.queryAllByMachine = function (req, res, next) {
       if(err) {
         return output.error(req,res,err);
       }
-      console.log(results);
       output.success(req,res,"查询queryAllByMachine成功",results);
     });
 };
@@ -234,7 +234,6 @@ exports.queryAllByMachineTemp = function (req, res, next) {
       if(err) {
         return output.error(req,res,err);
       }
-      console.log(results);
       output.success(req,res,"查询queryAllByMachineTemp成功",results);
     });
 };

@@ -326,7 +326,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, props
 /**
  * @param {注意：更新时应该先清空某产品的临时表内容，再插入新数据}
  */
-ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, callback) {
+ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, propsInfo, callback) {
   console.log(baseInfo);
   let baseInfoObj = JSON.parse(baseInfo);
   let chip = baseInfoObj.chip;
@@ -347,16 +347,23 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
           if (err) return callback1(err,null);
           callback1(null,"delSettingsTemp OK");
         });
+      },
+      delPropsTemp: function(callback1){
+        let sql = `DELETE FROM ${dbConfig.tables.propsdata_temp} WHERE chip=? AND model=?`;
+        db.conn.query(sql,[chip,model],function(err,rows,fields){
+          if (err) return callback1(err,null);
+          callback1(null,"delPropsTemp OK");
+        });
       }
   },
   function(err, results) {
       console.log(results);
       if(err) return callback(err,null);
-      _update(baseInfo, configInfo, settingsInfo, callback);
+      _update(baseInfo, configInfo, settingsInfo, propsInfo, callback);
   })
 }
 
-function _update(baseInfo, configInfo, settingsInfo, callback) {
+function _update(baseInfo, configInfo, settingsInfo, propsInfo, callback) {
 
   let baseInfoObj = JSON.parse(baseInfo);
   let chip = baseInfoObj.chip;
@@ -396,7 +403,7 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
   });
 
   let sql1 = `INSERT INTO ${dbConfig.tables.configdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
-  for(var i=0; i<configInfo.length;i++) {
+  for(let i=0; i<configInfo.length;i++) {
     let sql1_param = [chip,model,configInfo[i].engName,configInfo[i].curValue];
     console.log(sql1_param + i);
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
@@ -406,12 +413,22 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
   }
 
   let sql2 = `INSERT INTO ${dbConfig.tables.settingsdata_temp}(chip,model,engName) values (?,?,?)`;
-  for(var j=0; j<settingsInfo.length;j++) {
-    let sql2_param = [chip,model,settingsInfo[i].engName];
+  for(let j=0; j<settingsInfo.length;j++) {
+    let sql2_param = [chip,model,settingsInfo[j].engName];
     console.log(sql2_param + j);
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
+    });
+  }
+
+  let sql3 = `INSERT INTO ${dbConfig.tables.propsdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
+  for(let k=0; k<settingsInfo.length;k++) {
+    let sql3_param = [chip,model,propsInfo[k].engName,propsInfo[k].curValue];
+    console.log(sql3_param + k);
+    db.conn.query(sql3,sql3_param,function(err,rows,fields){
+      if (err) return ep.emit('error', err);
+      ep.emit('insert_result',"INSERT INTO propsdata_temp OK");
     });
   }
 }
