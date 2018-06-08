@@ -1122,11 +1122,14 @@ function getPropValue(){
 function getSysValue(){
 	var sysData = [];
 	for (var i=0; i<$(".sysitems").length; i++) {
-		var oAsysInfo = {
-			"engName": "",
-		};
-		oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
-		sysData.push(oAsysInfo);
+		var curId = $(".sysitems")[i].id;
+		if (document.getElementById(curId).checked) {
+			var oAsysInfo = {
+				"engName": "",
+			};
+			oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
+			sysData.push(oAsysInfo);
+		}
 	}
 	return sysData;
 }
@@ -1218,33 +1221,6 @@ function changeSettings(obj){
     }   
 }
 
-function changeProp(obj){
-    var x = obj.value;
-    console.log(x);
-    console.log(obj.getAttribute("oldvalue"))
-    if(x == obj.getAttribute("oldvalue")){
-        Array.prototype.indexOf = function(val) {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i] == val) return i;
-            }
-            return -1;
-        };
-        Array.prototype.remove = function(val) {
-            var index = this.indexOf(val);
-            if (index > -1) {
-                this.splice(index, 1);
-            }
-        };
-        changeProp.remove(obj.getAttribute("id"));
-        console.log("changeProp= "+changeProp);
-    }
-    else{
-        if (changeProp.indexOf(obj.getAttribute("id")) == -1){
-            changeProp.push(obj.getAttribute("id"));
-            console.log("changeProp= "+changeProp);
-        }
-    }
-}
 function changeDevice(obj){
     var x = obj.value;
     console.log(x);
@@ -1269,33 +1245,6 @@ function changeDevice(obj){
         if (changeDev.indexOf(obj.getAttribute("name")) == -1) {
             changeDev.push(obj.getAttribute("name"));
             console.log("changeDev = "+changeDev);
-        }
-    }
-}
-function changeProp(obj){
-    var x = obj.value;
-    console.log(x);
-    console.log(obj.getAttribute("oldvalue"))
-    if(x == obj.getAttribute("oldvalue")){
-        Array.prototype.indexOf = function(val) {
-            for (var i = 0; i < this.length; i++) {
-                if (this[i] == val) return i;
-            }
-            return -1;
-        };
-        Array.prototype.remove = function(val) {
-            var index = this.indexOf(val);
-            if (index > -1) {
-                this.splice(index, 1);
-            }
-        };
-        changeDev.remove(obj.getAttribute("name"));
-        console.log("changeProp = "+changeProp);
-    }
-    else{
-        if (changeDev.indexOf(obj.getAttribute("name")) == -1) {
-            changeDev.push(obj.getAttribute("name"));
-            console.log("changeProp = "+changeProp);
         }
     }
 }
