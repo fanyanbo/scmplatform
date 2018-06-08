@@ -15,6 +15,7 @@ var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 var dbConfig = require('../models/dbConfig');
 
+var test_flag = 1;
 
 var connection;							// 数据库连接
 var action_type;                        // 当前动作为预览还是git提交
@@ -722,24 +723,39 @@ function gitpush(shellFileName, callback)
 function getGitDir(systemVersion)
 {
 	var gitdir;
-	if (systemVersion == "6.0")
-        //gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
-        gitdir = os.homedir() + "/temp1/";
-    else
-        //gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
-        gitdir = os.homedir() + "/temp1/";
+	if (test_flag)
+	{
+	    gitdir = os.homedir() + "/scmv3_git/test/Custom/";
+	}
+	else
+	{
+	    if (systemVersion == "6.0")
+            gitdir = os.homedir() + "/scmv3_git/60/Custom/";
+        else if (systemVersion == "6.5")
+            gitdir = os.homedir() + "/scmv3_git/65/Custom/";
+        else
+            gitdir = os.homedir() + "/scmv3_git/test/Custom/";
+	}
 	return gitdir;
 }
 
 function getGitBranch(systemVersion)
 {
 	var gitbranch;
-	if (systemVersion == "6.0")
-        //gitbranch = "CCOS/Rel6.0";
-        gitbranch = "test";
-	else if (systemVersion == "6.5")
-        //gitbranch = "CCOS/Rel6.5";
-        gitbranch = "test";
+	
+	if (test_flag)
+	{
+	    gitbranch = "test";
+	}
+	else
+	{
+	    if (systemVersion == "6.0")
+            gitbranch = "CCOS/Rel6.0";
+    	else if (systemVersion == "6.5")
+            gitbranch = "CCOS/Rel6.5";
+        else
+            gitbranch = "test";
+	}
     return gitbranch;
 }
 
@@ -834,7 +850,8 @@ function show_callback(errno, result)
 //generator.generateByTargetProduct("p201", show_callback);
 
 
-
+// git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b test
+// git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.0
 
 
 module.exports = generator;
