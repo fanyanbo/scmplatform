@@ -396,7 +396,7 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
   });
 
   let sql1 = `INSERT INTO ${dbConfig.tables.configdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
-  for(var i=0; i<configInfo.length;i++) {
+  for(let i=0; i<configInfo.length;i++) {
     let sql1_param = [chip,model,configInfo[i].engName,configInfo[i].curValue];
     console.log(sql1_param + i);
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
@@ -406,8 +406,8 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
   }
 
   let sql2 = `INSERT INTO ${dbConfig.tables.settingsdata_temp}(chip,model,engName) values (?,?,?)`;
-  for(var j=0; j<settingsInfo.length;j++) {
-    let sql2_param = [chip,model,settingsInfo[i].engName];
+  for(let j=0; j<settingsInfo.length;j++) {
+    let sql2_param = [chip,model,settingsInfo[j].engName];
     console.log(sql2_param + j);
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
