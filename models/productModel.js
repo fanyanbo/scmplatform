@@ -223,6 +223,7 @@ ProductModel.prototype.queryAllByMachineTemp = function (chip, model, callback) 
                   `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?`,
                   `SELECT * FROM ${dbConfig.tables.configdata_temp} WHERE chip = ? AND model = ?`,
                   `SELECT * FROM ${dbConfig.tables.settingsdata_temp} WHERE chip = ? AND model = ?`,
+                  `SELECT * FROM ${dbConfig.tables.propsdata_temp} WHERE chip = ? AND model = ?`,
                   `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?)`
                 ];
 
@@ -320,7 +321,6 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, props
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
     });
   }
-
 }
 
 /**
