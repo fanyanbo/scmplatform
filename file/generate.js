@@ -5,7 +5,7 @@ var dbparam = {
 		user     : 'scmplatform',
 		password : 'scmplatform',
 		port: '3306',
-		database: 'scm',
+		database: 'scm_test',
 	};
 
 var os = require('os');
@@ -681,32 +681,50 @@ function copyFileAndCommit()
 	
 	fs.appendFileSync(shellFileName, shcmd);
 	
-	
+	gitpush(shellFileName);
 }
 
-function gitpush(
-            systemVersion,                      // 系统版本，例如 'Rel6.0'
-            targetProduct,                      // target_product的值, 例如 'full_sky828_5s02'
-            chip,                               // 机芯, 例如 '5S02'
-            model,                              // 机型, 例如 'A2'
-            deviceTabTempFileName,              // device_tab.mk 临时文件名
-            mkTempFileName,                     // mk临时文件名
-            configTempFileName                  // config临时文件名
-            )
+function gitpush(shellFileName, callback)
 {
-	var git = require("./gitcommit");
-	git.push(systemVersion, targetProduct, chip, model, deviceTabTempFileName, mkTempFileName, configTempFileName);
-	//deleteTempFile(deviceTabTempFileName, mkTempFileName, configTempFileName);
+	var shcmd = "";
+	
+	shcmd += "sleep 0.2s ; ";
+	shcmd += "sh " + shellFileName;
+	
+	var spawn = require('child_process').spawn;
+    var free = spawn('/bin/sh', ['-c', shcmd]); 
+    
+    // 捕获标准输出并将其打印到控制台 
+    free.stdout.on('data', function (data) { 
+		console.log("" + data); 
+    }); 
+    
+    // 捕获标准错误输出并将其打印到控制台 
+    free.stderr.on('data', function (data) { 
+		console.log('stderr output:\n' + data); 
+		infoTxt += data;
+    }); 
+    
+    // 注册子进程关闭事件 
+    free.on('exit', function (code, signal) { 
+		console.log('child process eixt ,exit:' + code); 
+		if (callback != null) 
+		{
+			callback(code, infoTxt);
+		}
+		//deleteTempFiles();
+    });
 }
-
 
 function getGitDir(systemVersion)
 {
 	var gitdir;
 	if (systemVersion == "6.0")
-        gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
+        //gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
+        gitdir = "/home/scmplatform/temp1/";
     else
-        gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
+        //gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
+        gitdir = "/home/scmplatform/temp1/";
 	return gitdir;
 }
 
