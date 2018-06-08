@@ -681,6 +681,12 @@ function resetAllInfo(){
 	document.getElementById("lable2Memory").value = "";
 	document.getElementById("lable2GitBranch").value = "";
 	document.getElementById("lable2Platform").value = "";
+	document.getElementById("lable2Chip").removeAttribute('disabled');
+	document.getElementById("lable2Chip").style.color = "black";
+	document.getElementById("lable2Model").removeAttribute('disabled');
+	document.getElementById("lable2Model").style.color = "black";
+	document.getElementById("lable2TargetProduct").removeAttribute('disabled');
+	document.getElementById("lable2TargetProduct").style.color = "black";
 	
 	for (var i=0; i<$(".configitems").length; i++) {
 		if ($(".configitems")[i].getAttribute("typestr") == "enum") {
@@ -755,9 +761,13 @@ function CommonDataInsert(type,arr){
         $("#lable2GitBranch").attr("onchange","changeDevice(this)");
         $("#lable2Platform").attr("onchange","changeDevice(this)");
 	}else{
-		document.getElementById("lable2Chip").removeAttribute('checked');
-		document.getElementById("lable2Model").removeAttribute('checked');
-		document.getElementById("lable2TargetProduct").removeAttribute('checked');
+		console.log(type);
+		document.getElementById("lable2Chip").removeAttribute('disabled');
+		//document.getElementById("lable2Chip").checked = false;
+		document.getElementById("lable2Model").removeAttribute('disabled');
+		//document.getElementById("lable2Model").checked = false;
+		document.getElementById("lable2TargetProduct").removeAttribute('disabled');
+		//document.getElementById("lable2TargetProduct").checked = false;
 	}
 }
 function ConfigDataInsert(type, arr){
@@ -777,7 +787,8 @@ function MKDataInsert(type, arr){
 		document.getElementsByClassName("mkradio")[j].removeAttribute('checked');
 	}
 	for (var i=0; i<arr.length; i++) {
-		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		document.getElementById(arr[i].engName).setAttribute('checked', '');
+		document.getElementById(arr[i].engName).checked = true;
 	}
 }
 function SysDataInsert(type, arr){
@@ -788,7 +799,8 @@ function SysDataInsert(type, arr){
 		}
 	}
 	for (var i=0; i<arr.length; i++) {
-		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		document.getElementById(arr[i].engName).setAttribute('checked', '');
+		document.getElementById(arr[i].engName).checked = true;
 		document.getElementById(arr[i].engName).setAttribute('oldvalue', '1');
 	}
 }
@@ -1059,7 +1071,8 @@ function moduleQueryData(arr1,arr2) {
 			}
 		}
 	}
-	document.getElementsByClassName("mkradio")[0].setAttribute('checked', 'true');
+	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
+	document.getElementsByClassName("mkradio")[0].checked = true;
 }
 
 function propQueryData(arr1,arr2) {
@@ -1155,16 +1168,13 @@ function getConfigValue(){
 	var configData = [];
 	console.log($(".configitems").length);
 	for (var i=0; i<$(".configitems").length; i++) {
-		console.log($(".configitems")[i].checked+"---"+i);
-		if ($(".configitems")[i].checked == true) {
-			var oAconfigInfo = {
-				"engName": "",
-				"curValue": ""
-			};
-			oAconfigInfo.engName = $(".configitems")[i].getAttribute("id");
-			oAconfigInfo.curValue = $(".configitems")[i].value;
-			configData.push(oAconfigInfo);
-		}
+		var oAconfigInfo = {
+			"engName": "",
+			"curValue": ""
+		};
+		oAconfigInfo.engName = $(".configitems")[i].getAttribute("id");
+		oAconfigInfo.curValue = $(".configitems")[i].value;
+		configData.push(oAconfigInfo);
 	}
 	return configData;
 	
@@ -1173,11 +1183,14 @@ function getSysValue(){
 	var sysData = [];
 	console.log($(".sysitems").length);
 	for (var i=0; i<$(".sysitems").length; i++) {
-		var oAsysInfo = {
-			"engName": "",
-		};
-		oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
-		sysData.push(oAsysInfo);
+		var curId = $(".sysitems")[i].id;
+		if (document.getElementById(curId).checked) {
+			var oAsysInfo = {
+				"engName": "",
+			};
+			oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
+			sysData.push(oAsysInfo);
+		}
 	}
 	return sysData;
 }
