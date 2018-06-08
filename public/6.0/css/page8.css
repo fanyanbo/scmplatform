@@ -108,6 +108,7 @@
 	text-align: center;
 	color: red;
 	margin-top: 2%;
+	margin-left: 20%;
 	font-size: 20px;
 }
 .page8_tables thead{
@@ -145,7 +146,7 @@
 #newClassify{
 	display: inline-block;
     position: relative;
-    left: 112px;
+    left: 20%;
     font-size: 21px;
 }
 

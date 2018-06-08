@@ -329,7 +329,8 @@ function getMKByTPResult() {
 				clearMKLastWork();
 				
 				for (var i=0; i<data.resultData.length; i++) {
-					document.getElementById(data.resultData[i].engName).setAttribute('checked', 'true');
+					document.getElementById(data.resultData[i].engName).setAttribute('checked', '');
+					document.getElementById(data.resultData[i].engName).checked = true;
 				}
 			}
 		}
@@ -338,7 +339,8 @@ function getMKByTPResult() {
 function clearMKLastWork(){
 	console.log($(".mkitems").length);
 	for (var i=0; i<$(".mkitems").length; i++) {
-		document.getElementsByClassName("mkitems")[i].removeAttribute('checked');
+//		document.getElementsByClassName("mkitems")[i].removeAttribute('checked');
+		document.getElementsByClassName("mkitems")[i].checked = false;
 	}
 }
 
@@ -1118,7 +1120,7 @@ function sysDataInsert(i, obj, num, arr1){
 	}
 }
 function propDataInsert(kk, obj, data) {
-	obj.innerHTML += "<div class='col-xs-6'><input id='"+data[kk].engName+"' type='checkbox' class='propitems' category='" + data[kk].category + '" descText="'+data[kk].desc+"' engName='"+data[kk].engName+"' value=''><span title='" + data[kk].desc + "'>" + data[kk].engName + "</span></div>";
+	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 }
 
 function getBaseValue(){
@@ -1175,6 +1177,20 @@ function getSysValue(){
 		sysData.push(oAsysInfo);
 	}
 	return sysData;
+}
+function getPropValue(){
+	var propData = [];
+	console.log($(".propitem").length);
+	for (var i=0; i<$(".propitem").length; i++) {
+		var oApropInfo = {
+			"engName": "",
+			"curValue": ""
+		};
+		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
+		oApropInfo.curValue = $(".propitem")[i].value;
+		propData.push(oApropInfo);
+	}
+	return propData;
 }
 
 function productAddResult(){
@@ -1425,15 +1441,17 @@ function myEditorAddSubmit(num){
 	var _base = getBaseValue();
 	var _config = getConfigValue();
 	var _sys = getSysValue();
+	var _prop = getPropValue();
 	_base = JSON.stringify(_base);
 	_config = JSON.stringify(_config);
 	_sys = JSON.stringify(_sys);
-	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
+	_prop = JSON.stringify(_prop);
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + ',"PropInfo":' + _prop +'}';
 	console.log(node);
 	if (num == 1) {
 		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
 	} else if(num == 2){
-		sendHTTPRequest(coocaaVersion+"/product/add", node, productAddResult);
+		//sendHTTPRequest(coocaaVersion+"/product/add", node, productAddResult);
 	}
 }
 

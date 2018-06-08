@@ -864,16 +864,17 @@ function SysDataInsert2(type, arr){
 	if (type == 2) {
 		for (var i=0; i<$(".sysitems").length; i++) {
 			$(".sysitems:eq("+i+")").attr("onchange","changeSettings(this)");
-//			$(".sysitems:eq("+i+")").attr("oldvalue",$(".sysitems:eq("+i+")").attr("value"));
 		}
 	}
 }
 
 function PropDataInsert2(type, arr){
-	console.log(type);
+	for (var i=0; i<arr.length; i++) {
+		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+	}
 	if (type == 2) {
-		for (var i=0; i<arr.length; i++) {
-			document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		for (var i=0; i<$(".propitems").length; i++) {
+			$(".propitems:eq("+i+")").attr("onchange","changeSettings(this)");
 		}
 	}
 }

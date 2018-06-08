@@ -34,13 +34,13 @@ function buttonInitBefore(){
 		console.log(_newValue);
 		if (_newValue == null ||_newValue.length == 0) {
 			console.log("输入项不能为空");
-			document.getElementById("chipMangInfo").style.display = "inline-block";
+			document.getElementById("chipMangInfo").style.display = "inline";
 			document.getElementById("chipMangInfo").innerHTML = "此项不能为空";
 			setTimeout("document.getElementById('chipMangInfo').style.display = 'none';", 3000);
 		} else{
+			addSubmit();
 			//page8SubmitState(_oldValue,_newValue,_curPart1,_curPart2);
 		}
-		addSubmit();
 	});
 	//修改页面确定按钮的点击
 	$("#page8_sortSave").click(function() {
@@ -77,16 +77,24 @@ function buttonInitAfter(){
 		if (_curId == 0) {
 			_node = '{"category":"' + _thisKey + '"}';
 			_ajaxUrl = coocaaVersion+"/config/queryByCategory";
+			console.log(_node);
+			sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
 		} else if(_curId == 1){
 			_node = '{"category":"' + _thisKey + '"}';
 			_ajaxUrl = coocaaVersion+"/module/queryByCategory";
+			console.log(_node);
+			sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
 		} else if(_curId == 2||_curId == 3||_curId == 4||_curId == 5){
 			_thisLevel = $(".edit_box1")[_curIndex].getAttribute("level");
 			_node = '{"category":"' + _thisKey + '","level":"' + _thisLevel + '"}';
 			_ajaxUrl = coocaaVersion+"/settings/queryByCategory";
+			console.log(_node);
+			sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
+		} else if(_curId == 6){
+			console.log("不让编辑");
+			//_node = '{"category":"' + _thisKey + '"}';
+			//_ajaxUrl = coocaaVersion+"/prop/queryByCategory";
 		}
-		console.log(_node);
-		sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
 	});
 }
 function queryByCategoryResult(){
@@ -114,7 +122,7 @@ function addCategoryResult(){
 			if(data.resultCode == "0") {
 				console.log("数据添加成功。");
 				$('#page8Modal').modal('hide');
-				freshModuleAddHtml();
+				freshModuleAddHtml(1);
 			}else{
 				console.log(data.resultDesc);
 				$("#chipMangInfo")[0].innerHTML = "数据添加失败！";
@@ -128,7 +136,6 @@ function editEachPage(num,array){
 	console.log(num+"--------"+array);
 	$(".page8_tabs:eq(" + (num) + ")").attr("hasvalue","true");
 	if(num==0||num==1){
-		var insertTable = "";
 		var _eachTableItem = "";
 		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
 		for (var i=0; i<array.length; i++) {
@@ -137,7 +144,6 @@ function editEachPage(num,array){
 		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
 	}else if(num==2||num==3||num==4||num==5){
 		var sysSettingArray = ["系统设置","信号源工具箱","卖场演示","中间件"];
-		var insertTable = "";
 		var _eachTableItem = "";
 		var kk = 0;
 		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
@@ -153,6 +159,13 @@ function editEachPage(num,array){
 					_eachTableItem += "<tr><td class='col-xs-4'>"+kk+"</td><td class='col-xs-4'>"+array[i].level2+"-"+array[i].level3+"</td><td class='col-xs-4'><a class='edit_box1' level = 'level3' tablename = "+array[i].level3+">编辑</a></td></tr>";
 				}
 			}
+		}
+		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
+	}else if(num == 6){
+		var _eachTableItem = "";
+		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
+		for (var i=0; i<array.length; i++) {
+			_eachTableItem += "<tr><td class='col-xs-4'>"+(i+1)+"</td><td class='col-xs-4'>"+array[i].category+"</td><td class='col-xs-4'><a href='javacript:void(0);' disabled='disabled' class='edit_box1' tablename = "+array[i].category+">编辑</a></td></tr>";
 		}
 		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
 	}
@@ -290,7 +303,7 @@ function updateCategoryResult(){
 			if(data.resultCode == "0") {
 				console.log("数据修改成功。");
 				$('#paged8_dialog_box1').modal('hide');
-				freshModuleAddHtml();
+				freshModuleAddHtml(1);
 			}else{
 				console.log(data.resultDesc);
 				$("#chipMangInfo")[0].innerHTML = "数据添加失败！";
@@ -328,16 +341,30 @@ function tabsClick(num){
 }
 
 /*刷新页面*/
-function freshModuleAddHtml() {
-	var htmlObject = parent.document.getElementById("tab_userMenu8");
-	console.log("lxw " + htmlObject.firstChild.src);
-	htmlObject.firstChild.src = "page8.html";
-
-//	var indexObject = parent.document.getElementById("home");
-//  var iframe = indexObject.getElementsByTagName("iframe");
-//  iframe[0].src = "wait.html";
-//  if(parent.document.getElementById("tab_userMenu2")){
-//	    var htmlObject1 = parent.document.getElementById("tab_userMenu2");
-//	    htmlObject1.firstChild.src = "review.html";
-//	}  
+function freshModuleAddHtml(num) {
+	if (num == 0) {
+		var htmlObject = parent.document.getElementById("tab_userMenu8");
+		htmlObject.firstChild.src = "page8.html";
+	}else{
+		var htmlObject1 = parent.document.getElementById("tab_userMenu1");
+	    var htmlObject2 = parent.document.getElementById("tab_userMenu2");
+	    var htmlObject3 = parent.document.getElementById("tab_userMenu3");
+	    var htmlObject4 = parent.document.getElementById("tab_userMenu4");
+	    var htmlObject5 = parent.document.getElementById("tab_userMenu5");
+	    if (htmlObject1) {
+	        htmlObject1.firstChild.src = "page1.html";
+	    }
+	    if (htmlObject2) {
+	    	htmlObject2.firstChild.src = "page2.html";
+	    }
+	    if (htmlObject3) {
+	    	htmlObject3.firstChild.src = "page3.html";
+	    }
+	    if (htmlObject4) {
+	    	htmlObject4.firstChild.src = "page4.html";
+	    }
+	     if (htmlObject5) {
+	    	htmlObject5.firstChild.src = "page5.html";
+	    }
+	}
 }
