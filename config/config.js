@@ -29,7 +29,7 @@ var config = {
   mysql: {
     user: 'scmplatform', // 用户名
     password: 'scmplatform', // 密码
-    database: 'scm', // 数据库
+    database: 'scm_test', // 数据库
     host: '172.20.5.239', // host
     port: 3306, // 端口
     checkExpirationInterval: 24*60*60*1000, // How frequently expired sessions will be cleared; milliseconds
