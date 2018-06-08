@@ -1451,7 +1451,7 @@ function myEditorAddSubmit(num){
 	if (num == 1) {
 		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
 	} else if(num == 2){
-		//sendHTTPRequest(coocaaVersion+"/product/add", node, productAddResult);
+		sendHTTPRequest(coocaaVersion+"/product/add", node, productAddResult);
 	}
 }
 
