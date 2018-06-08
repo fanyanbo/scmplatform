@@ -519,6 +519,7 @@ function review(obj,adminControl,deleteFlag){
         	document.getElementById("page5_firstTr").style.display="table-row";
         }       
     }
+    resetAllInfo();//删除前面的操作痕迹
 	var a = $(".eachaudit").index($(obj));
 	var b = $(".eachedit").index($(obj));
 	console.log(a+"||||"+b);
@@ -598,6 +599,7 @@ function editSure(){
 	var _base = getBaseValue();
 	var _config = getConfigValue();
 	var _sys = getSysValue();
+	var _prop = getPropValue();
 	_base = JSON.stringify(_base);
 	_config = JSON.stringify(_config);
 	_sys = JSON.stringify(_sys);
