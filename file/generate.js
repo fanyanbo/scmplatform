@@ -15,6 +15,7 @@ var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 var dbConfig = require('../models/dbConfig');
 
+
 var connection;							// 数据库连接
 var action_type;                        // 当前动作为预览还是git提交
 var mod_callback;                       // 
@@ -673,7 +674,7 @@ function copyFileAndCommit()
 	shcmd += cmd;
 	
     // cmd = "git push origin HEAD:refs/for/" + gitbranch + "  \n\n";
-    cmd = "git push 1 HEAD:refs/for/" + gitbranch + "  \n\n";
+    cmd = "git push origin HEAD:refs/for/" + gitbranch + "  \n\n";
 	shcmd += "echo " + cmd;
 	shcmd += cmd;
 	
@@ -681,7 +682,9 @@ function copyFileAndCommit()
 	
 	fs.appendFileSync(shellFileName, shcmd);
 	
-	gitpush(shellFileName);
+	gitpush(shellFileName, function(code, result){
+	    
+	});
 }
 
 function gitpush(shellFileName, callback)
@@ -721,10 +724,10 @@ function getGitDir(systemVersion)
 	var gitdir;
 	if (systemVersion == "6.0")
         //gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
-        gitdir = "/home/scmplatform/temp1/";
+        gitdir = os.homedir() + "/temp1/";
     else
         //gitdir = "/home/scmplatform/gitfiles/Rel6.0/Custom/";
-        gitdir = "/home/scmplatform/temp1/";
+        gitdir = os.homedir() + "/temp1/";
 	return gitdir;
 }
 
@@ -732,9 +735,11 @@ function getGitBranch(systemVersion)
 {
 	var gitbranch;
 	if (systemVersion == "6.0")
-        gitbranch = "CCOS/Rel6.0";
-	else if (systemVersion == "6.0")
-        gitbranch = "CCOS/Rel6.5";
+        //gitbranch = "CCOS/Rel6.0";
+        gitbranch = "test";
+	else if (systemVersion == "6.5")
+        //gitbranch = "CCOS/Rel6.5";
+        gitbranch = "test";
     return gitbranch;
 }
 
