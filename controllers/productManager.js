@@ -205,7 +205,6 @@ exports.queryAll = function (req, res, next) {
       if(err) {
         return output.error(req,res,err);
       }
-      console.log(results);
       output.success(req,res,"查询queryAll成功",results);
     });
 };

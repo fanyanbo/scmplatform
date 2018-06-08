@@ -531,7 +531,7 @@ ProductModel.prototype.queryAuditByUser = function (data, callback) {
     let userName = data.userName;
     let level = data.level;
 
-    console.log(userName + level);
+    console.log("queryAuditByUser = " + userName + level);
 
     let ep = new eventproxy();
     let sql_list0 = [
@@ -560,13 +560,13 @@ ProductModel.prototype.queryAuditByUser = function (data, callback) {
         callback(null,listObject);
     });
 
-    if (level === 1) {
+    if (level == 1) {
       for (var i = 0; i < sql_list0.length; i++) { //数据结构与调用顺序有关
         db.conn.query(sql_list0[i],[],ep.group('query_result'));
       }
     } else {
       for (var i = 0; i < sql_list1.length; i++) { //数据结构与调用顺序有关
-        db.conn.query(sql_list1[i],[level],ep.group('query_result'));
+        db.conn.query(sql_list1[i],[userName],ep.group('query_result'));
       }
     }
 }
