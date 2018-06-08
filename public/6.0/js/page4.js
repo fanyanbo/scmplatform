@@ -519,6 +519,7 @@ function review(obj,adminControl,deleteFlag){
         	document.getElementById("page4_firstTr").style.display="table-row";
         }       
     }
+    resetAllInfo();//删除前面的操作痕迹
 	var a = $(".eachaudit").index($(obj));
 	var b = $(".eachedit").index($(obj));
 	console.log(a+"||||"+b);
