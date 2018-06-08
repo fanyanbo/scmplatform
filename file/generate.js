@@ -540,6 +540,7 @@ function generate_files()
             preview_result.text4 = content4;
             mod_callback(0, preview_result);
         }
+        return;
 	}
 	else        // 非预览则复制并提交文件到git
 	{
