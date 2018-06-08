@@ -20,6 +20,7 @@ var changeAdd = [];
 var changeReduce = [];
 var changeConf = [];
 var changeDev = [];
+var changeProp = [];
 
 var recoverChip = null;
 var recoverModel = null;
@@ -293,6 +294,7 @@ function buttonInitAfter(){
 	    changeConf.splice(0,changeConf.length);
 	    changeDev.splice(0,changeDev.length);
 	    changeReduce.splice(0,changeReduce.length);
+	    changeProp.splice(0,changeProp.length);
 	});
 	$("#myDeleteModalEnsure2").click(function() {
 		recoverSure();
@@ -645,7 +647,7 @@ function setEditInfo(){
 			console.log(data);
 			if(data.resultCode == "0") {
 				console.log("数据修改提交成功");
-				var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
+				var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'","changeProp":"'+changeProp+'"}';
 				var _reason = document.getElementById("changeReason").value;
 				var _chip = $("#lable4Chip").val();
 				var _model = $("#lable4Model").val();
@@ -745,6 +747,9 @@ function sendEmail(){
 	    }
 	    if (changeConf.length != 0){
 	        maildata += "<br/>修改配置："+ changeConf;
+	    }
+	    if (changeProp.length != 0){
+	        maildata += "<br/>修改属性："+ changeProp;
 	    }
 	}else if(_num == 3){
 		console.log("恢复");
@@ -870,11 +875,13 @@ function SysDataInsert2(type, arr){
 
 function PropDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
-		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		$("#"+arr[i].engName).val(arr[i].curValue);
+		$("#"+arr[i].engName).attr("value",arr[i].curValue);
 	}
 	if (type == 2) {
-		for (var i=0; i<$(".propitems").length; i++) {
-			$(".propitems:eq("+i+")").attr("onchange","changeProp(this)");
+		for (var i=0; i<$(".propitem").length; i++) {
+			$(".propitem:eq("+i+")").attr("onchange","changeProp(this)");
+			$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
 		}
 	}
 }
@@ -957,6 +964,7 @@ function editIssue(){
     console.log("changeAdd"+changeAdd);
     console.log("changeReduce"+changeReduce);
     console.log("changeConf"+changeConf);
+    console.log("changeProp"+changeProp);
     //判断基本项是否为空
 	var nullName = 0;
 	for (var i=0; i<$("#page4Modal1Table .inputstyle").length; i++) {
@@ -991,7 +999,8 @@ function editIssue(){
 			console.log(changeReduce);
 			console.log(changeConf);
 			console.log(changeDev);
-			if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length == 0) {
+			console.log(changeProp);
+			if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length+changeProp.length == 0) {
 				console.log("未做任何修改");
 				document.getElementById("page4Modal1ErrorInfo").innerHTML = "您未做任何修改。";
 				setTimeout("document.getElementById('page4Modal1ErrorInfo').innerHTML='　'",3000);
@@ -1014,6 +1023,11 @@ function editIssue(){
 			        $("#txt4").css("display", "block");
 			        $("#txt44").val(changeConf);
 			        document.getElementById("txt44").innerHTML = changeConf;
+			    }
+			    if (changeProp.length != 0) {
+			        $("#txt5").css("display", "block");
+			        $("#txt55").val(changeProp);
+			        document.getElementById("txt55").innerHTML = changeProp;
 			    }
 			}
 		}
@@ -1163,19 +1177,10 @@ function changeSettings(obj){
 }
 
 function changeProp(obj){
-	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
-    if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
-        obj.setAttribute("oldvalue","1");
-        changeAdd.push(obj.getAttribute("cnname"));
-        console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
-    }else if(!(obj.checked) && (obj.getAttribute("oldvalue") == '0')){
-        obj.setAttribute("oldvalue","2");
-        changeReduce.push(obj.getAttribute("cnname"));
-        console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
-    }else{
-        obj.setAttribute("oldvalue","0");
+    var x = obj.value;
+    console.log(x);
+    console.log(obj.getAttribute("oldvalue"))
+    if(x == obj.getAttribute("oldvalue")){
         Array.prototype.indexOf = function(val) {
             for (var i = 0; i < this.length; i++) {
                 if (this[i] == val) return i;
@@ -1188,11 +1193,15 @@ function changeProp(obj){
                 this.splice(index, 1);
             }
         };
-        changeReduce.remove(obj.getAttribute("cnname"));
-        changeAdd.remove(obj.getAttribute("cnname"));
-        console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
-    }   
+        changeProp.remove(obj.getAttribute("id"));
+        console.log("changeProp= "+changeProp);
+    }
+    else{
+        if (changeProp.indexOf(obj.getAttribute("id")) == -1){
+            changeProp.push(obj.getAttribute("id"));
+            console.log("changeProp= "+changeProp);
+        }
+    }
 }
 function changeDevice(obj){
     var x = obj.value;
@@ -1218,6 +1227,33 @@ function changeDevice(obj){
         if (changeDev.indexOf(obj.getAttribute("name")) == -1) {
             changeDev.push(obj.getAttribute("name"));
             console.log("changeDev = "+changeDev);
+        }
+    }
+}
+function changeProp(obj){
+    var x = obj.value;
+    console.log(x);
+    console.log(obj.getAttribute("oldvalue"))
+    if(x == obj.getAttribute("oldvalue")){
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeDev.remove(obj.getAttribute("name"));
+        console.log("changeProp = "+changeProp);
+    }
+    else{
+        if (changeDev.indexOf(obj.getAttribute("name")) == -1) {
+            changeDev.push(obj.getAttribute("name"));
+            console.log("changeProp = "+changeProp);
         }
     }
 }

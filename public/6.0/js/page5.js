@@ -871,10 +871,14 @@ function SysDataInsert2(type, arr){
 }
 
 function PropDataInsert2(type, arr){
-	console.log(type);
+	for (var i=0; i<arr.length; i++) {
+		$("#"+arr[i].engName).val(arr[i].curValue);
+		$("#"+arr[i].engName).attr("value",arr[i].curValue);
+	}
 	if (type == 2) {
-		for (var i=0; i<arr.length; i++) {
-			document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		for (var i=0; i<$(".propitem").length; i++) {
+			$(".propitem:eq("+i+")").attr("onchange","changeConfig(this)");
+			$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
 		}
 	}
 }
