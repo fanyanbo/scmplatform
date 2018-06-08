@@ -15,8 +15,9 @@ exports.add = function (req, res, next) {
   let baseInfo = req.body.baseInfo;
   let configInfo = req.body.configInfo;
   let settingsInfo = req.body.settingsInfo;
+  let propsInfo = req.body.propsInfo;
 
-  productModel.add(baseInfo, configInfo, settingsInfo, function(err,results) {
+  productModel.add(baseInfo, configInfo, settingsInfo, propsInfo, function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }

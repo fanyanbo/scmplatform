@@ -247,13 +247,15 @@ ProductModel.prototype.queryAllByMachineTemp = function (chip, model, callback) 
   }
 }
 
-ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callback) {
+ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, propsInfo, callback) {
 
   console.log(baseInfo);
-  console.log(configInfo);
-  console.log(settingsInfo);
+  console.log(configInfo[0]);
+  console.log(settingsInfo[0]);
+  console.log(propsInfo);
   console.log(configInfo.length);
   console.log(settingsInfo.length);
+  console.log(propsInfo.length);
 
   let ep = new eventproxy();
 
@@ -264,7 +266,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
       callback(err,null);
   });
 
-  ep.after('insert_result', configInfo.length + settingsInfo.length + 1, function (list) {
+  ep.after('insert_result', configInfo.length + settingsInfo.length + propsInfo.length + 1, function (list) {
       // 所有查询的内容都存在list数组中
       callback(null,null);
   });
@@ -282,6 +284,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
   let platform = baseInfoObj.platform;
   let gitBranch = baseInfoObj.gitBranch;
   let userName = baseInfoObj.userName;
+
   let sql0 = `INSERT INTO ${dbConfig.tables.products}(chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,\
     gitBranch,userName) values (?,?,?,?,?,?,?,?,?,?,?,?)`;
   let sql0_param = [chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,gitBranch,userName];
@@ -308,6 +311,16 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
     });
   }
+
+  let sql3 = `INSERT INTO ${dbConfig.tables.propsdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
+  for(let i=0; i<propsInfo.length;i++) {
+    let sql3_param = [chip,model,propsInfo[i].engName,propsInfo[i].curValue];
+    db.conn.query(sql2,sql2_param,function(err,rows,fields){
+      if (err) return ep.emit('error', err);
+      ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
+    });
+  }
+
 }
 
 /**
