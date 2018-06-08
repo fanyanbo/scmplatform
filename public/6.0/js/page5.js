@@ -502,7 +502,7 @@ function sysDataInsert(i, obj, num, arr1){
 	}
 }
 function propDataInsert(kk, obj, data) {
-	obj.innerHTML += "<div class='col-xs-6'><input id='"+data[kk].engName+"' type='checkbox' class='propitems' category='" + data[kk].category + '" descText="'+data[kk].desc+"' engName='"+data[kk].engName+"' value=''><span title='" + data[kk].desc + "'>" + data[kk].engName + "</span></div>";
+	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 }
 
 //审核

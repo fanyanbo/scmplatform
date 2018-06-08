@@ -501,7 +501,7 @@ function sysDataInsert(i, obj, num, arr1){
 	}
 }
 function propDataInsert(kk, obj, data) {
-	obj.innerHTML += "<div class='col-xs-6'><input id='"+data[kk].engName+"' type='checkbox' class='propitem' category='" + data[kk].category + '" descText="'+data[kk].desc+"' engName='"+data[kk].engName+"' value=''><span title='" + data[kk].desc + "'>" + data[kk].engName + "</span></div>";
+	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 }
 
 //审核
@@ -792,8 +792,8 @@ function getPointProductInfo(){
             	CommonDataInsert2(_type,data.resultData[0]);
             	ConfigDataInsert2(_type,data.resultData[1]);
             	SysDataInsert2(_type,data.resultData[2]);
-            	MKDataInsert2(_type,data.resultData[4]);
             	PropDataInsert2(_type,data.resultData[3]);
+            	MKDataInsert2(_type,data.resultData[4]);
 				buttonstyle(_type,_state);
 				
 				$('#page4Modal1').modal();
