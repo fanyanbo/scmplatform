@@ -257,6 +257,7 @@ function changeSubmit(){
 	if (_curId == 0) {
 		_ajaxUrl = coocaaVersion+"/config/updateItemsOrderId";
 	} else if(_curId == 1){
+		console.log("sdasdasdas");
 		_ajaxUrl = coocaaVersion+"/module/updateItemsOrderId";
 	} else if(_curId == 2||_curId == 3||_curId == 4||_curId == 5){
 		_ajaxUrl = coocaaVersion+"/settings/updateItemsOrderId";
