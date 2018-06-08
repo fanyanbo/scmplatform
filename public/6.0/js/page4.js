@@ -276,6 +276,7 @@ function buttonInitAfter(){
 					setTimeout("document.getElementById('errorChangeInfo2').style.display = 'none';", 3000);
 				} else{
 					emailReason = content;
+					reviewSure();
 				}
 			} else{
 				reviewSure();
