@@ -471,41 +471,66 @@ ProductModel.prototype.review = function (data, callback) {
     let chip = data.chip;
     let model = data.model;
     let flag = data.flag; //0表示审核通过，1表示不通过
+    let operate = data.operate;//1表示新增，2表示修改，3表示删除
     let sql;
-    if(flag === 0){
-      sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?`;
-      db.conn.query(sql,[chip, model],function(err,rows,fields){
-        if (err) return callback(err);
-        let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 0 WHERE chip = ? AND model = ?`;
-        db.conn.query(sql1,[chip, model],function(err,rows,fields){
-          if (err) {
-            logger.debug("更新历史表时出错：" + err);
-            return callback(err);
-          }
-          //当更新产品表和修改历史表成功后，执行生成文件的操作
-          generator.generate(chip, model, function(err,result){
-            if(err) {
-              logger.debug("在审核生成文件时出错：" + err);
+    if(operate === 3 && flag === 0) {
+
+      let ep = new eventproxy();
+      ep.bind('error', function (err) {
+          logger.error("删除产品时捕获到错误-->" + err);
+          ep.unbind();
+          return callback(err,null);
+      });
+
+      ep.after('delete_result', 4, function (list) {
+          console.log("删除产品成功!");
+          return callback(null, "删除产品成功");
+      });
+      let sql_list = [
+                      `DELETE FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?`,
+                      `DELETE FROM  ${dbConfig.tables.configdata} WHERE chip = ? AND model = ?`,
+                      `DELETE FROM  ${dbConfig.tables.settingsdata} WHERE chip = ? AND model = ?`,
+                      `DELETE FROM  ${dbConfig.tables.propsdata} WHERE chip = ? AND model = ?`
+                    ];
+      for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
+          db.conn.query(sql_list[i],[chip, model],ep.group('delete_result'));
+      }
+    } else {
+      if(flag === 0){
+        sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?`;
+        db.conn.query(sql,[chip, model],function(err,rows,fields){
+          if (err) return callback(err);
+          let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 0 WHERE chip = ? AND model = ?`;
+          db.conn.query(sql1,[chip, model],function(err,rows,fields){
+            if (err) {
+              logger.debug("更新历史表时出错：" + err);
               return callback(err);
             }
-            callback(null, result);
+            //当更新产品表和修改历史表成功后，执行生成文件的操作
+            generator.generate(chip, model, function(err,result){
+              if(err) {
+                logger.debug("在审核生成文件时出错：" + err);
+                return callback(err);
+              }
+              callback(null, result);
+            });
+            // callback(null, rows);
           });
-          // callback(null, rows);
         });
-      });
-    }else {
-      sql = `UPDATE ${dbConfig.tables.products} set auditState = 2 WHERE chip = ? AND model = ?`;
-      db.conn.query(sql,[chip, model],function(err,rows,fields){
-        if (err) {
-          logger.error("调用审核不通过接口，更新产品表状态时错误" + err);
-          return callback(err);
-        }
-        let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 2 WHERE chip = ? AND model = ? AND state = 1`;
-        db.conn.query(sql1,[chip, model],function(err,rows,fields){
-          if (err) return callback(err);
-          callback(null, rows);
+      } else {
+        sql = `UPDATE ${dbConfig.tables.products} set auditState = 2 WHERE chip = ? AND model = ?`;
+        db.conn.query(sql,[chip, model],function(err,rows,fields){
+          if (err) {
+            logger.error("调用审核不通过接口，更新产品表状态时错误" + err);
+            return callback(err);
+          }
+          let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 2 WHERE chip = ? AND model = ? AND state = 1`;
+          db.conn.query(sql1,[chip, model],function(err,rows,fields){
+            if (err) return callback(err);
+            callback(null, rows);
+          });
         });
-      });
+      }
     }
 }
 
