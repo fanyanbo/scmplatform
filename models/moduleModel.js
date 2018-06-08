@@ -217,6 +217,8 @@ ModuleModel.prototype.updateItemsOrderId = function (arr, callback) {
 
   if(arr.length == 0) return callback("Module updateItemsOrderId",null);
 
+  console.log(arr);
+
   let ep = new eventproxy();
 
   ep.bind('error', function (err) {
