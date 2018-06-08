@@ -619,15 +619,22 @@ function page2AEC(number) {
 	var	_model = $(".model")[number].innerText;
 	var	_target = $(".target_product")[number].innerText;
 	
-	var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
-	console.log(node);
-	
 	console.log(_type);
 	if (_type == 2||_type == 3) {
 		console.log("点击了编辑或者复制" + number);
+		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
+		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 	} else if(_type == 4) {
 		console.log("点击了预览" + number);
+		var reviewObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"flag" : 0,
+		}
+		var _review = JSON.stringify(reviewObj);
+		var node = '{"data":' + _review + '}';
+		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/preview", node, getPreviewInfo);
 	}
 }
