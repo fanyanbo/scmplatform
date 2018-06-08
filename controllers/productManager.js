@@ -60,17 +60,16 @@ exports.update = function (req, res, next) {
 };
 
 /**
- * @param {预览}
+ * @param {预览,区别正式产品预览和待审核状态产品预览}
  */
 exports.preview = function (req, res, next) {
-  let chip = req.body.chip;
-  let model = req.body.model;
-  console.log(chip);
-  productModel.preview(chip, model, function(err,results) {
+
+  let data = req.body.data;
+  productModel.preview(data, function(err,results) {
     if(err) {
       return output.error(req,res,err);
     }
-    console.log(results);
+    // console.log(results);
     output.success(req,res,"获取预览信息成功",results);
   });
 }

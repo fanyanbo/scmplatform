@@ -447,11 +447,14 @@ ProductModel.prototype.addHistory = function (data, callback) {
 /**
  * @param {预览某产品生成的文件}
  */
-ProductModel.prototype.preview = function (chip, model, callback) {
-    console.log("preview chip:" + chip);
-    console.log("preview model:" + model);
-    generator.preview(chip, model, function(err, results){
+ProductModel.prototype.preview = function (data, callback) {
+    console.log("preview data:" + data);
+    let chip = data.chip;
+    let model = data.model;
+    let flag = data.flag; //0表示正式产品预览，1表示待审核或审核未通过产品预览
+    generator.preview(chip, model, flag, function(err, results){
       if (err) {
+          logger.error("获取预览信息发生错误:" + err);
           return callback(err);
       }
       callback(null, results);
