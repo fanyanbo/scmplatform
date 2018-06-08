@@ -48,9 +48,20 @@ function productQuery() {
 			//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 			if(data.resultCode == "0") {
 				var arr = new Array();
+				parent.document.getElementsByClassName("email")[0].style.display = "none";
+				parent.document.getElementsByClassName("email")[1].style.display = "none";
+				parent.document.getElementsByClassName("email")[2].style.display = "none";
 				for (var i=0; i<data.resultData.length; i++) {
 					if (data.resultData[i].auditState == 0) {
 						arr.push(data.resultData[i]);
+					}else if(data.resultData[i].auditState == 1){
+						console.log('111111111111');
+						parent.document.getElementsByClassName("email")[0].style.display = "block";
+						parent.document.getElementsByClassName("email")[1].style.display = "inline-block";
+					}else if(data.resultData[i].auditState == 2){
+						console.log('22222222222');
+						parent.document.getElementsByClassName("email")[0].style.display = "block";
+						parent.document.getElementsByClassName("email")[2].style.display = "inline-block";
 					}
 				}
 				_myArray = arr;
@@ -1606,8 +1617,6 @@ function scrollTopStyle(name){
 function page2Fresh() {
 	var htmlObject = parent.document.getElementById("tab_userMenu2");
 	htmlObject.firstChild.src = "page2.html";
-	
-	parent.document.getElementsByClassName("email")[0].style.display = "inline-block";
 	
 	var htmlObject1 = parent.document.getElementById("tab_userMenu1");
 	var htmlObject4 = parent.document.getElementById("tab_userMenu4");

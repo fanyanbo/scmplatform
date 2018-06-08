@@ -284,10 +284,10 @@ function buttonInitAfter(){
 					setTimeout("document.getElementById('errorChangeInfo2').style.display = 'none';", 3000);
 				} else{
 					emailReason = content;
-					reviewSure();
+					reviewSure(_state);
 				}
 			} else{
-				reviewSure();
+				reviewSure(_state);
 			}
 		} else if(_type == 2){
 			console.log("编辑时关闭确认框的的点击");
@@ -579,7 +579,7 @@ function recover(obj,deleteFlag){
 }
 
 //审核的提交
-function reviewSure(){
+function reviewSure(state){
 	var _chip = $("#lable4Chip").val();
 	var _model = $("#lable4Model").val();
 	var _flag = null;
@@ -590,7 +590,8 @@ function reviewSure(){
 		var recoveObj = {
 			"chip" : _chip,
 			"model" : _model,
-			"flag" : _flag
+			"flag" : _flag,
+			"operate" : state
 		}
 		console.log(recoveObj);
 		var _recove = JSON.stringify(recoveObj);
@@ -1612,9 +1613,6 @@ function page4fresh(num) {
     var htmlObject2 = parent.document.getElementById("tab_userMenu2");
     var htmlObject5 = parent.document.getElementById("tab_userMenu5");
     
-    if (htmlObject0) {
-    	htmlObject0.firstChild.src = "index.html";
-    }
     if (htmlObject1) {
     	htmlObject1.firstChild.src = "page1.html";
     }
