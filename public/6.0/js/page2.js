@@ -1155,13 +1155,16 @@ function getConfigValue(){
 	var configData = [];
 	console.log($(".configitems").length);
 	for (var i=0; i<$(".configitems").length; i++) {
-		var oAconfigInfo = {
-			"engName": "",
-			"curValue": ""
-		};
-		oAconfigInfo.engName = $(".configitems")[i].getAttribute("id");
-		oAconfigInfo.curValue = $(".configitems")[i].value;
-		configData.push(oAconfigInfo);
+		console.log($(".configitems")[i].checked+"---"+i);
+		if ($(".configitems")[i].checked == true) {
+			var oAconfigInfo = {
+				"engName": "",
+				"curValue": ""
+			};
+			oAconfigInfo.engName = $(".configitems")[i].getAttribute("id");
+			oAconfigInfo.curValue = $(".configitems")[i].value;
+			configData.push(oAconfigInfo);
+		}
 	}
 	return configData;
 	
