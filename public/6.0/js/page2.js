@@ -1446,7 +1446,7 @@ function myEditorAddSubmit(num){
 	_config = JSON.stringify(_config);
 	_sys = JSON.stringify(_sys);
 	_prop = JSON.stringify(_prop);
-	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + ',"PropInfo":' + _prop +'}';
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + ',"propsInfo":' + _prop +'}';
 	console.log(node);
 	if (num == 1) {
 		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
