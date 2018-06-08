@@ -831,15 +831,18 @@ function getPreviewInfo(){
 				$("#myPreviewModal").find("li")[0].className = "presentation active";
 				$("#myPreviewModal").find("li")[1].className = "presentation";
 				$("#myPreviewModal").find("li")[2].className = "presentation";
+				$("#myPreviewModal").find("li")[3].className = "presentation";
                	
                	document.getElementById("myPreviewBodyOne").innerHTML = data.resultData.text1;
                 document.getElementById("myPreviewBodyTwo").innerHTML = data.resultData.text2;
                 document.getElementById("myPreviewBodyThree").innerHTML = data.resultData.text3;
+                document.getElementById("myPreviewBodyFour").innerHTML = data.resultData.text4;
             } else{
                 console.log("lxw " + "预览-失败");
                 document.getElementById("myPreviewBodyOne").innerHTML = "信息出错，请刷新";
                 document.getElementById("myPreviewBodyTwo").innerHTML = "信息出错，请刷新";
                 document.getElementById("myPreviewBodyThree").innerHTML = "信息出错，请刷新";
+                document.getElementById("myPreviewBodyFour").innerHTML = "信息出错，请刷新";
             };
         };
     }
@@ -1597,8 +1600,14 @@ function page2Fresh() {
 	var htmlObject = parent.document.getElementById("tab_userMenu2");
 	htmlObject.firstChild.src = "page2.html";
 	
+	parent.document.getElementsByClassName("email")[0].style.display = "inline-block";
+	
+	var htmlObject1 = parent.document.getElementById("tab_userMenu1");
 	var htmlObject4 = parent.document.getElementById("tab_userMenu4");
 	var htmlObject5 = parent.document.getElementById("tab_userMenu5");
+	if (htmlObject1) {
+		htmlObject1.firstChild.src = "page1.html";
+	}
 	if (htmlObject4) {
 		htmlObject4.firstChild.src = "page4.html";
 	}

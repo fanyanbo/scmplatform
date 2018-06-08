@@ -139,9 +139,11 @@ function audioDataRresult(){
             	}else{
             		document.getElementsByClassName("email")[2].style.display = "inline-block";
             	}
-            	if (data.resultData[0].length == 0&&data.resultData[0].length == 0) {
+            	if (data.resultData[0].length == 0&&data.resultData[1].length == 0) {
+            		console.log("1111");
             		document.getElementsByClassName("email")[0].style.display = "none";
             	}else{
+            		console.log("2222");
             		document.getElementsByClassName("email")[0].style.display = "block";
             	}
             }

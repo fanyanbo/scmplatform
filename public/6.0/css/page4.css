@@ -189,7 +189,7 @@ body .modal-footer{
 	position: absolute;
 	z-index: 9999;
 }
-#myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree{
+#myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree,#myPreviewBodyFour{
 	width: 100%;
 	min-height: 500px;
 }

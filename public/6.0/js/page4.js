@@ -209,7 +209,15 @@ function buttonInitAfter(){
 		console.log("点击了审核页面的预览");
 		var _chip = $("#lable4Chip").val();
 		var _model = $("#lable4Model").val();
-		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
+		var node = '{"chip":"'+_chip+'","model":"'+_model+'","model":"'+_model+'"}';
+		
+		var reviewObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"flag" : 1,
+		}
+		var _review = JSON.stringify(reviewObj);
+		var node = '{"data":' + _review + '}';
 		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/preview", node, getPreviewInfo);
 	});
@@ -1056,6 +1064,7 @@ function getPreviewInfo(){
                	document.getElementById("myPreviewBodyOne").innerHTML = data.resultData.text1;
                 document.getElementById("myPreviewBodyTwo").innerHTML = data.resultData.text2;
                 document.getElementById("myPreviewBodyThree").innerHTML = data.resultData.text3;
+            	document.getElementById("myPreviewBodyFour").innerHTML = data.resultData.text4;
             } else{
                 console.log("lxw " + "预览-失败");
                 document.getElementById("myPreviewBodyOne").innerHTML = "信息出错，请刷新";
@@ -1597,17 +1606,22 @@ function scrollTopStyle(name){
 //刷新当前iframe
 function page4fresh(num) {
     var htmlObject = parent.document.getElementById("tab_userMenu4");
-    var htmlObject2 = parent.document.getElementById("tab_userMenu5");
-    var htmlObject3 = parent.document.getElementById("tab_userMenu2");
-    var htmlObject4 = parent.document.getElementById("tab_userMenu1");
     htmlObject.firstChild.src = "page4.html";
+    
+    var htmlObject1 = parent.document.getElementById("tab_userMenu1");
+    var htmlObject2 = parent.document.getElementById("tab_userMenu2");
+    var htmlObject5 = parent.document.getElementById("tab_userMenu5");
+    
+    if (htmlObject0) {
+    	htmlObject0.firstChild.src = "index.html";
+    }
+    if (htmlObject1) {
+    	htmlObject1.firstChild.src = "page1.html";
+    }
     if (htmlObject2) {
-        htmlObject2.firstChild.src = "page5.html";
+    	htmlObject2.firstChild.src = "page2.html";
     }
-    if (htmlObject3) {
-    	htmlObject3.firstChild.src = "page2.html";
-    }
-    if (htmlObject4) {
-    	htmlObject4.firstChild.src = "page1.html";
+    if (htmlObject5) {
+        htmlObject5.firstChild.src = "page5.html";
     }
 }   

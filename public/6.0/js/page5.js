@@ -209,7 +209,13 @@ function buttonInitAfter(){
 		console.log("点击了审核页面的预览");
 		var _chip = $("#lable5Chip").val();
 		var _model = $("#lable5Model").val();
-		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
+		var reviewObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"flag" : 1,
+		}
+		var _review = JSON.stringify(reviewObj);
+		var node = '{"data":' + _review + '}';
 		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/preview", node, getPreviewInfo);
 	});
@@ -1056,6 +1062,7 @@ function getPreviewInfo(){
                	document.getElementById("myPreviewBodyOne").innerHTML = data.resultData.text1;
                 document.getElementById("myPreviewBodyTwo").innerHTML = data.resultData.text2;
                 document.getElementById("myPreviewBodyThree").innerHTML = data.resultData.text3;
+            	document.getElementById("myPreviewBodyFour").innerHTML = data.resultData.text4;
             } else{
                 console.log("lxw " + "预览-失败");
                 document.getElementById("myPreviewBodyOne").innerHTML = "信息出错，请刷新";

@@ -308,7 +308,7 @@
     background-color: #66AFE9;
     padding: 5px;
 }
-#myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree{
+#myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree,#myPreviewBodyFour{
 	width: 100%;
 	min-height: 500px;
 }
