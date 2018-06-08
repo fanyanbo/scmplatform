@@ -295,7 +295,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, props
   });
 
   let sql1 = `INSERT INTO ${dbConfig.tables.configdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
-  for(var i=0; i<configInfo.length;i++) {
+  for(let i=0; i<configInfo.length; i++) {
     let sql1_param = [chip,model,configInfo[i].engName,configInfo[i].curValue];
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
@@ -304,7 +304,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, props
   }
 
   let sql2 = `INSERT INTO ${dbConfig.tables.settingsdata_temp}(chip,model,engName) values (?,?,?)`;
-  for(var i=0; i<settingsInfo.length;i++) {
+  for(let i=0; i<settingsInfo.length; i++) {
     let sql2_param = [chip,model,settingsInfo[i].engName];
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
@@ -313,9 +313,9 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, props
   }
 
   let sql3 = `INSERT INTO ${dbConfig.tables.propsdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
-  for(let i=0; i<propsInfo.length;i++) {
+  for(let i=0; i<propsInfo.length; i++) {
     let sql3_param = [chip,model,propsInfo[i].engName,propsInfo[i].curValue];
-    db.conn.query(sql2,sql2_param,function(err,rows,fields){
+    db.conn.query(sql3,sql3_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
     });
