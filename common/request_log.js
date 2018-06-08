@@ -1,6 +1,6 @@
 var logger = require('./logger');
 
-var ignore = /^\/(html|css|js)/;
+var ignore = /^\/(html|css|js|fonts)/;
 
 exports = module.exports = function (req, res, next) {
   // Assets do not out log.
