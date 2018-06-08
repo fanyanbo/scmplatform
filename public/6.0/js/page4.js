@@ -874,6 +874,7 @@ function SysDataInsert2(type, arr){
 }
 
 function PropDataInsert2(type, arr){
+	console.log(type);
 	for (var i=0; i<arr.length; i++) {
 		$("#"+arr[i].engName).val(arr[i].curValue);
 		$("#"+arr[i].engName).attr("value",arr[i].curValue);
