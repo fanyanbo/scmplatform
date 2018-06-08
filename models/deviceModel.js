@@ -232,7 +232,7 @@ DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
       //   }
       //   callback(null,"updateTargetProduct OK" + result);
       // });
-      callback(null,"updateTargetProduct OK" + result);
+      callback(null,"updateTargetProduct OK");
   });
 
   let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
