@@ -1,3 +1,4 @@
+var eventproxy = require('eventproxy');
 var db = require('../common/db');
 var logger = require('../common/logger');
 var config = require('../config/config');
@@ -233,6 +234,7 @@ ModuleModel.prototype.updateItemsOrderId = function (arr, callback) {
 
   for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
     let sql = "UPDATE modules SET orderId = ? WHERE engName = ?";
+
     let sql_param = [arr[i].orderId,arr[i].engName];
     db.conn.query(sql,sql_param,function(err,rows,fields) {
       if (err) return ep.emit('error', err);
