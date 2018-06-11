@@ -49,6 +49,7 @@ PropModel.prototype.update = function (data, callback) {
   let desc = data.desc;
   let sql = "UPDATE props SET defaultValue = ?, category = ?, desc = ? WHERE engName = ?";
   let sql_params = [defaultValue,category,desc,engName];
+  console.log(sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
       logger.error("更新属性信息发生错误:" + err);
