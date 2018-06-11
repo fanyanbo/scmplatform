@@ -1264,17 +1264,12 @@ function changeProps(obj){
     }
 }
 function changeSettings(obj){
-	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
     if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
         obj.setAttribute("oldvalue","1");
         changeAdd.push(obj.getAttribute("cnname"));
-        console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
     }else if(!(obj.checked) && (obj.getAttribute("oldvalue") == '0')){
         obj.setAttribute("oldvalue","2");
         changeReduce.push(obj.getAttribute("cnname"));
-        console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
     }else{
         obj.setAttribute("oldvalue","0");
         Array.prototype.indexOf = function(val) {
@@ -1289,11 +1284,11 @@ function changeSettings(obj){
                 this.splice(index, 1);
             }
         };
-        changeReduce.remove(obj.getAttribute("cnname"));
+        changeReduce.push(obj.getAttribute("cnname"));
         changeAdd.remove(obj.getAttribute("cnname"));
-        console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
-    }   
+    }
+    console.log("add"+changeAdd);
+    console.log("changeReduce"+changeReduce);
 }
 
 function changeDevice(obj){

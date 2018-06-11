@@ -1456,7 +1456,6 @@ function changeProps(obj){
 function changeSettings(obj){
 	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
     if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
-        // obj.oldvalue = '1';
         obj.setAttribute("oldvalue","1");
         changeAdd.push(obj.getAttribute("cnname"));
         console.log("add"+changeAdd);
