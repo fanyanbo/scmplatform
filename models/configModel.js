@@ -188,7 +188,7 @@ ConfigModel.prototype.add = function (engName, cnName, category, type, options, 
 ConfigModel.prototype.update = function (engName, cnName, category, type, options, defaultValue, desc, orderId, callback) {
 
   let sql0 = "SELECT * FROM configs WHERE category = ? AND engName = ?";
-  db.conn.query(sql0,[],function(err,rows,fields){
+  db.conn.query(sql0,[category,engName],function(err,rows,fields){
     if (err) {
       return callback(err);
     }

@@ -92,7 +92,7 @@ ModuleModel.prototype.update = function (engName, cnName, category, gitPath, des
   // let sql_category_count = "SELECT max(orderId) AS count FROM modules WHERE category = ?"; //当修改类别时需要同步修改orderId,以免在新分类中造成冲突
 
   let sql0 = "SELECT * FROM modules WHERE category = ? AND engName = ?";
-  db.conn.query(sql0,[],function(err,rows,fields){
+  db.conn.query(sql0,[category,engName],function(err,rows,fields){
     if (err) return callback(err);
     console.log("更新mk项，rows.length = " + rows.length);
     if(rows.length == 0){ //分类已经修改
