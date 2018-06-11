@@ -209,7 +209,6 @@ function buttonInitAfter(){
 		console.log("点击了审核页面的预览");
 		var _chip = $("#lable4Chip").val();
 		var _model = $("#lable4Model").val();
-		var node = '{"chip":"'+_chip+'","model":"'+_model+'","model":"'+_model+'"}';
 		
 		var reviewObj = {
 			"chip" : _chip,
@@ -583,7 +582,6 @@ function reviewSure(state){
 		_flag = $("#mydialog").attr("buttontype");
 		_flag = parseInt(_flag);
 		state = parseInt(state);
-		console.log(_flag);
 		var recoveObj = {
 			"chip" : _chip,
 			"model" : _model,
@@ -833,6 +831,8 @@ function productHistoryQuery2(){
 					$("#changeDescDiv").css("display","none");
 					$("#addDescDiv").css("display","block");
 				} else{
+					document.getElementById("reviewContent").innerHTML = "";
+					document.getElementById("reviewReason").innerHTML = "";
 					$("#changeDescDiv").css("display","block");
 					$("#addDescDiv").css("display","none");
 					
@@ -1264,6 +1264,7 @@ function changeProps(obj){
     }
 }
 function changeSettings(obj){
+	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
     if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
         obj.setAttribute("oldvalue","1");
         changeAdd.push(obj.getAttribute("cnname"));
@@ -1284,7 +1285,7 @@ function changeSettings(obj){
                 this.splice(index, 1);
             }
         };
-        changeReduce.push(obj.getAttribute("cnname"));
+        changeReduce.remove(obj.getAttribute("cnname"));
         changeAdd.remove(obj.getAttribute("cnname"));
     }
     console.log("add"+changeAdd);

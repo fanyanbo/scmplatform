@@ -38,7 +38,7 @@
 
 .CJJ-Table thead{
     border-bottom: 1px solid #ccc;
-    background: #f2f2f2;
+    background: #42A3E7;
 }
 
 .CJJ-Table thead th{
@@ -48,10 +48,17 @@
 
 .CJJ-Table tbody td{
     text-align: center;
+    max-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .CJJ-Table tbody tr{
     border-bottom: 1px dashed #d9d9d9;
+}
+.CJJ-Table tbody tr:nth-child(even) {
+    background-color: #CFEEE9;
 }
 
 .CJJ-Table tbody tr:hover{
@@ -60,7 +67,7 @@
 .CJJ-Table tfoot select{
     width: 80px;
     padding-left: 10px;
-    height: 26px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
 }
@@ -81,16 +88,16 @@
 }
 
 .CJJ-Table .tfootRight input {
-    width: 80px;
-    padding-left: 10px;
-    height: 25px;
+    width: 65px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
+    text-align: center;
 }
 
 .CJJ-Table .tfootRight button {
     width: 60px;
-    height: 25px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
     margin-left: 10px;
@@ -99,7 +106,7 @@
 
 .CJJ-Table .tfootRight button:hover {
     background: #ff6666 !important;
-    height: 27px;
+    height: 31px;
     color: white !important;
     border: none !important;
 }
@@ -212,10 +219,10 @@
     float: left;
     margin-left: 5%;
 }
-.page2_tabs:nth-child(1) {
-	background-color: red;
+.page2_tabs{
+	border-radius: 5px;
+    padding: 2px 4px;
 }
-
 .hidden{
 	display: none;
 }
@@ -230,7 +237,7 @@
     margin-right: 20%;
     z-index: 1051;
     height: 30%;
-    top: 15%;
+    top: 25%;
     font-size: 24px;
 }
 #page2Modal1{
@@ -263,7 +270,9 @@
 .eachpartbox{
 	position: relative;
 	width: 100%;
+	margin-top: 5px;
 	clear: both;
+	font-size: 18px;
 }
 .myModalErrorInfo{
     margin-left: 20%;
@@ -286,22 +295,96 @@
 }
 .myheader{
 	padding-bottom: 5px;
+	border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #66AFE9;
 }
 .mybody{
 	padding-bottom: 0px;
 }
-#myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree{
+.myfooter{
+	border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #66AFE9;
+    padding: 5px;
+}
+#myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree,#myPreviewBodyFour{
 	width: 100%;
 	min-height: 500px;
 }
 #myEditEnsureDiv,#myAddEnsureDiv{
 	position: absolute;
-    top: 100px;
+    top: 55px;
     padding-right: 0px;
     display: none;
-    max-height: 350px;
+    max-height: 370px;
     overflow: auto;
 }
-#txt1,#txt2,#txt3,#txt4{
+#txt1,#txt2,#txt3,#txt4,#txt5{
 	display: none;
+}
+
+#noChangeHistory{
+	text-align: center;
+    font-size: 26px;
+}
+#page2 .modal-footer{
+	text-align: center;
+}
+.target_product{
+	max-width: 100px;
+}
+
+.changetitle{
+	font-size: 24px;
+    color: darkblue;
+}
+#changeContent,#changeReason,#changeReason2{
+	background-color: lavender;
+	min-height: 80px;
+}
+#changeReason,#changeReason2{
+	width: 100%;
+	resize: none;
+	min-height: 60px;
+}
+#searchNoInfo,#areYouSure,#deleteInfo{
+	text-align: center;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+#errorChangeInfo,#errorChangeInfo2{
+	color: red;
+	display: none;
+}
+.eachcheck{
+	border-radius: 5px;
+    padding: 2px 5px;
+}
+#contenttable,#contenttable thead th{
+	text-align: center;
+}
+#contenttable thead th,#contenttable tbody td{
+	max-width: 300px;
+	word-wrap:break-word;
+	vertical-align: middle;
+}
+.page2_boxes{
+	margin: 0 auto;
+}
+#page2Modal1Table .sysitems{
+	margin-right: 5px;
+}
+#page2Modal1Table .propitems{
+	margin-right: 5px;
+}
+#page2Modal1Table .configitems{
+	padding-right: 0px;
+	padding-left: 0px;
+	background-color: white;
+}
+#myPreviewModal .mybody textarea{
+	overflow:scroll;
+    background-color: palegoldenrod;
+    padding-left: 10px;
 }

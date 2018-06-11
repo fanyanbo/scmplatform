@@ -40,13 +40,14 @@
 .CJJ-Table .tfootRight input {
     width: 80px;
     padding-left: 10px;
-    height: 25px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
+    text-align: center;
 }
 .CJJ-Table .tfootRight button {
     width: 60px;
-    height: 25px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
     margin-left: 10px;
@@ -54,7 +55,7 @@
 }
 .CJJ-Table .tfootRight button:hover {
     background: #ff6666 !important;
-    height: 27px;
+    height: 31px;
     color: white !important;
     border: none !important;
 }
@@ -86,15 +87,24 @@
 .CJJ-Table tbody tr:hover{
     background-color: #d5d5d5;
 }
+.CJJ-Table tbody tr:nth-child(even) {
+    background-color: #CFEEE9;
+}
 .CJJ-Table tfoot select{
     width: 80px;
     padding-left: 10px;
-    height: 26px;
+    height: 31px;
     border: 1px solid #d9d9d9;
     color: #333;
 }
+.CJJ-Table tfoot td {
+    padding-top: 10px;
+}
 #page4{
 	min-width: 900px;
+}
+body .modal-footer{
+	text-align: center;
 }
 #page4_table,#page4_table2{
 	position: absolute;
@@ -112,13 +122,13 @@
 
 #myEditEnsureDiv{
 	position: absolute;
-    top: 100px;
+    top: 65px;
     padding-right: 0px;
     display: none;
     max-height: 350px;
     overflow: auto;
 }
-#txt1,#txt2,#txt3,#txt4{
+#txt1,#txt2,#txt3,#txt4,#txt5{
 	display: none;
 }
 .grouptitle{
@@ -134,7 +144,9 @@
 .eachpartbox{
 	position: relative;
 	width: 100%;
+	margin-top: 5px;
 	clear: both;
+	font-size: 18px;
 }
 .close1 {
     float: right;
@@ -142,17 +154,13 @@
     font-size: 13px;
     margin-top: -4px;
 }
-#changeDeviceDesc, #removeModelDesc, #addModelDesc, #changeConfigDesc, #newFileDesc, #changeFileDesc{
-	display: none;
-}
-#mydialog{
-	text-align: center;
+#mydialog,#mydialog2{
     position: absolute;
     display: none;
     z-index: 1051;
     top: 0;
     font-size: 24px;
-    margin-top: 175px;
+    margin-top: 80px;
 }
 .myfooter button {
     position: relative;
@@ -181,7 +189,7 @@
 	position: absolute;
 	z-index: 9999;
 }
-#myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree{
+#myPreviewBodyOne,#myPreviewBodyTwo,#myPreviewBodyThree,#myPreviewBodyFour{
 	width: 100%;
 	min-height: 500px;
 }
@@ -226,4 +234,117 @@
 	width: 100%;
 	background-color: #94A6B0;
 	padding-left: 5px;
+}
+
+.changetitle{
+	font-size: 24px;
+    color: darkblue;
+}
+#changetitle3,#changetitle2{
+	text-align: left;
+	float: left;
+	display: none;
+}
+#changeContent{
+	font-size: 20px;
+}
+#changeContent,#changeReason,#changeReason2,#changeReason3{
+	background-color: lavender;
+}
+#changeReason,#changeReason2,#changeReason3{
+	width: 100%;
+	resize: none;
+}
+#changeReason2{
+	display: none;
+}
+#noChangeHistory{
+	text-align: center;
+    font-size: 26px;
+}
+.mybuttons {
+	margin-bottom: 10px;
+	height: 30px;
+	padding-left: 7px;
+	padding-right: 7px;
+	border-radius: 5px;
+	text-align: center;
+}
+#contenttable{
+	margin: 0 auto; 
+}
+#page4_examine{
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 100px;
+}
+#contenttable,#contenttable thead th{
+	text-align: center;
+}
+#contenttable thead th,#contenttable tbody td{
+	max-width: 300px;
+	word-wrap:break-word;
+	vertical-align: middle;
+}
+.eachlook,.eachedit,.eachaudit{
+	border-radius: 5px;
+    padding: 2px 5px;
+    margin: 0px 5px;
+}
+.page4_tabs{
+	border-radius: 5px;
+    padding: 2px 4px;
+}
+#errorChangeInfo,#errorChangeInfo2,#errorChangeInfo22{
+	color: red;
+	display: none;
+}
+#noList{
+    display: none;
+    width: 100%;
+    font-size: 20px;
+    margin: 0 auto;
+    margin-top: 100px;
+    text-align: center;
+}
+#changeDescDiv,#addDescDiv{
+	display: none;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+#reviewReason0,#reviewContent0,#reviewReason,#reviewContent{
+    padding-left: 4px;
+    padding-right: 4px;
+    overflow: auto;
+}
+#reviewContent0{
+	border-top: 1px solid white;
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+}
+#reviewReason0{
+	border-top: 1px solid white;
+	border-right: 1px solid white;
+}
+#reviewContent{
+	border-top: 1px solid white;
+	border-left: 1px solid white;
+	border-right: 1px solid white;
+	border-bottom: 1px solid white;
+	height: 68px;
+}
+#reviewReason,#reviewContent{
+	border-top: 1px solid white;
+	height: 68px;
+	border-right: 1px solid white;
+	border-bottom: 1px solid white;
+}
+#changeDescTitle{
+	padding-left: 0px;
+    padding-right: 0px;
+}
+#reasonBox{
+	padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 0px;
 }

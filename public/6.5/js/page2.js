@@ -7,32 +7,36 @@ var autoDataArray1 = new Array();
 var autoDataArray2 = new Array();
 var autoDataArray3 = new Array();
 var autoDataArray4 = new Array();
-var autogitArray = ["a", "b", "c", "bb", "cb", "bvv", "ca", "bsd", "cfg", "bd", "adfc", "bas", "asc"];
 
 var _twoLevelLinkageArrayOne = [[],[],[],[]];
 var _twoLevelLinkageArrayTwo = [[],[],[],[]];
 var _twoLevelLinkageArrayThree = [[],[],[],[]];
-var _myArray = [];
+
+var _myArray = [];//保存查询到的产品的信息
 
 var changeAdd = [];//保存新增模块信息
 var changeReduce = [];//保存删除模块信息
 var changeConf = [];//保存修改配置信息
 var changeDev = [];//保存修改设备信息
+var changeProp = [];//保存修改属性信息
 var olrplayerid = null;
 
+var deleteChip = null;
+var deleteModel = null;
+
 var fromEmail = null;
-var adminFlag = null;
+var level = null;
 var loginusername = null;
 
-var CoocaaVersion = "/v6.5";
+var coocaaVersion = "/v6.5";
 
 $(function() {
 	fromEmail = parent.loginEmail;
 	loginusername = parent.loginusername;
-	adminFlag = parent.adminFlag;
-	console.log(fromEmail+"--"+loginusername+"--"+adminFlag);
+	level = parent.loginlevel;
+	console.log(fromEmail+"--"+loginusername+"--"+level);
 	var node = '{"offset":"-1","rows":"10"}';
-	sendHTTPRequest(CoocaaVersion+"/product/queryByPage", node, productQuery);
+	sendHTTPRequest(coocaaVersion+"/product/queryByPage", node, productQuery);
 	buttonInit();
 });
 
@@ -44,16 +48,27 @@ function productQuery() {
 			//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 			if(data.resultCode == "0") {
 				var arr = new Array();
+				parent.document.getElementsByClassName("email")[0].style.display = "none";
+				parent.document.getElementsByClassName("email")[1].style.display = "none";
+				parent.document.getElementsByClassName("email")[2].style.display = "none";
 				for (var i=0; i<data.resultData.length; i++) {
 					if (data.resultData[i].auditState == 0) {
 						arr.push(data.resultData[i]);
+					}else if(data.resultData[i].auditState == 1){
+						console.log('111111111111');
+						parent.document.getElementsByClassName("email")[0].style.display = "block";
+						parent.document.getElementsByClassName("email")[1].style.display = "inline-block";
+					}else if(data.resultData[i].auditState == 2){
+						console.log('22222222222');
+						parent.document.getElementsByClassName("email")[0].style.display = "block";
+						parent.document.getElementsByClassName("email")[2].style.display = "inline-block";
 					}
 				}
+				_myArray = arr;
 				handleTableData(arr);
 			}
 		}
-		var node1 = '{}';
-		sendHTTPRequest(CoocaaVersion+"/device/queryAll", node1 , targetproductQueryResult);
+		sendHTTPRequest(coocaaVersion+"/device/queryAll", '{}' , targetproductQueryResult);
 	}
 }
 
@@ -75,11 +90,11 @@ function targetproductQueryResult() {
 				for(var i = 0; i < data.resultData[3].length; i++) {
 					autoDataArray4.push(data.resultData[3][i].name);
 				}
-				instantQuery(autoDataArray1, autoDataArray2, autoDataArray3, autoDataArray4, autogitArray);
+				instantQuery(autoDataArray1, autoDataArray2, autoDataArray3, autoDataArray4);
 			}
 		}
 		clearAllInfo();
-		sendHTTPRequest(CoocaaVersion+"/product/queryAll", '{}', allQueryResult);
+		sendHTTPRequest(coocaaVersion+"/product/queryAll", '{}', allQueryResult);
 	}
 }
 
@@ -87,18 +102,18 @@ function handleTableData(arr) {
 	var getdataArray2 = new Array();
 	for(var i = 0; i < arr.length; i++) {
 		var eachItem2 = {
-			"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
+//			"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
+			"number" : (i+1),
 			"model": arr[i].model,
 			"chip": arr[i].chip,
 			"target_product": arr[i].targetProduct,
-			"coocaaVersion": arr[i].coocaaVersion,
 			"AndroidVersion": arr[i].androidVersion,
 			"chipmodel": arr[i].soc,
 			"EMMC": arr[i].EMMC,
 			"memory": arr[i].memorySize,
 			"gitbranch": arr[i].gitBranch,
-			"history": "<a class='eachcheck' href='#'>查看</a>",
-			"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open'></span></a>"
+			"history": "<button class='eachcheck btn-success' href='#'>查看</button>",
+			"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil' title='修改'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove' title='删除'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy' title='复制'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open' title='预览'></span></a>"
 		};
 		getdataArray2.push(eachItem2);
 	}
@@ -109,17 +124,36 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页的样子
 	$('#page2_table').CJJTable({
-		'title': ["单选框", "机型", "机芯", "TP", "酷开版本", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
-		'body': ["checkout", "model", "chip", "target_product", "coocaaVersion", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
-		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
+		'title': ["序号", "机型", "机芯", "TP", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
+		'body': ["number", "model", "chip", "target_product", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
+		'display': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
 		'url': data1 //数据源 必填
 	});
+	editStatusByLength(data1.length);
+}
+function reloadClick(){
+	console.log("in reloadClick");
 	buttonInitAfter();
 }
+function editStatusByLength(num){
+	if (num == 0) {
+		console.log("查询结果为空");
+		$('#page2_table').css("display", "none");
+		$('#searchNoInfo').css("display", "block");
+	} else if (num < 11) {
+		console.log("查询结果个数小于11");
+		$('#page2_table').css("display", "block");
+		$('#searchNoInfo').css("display", "none");
+	}else{
+		console.log("查询结果个数大于11");
+		$('#page2_table').css("display", "block");
+		$('#searchNoInfo').css("display", "none");
+	}
+}
 
-function instantQuery(arr1, arr2, arr3, arr4, arr5) {
+function instantQuery(arr1, arr2, arr3, arr4) {
 	var _$ = function(id) {
 		return "string" == typeof id ? document.getElementById(id) : id;
 	}
@@ -156,7 +190,6 @@ function instantQuery(arr1, arr2, arr3, arr4, arr5) {
 		setValue: function(_this) {
 			return function() {
 				_this.obj.value = this.seq;
-				//checkInArray(_this.obj.id,$("#"+_this.obj.id).val());
 				if (_this.obj.id == "lable2TargetProduct") {
 					changeMKByTP(_this.obj.id, _this.obj.value);
 				}
@@ -220,7 +253,6 @@ function instantQuery(arr1, arr2, arr3, arr4, arr5) {
 			//回车键
 			else if(event.keyCode == 13) {
 				this.autoObj.className = "auto_hidden";
-				//checkInArray(this.autoObj.id,document.getElementById(this.autoObj.id).childNodes[this.index].innerText);
 				if (this.autoObj.id == "page2_tp_auto2") {
 					changeMKByTP(this.curname, this.curvalue);
 				}
@@ -271,40 +303,33 @@ function instantQuery(arr1, arr2, arr3, arr4, arr5) {
 	autoComplete2 = new AutoComplete('page2_model', 'page2_model_auto', arr2);
 	autoComplete3 = new AutoComplete('page2_targetProduct', 'page2_tp_auto', arr3);
 	autoComplete4 = new AutoComplete('page2_chipid', 'page2_soc_auto', arr4);
-	autoComplete5 = new AutoComplete('page2_gitbranch', 'page2_git_auto', arr5);
 	
 	autoComplete12 = new AutoComplete('lable2Chip', 'page2_chip_auto2', arr1);
 	autoComplete22 = new AutoComplete('lable2Model', 'page2_model_auto2', arr2);
 	autoComplete32 = new AutoComplete('lable2TargetProduct', 'page2_tp_auto2', arr3);
 	autoComplete42 = new AutoComplete('lable2ChipMode', 'page2_soc_auto2', arr4);
-	autoComplete52 = new AutoComplete('lable2GitBranch', 'page2_git_auto2', arr5);
 	/* 点击空白出隐藏临时div */
 	_$(document).onclick = function(e) {
 		var e = e || window.event; //浏览器兼容性 
 		var elem = e.target || e.srcElement;
-		
-		
-		var showArray = ["page2_chip_auto","page2_model_auto","page2_tp_auto","page2_soc_auto","page2_git_auto","page2_chip_auto2","page2_model_auto2","page2_tp_auto2","page2_soc_auto2","page2_git_auto2"];
-		var showBox = ["page2_chip","page2_model","page2_targetProduct","page2_chipid","page2_gitbranch","lable2Chip","lable2Model","lable2TargetProduct","lable2ChipMode","lable2GitBranch"];
+		var showArray = ["page2_chip_auto","page2_model_auto","page2_tp_auto","page2_soc_auto","page2_chip_auto2","page2_model_auto2","page2_tp_auto2","page2_soc_auto2"];
+		var showBox = ["page2_chip","page2_model","page2_targetProduct","page2_chipid","lable2Chip","lable2Model","lable2TargetProduct","lable2ChipMode"];
 		eachShowObj(showArray,showBox);
 	}
 	function eachShowObj(arr,arr2){
 		for (var i=0; i<arr.length; i++) {
 			var _style = document.getElementById(arr[i]).getAttribute("class");
 			if(_style == "auto_show") {
-				//checkInArray(arr2[i],$("#"+arr2[i])[0].value);
 				document.getElementById(arr[i]).setAttribute("class", "auto_hidden")
 			}
 		}
 	}
 }
 
-function checkInArray(id,value){}
-
 function changeMKByTP(id, value) {
 	console.log(id + "-----" + value);
 	var node = '{"targetproduct":"' + value + '"}';
-	sendHTTPRequest(CoocaaVersion+"/product/queryBytp", node, getMKByTPResult);
+	sendHTTPRequest(coocaaVersion+"/product/queryMKByTp", node, getMKByTPResult);
 }
 
 function getMKByTPResult() {
@@ -316,7 +341,8 @@ function getMKByTPResult() {
 				clearMKLastWork();
 				
 				for (var i=0; i<data.resultData.length; i++) {
-					document.getElementById(data.resultData[i].engName).setAttribute('checked', 'true');
+					document.getElementById(data.resultData[i].engName).setAttribute('checked', '');
+					document.getElementById(data.resultData[i].engName).checked = true;
 				}
 			}
 		}
@@ -325,14 +351,14 @@ function getMKByTPResult() {
 function clearMKLastWork(){
 	console.log($(".mkitems").length);
 	for (var i=0; i<$(".mkitems").length; i++) {
-		document.getElementsByClassName("mkitems")[i].removeAttribute('checked');
+//		document.getElementsByClassName("mkitems")[i].removeAttribute('checked');
+		document.getElementsByClassName("mkitems")[i].checked = false;
 	}
 }
 
 function buttonInit() {
 	document.getElementById("page2_searchInfo").onclick = page2Select;
 	document.getElementById("page2_reset").onclick = page2Reset;
-	document.getElementById("page2_deleteMore").onclick = page2DeleteMore;
 	document.getElementById("page2_export").onclick = page2Export;
 	document.getElementById("page2_fresh").onclick = page2Fresh;
 	document.getElementById("myEditEnsureModalEnsure").onclick = closeparentpage;
@@ -344,7 +370,8 @@ function buttonInit() {
 		closePage2Model("myAddCloseDiv");
 	});
 	$("#page2_add").click(function() {
-		$("#lable1SubmitTwo").attr("catagory","1");//1-新增、2-修改、3-复制、4-预览
+		//1-新增、2-修改、3-复制、4-预览、5-删除
+		$("#lable1SubmitTwo").attr("catagory","1");
 		console.log("点击了新增");
 		resetAllInfo();//删除前面的操作痕迹
 		$("#page2Modal1").modal();
@@ -355,16 +382,23 @@ function buttonInit() {
 		console.log("点击了确认框的确认按钮");
 		var _chip = $("#myDeleteModalEnsure").attr("chip");
 		var	_model = $("#myDeleteModalEnsure").attr("model");
-		var deleteObj = {
-			"chip" : _chip,
-			"model" : _model,
-			"userName" : loginusername,
+		var content = document.getElementById("changeReason2").value;
+		content = content.replace(/\s*/g,"");
+		console.log(content +"---"+content.length);
+		if(content == null || content.length == 0){
+			document.getElementById("errorChangeInfo2").style.display = "inline-block";
+			setTimeout("document.getElementById('errorChangeInfo2').style.display = 'none';", 3000);
+		} else{
+			var deleteObj = {
+				"chip" : _chip,
+				"model" : _model,
+				"userName" : loginusername,
+			}
+			var _delete = JSON.stringify(deleteObj);
+			var node = '{"data":' + _delete + '}';
+			console.log(node);
+			sendHTTPRequest(coocaaVersion+"/product/delete", node, productAddResult);
 		}
-		
-		var _delete = JSON.stringify(deleteObj);
-		var node = '{"data":' + _delete + '}';
-		console.log(node);
-		sendHTTPRequest(CoocaaVersion+"/product/delete", node, getDeleteProductInfo);
 	});
 	
 	$("#page2_chip").keyup(function(event) {
@@ -379,9 +413,6 @@ function buttonInit() {
 	$("#page2_chipid").keyup(function(event) {
 		autoComplete4.start(event);
 	});
-	$("#page2_gitbranch").keyup(function(event) {
-		autoComplete5.start(event);
-	});
 	$("#lable2Chip").keyup(function(event) {
 		autoComplete12.start(event);
 	});
@@ -393,9 +424,6 @@ function buttonInit() {
 	});
 	$("#lable2ChipMode").keyup(function(event) {
 		autoComplete42.start(event);
-	});
-	$("#lable2GitBranch").keyup(function(event) {
-		autoComplete52.start(event);
 	});
 	
 	
@@ -422,47 +450,47 @@ function buttonInit() {
 	$("#myEditEnsureX").click(function() {
 		console.log("修改提示框的X按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		page2Fresh()
+//		page2Fresh()
 	});
 	$("#myEditCancle").click(function() {
 		console.log("修改提示框的取消按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-		page2Fresh()
+//		page2Fresh()
 	});
 	$("#myEditEnsure").click(function() {
-		console.log("修改提示框的确定按钮");
-		//获取基本项、config、MK、系统设置的值
-		var _base = getBaseValue();
-		var _config = getConfigValue();
-		var _sys = getSysValue();
-		_base = JSON.stringify(_base);
-		_config = JSON.stringify(_config);
-		_sys = JSON.stringify(_sys);
-		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
-		console.log(node);
-		sendHTTPRequest(CoocaaVersion+"/product/update", node, productAddResult);
+		console.log("修改配置项的提交");
+		var content = document.getElementById("changeReason").value;
+		content = content.replace(/\s*/g,"");
+		console.log(content +"---"+content.length);
+		if(content == null || content.length == 0){
+			document.getElementById("errorChangeInfo").style.display = "inline-block";
+			setTimeout("document.getElementById('errorChangeInfo').style.display = 'none';", 3000);
+		} else{
+			myEditorAddSubmit(1);
+		}
 	});
 	$("#myAddEnsure").click(function() {
-		console.log("新增提示框的确定按钮");
-		var _base = getBaseValue();
-		var _config = getConfigValue();
-		var _sys = getSysValue();
-		_base = JSON.stringify(_base);
-		_config = JSON.stringify(_config);
-		_sys = JSON.stringify(_sys);
-		var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
-		console.log(node);
-		sendHTTPRequest(CoocaaVersion+"/product/add", node, productAddResult);
+		console.log("新增配置项的提交");
+		myEditorAddSubmit(2);
+	});
+	
+	$("#myAddCancle").click(function(){
+		$("#myAddEnsureDiv").css("display","none");
+	});
+	$("#myAddEnsureX").click(function(){
+		$("#myAddEnsureDiv").css("display","none");
 	});
 }
 
 function colorstatus(number){
 	for(var k = 0; k < $(".page2_tabs").length; k++) {
 		$(".page2_boxes")[k].style.display = "none";
-		$(".page2_tabs")[k].style.backgroundColor = "buttonface";
+		$(".page2_tabs")[k].style.backgroundColor = "#337ab7";
+		$(".page2_tabs")[k].style.backgroundColor = "#2e6da4";
 	}
 	$(".page2_boxes")[number].style.display = "block";
-	$(".page2_tabs")[number].style.backgroundColor = "red";
+	$(".page2_tabs")[number].style.backgroundColor = "#5cb85c";
+	$(".page2_tabs")[number].style.backgroundColor = "#4cae4c";
 }
 
 function buttonInitAfter() {
@@ -475,11 +503,11 @@ function buttonInitAfter() {
 		$('#page1_examine').modal();
 		
 		var node = '{"chip":"'+$(".new_productBox .chip")[_cIndex].innerHTML+'","model":"'+$(".new_productBox .model")[_cIndex].innerHTML+'"}';
-		sendHTTPRequest(CoocaaVersion+"/product/queryHistory", node, productHistoryQuery);
+		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
 	});
 	$(".eachedit").click(function() {
 		var _aIndex = $(".eachedit").index($(this));
-		//1-新增、2-修改、3-复制、4-预览
+		//1-新增、2-修改、3-复制、4-预览、5-删除
 		$("#lable1SubmitTwo").attr("catagory","2");
 		resetAllInfo();//删除前面的操作痕迹
 		$("#page2Modal1").modal();
@@ -489,17 +517,21 @@ function buttonInitAfter() {
 	});
 	$(".eachdelete").click(function() {
 		var _aIndex = $(".eachdelete").index($(this));
+		//1-新增、2-修改、3-复制、4-预览、5-删除
+		$("#lable1SubmitTwo").attr("catagory","5");
+		deleteChip = $(".chip")[_aIndex].innerText;
+		deleteModel = $(".model")[_aIndex].innerText;
 		$("#myDeleteModalEnsure").attr("chip",$(".chip")[_aIndex].innerText);
 		$("#myDeleteModalEnsure").attr("model",$(".model")[_aIndex].innerText);
 		$("#myDeleteModalLabel").text("单项删除");
 		$('#myDeleteModal').modal();
 		$(".modal-backdrop").addClass("new-backdrop");
-		
+		$("#deleteInfo").html("确定要删除"+$(".chip")[_aIndex].innerText+"-"+$(".model")[_aIndex].innerText+"的配置表吗？");
 	});
 	/*单项复制*/
 	$(".eachcopy").click(function() {
 		var _aIndex = $(".eachcopy").index($(this));
-		//1-新增、2-修改、3-复制、4-预览
+		//1-新增、2-修改、3-复制、4-预览、5-删除
 		$("#lable1SubmitTwo").attr("catagory","3");
 		resetAllInfo();//删除前面的操作痕迹
 		page2AEC(_aIndex);
@@ -510,12 +542,14 @@ function buttonInitAfter() {
 	/*单项预览*/
 	$(".eachpreview").click(function() {
 		var _aIndex = $(".eachpreview").index($(this));
-		//1-新增、2-修改、3-复制、4-预览
+		//1-新增、2-修改、3-复制、4-预览、5-删除
 		$("#lable1SubmitTwo").attr("catagory","4");
 		page2AEC(_aIndex);
 		//document.getElementById("loading").style.display = "block";
 	});
 	$("#page1_close1").click(function() {
+		//document.getElementById("descriptTbody").innerHTML = "";
+		document.getElementById("contenttable").innerHTML = "";
 		$("#page1_examine").modal('hide');
 	});
 	$("#page1_close2").click(function() {
@@ -528,7 +562,6 @@ function page2Select() {
 	var oChip = document.getElementById('page2_chip').value;
 	var oModel = document.getElementById('page2_model').value;
 	var oTargetProduct = document.getElementById('page2_targetProduct').value;
-	var oCoocaaVersion = document.getElementById('page2_coocaaVersion').value;
 	var oAndroid = document.getElementById('page2_androidVersion').value;
 	var oChipid = document.getElementById('page2_chipid').value;
 	var oEmmc = document.getElementById('page2_EMMC').value;
@@ -536,15 +569,25 @@ function page2Select() {
 	var oKeyWord = document.getElementById('page2_keyword').value;
 	var oGitBranch = document.getElementById('page2_gitbranch').value;
 
-	var node = "";
 	if(oKeyWord == null || oKeyWord == "") {
-		node = '{"chip":"' + oChip + '","model":"' + oModel + '","version":"' + oCoocaaVersion + '","soc":"' + oChipid + '","memory":"' + oMemory + '"}';
+		var searchObj = {
+			"chip" : oChip,
+			"model" : oModel,
+			"targetProduct" : oTargetProduct,
+			"memory" : oMemory,
+			"version" : oAndroid,
+			"soc" : oChipid,
+			"EMMC" : oEmmc,
+			"gitBranch" : oGitBranch,
+		}
+		var _search = JSON.stringify(searchObj);
+		var node = '{"data":' + _search + '}';
 		console.log(node);
-		sendHTTPRequest(CoocaaVersion+"/product/queryByRegEx", node, searchResource);
+		sendHTTPRequest(coocaaVersion+"/product/queryByRegEx", node, searchResource);
 	} else {
-		node = '{"name":"' + oKeyWord + '"}';
+		var node = '{"name":"' + oKeyWord + '"}';
 		console.log(node);
-		sendHTTPRequest(CoocaaVersion+"/product/queryByModule", node, searchResource);
+		sendHTTPRequest(coocaaVersion+"/product/queryByModule", node, searchResource);
 	}
 }
 
@@ -572,14 +615,13 @@ function page2Reset() {
 	document.getElementById("page2_chip").value = "";
 	document.getElementById("page2_model").value = "";
 	document.getElementById("page2_targetProduct").value = "";
-	document.getElementById("page2_coocaaVersion").value = "";
 	document.getElementById("page2_androidVersion").value = "";
 	document.getElementById("page2_chipid").value = "";
 	document.getElementById("page2_EMMC").value = "";
 	document.getElementById("page2_memory").value = "";
 	document.getElementById("page2_keyword").value = "";
 	document.getElementById("page2_gitbranch").value = "";
-	//	page2Select(); //重置时是否需要重新查询，这个需要分析
+	page2Select(); //重置时是否需要重新查询，这个需要分析
 }
 //新增、编辑、复制、预览 功能
 function page2AEC(number) {
@@ -587,14 +629,24 @@ function page2AEC(number) {
 	var _chip = $(".chip")[number].innerText;
 	var	_model = $(".model")[number].innerText;
 	var	_target = $(".target_product")[number].innerText;
-	if(_type == 2 || _type == 3) {
-		console.log("点击了编辑 或者是复制" + number);
+	
+	console.log(_type);
+	if (_type == 2||_type == 3) {
+		console.log("点击了编辑或者复制" + number);
 		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
-		sendHTTPRequest(CoocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
+		console.log(node);
+		sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 	} else if(_type == 4) {
 		console.log("点击了预览" + number);
-		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
-		sendHTTPRequest(CoocaaVersion+"/product/preview", node, getPreviewInfo);
+		var reviewObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"flag" : 0,
+		}
+		var _review = JSON.stringify(reviewObj);
+		var node = '{"data":' + _review + '}';
+		console.log(node);
+		sendHTTPRequest(coocaaVersion+"/product/preview", node, getPreviewInfo);
 	}
 }
 
@@ -605,9 +657,10 @@ function allQueryResult() {
 			var data = JSON.parse(this.responseText);
             console.log(data);
             if(data.resultCode == 0){
-            	configQueryData(data.resultData[3],data.resultData[0]);
-				moduleQueryData(data.resultData[4],data.resultData[1]);
-				settingsQueryData(data.resultData[5],data.resultData[2]);
+            	configQueryData1(data.resultData[4],data.resultData[0]);
+				moduleQueryData1(data.resultData[5],data.resultData[1]);
+				settingsQueryData1(data.resultData[7],data.resultData[2]);
+				propQueryData1(data.resultData[6],data.resultData[3]);
             }
 			colorstatus(0);
 		};
@@ -619,7 +672,6 @@ function clearAllInfo() {
 	document.getElementById("lable2Chip").value = "";
 	document.getElementById("lable2Model").value = "";
 	document.getElementById("lable2TargetProduct").value = "";
-	document.getElementById("lable2CoocaaVersion").value = "";
 	document.getElementById("lable2AndroidVersion").value = "";
 	document.getElementById("lable2ChipMode").value = "";
 	document.getElementById("lable2Emmc").value = "";
@@ -642,13 +694,18 @@ function resetAllInfo(){
 	document.getElementById("lable2Chip").value = "";
 	document.getElementById("lable2Model").value = "";
 	document.getElementById("lable2TargetProduct").value = "";
-	document.getElementById("lable2CoocaaVersion").value = "";
 	document.getElementById("lable2AndroidVersion").value = "";
 	document.getElementById("lable2ChipMode").value = "";
 	document.getElementById("lable2Emmc").value = "";
 	document.getElementById("lable2Memory").value = "";
 	document.getElementById("lable2GitBranch").value = "";
 	document.getElementById("lable2Platform").value = "";
+	document.getElementById("lable2Chip").removeAttribute('disabled');
+	document.getElementById("lable2Chip").style.color = "black";
+	document.getElementById("lable2Model").removeAttribute('disabled');
+	document.getElementById("lable2Model").style.color = "black";
+	document.getElementById("lable2TargetProduct").removeAttribute('disabled');
+	document.getElementById("lable2TargetProduct").style.color = "black";
 	
 	for (var i=0; i<$(".configitems").length; i++) {
 		if ($(".configitems")[i].getAttribute("typestr") == "enum") {
@@ -662,9 +719,11 @@ function resetAllInfo(){
 	}
 	for (var k=0; k<$(".mkitems").length; k++) {
 		if ($(".mkitems")[k].getAttribute("type") == "checkbox") {
-			document.getElementsByClassName("mkitems")[k].removeAttribute('checked');
+			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
+			document.getElementsByClassName("mkitems")[k].checked = false;
 		} else if($(".mkitems")[k].getAttribute("type") == "radio"){
-			document.getElementsByClassName("mkitems")[k].removeAttribute('checked');
+			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
+			document.getElementsByClassName("mkitems")[k].checked = false;
 		}
 	}
 	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
@@ -680,46 +739,17 @@ function getPointProductInfo(){
             if(data.resultCode == 0){
             	console.log("数据返回成功");
             	var _type = $("#lable1SubmitTwo").attr("catagory");//2-编辑、3-复制
-            	
-            	CommonDataInsert(_type,data.resultData[0]);
-            	ConfigDataInsert(_type,data.resultData[1]);
-            	SysDataInsert(_type,data.resultData[2]);
-            	MKDataInsert(_type,data.resultData[3]);
+            	CommonDataInsert2(_type,data.resultData[0]);
+            	ConfigDataInsert2(_type,data.resultData[1]);
+            	SysDataInsert2(_type,data.resultData[2]);
+            	PropDataInsert2(_type,data.resultData[3]);
+            	MKDataInsert2(_type,data.resultData[4]);
             }
         };
     }
 }
 
-function getDeleteProductInfo(){
-	if(this.readyState == 4) {
-        if(this.status == 200) {
-            var data = JSON.parse(this.responseText);
-            console.log(data);
-            if(data.resultCode == 0){
-            	console.log("数据返回成功,提交删除日志");
-            	var _chip = $("#myDeleteModalEnsure").attr("chip");
-				var	_model = $("#myDeleteModalEnsure").attr("model");
-				var historyObj = {
-					"chip" : _chip,
-					"model" : _model,
-					"reason" : "删除",
-					"state" : 1,
-					"userName" : loginusername,
-					"content" : "删除该产品"
-				}
-				
-				var _history = JSON.stringify(historyObj);
-				var node = '{"data":' + _history + '}';
-				$('#myDeleteModal').modal('hide');
-				sendHTTPRequest(CoocaaVersion+"/product/addHistory", node, productHistoryAdd);
-            }
-        };
-    }
-}
-
-
-function CommonDataInsert(type,arr){
-	$("#lable2CoocaaVersion").val(arr[0].coocaaVersion);
+function CommonDataInsert2(type,arr){
 	$("#lable2AndroidVersion").val(arr[0].androidVersion);
 	$("#lable2ChipMode").val(arr[0].soc);
 	$("#lable2Emmc").val(arr[0].EMMC);
@@ -737,8 +767,6 @@ function CommonDataInsert(type,arr){
 		$("#lable2TargetProduct").css("color","red");
 		$("#lable2TargetProduct").attr("disabled","disabled");
 		
-		
-		$("#lable2CoocaaVersion").attr("oldvalue",arr[0].coocaaVersion);
 		$("#lable2AndroidVersion").attr("oldvalue",arr[0].androidVersion);
 		$("#lable2ChipMode").attr("oldvalue",arr[0].chipModel);
 		$("#lable2Emmc").attr("oldvalue",arr[0].EMMC);
@@ -746,16 +774,20 @@ function CommonDataInsert(type,arr){
 		$("#lable2GitBranch").attr("oldvalue",arr[0].gitBranch);
 		$("#lable2Platform").attr("oldvalue",arr[0].platform);
 		
-		$("#lable2CoocaaVersion").attr("onchange","changeDevice(this)");
 		$("#lable2AndroidVersion").attr("onchange","changeDevice(this)");
         $("#lable2ChipMode").attr("onchange","changeDevice(this)");
         $("#lable2Memory").attr("onchange","changeDevice(this)");
         $("#lable2Emmc").attr("onchange","changeDevice(this)");
         $("#lable2GitBranch").attr("onchange","changeDevice(this)");
         $("#lable2Platform").attr("onchange","changeDevice(this)");
+	}else{
+		console.log(type);
+		document.getElementById("lable2Chip").removeAttribute('disabled');
+		document.getElementById("lable2Model").removeAttribute('disabled');
+		document.getElementById("lable2TargetProduct").removeAttribute('disabled');
 	}
 }
-function ConfigDataInsert(type, arr){
+function ConfigDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
 		$("#"+arr[i].engName).val(arr[i].curValue);
 		$("#"+arr[i].engName).attr("value",arr[i].curValue);
@@ -767,23 +799,36 @@ function ConfigDataInsert(type, arr){
 		}
 	}
 }
-function MKDataInsert(type, arr){
+function MKDataInsert2(type, arr){
 	for (var j=0; j<$(".mkradio").length; j++) {
 		document.getElementsByClassName("mkradio")[j].removeAttribute('checked');
 	}
 	for (var i=0; i<arr.length; i++) {
-		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
+		document.getElementById(arr[i].engName).setAttribute('checked', '');
+		document.getElementById(arr[i].engName).checked = true;
 	}
-//	olrplayerid = arr[i].id;
 }
-function SysDataInsert(type, arr){
-	for (var i=0; i<arr.length; i++) {
-		document.getElementById(arr[i].engName).setAttribute('checked', 'true');
-	}
+function SysDataInsert2(type, arr){
 	if (type == 2) {
 		for (var i=0; i<$(".sysitems").length; i++) {
-			$(".sysitems:eq("+i+")").attr("onchange","changeConfig(this)");
-			$(".sysitems:eq("+i+")").attr("oldvalue",$(".sysitems:eq("+i+")").attr("value"));
+			$(".sysitems:eq("+i+")").attr("onchange","changeSettings(this)");
+			$(".sysitems:eq("+i+")").attr("oldvalue","0");
+		}
+	}
+	for (var i=0; i<arr.length; i++) {
+		document.getElementById(arr[i].engName).setAttribute('checked', '');
+		document.getElementById(arr[i].engName).checked = true;
+	}
+}
+function PropDataInsert2(type, arr){
+	for (var i=0; i<arr.length; i++) {
+		console.log(arr[i].engName+"---"+arr[i].curValue);
+		document.getElementById(arr[i].engName).value = arr[i].curValue;
+	}
+	if (type == 2) {
+		for (var i=0; i<$(".propitem").length; i++) {
+			$(".propitem:eq("+i+")").attr("onchange","changeProps(this)");
+			$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
 		}
 	}
 }
@@ -803,15 +848,18 @@ function getPreviewInfo(){
 				$("#myPreviewModal").find("li")[0].className = "presentation active";
 				$("#myPreviewModal").find("li")[1].className = "presentation";
 				$("#myPreviewModal").find("li")[2].className = "presentation";
+				$("#myPreviewModal").find("li")[3].className = "presentation";
                	
                	document.getElementById("myPreviewBodyOne").innerHTML = data.resultData.text1;
                 document.getElementById("myPreviewBodyTwo").innerHTML = data.resultData.text2;
                 document.getElementById("myPreviewBodyThree").innerHTML = data.resultData.text3;
+                document.getElementById("myPreviewBodyFour").innerHTML = data.resultData.text4;
             } else{
                 console.log("lxw " + "预览-失败");
                 document.getElementById("myPreviewBodyOne").innerHTML = "信息出错，请刷新";
                 document.getElementById("myPreviewBodyTwo").innerHTML = "信息出错，请刷新";
                 document.getElementById("myPreviewBodyThree").innerHTML = "信息出错，请刷新";
+                document.getElementById("myPreviewBodyFour").innerHTML = "信息出错，请刷新";
             };
         };
     }
@@ -843,15 +891,13 @@ function getAndCheckAndSendAllData(){
 		var isTrueData1 = $("#page2Modal1Table .fuzzySearch")[1].value;
 		var isTrueData2 = $("#page2Modal1Table .fuzzySearch")[2].value;
 		var isTrueData3 = $("#page2Modal1Table .fuzzySearch")[3].value;
-		var isTrueData4 = $("#page2Modal1Table .fuzzySearch")[4].value;
-		console.log(isTrueData0+"-"+isTrueData1+"-"+isTrueData2+"-"+isTrueData3+"-"+isTrueData4);
+		console.log(isTrueData0+"-"+isTrueData1+"-"+isTrueData2+"-"+isTrueData3);
 		var index0 = autoDataArray1.indexOf(isTrueData0);
 		var index1 = autoDataArray2.indexOf(isTrueData1);
 		var index2 = autoDataArray3.indexOf(isTrueData2);
 		var index3 = autoDataArray4.indexOf(isTrueData3);
-		var index4 = autogitArray.indexOf(isTrueData4);
-		console.log(index0+"-"+index1+"-"+index2+"-"+index3+"-"+index4);
-		if (index0 == "-1"||index2 == "-1"||index3 == "-1"||index3 == "-1"||index4 == "-1") {
+		console.log(index0+"-"+index1+"-"+index2+"-"+index3);
+		if (index0 == "-1"||index2 == "-1"||index3 == "-1"||index3 == "-1") {
 			if (index0 == "-1") {
 				_errNum = 0;
 			}
@@ -864,34 +910,39 @@ function getAndCheckAndSendAllData(){
 			if (index3 == "-1") {
 				_errNum = 3;
 			}
-			if (index4 == "-1") {
-				_errNum = 4;
-			}
 			var _curInput = $("#page2Modal1Table .fuzzySearch")[_errNum].getAttribute("name");
 			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
 			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
 			if (type == 1|| type == 3) {
-				document.getElementById("myAddEnsureDiv").style.display = "block";
+				//判断该机芯机型的产品是否已存在
+				var checkObj = {
+					"chip" : $("#lable2Chip").val(),
+					"model" : $("#lable2Model").val()
+				}
+				var _check = JSON.stringify(checkObj);
+				var node = '{"data":' + _check + '}';
+				console.log(node);
+				sendHTTPRequest(coocaaVersion+"/product/queryByChipModel", node, checkResultInfo);
 			} else{
 				//弹出确认框
 				console.log(changeAdd);
 				console.log(changeReduce);
 				console.log(changeConf);
 				console.log(changeDev);
-				if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length == 0) {
+				console.log(changeProp);
+				if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length+changeProp.length == 0) {
 					console.log("未做任何修改");
+					document.getElementById("page2Modal1ErrorInfo").style.display = "block";
 					document.getElementById("page2Modal1ErrorInfo").innerHTML = "您未做任何修改。";
-					document.getElementById("MoreEditBack").style.display = "none";
-					setTimeout("document.getElementById('page2Modal1ErrorInfo').innerHTML='　'",3000);
+					setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 				} else{
 					console.log("做了修改");
 					document.getElementById("myEditEnsureDiv").style.display = "block";
 					if (changeDev.length != 0) {
 				        $("#txt1").css("display", "block");
 				        document.getElementById("txt11").innerHTML = changeDev;
-				    	
 					}
 				    if(changeAdd.length != 0){
 				        $("#txt2").css("display", "block");
@@ -906,6 +957,31 @@ function getAndCheckAndSendAllData(){
 				        $("#txt44").val(changeConf);
 				        document.getElementById("txt44").innerHTML = changeConf;
 				    }
+				    if (changeProp.length != 0) {
+				        $("#txt5").css("display", "block");
+				        $("#txt55").val(changeProp);
+				        document.getElementById("txt55").innerHTML = changeProp;
+				    }
+				}
+			}
+		}
+	}
+}
+function checkResultInfo(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				console.log(data.resultData.length);
+				if (data.resultData.length == 1) {
+					//已存在
+					document.getElementById("page2Modal1ErrorInfo").style.display = "block";
+					document.getElementById("page2Modal1ErrorInfo").innerHTML = "该机芯机型的配置项已经存在。";
+					setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
+				} else{
+					//不存在
+					document.getElementById("myAddEnsureDiv").style.display = "block";
 				}
 			}
 		}
@@ -934,8 +1010,8 @@ function page2Export() {
 	}
 	_newThead += "</tr></thead>";
 	console.log(_newThead);
-	for(var k = 0; k < data.length; k++) {
-		_newTbodyTr = "<tr><td>" + data[k].model + "</td><td>" + data[k].chip + "</td><td>" + data[k].target_product + "</td><td>" + data[k].chipmodel + "</td><td>" + data[k].coocaaVersion + "</td><td>" + data[k].AndroidVersion + "</td><td>" + data[k].memory + "</td><td>" + data[k].EMMC + "</td><td>" + data[k].author + "</td><td>" + data[k].time + "</td></tr>";
+	for(var k = 0; k < _myArray.length; k++) {
+		_newTbodyTr = "<tr><td>" + _myArray[k].model + "</td><td>" + _myArray[k].chip + "</td><td>" + _myArray[k].targetProduct + "</td><td>" + _myArray[k].androidVersion + "</td><td>" + _myArray[k].soc + "</td><td>" + _myArray[k].memorySize + "</td><td>" + _myArray[k].EMMC + "</td><td>" + _myArray[k].userName + "</td><td>" + _myArray[k].operateTime + "</td></tr>";
 		_newTbody += _newTbodyTr;
 	}
 	_newTbody += "</tbody>";
@@ -960,10 +1036,13 @@ function closePage2Model(objname) {
 
 function closeparentpage() {
 	document.getElementById("myAddCloseDiv").style.display = "none";
+	document.getElementById("myEditModalLabel").style.display = "none";
 	$("#page2Modal1").modal('hide');
+	//page2Fresh();
 }
 
-function configQueryData(arr1,arr2) {
+function configQueryData1(arr1,arr2) {
+	//console.log(arr2);
 	var _myConfigBox = document.getElementById("myConfigBox");
 	for(var i = 0; i < arr1.length; i++) {
 		_myConfigBox.innerHTML += '<div class="configitems1 eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
@@ -973,12 +1052,12 @@ function configQueryData(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].category == $(".configitems1:eq(" + (j) + ")").attr("category")) {
 				kk = i;
-				configDataInsert(kk, $(".configitems1")[j], arr2);
+				configDataInsert1(kk, $(".configitems1")[j], arr2);
 			}
 		}
 	}
 }
-function settingsQueryData(arr1,arr2) {
+function settingsQueryData1(arr1,arr2) {
 	var _mySysSettingBox = document.getElementById("mySysSettingBox");
 	var _mySourceBoxBox = document.getElementById("mySourceBoxBox");
 	var _myMarketShowBox = document.getElementById("myMarketShowBox");
@@ -987,16 +1066,16 @@ function settingsQueryData(arr1,arr2) {
 	for(var i = 0; i < arr1.length; i++) {
 		if (arr1[i].level1 == "系统设置") {
 			kk = i;
-			sysDataInsert(kk,_mySysSettingBox,0,arr1);
+			sysDataInsert1(kk,_mySysSettingBox,0,arr1);
 		} else if(arr1[i].level1 == "信号源工具箱"){
 			kk = i;
-			sysDataInsert(kk,_mySourceBoxBox,1,arr1);
+			sysDataInsert1(kk,_mySourceBoxBox,1,arr1);
 		}else if(arr1[i].level1 == "卖场演示"){
 			kk = i;
-			sysDataInsert(kk,_myMarketShowBox,2,arr1);
+			sysDataInsert1(kk,_myMarketShowBox,2,arr1);
 		}else if(arr1[i].level1 == "中间件"){
 			kk = i;
-			sysDataInsert(kk,_myMiddlewareBox,3,arr1);
+			sysDataInsert1(kk,_myMiddlewareBox,3,arr1);
 		}
 	}
 	for (var j=0; j< $(".settingsitems").length; j++) {
@@ -1013,7 +1092,7 @@ function settingsQueryData(arr1,arr2) {
 		}
 	}
 }
-function moduleQueryData(arr1,arr2) {
+function moduleQueryData1(arr1,arr2) {
 	var _myMKBox = document.getElementById("myMkBox");
 	for(var i = 0; i < arr1.length; i++) {
 		_myMKBox.innerHTML += '<div class="moduleitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
@@ -1023,18 +1102,35 @@ function moduleQueryData(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
 				kk = i;
-				mkDataInsert(kk, $(".moduleitems")[j], arr2);
+				mkDataInsert1(kk, $(".moduleitems")[j], arr2);
 			}
 		}
 	}
-	document.getElementsByClassName("mkradio")[0].setAttribute('checked', 'true');
+	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
+	document.getElementsByClassName("mkradio")[0].checked = true;
 }
 
-function configDataInsert(kk, obj, data) {
+function propQueryData1(arr1,arr2) {
+	var _myPropBox = document.getElementById("myPropBox");
+	for(var i = 0; i < arr1.length; i++) {
+		_myPropBox.innerHTML += '<div class="propitems eachpartbox" category="'+ arr1[i].category +'"><div class="grouptitle" title="'+arr1[i].category+'">'+arr1[i].category+'</div></div>';
+	}
+	var kk = 0;
+	for (var j=0; j< $(".propitems").length; j++) {
+		for(var i = 0; i < arr2.length; i++) {
+			if(arr2[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
+				kk = i;
+				propDataInsert1(kk, $(".propitems")[j], arr2);
+			}
+		}
+	}
+}
+
+function configDataInsert1(kk, obj, data) {
 	if(data[kk].typeStr == "string") {
-		obj.innerHTML += "<div class='col-xs-6'><span title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
+		obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].cnName+":</span><input class='col-xs-6 configitems' type='text' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='"+data[kk].typeStr+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
 	} else if(data[kk].typeStr == "enum") {
-		var _myAddselect = "<select class='configitems' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='" + data[kk].typeStr + "' defaultValue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
+		var _myAddselect = "<select class='col-xs-6 configitems' category='"+data[kk].category+"' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' options='"+data[kk].options+"' typeStr='" + data[kk].typeStr + "' defaultValue='" + data[kk].defaultValue + "' value='" + data[kk].defaultValue + "'>";
 		var str2 = data[kk].options.replace(/"/g, '');
 		str2 = str2.replace("[", "");
 		str2 = str2.replace("]", "");
@@ -1046,18 +1142,18 @@ function configDataInsert(kk, obj, data) {
 				_myAddselect += "<option value='" + str2[k] + "'>" + str2[k] + "</option>";
 			}
 		}
-		_myAddselect = "<div class='col-xs-6'><span title='" + data[kk].descText + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
+		_myAddselect = "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='" + data[kk].descText + "'>" + data[kk].cnName + " :</span>" + _myAddselect + "</select></div>";
 		obj.innerHTML += _myAddselect;
 	}
 }
-function mkDataInsert(kk, obj, data) {
+function mkDataInsert1(kk, obj, data) {
 	if (data[kk].category == "PlayerLibrary") {
 		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='radio' class='mkitems mkradio' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].category + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	} else{
 		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' type='checkbox'class='mkitems' category='" + data[kk].category + "' cnName='"+data[kk].cnName+"' descText='"+data[kk].descText+"' engName='"+data[kk].engName+"' gitPath='" + data[kk].gitPath + "' name='" + data[kk].category + "' value='' disabled><span title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
 	}
 }
-function sysDataInsert(i, obj, num, arr1){
+function sysDataInsert1(i, obj, num, arr1){
 	if(arr1[i].level3 != ""){
 		obj.innerHTML += '<div class="settingsitems eachpartbox" level2="'+arr1[i].level2+'" level3="'+arr1[i].level3+'"><div class="grouptitle" title="'+arr1[i].level2+"-"+arr1[i].level3+'">'+arr1[i].level2+"-"+arr1[i].level3+'</div></div>';
 		if (_twoLevelLinkageArrayTwo[num].indexOf(arr1[i].level3)== -1) {
@@ -1071,25 +1167,25 @@ function sysDataInsert(i, obj, num, arr1){
 		_twoLevelLinkageArrayOne[num].push(arr1[i].level2);
 	}
 }
-
+function propDataInsert1(kk, obj, data) {
+	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
+}
 
 function getBaseValue(){
 	var _chip = $("#page2Modal1Table .inputstyle")[0].value;
 	var _model = $("#page2Modal1Table .inputstyle")[1].value;
 	var _tp = $("#page2Modal1Table .inputstyle")[2].value;
-	var _coocaa = $("#page2Modal1Table .inputstyle")[3].value;
-	var _android = $("#page2Modal1Table .inputstyle")[4].value;
-	var _soc = $("#page2Modal1Table .inputstyle")[5].value;
-	var _emmc = $("#page2Modal1Table .inputstyle")[6].value;
-	var _memory = $("#page2Modal1Table .inputstyle")[7].value;
-	var _branch = $("#page2Modal1Table .inputstyle")[8].value;
-	var _platform = $("#page2Modal1Table .inputstyle")[9].value;
+	var _android = $("#page2Modal1Table .inputstyle")[3].value;
+	var _soc = $("#page2Modal1Table .inputstyle")[4].value;
+	var _emmc = $("#page2Modal1Table .inputstyle")[5].value;
+	var _memory = $("#page2Modal1Table .inputstyle")[6].value;
+	var _branch = $("#page2Modal1Table .inputstyle")[7].value;
+	var _platform = $("#page2Modal1Table .inputstyle")[8].value;
 	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,
 		"model" : _model,
 		"targetProduct" : _tp,
-		"coocaaVersion" : _coocaa,
 		"androidVersion" : _android,
 		"soc" : _soc,
 		"EMMC" : _emmc,
@@ -1122,13 +1218,30 @@ function getSysValue(){
 	var sysData = [];
 	console.log($(".sysitems").length);
 	for (var i=0; i<$(".sysitems").length; i++) {
-		var oAsysInfo = {
-			"engName": "",
-		};
-		oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
-		sysData.push(oAsysInfo);
+		var curId = $(".sysitems")[i].id;
+		if (document.getElementById(curId).checked) {
+			var oAsysInfo = {
+				"engName": "",
+			};
+			oAsysInfo.engName = $(".sysitems")[i].getAttribute("engname");
+			sysData.push(oAsysInfo);
+		}
 	}
 	return sysData;
+}
+function getPropValue(){
+	var propData = [];
+	console.log($(".propitem").length);
+	for (var i=0; i<$(".propitem").length; i++) {
+		var oApropInfo = {
+			"engName": "",
+			"curValue": ""
+		};
+		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
+		oApropInfo.curValue = $(".propitem")[i].value;
+		propData.push(oApropInfo);
+	}
+	return propData;
 }
 
 function productAddResult(){
@@ -1140,16 +1253,26 @@ function productAddResult(){
 				console.log("数据提交成功");
 				var type = $("#lable1SubmitTwo").attr("catagory");
 				if(type == 1||type == 3){
-					console.log("新增或者复制");
+					console.log("新增或者复制数据的日志提交");
 					var _desc = "新增该产品";
 					var _reason = "新增";
-				}else if(type == 2){
-					console.log("编辑");
-					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'"}';
-					var _reason = document.getElementById("changeReason").innerHTML;
-				}
-				var _chip = $("#lable2Chip").val();
+					var _chip = $("#lable2Chip").val();
 				var _model = $("#lable2Model").val();
+				}else if(type == 2){
+					console.log("编辑数据的日志提交");
+					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'","changeProp":"'+changeProp+'"}';
+					var _reason = document.getElementById("changeReason").value;
+					var _chip = $("#lable2Chip").val();
+					var _model = $("#lable2Model").val();
+				}else if(type == 5){
+					console.log("删除数据的日志提交");
+					var _desc = '删除该机芯机型的配置表';
+					var _reason = document.getElementById("changeReason2").value;
+					console.log(_reason);
+					var _chip = $("#myDeleteModalEnsure").attr("chip");
+					var	_model = $("#myDeleteModalEnsure").attr("model");
+					$('#myDeleteModal').modal('hide');
+				}
 				//0审核通过\1待审核\2审核未通过
 				var _state = "1";
 				var _author = loginusername;
@@ -1164,7 +1287,8 @@ function productAddResult(){
 				$("#page2Modal1").modal('hide');
 				var _history = JSON.stringify(historyObj);
 				var node = '{"data":' + _history + '}';
-				sendHTTPRequest(CoocaaVersion+"/product/addHistory", node, productHistoryAdd);
+				console.log(node);
+				sendHTTPRequest(coocaaVersion+"/product/addHistory", node, productHistoryAdd);
 			}
 		}
 	}
@@ -1175,11 +1299,12 @@ function productHistoryAdd(){
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				console.log("日志数据提交成功");
+				console.log("日志数据提交成功,发送邮件");
 				document.getElementById("myEditEnsureDiv").style.display = "none";
-				page2Fresh();
+				//page2Fresh();
 			}
 		}
+		sendEmail();
 	}
 }
 
@@ -1190,28 +1315,92 @@ function productHistoryQuery(){
 			console.log(data);
 			if(data.resultCode == "0") {
 				console.log("数据查询成功");
-				for (var i=0; i<data.resultData.length; i++) {
-					var _row = document.getElementById("descriptTbody").insertRow(0);
-					var _cell0 = _row.insertCell(0);
-					_cell0.innerHTML = data.resultData[i].content;
-					var _cell1 = _row.insertCell(1);
-					_cell1.innerHTML = data.resultData[i].reason;
-					var _cell2 = _row.insertCell(2);
-					_cell2.innerHTML = data.resultData[i].state;
-					var _cell3 = _row.insertCell(3);
-					_cell3.innerHTML = data.resultData[i].userName;
-					var _cell4 = _row.insertCell(4);
-					_cell4.innerHTML = data.resultData[i].modifyTime;
+				if (data.resultData.length == 0) {
+					$("#contenttable").css("display","none");
+					$("#noChangeHistory").css("display","block");
+					$("#noChangeHistory").html("该产品没有修改历史。");
+				} else{
+					$("#contenttable").css("display","inline-table");
+					$("#noChangeHistory").html(" ");
+					$("#noChangeHistory").css("display","none");
+					
+					var _tableInnerHtml = "<thead><tr><th>修改内容</th><th>修改原因</th><th style='min-width: 55px;'>状态</th><th>提交者</th><th>提交时间</th></tr></thead>"
+					for (var i=0; i<data.resultData.length; i++) {
+						var _state = "";
+						if (data.resultData[i].state == 0) {
+							_state = "审核通过";
+						} else if(data.resultData[i].state == 1){
+							_state = "待审核";
+						} else if(data.resultData[i].state == 2){
+							_state = "审核不通过";
+						}
+						
+						var _desc = "";
+						var _content = data.resultData[i].content;
+						console.log(isJSON_test(_content));
+						if (isJSON_test(_content)) {
+							_content = JSON.parse(_content);
+							_content.deleteObj = "";
+						}else{
+							_content= {
+								changeDev : "",
+								changeAdd : "",
+								changeReduce: "",
+								changeConf : "",
+								changeProp : "",
+								deleteObj : data.resultData[i].content
+							};
+						}
+						console.log(_content);
+						var _devArray,_addArray,_deleteArray,_confArray,_propsArray = "";
+						
+						var _devArray = _content.changeDev;//.splice(",")
+						var _addArray = _content.changeAdd;//.splice(",")
+						var _deleteArray = _content.changeReduce;//.splice(",")
+						var _confArray = _content.changeConf;//.splice(",")
+						var _propsArray = _content.changeProp;//.splice(",")
+						var _deleteArray2 = _content.deleteObj;
+						if (_devArray.length != 0) {
+							_desc += "<span>修改了基本项："+_devArray+"</span><br/>";
+						}if (_addArray.length != 0) {
+							_desc += "<span>新增了设置项："+_addArray+"</span><br/>";
+						}if (_deleteArray.length != 0) {
+							_desc += "<span>删除了设置项："+_deleteArray+"</span><br/>";
+						}if (_confArray.length != 0) {
+							_desc += "<span>修改了Config项："+_confArray+"</span><br/>";
+						}if (_propsArray.length != 0) {
+							_desc += "<span>修改了属性项："+_propsArray+"</span><br/>";
+						}
+						if (_deleteArray2.length != 0){
+							_desc += "<span>"+_deleteArray2+"</span><br/>";
+						}
+						
+						_tableInnerHtml += "<tbody id='descriptTbody'><tr><td>"+_desc+"</td><td>"+data.resultData[i].reason+"</td><td>"+_state+"</td><td>"+data.resultData[i].userName+"</td><td>"+data.resultData[i].modifyTime+"</td></tr></tbody>";
+					}
+					document.getElementById("contenttable").innerHTML = _tableInnerHtml;
 				}
 			}
 		}
 	}
 }
 
+function isJSON_test(str) {
+    if (typeof str == 'string') {
+        try {
+            var obj=JSON.parse(str);
+            console.log('转换成功：'+obj);
+            return true;
+        } catch(e) {
+            return false;
+        }
+    }
+    console.log('It is not a string!');
+}
+
 function changeConfig(obj){
-    var x = obj.value;
+	var x = obj.value;
     console.log(x);
-    console.log(obj.getAttribute("oldvalue"))
+    console.log(obj.getAttribute("oldvalue"));
     if(x == obj.getAttribute("oldvalue")){
         Array.prototype.indexOf = function(val) {
             for (var i = 0; i < this.length; i++) {
@@ -1235,19 +1424,42 @@ function changeConfig(obj){
         }
     }
 }
+function changeProps(obj){
+	var x = obj.value;
+    console.log(x);
+    console.log(obj.getAttribute("oldvalue"));
+    if(x == obj.getAttribute("oldvalue")){
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeProp.remove(obj.getAttribute("id"));
+        console.log("changeProp= "+changeProp);
+    }
+    else{
+        if (changeProp.indexOf(obj.getAttribute("id")) == -1){
+            changeProp.push(obj.getAttribute("id"));
+            console.log("changeProp= "+changeProp);
+        }
+    }
+}
 
 function changeSettings(obj){
+	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
     if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
-        // obj.oldvalue = '1';
         obj.setAttribute("oldvalue","1");
-        changeAdd.push(obj.getAttribute("cvalue"));
-        console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
+        changeAdd.push(obj.getAttribute("cnname"));
     }else if(!(obj.checked) && (obj.getAttribute("oldvalue") == '0')){
         obj.setAttribute("oldvalue","2");
-        changeReduce.push(obj.getAttribute("cvalue"));
-        console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
+        changeReduce.push(obj.getAttribute("cnname"));
     }else{
         obj.setAttribute("oldvalue","0");
         Array.prototype.indexOf = function(val) {
@@ -1262,11 +1474,11 @@ function changeSettings(obj){
                 this.splice(index, 1);
             }
         };
-        changeReduce.remove(obj.getAttribute("name"));
-        changeAdd.remove(obj.getAttribute("name"));
-        console.log("add"+changeAdd);
-        console.log("changeReduce"+changeReduce);
-    }   
+        changeReduce.remove(obj.getAttribute("cnname"));
+        changeAdd.remove(obj.getAttribute("cnname"));
+    }
+    console.log("add"+changeAdd);
+    console.log("delete"+changeReduce);
 }
 function changeDevice(obj){
     var x = obj.value;
@@ -1296,12 +1508,91 @@ function changeDevice(obj){
     }
 }
 
+function myEditorAddSubmit(num){
+	//获取基本项、config、MK、系统设置的值
+	var _base = getBaseValue();
+	var _config = getConfigValue();
+	var _sys = getSysValue();
+	var _prop = getPropValue();
+	_base = JSON.stringify(_base);
+	_config = JSON.stringify(_config);
+	_sys = JSON.stringify(_sys);
+	_prop = JSON.stringify(_prop);
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + ',"propsInfo":' + _prop +'}';
+	console.log(node);
+	if (num == 1) {
+		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
+	} else if(num == 2){
+		sendHTTPRequest(coocaaVersion+"/product/add", node, productAddResult);
+	}
+}
 
+function sendEmail(){
+	var type = $("#lable1SubmitTwo").attr("catagory");
+	console.log(type);
+	if(type == 1||type == 3){
+		console.log("新增或者复制了产品");
+		var _chip = $("#lable2Chip").val();
+		var _model = $("#lable2Model").val();
+		console.log(_chip+"--------"+_model);
+		maildata = "用户："+loginusername+"<br/>新增了机芯："+_chip+",机型："+_model+"的配置文档，请审核";
+	    maildata += "<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>"
+	}else if(type == 2){
+		console.log("编辑了产品");
+		var _chip = $("#lable2Chip").val();
+		var _model = $("#lable2Model").val();
+		console.log(_chip+"--------"+_model);
+		var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'","changeProp":"'+changeProp+'"}';
+		console.log(_desc);
+		var maildata = "用户："+loginusername+"<br/>针对机芯："+_chip+",机型："+_model+"做出了如下修改：";
+	    if(changeDev.length != 0) {
+	    	maildata += "<br/>修改设备信息："+ changeDev;
+	    }
+	    if(changeAdd.length != 0){
+	        maildata += "<br/>新增模块："+ changeAdd;
+	    }
+	    if (changeReduce.length != 0){
+	        maildata += "<br/>删除模块："+ changeReduce;
+	    }
+	    if (changeConf.length != 0){
+	        maildata += "<br/>修改配置："+ changeConf;
+	    }
+	    if (changeProp.length != 0){
+	        maildata += "<br/>修改配置："+ changeProp;
+	    }
+	    maildata += "<br/>请前往《待审核文件》菜单进行审核处理<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>";
+	}else if(type == 5){
+		console.log("删除了产品");
+		var _chip = deleteChip;
+		var _model = deleteModel;
+		console.log(_chip+"--------"+_model);
+		var maildata = "用户："+loginusername+"<br/>删除了机芯："+_chip+",机型："+_model+"的配置文档";
+		maildata += "<br/>请前往《待审核文件》菜单进行审核处理<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>";
+	}
+    var emailObj = {
+		"desc" : maildata,
+		"from" : fromEmail,
+		"to" : "SKY058689@skyworth.com",
+		"subject" : "软件配置平台通知-自动发送，请勿回复"
+	}
+	var _email = JSON.stringify(emailObj);
+	var node = '{"data":' + _email + '}';
+	console.log(node);
+    //sendHTTPRequest("/sendMail", node, mailfun);
+    page2Fresh();
+}
 
-
-
-
-
+//邮件函数回调
+function mailfun(){
+	console.log("in mailfun");
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+		}
+		page2Fresh();
+	}
+}
 //滚动到最上面
 function scrollTopStyle(name){
 	var div = document.getElementById(name);
@@ -1315,11 +1606,17 @@ function page2Fresh() {
 	var htmlObject = parent.document.getElementById("tab_userMenu2");
 	htmlObject.firstChild.src = "page2.html";
 	
-	var htmlObject2 = parent.document.getElementById("tab_userMenu5");
-	if (htmlObject2 == null) {
-		console.log("待审核页未被点击，不需要刷新。");
-	} else{
-		htmlObject2.firstChild.src = "page5.html";
+	var htmlObject1 = parent.document.getElementById("tab_userMenu1");
+	var htmlObject4 = parent.document.getElementById("tab_userMenu4");
+	var htmlObject5 = parent.document.getElementById("tab_userMenu5");
+	if (htmlObject1) {
+		htmlObject1.firstChild.src = "page1.html";
+	}
+	if (htmlObject4) {
+		htmlObject4.firstChild.src = "page4.html";
+	}
+	if (htmlObject5) {
+		htmlObject5.firstChild.src = "page5.html";
 	}
 }
 

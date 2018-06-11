@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="utf-8" />
-		<title>配置信息管理平台</title>
+		<title>配置信息管理平台-V3.0</title>
 
 		<link rel="stylesheet" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" href="../css/bootstrap-select.css">
@@ -20,14 +20,34 @@
 	</head>
 
 	<body id="homePage">
-		<nav class="navbar containerp" role="navigation">
-			<a class="navbar-brand">
-				<span style="font-size:30px">配置信息管理平台6.5</span>
-			</a>
-			<a class="navbar-brand" style="float:right">
-				<span class="glyphicon glyphicon-user" style="font-size:15px;margin-right: 10px;"></span><span id="indexUserName"></span>
-				<span id="index_exit">退出</span>
-			</a>
+		<nav class="navbar navbar-default" role="navigation">
+		    <div class="container-fluid">
+			    <div class="navbar-header">
+			    	<img id="logoImg" src="../../images/bg.png"/>
+			        <a class="navbar-brand" href="javascript:void(0)">配置信息管理平台&nbsp;V3.0</a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="ccollapse">
+			        <ul id="index_branch" class="nav navbar-nav">
+			            <li class="dropdown">
+			                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+			                	<span id="CoocaaVersionFlag" class="glyphicon glyphicon-flag" style="font-size:15px;"></span>
+								<span id="CoocaaVersion">Coocaa 6.5</span>
+			                	<b class="caret"></b>
+			                </a>
+			                <ul class="dropdown-menu">
+			                    <li><a href="../../6.0/html/index.html">Coocaa 6.0</a></li>
+			                    <li><a href="../../6.5/html/index.html">Coocaa 6.5</a></li>
+			                </ul>
+			            </li>
+			            <li>
+			            	<a class="navbar-brand blcakitems" style="float:right">
+								<span class="glyphicon glyphicon-user" style="font-size:15px;margin-right: 10px;"></span><span id="indexUserName"></span>
+								<span id="index_exit">退出</span>
+							</a>
+			            </li>
+			        </ul>
+			    </div>
+		    </div>
 		</nav>
 		<div class="containerp">
 			<div class="row">
@@ -39,57 +59,58 @@
 								<ul class="leftUl list-group text-left">
 									<li class="everyList">
 										<div class="everyButton">
-											<span class="glyphicon glyphicon-home"></span>
+											<span class="glyphicon glyphicon-home glyphiconss"></span>
 											<a href="#home" aria-controls="home" role="tab" data-toggle="tab" class="eachpage"  data-addtab="userMenu1">首页</a>
 										</div>
 									</li>
 									<li class="everyList">
 										<div class="everyButton">
-											<span class="glyphicon glyphicon-file"></span>
+											<span class="glyphicon glyphicon-th-list"></span>
 											<span class="centertxt">配置文件管理</span>
 										</div>
 										<div>
 											<ul class="everyDiv" style="display: none;">
 												<li>
-													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu2" url="page2.html">配置文件管理</a>
+													<span class="glyphicon glyphicon-star glyphiconss"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu2" url="page2.html">配置文件管理</a>
 												</li>
-												<li>
-													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu3" url="page3.html">目标设备管理</a>
+												<li id="adminVisible1">
+													<span class="glyphicon glyphicon-star glyphiconss"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu3" url="page3.html">目标设备管理</a>
 												</li>
 											</ul>
 										</div>
 									</li>
 									<li class="everyList">
 										<div class="everyButton">
-											<span class="glyphicon glyphicon-file"></span>
+											<span class="glyphicon glyphicon-th-list"></span>
 											<span class="centertxt">审核文件管理</span>
+											<span class="email glyphicon"></span>
 										</div>
 										<div>
 											<ul class="everyDiv" style="display: none;">
 												<li>
-													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu4" url="page4.html">待审核文件</a>
+													<span class="glyphicon glyphicon-star glyphiconss"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu4" url="page4.html">待审核文件</a><span class="email glyphicon"></span>
 												</li>
 												<li>
-													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu5" url="page5.html">审核未通过文件</a>
+													<span class="glyphicon glyphicon-star glyphiconss"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu5" url="page5.html">审核未通过文件</a><span class="email glyphicon"></span>
 												</li>
 											</ul>
 										</div>
 									</li>
-									<li class="everyList" id="adminVisible">
+									<li class="everyList" id="adminVisible2">
 										<div class="everyButton">
-											<span class="glyphicon glyphicon-file"></span>
+											<span class="glyphicon glyphicon-th-list"></span>
 											<span class="centertxt">配置内容管理</span>
 										</div>
 										<div>
 											<ul class="everyDiv" style="display: none;">
 												<li>
-													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu6" url="page6.html">设备管理</a>
+													<span class="glyphicon glyphicon-star glyphiconss"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu6" url="page6.html">设备管理</a>
 												</li>
 												<li>
-													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu7" url="page7.html">配置内容管理</a>
+													<span class="glyphicon glyphicon-star glyphiconss"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu7" url="page7.html">配置内容管理</a>
 												</li>
 												<li>
-													<span class="glyphicon glyphicon-star"></span><a href="javascript:void(0);" data-addtab="userMenu8" url="page8.html">分类排序管理</a>
+													<span class="glyphicon glyphicon-star glyphiconss"></span><a href="javascript:void(0);" class="eachpage" data-addtab="userMenu8" url="page8.html">分类排序管理</a>
 												</li>
 											</ul>
 										</div>

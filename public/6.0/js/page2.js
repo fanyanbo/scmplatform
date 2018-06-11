@@ -818,7 +818,6 @@ function SysDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
 		document.getElementById(arr[i].engName).setAttribute('checked', '');
 		document.getElementById(arr[i].engName).checked = true;
-		document.getElementById(arr[i].engName).setAttribute('oldvalue', '1');
 	}
 }
 function PropDataInsert2(type, arr){
@@ -1458,13 +1457,9 @@ function changeSettings(obj){
     if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
         obj.setAttribute("oldvalue","1");
         changeAdd.push(obj.getAttribute("cnname"));
-        console.log("add"+changeAdd);
-        console.log("delete"+changeReduce);
     }else if(!(obj.checked) && (obj.getAttribute("oldvalue") == '0')){
         obj.setAttribute("oldvalue","2");
         changeReduce.push(obj.getAttribute("cnname"));
-        console.log("add"+changeAdd);
-        console.log("delete"+changeReduce);
     }else{
         obj.setAttribute("oldvalue","0");
         Array.prototype.indexOf = function(val) {
@@ -1479,11 +1474,11 @@ function changeSettings(obj){
                 this.splice(index, 1);
             }
         };
-        changeReduce.push(obj.getAttribute("cnname"));
+        changeReduce.remove(obj.getAttribute("cnname"));
         changeAdd.remove(obj.getAttribute("cnname"));
-        console.log("add"+changeAdd);
-        console.log("delete"+changeReduce);
-    }   
+    }
+    console.log("add"+changeAdd);
+    console.log("delete"+changeReduce);
 }
 function changeDevice(obj){
     var x = obj.value;

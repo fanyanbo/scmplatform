@@ -5,13 +5,12 @@ var _twoLevelLinkageArrayTwo = [[],[],[],[]];
 var _twoLevelLinkageArrayThree = [[],[],[],[]];
 var _myArray = [];
 
-var CoocaaVersion = "/v6.5";
+var coocaaVersion = "/v6.5";
 
 $(function() {
 	$(".page7_boxes")[0].style.display = "block";
 	buttonInitBefore();
-	var node11 = '{}';
-	sendHTTPRequest(CoocaaVersion+"/config/queryCategory", node11, configCategoryQueryResult);
+	sendHTTPRequest(coocaaVersion+"/config/queryCategory", '{}', configCategoryQueryResult);
 });
 
 function buttonInitBefore() {
@@ -28,8 +27,14 @@ function buttonInitBefore() {
 			$('#page7_config').modal();
 			$("#configSubmit").attr("hidedata", 1);
 			$("#configSubmit").attr("oldValue", "null");
-			clearConfigPart();
-		} else if(_bIndex == 1 || _bIndex == 2 || _bIndex == 3 || _bIndex == 4) {
+			clearConfigPart(1);
+		}  else if(_bIndex == 1) {
+			console.log("点击MK的新增按钮");
+			$('#page7_module').modal();
+			$("#moduleSubmit").attr("hidedata", 1);
+			$("#moduleSubmit").attr("oldValue", "null");
+			clearMKPart();
+		} else if(_bIndex == 2 || _bIndex == 3 || _bIndex == 4 || _bIndex == 5) {
 			console.log("点击系统设置大项的新增按钮");
 			$('#page7_sys').modal();
 			$("#sysSubmit").attr("hidedata", 1);
@@ -37,15 +42,12 @@ function buttonInitBefore() {
 			$("#sysSubmit").attr("oldValue", "null");
 			editEachSelect(_bIndex);
 			clearSysPart(_bIndex);
-		} else if(_bIndex == 5) {
-			console.log("点击MK的新增按钮");
-			$('#page7_module').modal();
-			$("#moduleSubmit").attr("hidedata", 1);
-			$("#moduleSubmit").attr("oldValue", "null");
-			clearMKPart();
 		} else if(_bIndex == 6) {
 			console.log("点击Prop的新增按钮");
-//			clearPropPart();
+			$('#page7_prop').modal();
+			$("#propSubmit").attr("hidedata", 1);
+			$("#propSubmit").attr("oldValue", "null");
+			clearPropPart();
 		}
 		$(".modal-backdrop").addClass("new-backdrop");
 	});
@@ -64,8 +66,7 @@ function configCategoryQueryResult() {
 				}
 			}
 		}
-		var node1 = '{}';
-		sendHTTPRequest(CoocaaVersion+"/config/query", node1, configQueryResult);
+		sendHTTPRequest(coocaaVersion+"/config/query", '{}', configQueryResult);
 	}
 }
 
@@ -89,8 +90,8 @@ function moduleQueryResult() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(5)").attr("hasvalue","true");
-				editEachPage("5",data.resultData);
+				$(".page7_tabs:eq(1)").attr("hasvalue","true");
+				editEachPage("1",data.resultData);
 			}
 		}
 		buttonInitAfter();
@@ -103,11 +104,11 @@ function settingQueryResult() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(1)").attr("hasvalue","true");
 				$(".page7_tabs:eq(2)").attr("hasvalue","true");
 				$(".page7_tabs:eq(3)").attr("hasvalue","true");
 				$(".page7_tabs:eq(4)").attr("hasvalue","true");
-				editEachPage("1",data.resultData);
+				$(".page7_tabs:eq(5)").attr("hasvalue","true");
+				editEachPage("5",data.resultData);
 			}
 		}
 		buttonInitAfter();
@@ -119,9 +120,11 @@ function propQueryResult() {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-
+				$(".page7_tabs:eq(6)").attr("hasvalue","true");
+				editEachPage("6",data.resultData);
 			}
 		}
+		buttonInitAfter();
 	}
 }
 function buttonInitAfter() {
@@ -131,7 +134,6 @@ function buttonInitAfter() {
 		_aIndex = $(".page7_a").index($(this));
 		_cHidedata = $(this).attr("hidedata");
 		_aPart = $(this).attr("part");
-		
 		eachPartChange(_aPart, _cHidedata);
 	});
 
@@ -143,24 +145,32 @@ function buttonInitAfter() {
 	$("#moduleSubmit").click(function() {
 		saveInMK();
 	});
+	/*sys-保存*/
 	$("#sysSubmit").click(function() {
 		saveInSys();
 	});
-	var _cIndex2, _box1, _box2 = "";
+	/*prop-保存*/
+	$("#propSubmit").click(function() {
+		saveInProp();
+	});
 	$(".defaultOption").click(function() {
-		_cIndex2 = $(".defaultOption").index($(this));
-		_box1 = $(this).attr("boxone");
-		_box2 = $(this).attr("boxtwo");
+		var _cIndex2 = $(".defaultOption").index($(this));
+		var _box1 = $(this).attr("boxone");
+		var _box2 = $(this).attr("boxtwo");
 		console.log(_box1 + "---" + _box2);
 		document.getElementById(_box1).style.display = "block";
 		document.getElementById(_box2).style.display = "none";
 	});
-
-	/*枚举各个图标的点击事件*/
-	var _cIndex3 = "";
+	$(".defaultOption2").click(function() {
+		var _cIndex2 = $(".defaultOption2").index($(this));
+		var _box1 = $(this).attr("boxone");
+		var _box2 = $(this).attr("boxtwo");
+		document.getElementById(_box1).style.display = "block";
+		document.getElementById(_box2).style.display = "none";
+	});
+	/*枚举1各个图标的点击事件*/
 	$(".menuEdit").click(function() {
-		_cIndex3 = $(".menuEdit").index($(this));
-		console.log(_cIndex3);
+		var _cIndex3 = $(".menuEdit").index($(this));
 		if(_cIndex3 == 0) {
 			console.log("lxw " + "点击的是添加");
 			var parentDiv = document.getElementsByClassName("ADCSEfficient")[0];
@@ -198,25 +208,33 @@ function eachPartChange(part, data) {
 		$('#page7_config').modal();
 		$("#configSubmit").attr("hidedata", 2);
 		$("#configSubmit").attr("oldValue", data);
-		clearConfigPart();
+		clearConfigPart(2);
 		editConfigModel(data);
-	} else if(part == 1 || part == 2 || part == 3 || part == 4) {
-		console.log("系统设置子项的修改");
-		$('#page7_sys').modal();
-		$("#sysSubmit").attr("hidedata", 1);
-		$("#sysSubmit").attr("tabindex", part);
-		$("#sysSubmit").attr("oldValue", "null");
-		editEachSelect(part);
-		clearSysPart(part);
-		editSysModel(part, data);
-	} else if(part == 5) {
+	} else if(part == 1) {
 		console.log("MK子项的修改");
 		$('#page7_module').modal();
 		$("#moduleSubmit").attr("hidedata", 2);
 		$("#moduleSubmit").attr("oldValue", data);
 		clearMKPart();
 		editMKModel(data);
+	} else if(part == 2 || part == 3 || part == 4 || part == 5) {
+		console.log("系统设置子项的修改");
+//		$('#page7_sys').modal();
+//		$("#sysSubmit").attr("hidedata", 2);
+//		$("#sysSubmit").attr("tabindex", part);
+//		$("#sysSubmit").attr("oldValue", data);
+//		editEachSelect(part);
+//		clearSysPart(part);
+//		editSysModel(part, data);
+	} else if(part == 6) {
+		console.log("Prop子项的修改");
+		$('#page7_prop').modal();
+		$("#propSubmit").attr("hidedata", 2);
+		$("#propSubmit").attr("oldValue", data);
+		clearPropPart();
+		editPropModel(data);
 	}
+	
 	$(".modal-backdrop").addClass("new-backdrop");
 }
 
@@ -324,7 +342,25 @@ function editMKModel(data) {
 	};
 }
 
-function clearConfigPart() {
+function editPropModel(data) {
+	console.log(JSON.parse(data));
+	$("#propEName").val(JSON.parse(data).engName);
+	$("#propEName").attr('disabled', '');
+	$("#propInstr").val(JSON.parse(data).descText);
+	$("#propString").val(JSON.parse(data).defaultValue);
+	var categoryClass = JSON.parse(data).category;
+	var opt = document.getElementById("propSelect").getElementsByTagName("option");
+	console.log(opt);
+	for(var j = 0; j < opt.length; j++) {
+		opt[j].removeAttribute("selected");
+		if(opt[j].value == categoryClass) {
+			console.log(j);
+			opt[j].setAttribute("selected", "");
+		}
+	};
+}
+
+function clearConfigPart(num) {
 	document.getElementById("configCName").value = "";
 	document.getElementById("configEName").value = "";
 	document.getElementById("configEName").removeAttribute('disabled');
@@ -344,6 +380,12 @@ function clearConfigPart() {
 	};
 	document.getElementById("configString").style.display = "block";
 	document.getElementById("configTableBoxEnum").style.display = "none";
+	
+	var opt = document.getElementById("configSelect").getElementsByTagName("option");
+	for (var j = 0; j < opt.length; j++) {
+		opt[j].removeAttribute("selected");
+	};
+	opt[0].setAttribute("selected","");
 }
 function clearSysPart(num) {
 	document.getElementById("sysCName").value = "";
@@ -357,6 +399,18 @@ function clearMKPart() {
 	document.getElementById("moduleEName").removeAttribute('disabled');
 	document.getElementById("moduleEName").style.backgroundColor = "white";
 	document.getElementById("moduleInstr").value = "";
+}
+function clearPropPart() {
+	$("#propEName").removeAttr('disabled');
+	document.getElementById("propEName").value = "";
+	document.getElementById("propString").value = "";
+	document.getElementById("propInstr").value = "";
+	document.getElementById("propSelect").value = "";
+	var opt = document.getElementById("propSelect").getElementsByTagName("option");
+	for (var j = 0; j < opt.length; j++) {
+		opt[j].removeAttribute("selected");
+	};
+	opt[0].setAttribute("selected","");
 }
 
 function editEachSelect(num){
@@ -427,25 +481,18 @@ function saveInConfig() {
 			}
 			newConfigString = newConfigOptions[0];
 		}
-		console.log("engName = " + newConfigEnName);
-		console.log("cnName = " + newConfigCzName);
-		console.log("category = " + newConfigSelect);
-		console.log("type = " + newConfigType);
-		console.log("options = " + newConfigOptions);
-		console.log("defaultValue = " + newConfigString);
-		console.log("desc = " + newConfigInstr);
 		if(_Hidendata == 1) {
 			console.log("lxw in edit 新增");
 			node = '{"engName":"' + newConfigEnName + '","cnName":"' + newConfigCzName + '","category":"' + newConfigSelect + '","type":"' + newConfigType + '","options":"[' + newConfigOptions + ']","defaultValue":"' + newConfigString + '","desc":"' + newConfigInstr + '"}';
 			console.log("lxw " + node);
-			sendHTTPRequest(CoocaaVersion+"/config/add", node, returnConfigAddInfo);
+			sendHTTPRequest(coocaaVersion+"/config/add", node, returnAddOrUpdateInfo);
 		} else {
 			console.log("lxw in edit 修改");
 			newConfigOrderId = JSON.parse(_oldValue).orderId;
 			console.log("orderId = " + newConfigOrderId);
 			node = '{"engName":"' + newConfigEnName + '","cnName":"' + newConfigCzName + '","category":"' + newConfigSelect + '","type":"' + newConfigType + '","options":"[' + newConfigOptions + ']","defaultValue":"' + newConfigString + '","desc":"' + newConfigInstr + '","orderId":"' + newConfigOrderId + '"}';
 			console.log("lxw " + node);
-			sendHTTPRequest(CoocaaVersion+"/config/update", node, returnConfigAddInfo);
+			sendHTTPRequest(coocaaVersion+"/config/update", node, returnAddOrUpdateInfo);
 		}
 	}
 }
@@ -494,13 +541,13 @@ function saveInSys() {
 			console.log("lxw sys 新增");
 			var node = '{"engName":"' + newSysEName + '","cnName":"' + newSysCName + '","level1":"' + newSysSelect1 + '","level2":"' + newSysSelect2 + '","level3":"' + newSysSelect3 + '","desc":"' + newSysInstr + '"}';
 			console.log(node);
-			//sendHTTPRequest(CoocaaVersion+"/module/add", node, returnMKAddInfo);
+			//sendHTTPRequest(coocaaVersion+"/module/add", node, returnSysAddInfo);
 		} else {
 			console.log("lxw sys 修改");
-			_oldValue3 = JSON.parse(_oldValue3);
+			_oldValue2 = JSON.parse(_oldValue2);
 			var node = '{"engName":"' + newSysEName + '","cnName":"' + newSysCName + '","level1":"' + newSysSelect1 + '","level2":"' + newSysSelect2 + '","level3":"' + newSysSelect3 + '","desc":"' + newSysInstr + '"}';
 			console.log("lxw " + node);
-			//sendHTTPRequest(CoocaaVersion+"/module/update", node, returnMKAddInfo);
+			//sendHTTPRequest(coocaaVersion+"/module/update", node, returnSysAddInfo);
 		}
 	}
 }
@@ -540,69 +587,101 @@ function saveInMK() {
 			console.log("lxw model 新增");
 			var node = '{"engName":"' + newModuleEnName + '","cnName":"' + newModuleCzName + '","category":"' + newModuleSelect + '","desc":"' + newModuleInstr + '","gitPath":"' + newModuleSrc + '"}';
 			console.log(node);
-			sendHTTPRequest(CoocaaVersion+"/module/add", node, returnMKAddInfo);
+			sendHTTPRequest(coocaaVersion+"/module/add", node, returnAddOrUpdateInfo);
 		} else {
 			console.log("lxw model 修改");
 			_oldValue3 = JSON.parse(_oldValue3);
 			var node = '{"engName":"' + newModuleEnName + '","cnName":"' + newModuleCzName + '","category":"' + newModuleSelect + '","desc":"' + newModuleInstr + '","gitPath":"' + newModuleSrc + '","orderId":"' + _oldValue3.orderId + '"}';
 			console.log("lxw " + node);
-			sendHTTPRequest(CoocaaVersion+"/module/update", node, returnMKAddInfo);
+			sendHTTPRequest(coocaaVersion+"/module/update", node, returnAddOrUpdateInfo);
 		}
 	}
 }
 
-function returnMKAddInfo() {
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			if(data.resultCode == "0") {
-				console.log("数据添加成功");
-				$("#page7_module").modal('hide');
-				freshModuleAddHtml();
+function saveInProp() {
+	var _Hidendata = $("#propSubmit").attr("hidedata");
+	var _oldValue3 = $("#propSubmit").attr("oldValue");
+	console.log(_Hidendata+"-----------"+_oldValue3);
 
-			} else {
-				console.log("数据添加失败");
-				document.getElementById("moduleErrorInfo").innerHTML = "添加失败！该内容或已存在。";
-				setTimeout("document.getElementById('moduleErrorInfo').innerHTML='　'", 3000);
-
-			}
+	var node = null; //向后台传递的数据
+	var newPropEnName = $("#propEName").val();
+	var newPropString = $("#propString").val();
+	newPropString = newPropString.replace(new RegExp("\"", "gm"), "\\\"");
+	newPropString = newPropString.replace(new RegExp("\n", "gm"), "\\n");
+	var newPropInstr = $("#propInstr").val();
+	newPropInstr = newPropInstr.replace(new RegExp("\"", "gm"), "\\\"");
+	newPropInstr = newPropInstr.replace(new RegExp("\n", "gm"), "\\n");
+	var newPropSelect = $("#propSelect").val();
+	
+	if(newPropEnName == "" || newPropString == "" || newPropInstr == "") {
+		console.log("数据项都为空");
+		$("#propErrorInfo")[0].innerHTML = "请确保所有项不为空！";
+		setTimeout('$("#propErrorInfo")[0].innerHTML = "　"', 3000);
+	} else {
+		var editObj = {
+			"engName" : newPropEnName,
+			"defaultValue" : newPropString,
+			"category" : newPropSelect,
+			"descText" : newPropInstr
+		}
+		var _edit = JSON.stringify(editObj);
+		var node = '{"data":' + _edit + '}';
+		if(_Hidendata == 1) {
+			console.log("lxw in Prop 新增");
+			console.log("lxw " + node);
+			sendHTTPRequest(coocaaVersion+"/prop/add", node, returnAddOrUpdateInfo);
+		} else {
+			console.log("lxw in Prop 修改");
+			console.log(node);
+			sendHTTPRequest(coocaaVersion+"/prop/update", node, returnAddOrUpdateInfo);
 		}
 	}
 }
 
-//function returnSysAddInfo() {
-//	if(this.readyState == 4) {
-//		if(this.status == 200) {
-//			var data = JSON.parse(this.responseText);
-//			console.log(data);
-//			if(data.resultCode == "0") {
-//				console.log("数据添加成功");
-//				$("#page7_sys").modal('hide');
-//				freshModuleAddHtml();
-//
-//			} else {
-//				console.log("数据添加失败");
-//				document.getElementById("sysErrorInfo").innerHTML = "添加失败！该内容或已存在。";
-//				setTimeout("document.getElementById('sysErrorInfo').innerHTML='　'", 3000);
-//			}
-//		}
-//	}
-//}
-//
-function returnConfigAddInfo() {
+function returnAddOrUpdateInfo() {
 	if(this.readyState == 4) {
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
+			var _curId = $("#tabClickIndex").attr("curId");
 			if(data.resultCode == "0") {
 				console.log("数据添加成功");
-				$("#page7_config").modal('hide');
-				freshModuleAddHtml();
+				if (_curId ==0) {
+					$("#page7_config").modal('hide');
+					$(".page7_tabs:eq(0)").attr("hasvalue","false");
+				} else if(_curId==1){
+					$("#page7_module").modal('hide');
+					$(".page7_tabs:eq(1)").attr("hasvalue","false");
+				} else if(_curId==6){
+					$("#page7_prop").modal('hide');
+					$(".page7_tabs:eq(6)").attr("hasvalue","false");
+				}else{
+					$("#page7_sys").modal('hide');
+					$(".page7_tabs:eq(2)").attr("hasvalue","false");
+					$(".page7_tabs:eq(3)").attr("hasvalue","false");
+					$(".page7_tabs:eq(4)").attr("hasvalue","false");
+					$(".page7_tabs:eq(5)").attr("hasvalue","false");
+				}
+				tabsClick(_curId);
+				freshModuleAddHtml(1);
 			} else {
 				console.log("数据添加失败");
 				document.getElementById("configErrorInfo").innerHTML = "添加失败！该内容或已存在。";
 				setTimeout("document.getElementById('configErrorInfo').innerHTML='　'", 3000);
+				
+				if (_curId ==0) {
+					document.getElementById("configErrorInfo").innerHTML = "添加失败！该内容或已存在。";
+					setTimeout("document.getElementById('configErrorInfo').innerHTML='　'", 3000);
+				} else if(_curId==1){
+					document.getElementById("moduleErrorInfo").innerHTML = "添加失败！该内容或已存在。";
+					setTimeout("document.getElementById('moduleErrorInfo').innerHTML='　'", 3000);
+				} else if(_curId==6){
+					document.getElementById("propErrorInfo").innerHTML = "添加失败！该内容或已存在。";
+					setTimeout("document.getElementById('propErrorInfo').innerHTML='　'", 3000);
+				}else{
+					document.getElementById("sysErrorInfo").innerHTML = "添加失败！该内容或已存在。";
+					setTimeout("document.getElementById('sysErrorInfo').innerHTML='　'", 3000);
+				}
 			}
 		}
 	}
@@ -621,16 +700,17 @@ function tabsClick(num) {
 	
 	console.log(_hasValue);
 	if(_hasValue == "false") {
-		var node31 = '{}';
 		var ajaxUrl = "";
 		if(num == 0) {
-			ajaxUrl = CoocaaVersion+"/config/queryCategory";
-		} else if(num == 1 || num == 2 || num == 3 || num == 4) {
-			ajaxUrl = CoocaaVersion+"/settings/queryCategory";
-		} else if(num == 5) {
-			ajaxUrl = CoocaaVersion+"/module/queryCategory";
+			ajaxUrl = coocaaVersion+"/config/queryCategory";
+		} else if(num == 1) {
+			ajaxUrl = coocaaVersion+"/module/queryCategory";
+		} else if(num == 2 || num == 3 || num == 4 || num == 5) {
+			ajaxUrl = coocaaVersion+"/settings/queryCategory";
+		} else if(num == 6){
+			ajaxUrl = coocaaVersion+"/prop/queryCategory";
 		}
-		sendHTTPRequest(ajaxUrl, node31, categoryQueryResult);
+		sendHTTPRequest(ajaxUrl, '{}', categoryQueryResult);
 	} else {
 		console.log("已经获取过了");
 	}
@@ -647,20 +727,31 @@ function categoryQueryResult() {
 				if (_curId==0) {
 					$("#configSelect").attr("hasvalue", "true");
 					var _myConfigTbody = document.getElementById("myConfigTbody");
+					_myConfigTbody.innerHTML = "";
 					for(var i = 0; i < data.resultData.length; i++) {
 						document.getElementById("configSelect").options.add(new Option(data.resultData[i].category));
 						_myConfigTbody.innerHTML += '<tr><td class="configitems" category="'+ data.resultData[i].category +'" id="configTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
 					}
-					var node = '{}';
-					sendHTTPRequest(CoocaaVersion+"/config/query", node, configQueryResult);
-				}else if(_curId==1||_curId==2||_curId==3||_curId==4) {
-					console.log(data);
-					
+					sendHTTPRequest(coocaaVersion+"/config/query", '{}', configQueryResult);
+				} else if(_curId==1){
+					$("#moduleSelect").attr("hasvalue", "true");
+					var _myMKTbody = document.getElementById("myMKTbody");
+					_myMKTbody.innerHTML = "";
+					for(var i = 0; i < data.resultData.length; i++) {
+						document.getElementById("moduleSelect").options.add(new Option(data.resultData[i].category));
+						_myMKTbody.innerHTML += '<tr><td class="moduleitems" category="'+ data.resultData[i].category +'" id="moduleTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
+					}
+					sendHTTPRequest(coocaaVersion+"/module/query", '{}', moduleQueryResult);
+				} else if(_curId==2||_curId==3||_curId==4||_curId==5) {
+					$("#selectFirst").attr("hasvalue", "true");
 					var _mySysSettingTbody = document.getElementById("mySysSettingTbody");
 					var _mySourceBoxTbody = document.getElementById("mySourceBoxTbody");
 					var _myMarketShowTbody = document.getElementById("myMarketShowTbody");
 					var _myMiddlewareTbody = document.getElementById("myMiddlewareTbody");
-					
+					_mySysSettingTbody.innerHTML = "";
+					_mySourceBoxTbody.innerHTML = "";
+					_myMarketShowTbody.innerHTML = "";
+					_myMiddlewareTbody.innerHTML = "";
 					for(var i = 0; i < data.resultData.length; i++) {
 						if (data.resultData[i].level1 == "系统设置") {
 							if(data.resultData[i].level3 != ""){
@@ -719,17 +810,15 @@ function categoryQueryResult() {
 					console.log(_twoLevelLinkageArrayOne);
 					console.log(_twoLevelLinkageArrayTwo);
 					console.log(_twoLevelLinkageArrayThree);
-					var node = '{}';
-					sendHTTPRequest(CoocaaVersion+"/settings/query", node, settingQueryResult);
-				} else if(_curId==5){
-					$("#moduleSelect").attr("hasvalue", "true");
-					var _myMKTbody = document.getElementById("myMKTbody");
+					sendHTTPRequest(coocaaVersion+"/settings/query", '{}', settingQueryResult);
+				} else if(_curId==6){
+					var _myPropTbody = document.getElementById("myPropTbody");
+					_myPropTbody.innerHTML = "";
 					for(var i = 0; i < data.resultData.length; i++) {
-						document.getElementById("moduleSelect").options.add(new Option(data.resultData[i].category));
-						_myMKTbody.innerHTML += '<tr><td class="moduleitems" category="'+ data.resultData[i].category +'" id="moduleTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
+						document.getElementById("propSelect").options.add(new Option(data.resultData[i].category));
+						_myPropTbody.innerHTML += '<tr><td class="propitems" category="'+ data.resultData[i].category +'" id="propTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
 					}
-					var node = '{}';
-					sendHTTPRequest(CoocaaVersion+"/module/query", node, moduleQueryResult);
+					sendHTTPRequest(coocaaVersion+"/prop/query", '{}', propQueryResult);
 				}
 			}
 		}
@@ -742,29 +831,37 @@ function editEachPage(num,array){
 		for (var j=0; j< $(".configitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
 				if(array[i].category == $(".configitems:eq(" + (j) + ")").attr("category")) {
-					$(".configitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='0' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+					$(".configitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='0' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 				}
 			}
 		}
-	}else if(num==1){
+	} else if(num==1){
+		for (var j=0; j< $(".moduleitems").length; j++) {
+			for(var i = 0; i < array.length; i++) {
+				if(array[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
+					$(".moduleitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+				}
+			}
+		}
+	} else if(num==5){
 		for (var j=0; j< $(".settingsitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
 				if(array[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
 					if (array[i].level3 === null || array[i].level3 == "") {
-						$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+						$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 					} else{
 						if (array[i].level3 == $(".settingsitems:eq(" + (j) + ")").attr("level3")) {
-							$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+							$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 						}
 					}
 				}
 			}
 		}
-	} else if(num==5){
-		for (var j=0; j< $(".moduleitems").length; j++) {
+	} else if(num==6){
+		for (var j=0; j< $(".propitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
-				if(array[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
-					$(".moduleitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='5' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+				if(array[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
+					$(".propitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='6' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].engName + "</a></div>";
 				}
 			}
 		}
@@ -772,18 +869,28 @@ function editEachPage(num,array){
 }
 
 /*刷新页面*/
-function freshModuleAddHtml() {
-	var htmlObject = parent.document.getElementById("tab_userMenu7");
-	console.log("lxw " + htmlObject.firstChild.src);
-	htmlObject.firstChild.src = "page7.html";
-
-	//	var indexObject = parent.document.getElementById("home");
-	//  var iframe = indexObject.getElementsByTagName("iframe");
-	//  iframe[0].src = "wait.html";
-	//  if(parent.document.getElementById("tab_userMenu2")){
-	//	    var htmlObject1 = parent.document.getElementById("tab_userMenu2");
-	//	    htmlObject1.firstChild.src = "review.html";
-	//	}  
+function freshModuleAddHtml(num) {
+	if (num == 0) {
+		var htmlObject = parent.document.getElementById("tab_userMenu7");
+		htmlObject.firstChild.src = "page7.html";
+	}else{
+		var htmlObject1 = parent.document.getElementById("tab_userMenu1");
+	    var htmlObject2 = parent.document.getElementById("tab_userMenu2");
+	    var htmlObject4 = parent.document.getElementById("tab_userMenu4");
+	    var htmlObject5 = parent.document.getElementById("tab_userMenu5");
+	    if (htmlObject1) {
+	        htmlObject1.firstChild.src = "page1.html";
+	    }
+	    if (htmlObject2) {
+	    	htmlObject2.firstChild.src = "page2.html";
+	    }
+	    if (htmlObject4) {
+	    	htmlObject4.firstChild.src = "page4.html";
+	    }
+	     if (htmlObject5) {
+	    	htmlObject5.firstChild.src = "page5.html";
+	    }
+	}
 }
 
 function changeSelect(str){

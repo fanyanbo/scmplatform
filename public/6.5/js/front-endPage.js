@@ -75,7 +75,7 @@
             "<td  colspan='"+_this.options.title.length+"'>"+
                 "<div style='float:right;margin-left:10px;' class='tfootRight'>"+
                     "<input  placeholder='输入页码' type='text'>"+
-                    "<button class='mybuttons btn-success'>确定</button>"+
+                    "<button class='mybuttons'>确定</button>"+
                     "</div>"+
                     "<div style='float:right'>"+
                         "<span class='firstPage' style='margin-right:10px;cursor: pointer;float:left;display: none;margin-left:10px;'>首页</span>"+
@@ -124,6 +124,8 @@
             $(_this.$element.selector+ ' tbody tr').unbind('dblclick').dblclick(function(){
                   _this.options.dbTrclick($(this));
             });
+            console.log("绘完了");
+            reloadClick();
         },
         inputKeyup:function(e,maxpagenumberBox,json){
             var val = $(e.$element.selector+ " .tfootRight input").val();
@@ -268,6 +270,8 @@
             $(that.selector+ ' tbody tr').unbind('dblclick').dblclick(function(){
                   e.options.dbTrclick($(this));
             });
+            console.log("重绘完了");
+            reloadClick();
         }    
 
   }
