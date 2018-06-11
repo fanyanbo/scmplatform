@@ -47,7 +47,7 @@ PropModel.prototype.update = function (data, callback) {
   let defaultValue = data.defaultValue;
   let category = data.category;
   let desc = data.desc;
-  let sql = "UPDATE props SET defaultValue = ?, category = ?, desc = ? WHERE engName = ?";
+  let sql = "UPDATE props SET defaultValue = ?, category = ?, descText = ? WHERE engName = ?";
   let sql_params = [defaultValue,category,desc,engName];
   console.log(sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
