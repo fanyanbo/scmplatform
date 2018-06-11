@@ -26,7 +26,9 @@ function QueryResult(){
 					page6ChipTd .innerHTML = "";
 					page6ModelTd .innerHTML = "";
 					page6SocTd .innerHTML = "";
-					
+					autoDataArray1 = [];
+					autoDataArray2 = [];
+					autoDataArray3 = [];
 					for (var i=0; i<data.resultData[0].length; i++) {
 						page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachchipa" part="1" name="'+data.resultData[0][i].name+'" title="'+data.resultData[0][i].name+'">'+data.resultData[0][i].name+'</a></div>';
 						autoDataArray1.push(data.resultData[0][i].name);
@@ -41,18 +43,21 @@ function QueryResult(){
 					}
 				} else if (freshNumber == 0) {
 					page6ChipTd .innerHTML = "";
+					autoDataArray1 = [];
 					for (var i=0; i<data.resultData[0].length; i++) {
 						page6ChipTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachchipa" part="1" name="'+data.resultData[0][i].name+'" title="'+data.resultData[0][i].name+'">'+data.resultData[0][i].name+'</a></div>';
 						autoDataArray1.push(data.resultData[0][i].name);
 					}
 				} else if (freshNumber == 1) {
 					page6ModelTd .innerHTML = "";
+					autoDataArray2 = [];
 					for (var i=0; i<data.resultData[1].length; i++) {
 						page6ModelTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachmodela" part="2" name="'+data.resultData[1][i].name+'" title="'+data.resultData[1][i].name+'">'+data.resultData[1][i].name+'</a></div>';
 						autoDataArray2.push(data.resultData[1][i].name);
 					}
 				} else if (freshNumber == 2) {
 					page6SocTd .innerHTML = "";
+					autoDataArray3 = [];
 					for (var i=0; i<data.resultData[3].length; i++) {
 						page6SocTd.innerHTML += '<div class="col-xs-4 divitems"><a class="myeachsoca" part="3" name="'+data.resultData[3][i].name+'" title="'+data.resultData[3][i].name+'">'+data.resultData[3][i].name+'</a></div>';
 						autoDataArray3.push(data.resultData[3][i].name);
@@ -281,6 +286,7 @@ function addOrChangeResult(){
 				$("#page6Modal").modal('hide');
 				var _curPart1 = $("#page6Submit").attr("part1");
 				freshNumber == _curPart1;
+				console.log(freshNumber);
 				sendHTTPRequest(coocaaVersion+"/device/queryAll", '{}' , QueryResult);
 				page6freshHtml(1);
 			}else{
