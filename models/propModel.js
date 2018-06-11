@@ -29,8 +29,8 @@ PropModel.prototype.add = function (data, callback) {
   let engName = data.engName;
   let defaultValue = data.defaultValue;
   let category = data.category;
-  let desc = data.desc;
-  let sql = "INSERT INTO props (engName,defaultValue,category,desc) VALUES (?,?,?,?)";
+  let desc = data.descText;
+  let sql = "INSERT INTO props (engName,defaultValue,category,descText) VALUES (?,?,?,?)";
   let sql_params = [engName,defaultValue,category,desc];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
@@ -46,7 +46,7 @@ PropModel.prototype.update = function (data, callback) {
   let engName = data.engName;
   let defaultValue = data.defaultValue;
   let category = data.category;
-  let desc = data.desc;
+  let desc = data.descText;
   let sql = "UPDATE props SET defaultValue = ?, category = ?, descText = ? WHERE engName = ?";
   let sql_params = [defaultValue,category,desc,engName];
   console.log(sql_params);
