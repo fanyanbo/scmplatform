@@ -136,6 +136,7 @@ function editEachPage(num,array){
 	console.log(num+"--------"+array);
 	$(".page8_tabs:eq(" + (num) + ")").attr("hasvalue","true");
 	if(num==0||num==1){
+		$(".page8_tables")[num].innerHTML = "";
 		var _eachTableItem = "";
 		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
 		for (var i=0; i<array.length; i++) {
@@ -145,6 +146,7 @@ function editEachPage(num,array){
 	}else if(num==2||num==3||num==4||num==5){
 		var sysSettingArray = ["系统设置","信号源工具箱","卖场演示","中间件"];
 		var _eachTableItem = "";
+		$(".page8_tables")[num].innerHTML = "";
 		var kk = 0;
 		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
 		for (var i=0; i<array.length; i++) {
@@ -300,9 +302,20 @@ function updateCategoryResult(){
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
+			var _curId = $("#tabClickIndex").attr("curId");
 			if(data.resultCode == "0") {
 				console.log("数据修改成功。");
 				$('#paged8_dialog_box1').modal('hide');
+				console.log("数据添加成功");
+				if (_curId ==0||_curId==1||_curId==6) {
+					$(".page8_tabs:eq("+_curId+")").attr("hasvalue","false");
+				} else{
+					$(".page8_tabs:eq(2)").attr("hasvalue","false");
+					$(".page8_tabs:eq(3)").attr("hasvalue","false");
+					$(".page8_tabs:eq(4)").attr("hasvalue","false");
+					$(".page8_tabs:eq(5)").attr("hasvalue","false");
+				}
+				tabsClick(_curId);
 				freshModuleAddHtml(1);
 			}else{
 				console.log(data.resultDesc);
