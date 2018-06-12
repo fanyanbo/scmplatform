@@ -157,7 +157,6 @@
             var number = $(e.$element.selector+ " .typeNumber").val();
             $(e.$element.selector+ " .typeNumber").val(number * 1 + 1);
             e.page($(e.$element.selector+ " .typeNumber").val(), e.options.pageNUmber, maxpagenumberBox,json,e.$element, e);
-    
         },
         nextTableLi:function(e,maxpagenumberBox,json,that){
             var val = that.html();

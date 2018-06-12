@@ -103,7 +103,6 @@ function handleTableData(arr) {
 	var getdataArray2 = new Array();
 	for(var i = 0; i < arr.length; i++) {
 		var eachItem2 = {
-//			"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 			"number" : (i+1),
 			"model": arr[i].model,
 			"chip": arr[i].chip,
@@ -1326,7 +1325,8 @@ function productHistoryQuery(){
 					$("#noChangeHistory").css("display","none");
 					
 					var _tableInnerHtml = "<thead><tr><th>修改内容</th><th>修改原因</th><th>提交时间</th><th>提交者</th><th style='min-width: 55px;'>状态</th></tr></thead>"
-					for (var i=(data.resultData.length-1); i>=0; i--) {
+					//for (var i=(data.resultData.length-1); i>=0; i--) {
+					for (var i=0; i<data.resultData.length; i++) {
 						var _state = "";
 						if (data.resultData[i].state == 0) {
 							_state = "审核通过";
