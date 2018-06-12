@@ -711,27 +711,27 @@ function sendEmail(){
 		console.log(_chip+"--------"+_model);
 		var _buttontype = $("#mydialog").attr("buttontype");
 		if (_type == 1) {
-			if (_buttontype == 0) {
+			if (_buttontype == 1) {
 				//修改操作审核不通过
 				console.log(emailReason);
 				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，原因是："+emailReason+"请前往《审核未通过文件》菜单进行修改并再次提交";
-			} else if(_buttontype == 1){
+			} else if(_buttontype == 0){
 				//修改操作审核通过
 				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
 			}
 		} else if (_type == 2) {
-			if (_buttontype == 0) {
+			if (_buttontype == 1) {
 				//增加操作审核不通过
 				var maildata = "您增加的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
-			} else if(_buttontype == 1){
+			} else if(_buttontype == 0){
 				//增加操作审核通过
 				var maildata = "您增加的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
 			}
 		} else if(_type == 3){
-			if (_buttontype == 0) {
+			if (_buttontype == 1) {
 				//删除操作审核不通过
 				var maildata = "您删除的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
-			} else if(_buttontype == 1){
+			} else if(_buttontype == 0){
 				//删除操作审核通过
 				var maildata = "您删除的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
 			}
@@ -1486,8 +1486,8 @@ function getEmailResult(){
             console.log(data);
             if(data.resultCode == 0) {
             	console.log(data.resultData[0].email);
-            	//toEmail = "linxinwang@skyworth.com";//测试用
-            	toEmail = data.resultData[0].email;
+            	toEmail = "linxinwang@skyworth.com";//测试用
+            	//toEmail = data.resultData[0].email;
             }
         };
 	}
