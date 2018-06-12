@@ -62,7 +62,7 @@ ProductModel.prototype.queryByRegEx = function (data, callback) {
  */
 ProductModel.prototype.queryHistory = function (chip, model, callback) {
 
-  var sql = `SELECT * FROM ${dbConfig.tables.modifyhistory} WHERE chip = ? AND model = ?`;
+  var sql = `SELECT * FROM ${dbConfig.tables.modifyhistory} WHERE chip = ? AND model = ? order by modifyTime desc`;
   let sql_params = [chip, model];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {

@@ -123,7 +123,7 @@ ConfigModel.prototype.updateCategoryOrderId = function (arr, callback) {
 }
 
 /**
- * @param {更新分类里子项的排序}
+ * @param {更新configs表中某个分类里子项的排序}
  */
 ConfigModel.prototype.updateItemsOrderId = function (arr, callback) {
 
@@ -146,7 +146,7 @@ ConfigModel.prototype.updateItemsOrderId = function (arr, callback) {
     let sql_param = [arr[i].orderId,arr[i].engName];
     db.conn.query(sql,sql_param,function(err,rows,fields) {
       if (err) {
-        logger.error("更新configs表的orderId发生错误:" + err);
+        logger.error("更新configs表某个分类的orderId排序发生错误:" + err);
         return ep.emit('error', err);
       }
       ep.emit('update_result', 'ok' + i);
@@ -160,19 +160,19 @@ ConfigModel.prototype.updateItemsOrderId = function (arr, callback) {
  */
 ConfigModel.prototype.add = function (engName, cnName, category, type, options, defaultValue, desc, callback) {
   //SELECT orderId FROM configs WHERE category = '广告配置' order by orderId desc limit 0,1
-  let sql_order = "SELECT orderId FROM configs WHERE category = ? order by orderId desc limit 0,1";
-  db.conn.query(sql_order,[category],function(err,rows,fields){
+  let sql0 = "SELECT orderId FROM configs WHERE category = ? order by orderId desc limit 0,1";
+  db.conn.query(sql,[category],function(err,rows,fields){
     if (err) {
       logger.error("查询configs表的orderId发生错误:" + err);
       return callback(err);
     }
     let _orderId = (rows.length == 0) ? 1 : rows[0].orderId + 1;
-    console.log("新增的mk模块的orderId：" + _orderId);
-    let sql = "INSERT INTO configs(engName,cnName,category,typeStr,options,defaultValue,descText,orderId) VALUES (?,?,?,?,?,?,?,?)";
-    let sql_params = [engName,cnName,category,type,options,defaultValue,desc,_orderId];
-    db.conn.query(sql,sql_params,function(err,rows,fields){
+    console.log("新增的config项的orderId：" + _orderId);
+    let sql1 = "INSERT INTO configs(engName,cnName,category,typeStr,options,defaultValue,descText,orderId) VALUES (?,?,?,?,?,?,?,?)";
+    let sql1_params = [engName,cnName,category,type,options,defaultValue,desc,_orderId];
+    db.conn.query(sql1,sql1_params,function(err,rows,fields){
       if (err) {
-        logger.error("新增configs表发生错误:" + err);
+        logger.error("新增config项发生错误:" + err);
         return callback(err);
       }
       callback(null, rows);
@@ -182,8 +182,8 @@ ConfigModel.prototype.add = function (engName, cnName, category, type, options, 
 
 /**
  * @param {更新Config项}
- * @param {要明确哪些字段是不能重复的，英文名，中文名}
- * @param {当分类没有修改时，则不用考虑orderId的情况，如果分类有修改，则需要更改orderId}
+ * @param {要明确哪些字段是不能重复，英文名，中文名}
+ * @param {当分类没有修改时，则不用考虑orderId排序的情况，如果分类有修改，则需要更改orderId}
  */
 ConfigModel.prototype.update = function (engName, cnName, category, type, options, defaultValue, desc, orderId, callback) {
 
