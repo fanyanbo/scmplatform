@@ -7,7 +7,7 @@
 }
 .page8_boxes{
 	display: none;
-	max-height: 425px;
+	/*max-height: 425px;*/
 	overflow: auto;
 }
 .page8_tabs{
