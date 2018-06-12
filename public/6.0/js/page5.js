@@ -11,7 +11,7 @@ var _myArray = [];
 var level = null;
 var loginusername = null;
 var fromEmail = null;
-var toEmail = "SKY058689@skyworth.com";
+var toEmail = null;
 var emailReason = null;
 var _author = null;
 var adminControl = null;
@@ -776,8 +776,7 @@ function sendEmail(){
 	var _email = JSON.stringify(emailObj);
 	var node = '{"data":' + _email + '}';
 	console.log(node);
-    //sendHTTPRequest("/sendMail", node, mailfun);
-    page5fresh(1);
+    sendHTTPRequest("/sendMail", node, mailfun);
 }
 //邮件函数回调
 function mailfun(){

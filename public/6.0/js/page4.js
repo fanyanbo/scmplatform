@@ -11,7 +11,7 @@ var _myArray = [];
 var level = null;
 var loginusername = null;
 var fromEmail = null;
-var toEmail = "SKY058689@skyworth.com";
+var toEmail = null;
 var emailReason = null;
 var _author = null;
 var adminControl = null;
@@ -777,8 +777,8 @@ function sendEmail(){
 	var _email = JSON.stringify(emailObj);
 	var node = '{"data":' + _email + '}';
 	console.log(node);
-    //sendHTTPRequest("/sendMail", node, mailfun);
-    page4fresh(2);
+	
+    sendHTTPRequest("/sendMail", node, mailfun);
 }
 //邮件函数回调
 function mailfun(){
@@ -1486,8 +1486,8 @@ function getEmailResult(){
             console.log(data);
             if(data.resultCode == 0) {
             	console.log(data.resultData[0].email);
-            	toEmail = "linxinwang@skyworth.com";//测试用
-//          	toEmail = data.resultData[0].email;
+            	//toEmail = "linxinwang@skyworth.com";//测试用
+            	toEmail = data.resultData[0].email;
             }
         };
 	}
