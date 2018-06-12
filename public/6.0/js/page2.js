@@ -1326,7 +1326,7 @@ function productHistoryQuery(){
 					$("#noChangeHistory").css("display","none");
 					
 					var _tableInnerHtml = "<thead><tr><th>修改内容</th><th>修改原因</th><th>提交时间</th><th>提交者</th><th style='min-width: 55px;'>状态</th></tr></thead>"
-					for (var i=0; i<data.resultData.length; i++) {
+					for (var i=(data.resultData.length-1); i>=0; i--) {
 						var _state = "";
 						if (data.resultData[i].state == 0) {
 							_state = "审核通过";
@@ -1375,7 +1375,6 @@ function productHistoryQuery(){
 						if (_deleteArray2.length != 0){
 							_desc += "<span>"+_deleteArray2+"</span><br/>";
 						}
-						
 						_tableInnerHtml += "<tbody id='descriptTbody'><tr><td>"+_desc+"</td><td>"+data.resultData[i].reason+"</td><td>"+data.resultData[i].modifyTime+"</td><td>"+data.resultData[i].userName+"</td><td>"+_state+"</td></tr></tbody>";
 					}
 					document.getElementById("contenttable").innerHTML = _tableInnerHtml;

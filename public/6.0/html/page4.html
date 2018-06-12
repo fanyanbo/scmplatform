@@ -41,8 +41,10 @@
 										<div class="col-xs-12" id="changeDescDiv">
 											<div class="col-xs-12 form-group text-left inputdiv" id="reasonBox">
 												<span class="col-xs-12" id="changeDescTitle"><b>当前文件做了如下更改，请注意审核：</b></span>
-												<div id="reviewContent0" class="col-xs-6 text-center">修改内容</div><div id="reviewReason0" class="col-xs-6 text-center">修改原因</div>
-												<div id="reviewContent" class="col-xs-6"></div><div id="reviewReason" class="col-xs-6 text-center"></div>
+												<table class="table-bordered" id="historyTable" style="width: 100%;">
+													<tr><th id="reviewContent0" style="width: 50%;text-align: center;">修改内容</th><th id="reviewReason0" style="width: 50%;text-align: center;">修改原因</th></tr>
+													<tr><td id="reviewContent"></td><td id="reviewReason"></td></tr>
+												</table>
 											</div>
 										</div>
 										<div class="col-xs-12" id="addDescDiv">
