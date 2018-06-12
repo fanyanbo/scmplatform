@@ -64,15 +64,11 @@ function categoryQueryResult(){
 }
 function buttonInitAfter(){
 	$(".edit_box1").click(function(){
-		var _curIndex = "";
-		var _thisKey = "";
-		var _thisLevel= "";
-		var _curId = "";
 		var _ajaxUrl = "";
 		var _node = "{}";
-		_curIndex = $(".edit_box1").index($(this));
-		_thisKey = $(".edit_box1")[_curIndex].getAttribute("tablename");
-		_curId = $("#tabClickIndex").attr("curId");
+		var _curIndex = $(".edit_box1").index($(this));
+		var _thisKey = $(".edit_box1")[_curIndex].getAttribute("tablename");
+		var _curId = $("#tabClickIndex").attr("curId");
 		console.log(_curIndex + "---" + _thisKey);
 		if (_curId == 0) {
 			_node = '{"category":"' + _thisKey + '"}';
@@ -85,7 +81,7 @@ function buttonInitAfter(){
 			console.log(_node);
 			sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
 		} else if(_curId == 2||_curId == 3||_curId == 4||_curId == 5){
-			_thisLevel = $(".edit_box1")[_curIndex].getAttribute("level");
+			var _thisLevel = $(".edit_box1")[_curIndex].getAttribute("level");
 			_node = '{"category":"' + _thisKey + '","level":"' + _thisLevel + '"}';
 			_ajaxUrl = coocaaVersion+"/settings/queryByCategory";
 			console.log(_node);
@@ -119,9 +115,20 @@ function addCategoryResult(){
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
+			var _curId = $("#tabClickIndex").attr("curId");
 			if(data.resultCode == "0") {
 				console.log("数据添加成功。");
 				$('#page8Modal').modal('hide');
+				console.log("数据添加成功");
+				if (_curId ==0||_curId==1||_curId==6) {
+					$(".page8_tabs:eq("+_curId+")").attr("hasvalue","false");
+				} else{
+					$(".page8_tabs:eq(2)").attr("hasvalue","false");
+					$(".page8_tabs:eq(3)").attr("hasvalue","false");
+					$(".page8_tabs:eq(4)").attr("hasvalue","false");
+					$(".page8_tabs:eq(5)").attr("hasvalue","false");
+				}
+				tabsClick(_curId);
 				freshModuleAddHtml(1);
 			}else{
 				console.log(data.resultDesc);
@@ -205,22 +212,6 @@ function creatTableByData(data){
 	$(".headtr")[0].innerHTML = _thisHeadTh;
 	$(".bodytr")[0].innerHTML = _thisbodyTr;
 	dataSort(tableCnArray,tableEnArray);
-	//recursive(tableOrderId,tableCnArray,tableEnArray);
-}
-//递归,将非连续数组按排序读取
-function recursive(data1,data2,data3){
-	console.log(data1+"--"+data2+"--"+data3);
-	var kk = data1.indexOf(Math.max.apply(Math, data1));
-	sortCnArray.push(data2[kk]);
-	sortEnArray.push(data3[kk]);
-	data1.splice(kk, 1);
-	data2.splice(kk, 1);
-	data3.splice(kk, 1);
-	if (data1.length != 0) {
-		recursive(data1,data2,data3);
-	}else{
-		dataSort(sortCnArray,sortEnArray);
-	}
 }
 
 function dataSort(CnData,EnData){
