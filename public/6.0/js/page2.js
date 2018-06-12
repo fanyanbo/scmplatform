@@ -25,6 +25,7 @@ var deleteChip = null;
 var deleteModel = null;
 
 var fromEmail = null;
+var toEmail = "SKY058689@skyworth.com";
 var level = null;
 var loginusername = null;
 
@@ -1324,7 +1325,7 @@ function productHistoryQuery(){
 					$("#noChangeHistory").html(" ");
 					$("#noChangeHistory").css("display","none");
 					
-					var _tableInnerHtml = "<thead><tr><th>修改内容</th><th>修改原因</th><th style='min-width: 55px;'>状态</th><th>提交者</th><th>提交时间</th></tr></thead>"
+					var _tableInnerHtml = "<thead><tr><th>修改内容</th><th>修改原因</th><th>提交时间</th><th>提交者</th><th style='min-width: 55px;'>状态</th></tr></thead>"
 					for (var i=0; i<data.resultData.length; i++) {
 						var _state = "";
 						if (data.resultData[i].state == 0) {
@@ -1375,7 +1376,7 @@ function productHistoryQuery(){
 							_desc += "<span>"+_deleteArray2+"</span><br/>";
 						}
 						
-						_tableInnerHtml += "<tbody id='descriptTbody'><tr><td>"+_desc+"</td><td>"+data.resultData[i].reason+"</td><td>"+_state+"</td><td>"+data.resultData[i].userName+"</td><td>"+data.resultData[i].modifyTime+"</td></tr></tbody>";
+						_tableInnerHtml += "<tbody id='descriptTbody'><tr><td>"+_desc+"</td><td>"+data.resultData[i].reason+"</td><td>"+data.resultData[i].modifyTime+"</td><td>"+data.resultData[i].userName+"</td><td>"+_state+"</td></tr></tbody>";
 					}
 					document.getElementById("contenttable").innerHTML = _tableInnerHtml;
 				}
@@ -1572,14 +1573,18 @@ function sendEmail(){
     var emailObj = {
 		"desc" : maildata,
 		"from" : fromEmail,
-		"to" : "SKY058689@skyworth.com",
+		"to" : toEmail,
 		"subject" : "软件配置平台通知-自动发送，请勿回复"
 	}
 	var _email = JSON.stringify(emailObj);
 	var node = '{"data":' + _email + '}';
 	console.log(node);
-    //sendHTTPRequest("/sendMail", node, mailfun);
-    page2Fresh();
+	
+	if(level == 1){
+		console.log("管理员编辑、修改或者删除，不用发邮件。");
+	}else{
+		sendHTTPRequest("/sendMail", node, mailfun);
+	}
 }
 
 //邮件函数回调
