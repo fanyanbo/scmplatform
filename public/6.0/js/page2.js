@@ -843,7 +843,7 @@ function getPreviewInfo(){
                 console.log("lxw " + "预览-成功");
 //              document.getElementById("loading").style.display = "none";
                 $("#myPreviewModalLabel").text("预览");
-				$('#myPreviewModal').modal(); //弹出编辑页（即新增页，只是每项都有数据，这个数据从后台获取）
+				$('#myPreviewModal').modal();
 				$(".modal-backdrop").addClass("new-backdrop");
 				$("#myPreviewModal").find("li")[0].className = "presentation active";
 				$("#myPreviewModal").find("li")[1].className = "presentation";

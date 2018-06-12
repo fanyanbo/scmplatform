@@ -342,6 +342,7 @@ body .modal-footer{
 #changeDescTitle{
 	padding-left: 0px;
     padding-right: 0px;
+    color: red;
 }
 #reasonBox{
 	padding-left: 0px;

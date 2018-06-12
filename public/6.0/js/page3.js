@@ -81,15 +81,13 @@ function buttonInitBefore(){
 	});
 	$("#myEditCancle").click(function(){
 		$("#myEditEnsureDiv").css("display","none");
-//		page3Fresh();
 	});
 	$("#myEditEnsureX").click(function(){
 		$("#myEditEnsureDiv").css("display","none");
-//		page3Fresh();
 	});
 	$("#page3_tp_close").click(function(){
+		resetAllInfo();
 		$("#page3Modal").modal("hide");
-		//page3Fresh();
 	});
 	$("#page3_targetProduct").keyup(function(event) {
 		autoComplete1.start(event);
@@ -286,18 +284,7 @@ function instantQuery(arr1) {
 }
 
 function eachOperate(index,num){
-	$('#page3Modal').modal();
-	$(".modal-backdrop").addClass("new-backdrop");
 	$('#page3Modal').attr("status",num);
-	
-	if (num == 0) {
-		$("#page3_title").html("编辑tp的名称");
-	} else if(num==1){
-		$("#page3_title").html("复制tp的名称");
-	} else if(num==2){
-		$("#page3_title").html("预览tp的名称");
-	}
-	
 	var thisEnName = $(".eachtpvalue")[index].innerText;
 	var thisEnNameCut = "";
 	if(thisEnName.length>10){
@@ -307,7 +294,17 @@ function eachOperate(index,num){
 	}
 	console.log(thisEnName);
 	document.getElementById("page3_TP").value = thisEnName;
-	
+	$('#page3Modal').modal();
+	if (num == 0) {
+		$("#page3_title").html("编辑tp的名称");
+		$("#page3_TP").attr("disabled","disabled");
+	} else if(num==1){
+		$("#page3_title").html("复制tp的名称");
+		$("#page3_TP").removeAttr("disabled");
+	}else if(num==2){
+		$("#page3_title").html("预览tp的名称");
+		$("#page3_TP").attr("disabled","disabled");
+	}
 	resetAllInfo();
 	var node = '{"targetproduct":"' + thisEnName + '"}';
 	sendHTTPRequest(coocaaVersion+"/product/queryMKByTp", node, getMKByTPResult);
@@ -331,6 +328,7 @@ function page3Add(){
 	$('#page3Modal').modal();
 	$('#page3Modal').attr("status","1");
 	document.getElementById("page3_TP").value = "";
+	$("#page3_TP").removeAttr("disabled");
 	resetAllInfo();
 	console.log($('#page3Modal').attr("hasquery"));
 	if ($('#page3Modal').attr("hasquery") == "false") {
@@ -382,13 +380,10 @@ function modelQueryResult2(){
 						}
 					}
 				}
-//				for (var i=0; i<$(".mkradio").length; i++) {
-					document.getElementsByClassName("mkradio")[0].setAttribute('checked', 'true');
-//				}
+				document.getElementsByClassName("mkradio")[0].setAttribute('checked', 'true');
 			}
 		}
 		$('#page3Modal').attr("hasquery","true");
-//		sendHTTPRequest(coocaaVersion+"/module/query", node, modelQueryResult2);
 	}
 }
 function mkDataInsert(kk, obj, data) {
@@ -532,25 +527,38 @@ function getMKByTPResult() {
 			if(data.resultCode == "0") {
 				var type = $('#page3Modal').attr("status");
 				//0-编辑、1-复制、2-预览
-				for (var i=0; i<$(".mkitems").length; i++) {
-					if (type == 0) {
-						$(".mkitems:eq("+i+")").removeAttr("disabled");
-						$(".mkitems:eq("+i+")").attr("oldvalue","0");
-						if($(".mkitems:eq("+i+")").attr("type") == "radio"){
-							$(".mkitems:eq("+i+")").attr("onchange","changeRadio(this)");
-						}else{
-							$(".mkitems:eq("+i+")").attr("onchange","changeMK(this)");
-						}
-					}else if(type == 1){
-						$(".mkitems:eq("+i+")").removeAttr("disabled");
-						$(".mkitems:eq("+i+")").removeAttr("onchange");
-					}else if (type == 2) {
+				if(type == 2){
+					console.log("预览");
+					for (var i=0; i<$(".mkitems").length; i++) {
 						$(".mkitems:eq("+i+")").attr("disabled","disabled");
+						$(".mkitems:eq("+i+")").parent().css("display","none");
+					}
+				}else{
+					if (type == 0) {
+						console.log("编辑");
+						for (var i=0; i<$(".mkitems").length; i++) {
+							$(".mkitems:eq("+i+")").removeAttr("disabled");
+							$(".mkitems:eq("+i+")").attr("oldvalue","0");
+							$(".mkitems:eq("+i+")").parent().css("display","block");
+							if($(".mkitems:eq("+i+")").attr("type") == "radio"){
+								$(".mkitems:eq("+i+")").attr("onchange","changeRadio(this)");
+							}else{
+								$(".mkitems:eq("+i+")").attr("onchange","changeMK(this)");
+							}
+						}
+					} else if(type == 1){
+						console.log("复制");
+						for (var i=0; i<$(".mkitems").length; i++) {
+							$(".mkitems:eq("+i+")").removeAttr("disabled");
+							$(".mkitems:eq("+i+")").removeAttr("onchange");
+							$(".mkitems:eq("+i+")").parent().css("display","block");
+						}
 					}
 				}
 				for (var i=0; i<data.resultData.length; i++) {
 					document.getElementById(data.resultData[i].engName).setAttribute("checked","");
 					document.getElementById(data.resultData[i].engName).checked = true;
+					$("#"+data.resultData[i].engName).parent().css("display","block");
 					if ($("#"+data.resultData[i].engName).attr("type") == "radio") {
 						oldRadioName = $("#"+data.resultData[i].engName).attr("cnname");
 						$("#"+data.resultData[i].engName).attr("oldvalue","1");
