@@ -1350,7 +1350,8 @@ function productHistoryQuery(){
 					$("#contenttable").css("display","inline-table");
 					$("#noChangeHistory").html(" ");
 					$("#noChangeHistory").css("display","none");
-					for (var i=0; i<data.resultData.length; i++) {
+					//for (var i<(data.resultData.length-1); i>=0; i--) {
+					for (var i=(data.resultData.length-1); i>=0; i--) {
 						var _state = "";
 						if (data.resultData[i].state == 0) {
 							_state = "审核通过";
