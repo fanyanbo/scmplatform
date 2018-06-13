@@ -709,7 +709,6 @@ function clearAllInfo() {
 
 function resetAllInfo(num){
 	colorstatus(0);//焦点落在第一个tabs上
-	
 	document.getElementById("lable2Chip").value = "";
 	document.getElementById("lable2Model").value = "";
 	document.getElementById("lable2TargetProduct").value = "";
@@ -1194,7 +1193,7 @@ function sysDataInsert1(i, obj, num, arr1){
 	}
 }
 function propDataInsert1(kk, obj, data) {
-	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
+	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"' disabled></div>";
 }
 
 function getBaseValue(){
