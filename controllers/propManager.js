@@ -39,7 +39,7 @@ var logger = require('../common/logger');
 
  exports.add = function (req, res, next) {
    let data = req.body.data;
-   console.log(data);
+   logger.info(data);
    propModel.add(data, function(err,results) {
      if(err) {
        return output.error(req,res,err);
@@ -50,7 +50,7 @@ var logger = require('../common/logger');
 
  exports.update = function (req, res, next) {
    let data = req.body.data;
-   console.log(data);
+   logger.info(data);
    propModel.update(data, function(err,results) {
      if(err) {
        return output.error(req,res,err);

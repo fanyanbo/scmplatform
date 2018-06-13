@@ -89,6 +89,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  logger.trace('Listening on ' + bind);
-  logger.error('Listening on ' + bind + ' [Relax! just testing by fyb]');
+  logger.info('Scmplatform server is Listening on ' + bind);
 }

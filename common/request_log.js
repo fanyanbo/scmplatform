@@ -1,6 +1,6 @@
 var logger = require('./logger');
 
-var ignore = /(html|css|js|fonts)/i; //^以什么开头,$以什么结尾
+var ignore = /(html|css|js|fonts|images)/i; //^以什么开头,$以什么结尾
 
 exports = module.exports = function (req, res, next) {
   // Assets do not out log.
@@ -9,12 +9,13 @@ exports = module.exports = function (req, res, next) {
     return;
   }
   var t = new Date();
-  logger.info('\nStarted', t.toISOString(), req.method, req.url, req.ip);
+  logger.info('==>Started', t.toISOString(), req.method, req.url, req.ip);
 
   res.on('finish', function () {
     var duration = ((new Date()) - t);
 
-    logger.info('Completed', res.statusCode, ('(' + duration + 'ms)').green);
+    // logger.info('Completed', res.statusCode, ('(' + duration + 'ms)').green);
+    logger.info('Completed', res.statusCode, '(' + duration + 'ms)');
   });
 
   next();

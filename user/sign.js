@@ -18,7 +18,6 @@ var userModel = require('./userModel');
  */
 exports.login = function (req, res, next) {
 
-    logger.debug("enter login");
     var loginname = validator.trim(req.body.loginname).toLowerCase();
     var pass = validator.trim(req.body.password);
 
@@ -89,7 +88,7 @@ exports.logout = function (req, res, next) {
 
 exports.sendMail = function (req, res, next) {
   let data = req.body.data;
-  console.log(data);
+  logger.info(data);
   mailer.sendActiveMail(data,function(err,data){
     if (err) return output.error(req,res,"发送邮件失败!");
     output.success(req,res,"发送邮件成功!");
@@ -98,7 +97,7 @@ exports.sendMail = function (req, res, next) {
 
 exports.getUserInfo = function (req, res, next) {
   let userName = req.body.userName;
-  console.log(userName);
+  logger.info(userName);
   userModel.getUserByQuery(userName, function(err,result){
     if(err) return output.error(req,res,err);
     output.success(req,res,"获取用户信息成功!",result);
