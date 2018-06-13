@@ -1607,6 +1607,7 @@ function sendEmail(){
 	
 	if(level == 1){
 		console.log("管理员编辑、修改或者删除，不用发邮件。");
+		page2Fresh();
 	}else{
 		sendHTTPRequest("/sendMail", node, mailfun);
 	}
