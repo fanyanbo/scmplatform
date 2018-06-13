@@ -2,7 +2,7 @@ var config = require('../config/config');
 var pathLib = require('path')
 
 var env = process.env.NODE_ENV || "development"
-console.log('logger.js env ' + env);
+// console.log('logger.js env ' + env);
 
 var log4js = require('log4js');
 log4js.configure({

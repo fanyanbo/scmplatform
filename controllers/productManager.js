@@ -79,7 +79,7 @@ exports.preview = function (req, res, next) {
  */
 exports.delete = function (req, res, next) {
   let data = req.body.data;
-  console.log(data);
+  logger.info(data);
   productModel.delete(data, function(err,results) {
     if(err) {
       return output.error(req,res,err);
@@ -93,7 +93,7 @@ exports.delete = function (req, res, next) {
  */
 exports.review = function (req, res, next) {
   let data = req.body.data;
-  console.log(data);
+  logger.info(data);
   productModel.review(data, function(err,results) {
     if(err) {
       return output.error(req,res,err);
@@ -104,7 +104,7 @@ exports.review = function (req, res, next) {
 
 exports.deleteRecovery = function (req, res, next) {
   let data = req.body.data;
-  console.log(data);
+  logger.info(data);
   productModel.deleteRecovery(data, function(err,results) {
     if(err) {
       return output.error(req,res,err);

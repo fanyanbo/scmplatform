@@ -90,7 +90,6 @@ exports.queryCategory = function (req, res, next) {
 exports.addCategory = function (req, res, next) {
 
   let category = req.body.category;
-  console.log(category);
 
   moduleModel.addCategory(category,function(err,results) {
     if(err) {
