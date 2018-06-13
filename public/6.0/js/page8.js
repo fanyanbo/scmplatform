@@ -9,7 +9,8 @@ $(function() {
 	$("#tabClickIndex").attr("curId","0");
 	
 	buttonInitBefore();
-	sendHTTPRequest(coocaaVersion+"/config/queryCategory", '{}', categoryQueryResult);
+	//sendHTTPRequest(coocaaVersion+"/config/queryCategory", '{}', categoryQueryResult);
+	sendHTTPRequest(coocaaVersion+"/module/queryCategory", '{}', categoryQueryResult);
 });
 
 function buttonInitBefore(){
@@ -39,7 +40,6 @@ function buttonInitBefore(){
 			setTimeout("document.getElementById('chipMangInfo').style.display = 'none';", 3000);
 		} else{
 			addSubmit();
-			//page8SubmitState(_oldValue,_newValue,_curPart1,_curPart2);
 		}
 	});
 	//修改页面确定按钮的点击
@@ -72,12 +72,12 @@ function buttonInitAfter(){
 		console.log(_curIndex + "---" + _thisKey);
 		if (_curId == 0) {
 			_node = '{"category":"' + _thisKey + '"}';
-			_ajaxUrl = coocaaVersion+"/config/queryByCategory";
+			_ajaxUrl = coocaaVersion+"/module/queryByCategory";
 			console.log(_node);
 			sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
 		} else if(_curId == 1){
 			_node = '{"category":"' + _thisKey + '"}';
-			_ajaxUrl = coocaaVersion+"/module/queryByCategory";
+			_ajaxUrl = coocaaVersion+"/config/queryByCategory";
 			console.log(_node);
 			sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
 		} else if(_curId == 2||_curId == 3||_curId == 4||_curId == 5){
@@ -242,9 +242,9 @@ function addSubmit(){
 	var ajaxUrl3 = "";
 	var _curIndex3 = $("#page8Submit").attr("clickid");
 	if (_curIndex3 == 0) {
-		ajaxUrl3 = coocaaVersion+"/config/addCategory";
-	} else if(_curIndex3 == 1){
 		ajaxUrl3 = coocaaVersion+"/module/addCategory";
+	} else if(_curIndex3 == 1){
+		ajaxUrl3 = coocaaVersion+"/config/addCategory";
 	} else if(_curIndex3 == 2||_curIndex3 == 3||_curIndex3 == 4||_curIndex3 == 5){
 		ajaxUrl3 = coocaaVersion+"/sys/addCategory";
 	} else if(_curIndex3 == 6){
@@ -261,10 +261,9 @@ function changeSubmit(){
 	console.log(_curId);
 	var _ajaxUrl = "";
 	if (_curId == 0) {
-		_ajaxUrl = coocaaVersion+"/config/updateItemsOrderId";
-	} else if(_curId == 1){
-		console.log("sdasdasdas");
 		_ajaxUrl = coocaaVersion+"/module/updateItemsOrderId";
+	} else if(_curId == 1){
+		_ajaxUrl = coocaaVersion+"/config/updateItemsOrderId";
 	} else if(_curId == 2||_curId == 3||_curId == 4||_curId == 5){
 		_ajaxUrl = coocaaVersion+"/settings/updateItemsOrderId";
 	} else if(_curId == 6){
@@ -330,9 +329,9 @@ function tabsClick(num){
 	if (_hasValue == "false") {
 		var ajaxUrl = "";
 		if (num == 0) {
-			ajaxUrl = coocaaVersion+"/config/queryCategory";
-		} else if(num == 1){
 			ajaxUrl = coocaaVersion+"/module/queryCategory";
+		} else if(num == 1){
+			ajaxUrl = coocaaVersion+"/config/queryCategory";
 		} else if(num == 2||num == 3||num == 4||num == 5){
 			ajaxUrl = coocaaVersion+"/settings/queryCategory";
 		} else if(num == 6){
@@ -367,7 +366,7 @@ function freshModuleAddHtml(num) {
 	    if (htmlObject4) {
 	    	htmlObject4.firstChild.src = "page4.html";
 	    }
-	     if (htmlObject5) {
+	    if (htmlObject5) {
 	    	htmlObject5.firstChild.src = "page5.html";
 	    }
 	}
