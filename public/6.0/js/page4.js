@@ -544,7 +544,8 @@ function review(obj,adminControl,deleteFlag){
 //编辑
 function edit(obj,adminControl,deleteFlag){
 //	document.getElementById("loading").style.display = "block";
-    $("#changeDescDiv").css("display","none");
+//  $("#changeDescDiv").css("display","none");
+    document.getElementById("page4_firstTr").style.display="none";
     $("#myAddModalLabel").attr("num","2");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
 	resetAllInfo();//删除前面的操作痕迹
@@ -797,7 +798,7 @@ function mailfun(){
 		page4fresh(2);
 	}
 }
-//管理员点审核、时的数据请求函数
+//管理员点审核、编辑时的数据请求函数
 function getPointProductInfo(){
 	if(this.readyState == 4) {
         if(this.status == 200) {
