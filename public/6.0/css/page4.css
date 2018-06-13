@@ -316,17 +316,8 @@ body .modal-footer{
     padding-left: 4px;
     padding-right: 4px;
     max-height: 68px;
-    border-top: 1px solid red;
-	border-left: 1px solid red;
-	border-right: 1px solid red;
-	border-bottom: 1px solid red;
+    border: 1px solid red;
     overflow: auto;
-}
-#reviewContent0{
-}
-#reviewReason0{
-}
-#reviewContent{
 }
 #reviewReason{
 	text-align: center;
