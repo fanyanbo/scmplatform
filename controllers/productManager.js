@@ -174,10 +174,9 @@ exports.queryHistory = function (req, res, next) {
     });
 };
 
-exports.queryMKDataByTargetProduct = function (req, res, next) {
+exports.queryMKAndPropsByTargetProduct = function (req, res, next) {
     let targetproduct = req.body.targetproduct;
-    console.log(targetproduct);
-    productModel.queryMKDataByTargetProduct(targetproduct, function(err,results) {
+    productModel.queryMKAndPropsByTargetProduct(targetproduct, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }

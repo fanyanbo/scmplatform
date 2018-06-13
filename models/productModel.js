@@ -98,15 +98,39 @@ ProductModel.prototype.queryByChipModel = function (data, callback) {
   });
 }
 
-ProductModel.prototype.queryMKDataByTargetProduct = function (targetproduct, callback) {
-  let sql = `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
-  let sql_params = [targetproduct];
-  db.conn.query(sql,sql_params,function(err,rows,fields){
-    if (err) {
-        return callback(err);
-    }
-    callback(null, rows);
+ProductModel.prototype.queryMKAndPropsByTargetProduct = function (targetproduct, callback) {
+  let ep = new eventproxy();
+  let sql_list = [
+                  `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`,
+                  `SELECT * FROM ${dbConfig.tables.propsdata} WHERE targetProduct = ?`
+                ];
+
+  ep.bind('error', function (err) {
+      logger.error("捕获到错误-->" + err);
+      ep.unbind();
+      callback(err,null);
   });
+
+  ep.after('query_result', sql_list.length, function (list) {
+      let listObject = [];
+      for(let i in list){
+        listObject.push(list[i]);
+      }
+      callback(null,listObject);
+  });
+
+  for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
+      db.conn.query(sql_list[i],[],ep.group('query_result'));
+  }
+
+  // let sql = `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
+  // let sql_params = [targetproduct];
+  // db.conn.query(sql,sql_params,function(err,rows,fields){
+  //   if (err) {
+  //       return callback(err);
+  //   }
+  //   callback(null, rows);
+  // });
 }
 
 /**
