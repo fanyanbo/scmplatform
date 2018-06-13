@@ -1484,8 +1484,8 @@ function getEmailResult(){
             console.log(data);
             if(data.resultCode == 0) {
             	console.log(data.resultData[0].email);
-            	toEmail = "linxinwang@skyworth.com";//测试用
-//          	toEmail = data.resultData[0].email;
+//          	toEmail = "linxinwang@skyworth.com";//测试用
+            	toEmail = data.resultData[0].email;
             }
         };
 	}
