@@ -1,3 +1,5 @@
+var test_flag = 1;
+var version = "6.0";
 
 var mysql = require('mysql');
 var dbparam = {
@@ -15,44 +17,38 @@ var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 var dbConfig = require('../models/dbConfig');
 
-var test_flag = 1;
-
 var connection;							// 数据库连接
 var action_type;                        // 当前动作为预览还是git提交
-var mod_callback;                       // 
+var mod_callback;                       // 回调函数
 
-var allInfos;
-var infoTotal;
-var infoCnt;
+var allInfos;                           // 记录所有机芯机型信息
+var infoTotal;                          // 机芯机型信息总数
+var infoCnt;                            // 机芯机型的counter计数器
 
-var allTargets;
-var targetTotal;
-var targetCnt;
-var targetProductParam;
+var allTargets;                         // 记录target products信息
+var targetTotal;                        // target products信息总数
+var targetCnt;                          // target products的counter计数器
+var targetProductParam;                 // 如果产生文件时只传了target products一个参数，这里保存这个参数值
 
 var tempdir = "";                       // 临时文件夹
 
-var version = "6.0";
-
-var tab_products;
-var tab_configdata;
-var tab_settingsdata;
-var tab_propsdata;
-var tab_mkdata;
+var tab_products;                       // 数据库中,产品表的表名
+var tab_configdata;                     // 数据库中,配置数据表名
+var tab_settingsdata;                   // 数据库中,设置数据表名
+var tab_propsdata;                      // 数据库中,属性数据表名
+var tab_mkdata;                         // 数据库中,mk数据表名
 
 var infoTxt = "";
 var sql = ";";
 
-var filelist;
-var filecnt = 0;
+var filelist;                           // 产生的文件列表
+var filecnt = 0;                        // 产生的文件列表数量计数
 var shellFileName;
 
 var i, j, k;
 var generator = new Generator();
 
-function Generator()
-{
-}
+function Generator(){}
 
 function CreateInfo(chip, model)
 {
@@ -129,6 +125,11 @@ function generateFiles(
 	action_type = actionType;
 	mod_callback = callback;
 
+    if (test_flag)
+        dbparam.database = "scm_test";
+    else
+        dbparam.database = "scm";
+
     tab_products = dbConfig.tables.products;
     if (tempflag != 0)
     {
@@ -194,7 +195,7 @@ function generateFiles(
     else if (action_type == "chip_only")
     {
         var result = 0;
-        var sql = "select model from " + tab_products + " where chip=\"" +
+        sql = "select model from " + tab_products + " where chip=\"" +
         			chip + "\";";
         
         writerlog.w("开始查询: " + sql + "\n");
@@ -221,7 +222,7 @@ function generateFiles(
     else if (action_type == "model_only")
     {
         var result = 0;
-        var sql = "select chip from " + tab_products + " where model=\"" +
+        sql = "select chip from " + tab_products + " where model=\"" +
         			model + "\";";
         
         writerlog.w("开始查询: " + sql + "\n");
@@ -277,7 +278,7 @@ function step_query_targetProduct(connection)
         else 
         {
             var result = 0;
-        	var sql = "select targetProduct from " + tab_products + " where chip=\"" +
+        	sql = "select targetProduct from " + tab_products + " where chip=\"" +
         				allInfos[infoCnt].chip + "\"" +
         				" and model=\"" +
         				allInfos[infoCnt].model + "\";";
@@ -342,18 +343,17 @@ function step_query_all_config(connection)
     	var model = allInfos[infoCnt].model;
     	var configid = allInfos[infoCnt].curConfigId;
     	var list = allInfos[infoCnt].list;
-    	var sqltext;
     
     	if (list[configid].type == "general_config")
     	{
-    		sqltext = "select a.engName, a.curValue, b.descText from " + tab_configdata + " a, configs b where a.engName=b.engName and a.chip=\"" +
+    		sql = "select a.engName, a.curValue, b.descText from " + tab_configdata + " a, configs b where a.engName=b.engName and a.chip=\"" +
     				allInfos[infoCnt].chip + "\"" +
     				" and a.model=\"" +
     				allInfos[infoCnt].model + "\";";
     	}
     	else if (list[configid].type == "system_settings")
     	{
-    		sqltext = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText "
+    		sql = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText "
     		        + " from " + tab_settingsdata + " a, settings b where a.engName = b.engName and a.chip = \"" +
     				allInfos[infoCnt].chip + "\"" +
     				" and a.model=\"" +
@@ -361,7 +361,7 @@ function step_query_all_config(connection)
     	}
     	else if (list[configid].type == "prop")
     	{
-    		sqltext = "select engName, curValue from " + tab_propsdata + " where chip = \"" +
+    		sql = "select engName, curValue from " + tab_propsdata + " where chip = \"" +
     				allInfos[infoCnt].chip + "\"" +
     				" and model=\"" +
     				allInfos[infoCnt].model + "\";";
@@ -369,9 +369,9 @@ function step_query_all_config(connection)
     	else
     		return;
     
-        writerlog.w("开始查询: " + sqltext + "\n");
+        writerlog.w("开始查询: " + sql + "\n");
     
-    	connection.query(sqltext, function (err, result) {
+    	connection.query(sql, function (err, result) {
     		if(err)
     		{
     			console.log('[SELECT ERROR] - ', err.message);
@@ -412,7 +412,7 @@ function step_query_mkdata_item(connection)
 	{
 		var curTargetProduct = allTargets[targetCnt].name;
 		var result = 0;
-		var sql = "select a.engName,b.cnName,b.gitPath,b.category from " + tab_mkdata + " a, modules b where a.engName = b.engName and a.targetProduct=\"" +
+		sql = "select a.engName,b.cnName,b.gitPath,b.category from " + tab_mkdata + " a, modules b where a.engName = b.engName and a.targetProduct=\"" +
 					curTargetProduct + "\";";
 
 		writerlog.w("开始查询: " + sql + "\n");
@@ -609,6 +609,7 @@ function copyFileAndCommit()
     shellFileName =  getTmpDir() + "shell_script.sh";
     
     var cmd;
+    var commitmsg = "";
 	var shcmd = "#!/bin/sh\n\n";
 	
 	var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限 
@@ -650,10 +651,10 @@ function copyFileAndCommit()
 	    }
 	    else
 	    {
-	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/settings/";
+	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/pcfg-setting-config/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
 	    }
-	    
+	    commitmsg += "修改" + config_file_relpath + ";\n";
     	
         if (config_dir_relpath != "")
         {
@@ -679,7 +680,7 @@ function copyFileAndCommit()
 	var gitbranch = getGitBranch(version);
 	
 	cmd = "git commit -m  '\n";
-	cmd += "some_message"; //commit_msg;
+	cmd += commitmsg;
 	cmd += "'\n";
 	
 	//shcmd += "echo " + cmd;
