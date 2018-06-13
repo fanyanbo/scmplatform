@@ -304,6 +304,9 @@ function eachOperate(index,num){
 	document.getElementById("page3_TP").value = thisEnName;
 	
 	$('#page3Modal').modal();
+	$("#page3Modal").find("li")[0].className = "presentation active";
+	$("#page3Modal").find("li")[1].className = "presentation";
+	
 	if (num == 0) {
 		$("#page3_title").html("编辑tp的名称");
 		$("#page3_TP").attr("disabled","disabled");
@@ -445,6 +448,8 @@ function tpsubmit(){
 		}
 	}
 	_mkArray = JSON.stringify(_mkArray);
+	
+	
 	if ($('#page3Modal').attr("status") == 1) {
 		console.log("新增或者复制的提交");
 		if (_tpValue == ""||_tpValue==null) {

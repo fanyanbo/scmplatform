@@ -146,7 +146,10 @@ body .modal-footer{
 	width: 100%;
 	margin-top: 5px;
 	clear: both;
-	font-size: 18px;
+	font-size: 16px;
+	overflow: auto;
+	padding-bottom: 5px;
+    border-bottom: 1px solid black;
 }
 .close1 {
     float: right;

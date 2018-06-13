@@ -46,9 +46,27 @@
 								<button type="button" id="page3_tp_submit" class="btn btn-primary" style="position: absolute;right: 70px;top: 9px;">提交</button>
 							</div>
 							<div class="modal-body mybody">
-								<table class="table table-bordered" id="page6MkTable">
-									<tbody id="page3MkTbody"></tbody>
-								</table>
+								<ul class="nav nav-pills nav-justified" role="tablist">
+									<li role="presentation" class="presentation active">
+										<a href="#myPreviewBodyOne" aria-controls="myPreviewBodyOne" role="tab" data-toggle="tab">MK</a>
+									</li>
+									<li role="presentation" class="presentation">
+										<a href="#myPreviewBodyTwo" aria-controls="myPreviewBodyTwo" role="tab" data-toggle="tab">属性</a>
+									</li>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div wrap="off" role="tabpanel" class="tab-pane active" id="myPreviewBodyOne">
+										<table class="table table-bordered" id="page6MkTable">
+											<tbody id="page3MkTbody"></tbody>
+										</table>
+									</div>
+									<div wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyTwo">
+										<table class="table table-bordered" id="page6PropTable">
+											<tbody id="page3PropTbody"></tbody>
+										</table>
+									</div>
+								</div>
 							</div>
 							<div class="modal-footer myfooter">
 								<button type="button" id="page3_tp_submit2" class="btn btn-primary">提交</button>
