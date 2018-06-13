@@ -55,14 +55,6 @@ function productQuery() {
 				for (var i=0; i<data.resultData.length; i++) {
 					if (data.resultData[i].auditState == 0) {
 						arr.push(data.resultData[i]);
-					}else if(data.resultData[i].auditState == 1){
-						console.log('111111111111');
-						parent.document.getElementsByClassName("email")[0].style.display = "block";
-						parent.document.getElementsByClassName("email")[1].style.display = "inline-block";
-					}else if(data.resultData[i].auditState == 2){
-						console.log('22222222222');
-						parent.document.getElementsByClassName("email")[0].style.display = "block";
-						parent.document.getElementsByClassName("email")[2].style.display = "inline-block";
 					}
 				}
 				_myArray = arr;
@@ -373,7 +365,7 @@ function buttonInit() {
 		//1-新增、2-修改、3-复制、4-预览、5-删除
 		$("#lable1SubmitTwo").attr("catagory","1");
 		console.log("点击了新增");
-		resetAllInfo();//删除前面的操作痕迹
+		resetAllInfo(1);//删除前面的操作痕迹
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
 		$(".page2_boxes")[0].style.display = "block";
@@ -509,7 +501,7 @@ function buttonInitAfter() {
 		var _aIndex = $(".eachedit").index($(this));
 		//1-新增、2-修改、3-复制、4-预览、5-删除
 		$("#lable1SubmitTwo").attr("catagory","2");
-		resetAllInfo();//删除前面的操作痕迹
+		resetAllInfo(2);//删除前面的操作痕迹
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
 		page2AEC(_aIndex);
@@ -533,7 +525,7 @@ function buttonInitAfter() {
 		var _aIndex = $(".eachcopy").index($(this));
 		//1-新增、2-修改、3-复制、4-预览、5-删除
 		$("#lable1SubmitTwo").attr("catagory","3");
-		resetAllInfo();//删除前面的操作痕迹
+		resetAllInfo(3);//删除前面的操作痕迹
 		page2AEC(_aIndex);
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
@@ -664,6 +656,33 @@ function allQueryResult() {
             }
 			colorstatus(0);
 		};
+		var searchObj = {
+			"userName" : loginusername,
+			"level" : level
+		}
+		var _search = JSON.stringify(searchObj);
+		var node = '{"data":' + _search + '}';
+		console.log(node);
+		sendHTTPRequest(coocaaVersion+"/product/queryAuditByUser", node, productTempQuery);
+	}
+}
+function productTempQuery() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
+			if(data.resultCode == "0") {
+				if(data.resultData[0].length > 0){
+					parent.document.getElementsByClassName("email")[0].style.display = "block";
+					parent.document.getElementsByClassName("email")[1].style.display = "inline-block";
+				}
+				if(data.resultData[1].length > 0){
+					parent.document.getElementsByClassName("email")[0].style.display = "block";
+					parent.document.getElementsByClassName("email")[2].style.display = "inline-block";
+				}
+			}
+		}
 	}
 }
 
@@ -688,7 +707,7 @@ function clearAllInfo() {
 	document.getElementById("myPropBox").innerHTML = "";
 }
 
-function resetAllInfo(){
+function resetAllInfo(num){
 	colorstatus(0);//焦点落在第一个tabs上
 	
 	document.getElementById("lable2Chip").value = "";
@@ -714,8 +733,15 @@ function resetAllInfo(){
 			$(".configitems")[i].value = $(".configitems")[i].getAttribute("defaultvalue");
 		}
 	}
+	for (var i=0; i<$(".propitem").length; i++) {
+		$(".propitem")[i].value = $(".propitem")[i].getAttribute("defaultvalue");
+	}
 	for (var j=0; j<$(".sysitems").length; j++) {
-		$(".sysitems")[j].checked = false;
+		if(num== 1){
+			$(".sysitems")[j].checked = true;
+		}else{
+			$(".sysitems")[j].checked = false;
+		}
 	}
 	for (var k=0; k<$(".mkitems").length; k++) {
 		if ($(".mkitems")[k].getAttribute("type") == "checkbox") {
