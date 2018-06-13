@@ -96,17 +96,25 @@ function buttonInitBefore(){
 function buttonInitAfter(){
 	$(".eachedit").click(function(){
 		console.log("单项编辑");
+		//0-编辑、1-复制、2-预览、3-新增
+		$("#page3_tp_submit").css("display","block");
+		$("#page3_tp_submit2").css("display","inline-block");
 		var _eachtpAIndex = $(".eachedit").index($(this));
 		eachOperate(_eachtpAIndex, 0);
 	});
 	$(".eachcopy").click(function(){
 		console.log("单项复制");
+		//0-新增、1-编辑、2-复制、3-预览
+		$("#page3_tp_submit").css("display","block");
+		$("#page3_tp_submit2").css("display","inline-block");
 		var _eachtpAIndex = $(".eachcopy").index($(this));
 		eachOperate(_eachtpAIndex, 1);
 	});
 	
 	$(".eachpreview").click(function(){
 		console.log("单项预览");
+		$("#page3_tp_submit").css("display","none");
+		$("#page3_tp_submit2").css("display","none");
 		var _eachtpAIndex = $(".eachpreview").index($(this));
 		eachOperate(_eachtpAIndex, 2);
 	});
@@ -294,6 +302,7 @@ function eachOperate(index,num){
 	}
 	console.log(thisEnName);
 	document.getElementById("page3_TP").value = thisEnName;
+	
 	$('#page3Modal').modal();
 	if (num == 0) {
 		$("#page3_title").html("编辑tp的名称");
@@ -325,8 +334,12 @@ function page3Reset() {
 }
 //新增功能
 function page3Add(){
+	$("#page3_tp_submit").css("display","block");
+	$("#page3_tp_submit2").css("display","inline-block");
 	$('#page3Modal').modal();
 	$('#page3Modal').attr("status","1");
+	//0-编辑、1-复制、2-预览、3-新增
+	$("#page3Modal").attr("part","3");
 	document.getElementById("page3_TP").value = "";
 	$("#page3_TP").removeAttr("disabled");
 	resetAllInfo();
