@@ -32,9 +32,17 @@ $(function() {
     loginusername = parent.loginusername;
     fromEmail = parent.loginEmail;
 	
-	var node = '{"offset":"-1","rows":"10"}';
-	sendHTTPRequest(coocaaVersion+"/product/queryByPage", node, productQuery);
+//	var node = '{"offset":"-1","rows":"10"}';
+//	sendHTTPRequest(coocaaVersion+"/product/queryByPage", node, productQuery);
 	
+	var searchObj = {
+		"userName" : loginusername,
+		"level" : level
+	}
+	var _search = JSON.stringify(searchObj);
+	var node = '{"data":' + _search + '}';
+	console.log(node);
+	sendHTTPRequest(coocaaVersion+"/product/queryAuditByUser", node, productQuery);
 	buttonInitBefore();
 });
 
@@ -46,10 +54,8 @@ function productQuery() {
 			//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 			if(data.resultCode == "0") {
 				var arr = new Array();
-				for (var i=0; i<data.resultData.length; i++) {
-					if (data.resultData[i].auditState == 2) {
-						arr.push(data.resultData[i]);
-					}
+				for (var i=0; i<data.resultData[1].length; i++) {
+					arr.push(data.resultData[1][i]);
 				}
 				handleTableData(arr);
 			}
@@ -834,8 +840,8 @@ function productHistoryQuery2(){
 					$("#changeDescDiv").css("display","block");
 					$("#addDescDiv").css("display","none");
 					var _desc = "";
-					var _reason = data.resultData[data.resultData.length-1].reason;
-					var _content = data.resultData[data.resultData.length-1].content;
+					var _reason = data.resultData[0].reason;
+					var _content = data.resultData[0].content;
 					console.log(isJSON_test(_content));
 					if (isJSON_test(_content)) {
 						_content = JSON.parse(_content);
@@ -1407,13 +1413,13 @@ function productHistoryQuery(){
 						_cell1.innerHTML = data.resultData[i].reason;
 						var _cell2 = _row.insertCell(2);
 						_cell2.style.textAlign = "center";
-						_cell2.innerHTML = _state;
+						_cell2.innerHTML = data.resultData[i].modifyTime;
 						var _cell3 = _row.insertCell(3);
 						_cell3.style.textAlign = "center";
 						_cell3.innerHTML = data.resultData[i].userName;
 						var _cell4 = _row.insertCell(4);
 						_cell4.style.textAlign = "center";
-						_cell4.innerHTML = data.resultData[i].modifyTime;
+						_cell4.innerHTML = _state;
 					}
 				}
 			}
