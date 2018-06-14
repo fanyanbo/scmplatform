@@ -37,9 +37,9 @@ exports.queryTargetProductByRegEx = function (req, res, next) {
 
 exports.addTargetProduct = function (req, res, next) {
 
-    let name = req.body.name;
-    let arrObj = req.body.arr;
-    deviceModel.addTargetProduct(name, arrObj, function(err,results) {
+    let data = req.body.data;
+
+    deviceModel.addTargetProduct(data, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
@@ -50,7 +50,7 @@ exports.addTargetProduct = function (req, res, next) {
 exports.updateTargetProduct = function (req, res, next) {
 
     let data = req.body.data;
-    
+
     deviceModel.updateTargetProduct(data, function(err,results) {
       if(err) {
         return output.error(req,res,err);

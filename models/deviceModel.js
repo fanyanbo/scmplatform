@@ -172,10 +172,14 @@ DeviceModel.prototype.queryTargetProductByRegEx = function (value, callback) {
 /**
  * @param {新增targetproduct,这里需要更新两个表，mkdata和targetProducts}
  */
-DeviceModel.prototype.addTargetProduct = function (name, arr, callback) {
-  console.log(name);
-  console.log(arr);
-  if(arr.length == 0) return callback("addTargetProduct参数错误！",null);
+DeviceModel.prototype.addTargetProduct = function (data, callback) {
+  let name = data.name;
+  let mkArr = data.mkArr;
+  let propsArr = data.propsArr;
+  console.log(mkArr.length);
+  console.log(propsArr.length);
+
+  if(mkArr.length == 0) return callback("addTargetProduct参数错误！",null);
   let ep = new eventproxy();
 
   ep.bind('error', function (err) {
@@ -184,24 +188,33 @@ DeviceModel.prototype.addTargetProduct = function (name, arr, callback) {
       callback(err,null);
   });
 
-  ep.after('insert_result', arr.length + 1, function (list) { // 注意：长度是 arr.length + 1
+  ep.after('insert_result', mkArr.length + propsArr.length + 1, function (list) { // 注意：长度是 arr.length + 1
       callback(null,"addTargetProduct OK");
   });
 
   let sql0 = "INSERT INTO targetProducts(name) values (?)";
-  let sql_params0 = [name];
-  db.conn.query(sql0,sql_params0,function(err,rows,fields){
+  db.conn.query(sql0,[name],function(err,rows,fields){
     if (err) return ep.emit('error', err);
     ep.emit('insert_result', 'sql0 ok');
   });
 
-  for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
-    let sql = `INSERT INTO ${dbConfig.tables.mkdata}(targetProduct,engName) values (?,?)`;
-    let sql_params = [name ,arr[i].engName];
-    db.conn.query(sql,sql_params,function(err,rows,fields) {
+  for (let i = 0; i < mkArr.length; i++) { //数据结果与调用顺序无关
+    let sql1 = `INSERT INTO ${dbConfig.tables.mkdata}(targetProduct,engName) values (?,?)`;
+    let sql_params1 = [name ,mkArr[i].engName];
+    db.conn.query(sql1,sql_params1,function(err,rows,fields) {
       if (err) return ep.emit('error', err);
       console.log('insert_result----ok' + i);
       ep.emit('insert_result', 'ok' + i);
+    });
+  }
+
+  for (let j = 0; j < propsArr.length; j++) { //数据结果与调用顺序无关
+    let sql2 = `INSERT INTO ${dbConfig.tables.mkdata}(targetProduct,engName,curValue) values (?,?,?)`;
+    let sql_params2 = [name ,propsArr[j].engName,propsArr[j].curValue];
+    db.conn.query(sql2,sql_params2,function(err,rows,fields) {
+      if (err) return ep.emit('error', err);
+      console.log('insert_result----ok' + j);
+      ep.emit('insert_result', 'ok' + j);
     });
   }
 }
