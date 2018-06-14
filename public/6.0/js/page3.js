@@ -546,7 +546,7 @@ function tpsubmit2(){
 			_mkArray.push(_objItem);
 		}
 	}
-	_mkArray = JSON.stringify(_mkArray);
+	//_mkArray = JSON.stringify(_mkArray);
 	
 	var _propArray = [];
 	for (var i=0; i<$(".propitem").length; i++) {
@@ -556,7 +556,7 @@ function tpsubmit2(){
 		};
 		_propArray.push(_objItem);
 	}
-	_propArray = JSON.stringify(_propArray);
+	//_propArray = JSON.stringify(_propArray);
 	
 	var updateObj = {
 		"name" : _tpValue,
