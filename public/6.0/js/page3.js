@@ -394,7 +394,7 @@ function moduleQueryData1(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
 				kk = i;
-				mkDataInsert(kk, $(".moduleitems")[j], arr2);
+				//mkDataInsert(kk, $(".moduleitems")[j], arr2);
 			}
 		}
 	}
@@ -414,7 +414,7 @@ function propQueryData1(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
 				kk = i;
-				propDataInsert(kk, $(".propitems")[j], arr2);
+				//propDataInsert(kk, $(".propitems")[j], arr2);
 			}
 		}
 	}
