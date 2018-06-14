@@ -1257,20 +1257,20 @@ function getSysValue(){
 	}
 	return sysData;
 }
-function getPropValue(){
-	var propData = [];
-	console.log($(".propitem").length);
-	for (var i=0; i<$(".propitem").length; i++) {
-		var oApropInfo = {
-			"engName": "",
-			"curValue": ""
-		};
-		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
-		oApropInfo.curValue = $(".propitem")[i].value;
-		propData.push(oApropInfo);
-	}
-	return propData;
-}
+//function getPropValue(){
+//	var propData = [];
+//	console.log($(".propitem").length);
+//	for (var i=0; i<$(".propitem").length; i++) {
+//		var oApropInfo = {
+//			"engName": "",
+//			"curValue": ""
+//		};
+//		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
+//		oApropInfo.curValue = $(".propitem")[i].value;
+//		propData.push(oApropInfo);
+//	}
+//	return propData;
+//}
 
 function productAddResult(){
 	if(this.readyState == 4) {
@@ -1541,12 +1541,12 @@ function myEditorAddSubmit(num){
 	var _base = getBaseValue();
 	var _config = getConfigValue();
 	var _sys = getSysValue();
-	var _prop = getPropValue();
+	//var _prop = getPropValue();
 	_base = JSON.stringify(_base);
 	_config = JSON.stringify(_config);
 	_sys = JSON.stringify(_sys);
-	_prop = JSON.stringify(_prop);
-	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + ',"propsInfo":' + _prop +'}';
+	//_prop = JSON.stringify(_prop);
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys +'}';
 	console.log(node);
 	if (num == 1) {
 		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
