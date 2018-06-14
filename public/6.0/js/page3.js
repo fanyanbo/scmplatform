@@ -379,6 +379,7 @@ function allQueryResult() {
             if(data.resultCode == 0){
 				moduleQueryData1(data.resultData[5],data.resultData[1]);
 				propQueryData1(data.resultData[6],data.resultData[3]);
+				$('#page3Modal').attr("hasquery","true");
             }
 		};
 	}
