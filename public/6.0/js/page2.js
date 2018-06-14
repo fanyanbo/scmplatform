@@ -332,9 +332,12 @@ function getMKByTPResult() {
 			if(data.resultCode == "0") {
 				clearMKLastWork();
 				
-				for (var i=0; i<data.resultData.length; i++) {
-					document.getElementById(data.resultData[i].engName).setAttribute('checked', '');
-					document.getElementById(data.resultData[i].engName).checked = true;
+				for (var i=0; i<data.resultData[0].length; i++) {
+					document.getElementById(data.resultData[0][i].engName).setAttribute('checked', '');
+					document.getElementById(data.resultData[0][i].engName).checked = true;
+				}
+				for (var i=0; i<data.resultData[1].length; i++) {
+					document.getElementById(data.resultData[0][i].engName).value = data.resultData[0][i].curValue;
 				}
 			}
 		}
