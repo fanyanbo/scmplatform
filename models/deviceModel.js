@@ -246,19 +246,21 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
           let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
           db.conn.query(sql,[name],function(err,rows,fields){
             if (err) return callback1(err,null);
+            console.log("==>1");
             callback1(null,"delMKdata OK");
           });
       },
       delPropsdata: function(callback1) {
         let sql = `DELETE FROM ${dbConfig.tables.propsdata} WHERE targetProduct = ?`;
-        db.conn.query(sql,[name],function(err,rows,fields){
+        db.conn.query(sql,[name],function(err,rows,fields) {
           if (err) return callback1(err,null);
+          console.log("==>2");
           callback1(null,"delPropsdata OK");
         });
       }
   },
   function(err, results) {
-      console.log(results);
+      console.log("==>" + results);
       if(err) {
         logger.error("删除tp数据失败" + err);
         return callback(err,null);
@@ -266,6 +268,7 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
       for (let i = 0; i < mkArr.length; i++) {
           let sql = `INSERT INTO ${dbConfig.tables.mkdata} (targetProduct, engName) VALUES (?,?)`;
           let sql_param = [name, mkArr[i].engName];
+          console.log("====>mkArr[i].engName" + mkArr[i].engName);
           db.conn.query(sql,sql_param,function(err,rows,fields) {
             if (err) return ep.emit('error', err);
             ep.emit('insert_result', 'ok' + i);
@@ -274,6 +277,7 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
       for (let j = 0; j < propsArr.length; j++) {
           let sql = `INSERT INTO ${dbConfig.tables.propsdata} (targetProduct, engName, curValue) VALUES (?,?,?)`;
           let sql_param = [name, propsArr[j].engName,propsArr[j].curValue];
+          console.log("====>propsArr[j].engName" + propsArr[j].engName);
           db.conn.query(sql,sql_param,function(err,rows,fields) {
             if (err) return ep.emit('error', err);
             ep.emit('insert_result', 'ok' + j);
