@@ -555,7 +555,15 @@ function tpsubmit2(){
 		_propArray.push(_objItem);
 	}
 	_propArray = JSON.stringify(_propArray);
-	var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'","arr2":'+_propArray+'}';
+	
+	var updateObj = {
+		"name" : _tpValue,
+		"mkArr" : _mkArray,
+		"propsArr" : _propArray
+	}
+	console.log(updateObj);
+	var _update = JSON.stringify(updateObj);
+	var node = '{"data":' + _update + '}';
 	console.log(node);
 	sendHTTPRequest(coocaaVersion+"/targetproduct/update", node, addOrChangeResult);
 }
