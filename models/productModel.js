@@ -120,17 +120,8 @@ ProductModel.prototype.queryMKAndPropsByTargetProduct = function (targetproduct,
   });
 
   for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
-      db.conn.query(sql_list[i],[],ep.group('query_result'));
+      db.conn.query(sql_list[i],[targetproduct],ep.group('query_result'));
   }
-
-  // let sql = `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
-  // let sql_params = [targetproduct];
-  // db.conn.query(sql,sql_params,function(err,rows,fields){
-  //   if (err) {
-  //       return callback(err);
-  //   }
-  //   callback(null, rows);
-  // });
 }
 
 /**
