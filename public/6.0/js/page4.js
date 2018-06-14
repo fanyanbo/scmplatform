@@ -961,12 +961,9 @@ function PropDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
 		document.getElementById(arr[i].engName).value = arr[i].curValue;
 	}
-	if (type == 2) {
-		for (var i=0; i<$(".propitem").length; i++) {
-			$(".propitem:eq("+i+")").attr("disabled","disabled");
-			//$(".propitem:eq("+i+")").attr("onchange","changeProps(this)");
-			//$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
-		}
+	for (var i=0; i<$(".propitem").length; i++) {
+		console.log("1-----");
+		$(".propitem:eq("+i+")").attr("disabled","disabled");
 	}
 }
 
