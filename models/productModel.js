@@ -263,7 +263,7 @@ ProductModel.prototype.queryAllByMachineTemp = function (chip, model, callback) 
   }
 }
 
-ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, propsInfo, callback) {
+ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callback) {
 
   console.log(baseInfo);
   console.log(configInfo[0]);
