@@ -337,7 +337,7 @@ function getMKByTPResult() {
 					document.getElementById(data.resultData[0][i].engName).checked = true;
 				}
 				for (var i=0; i<data.resultData[1].length; i++) {
-					document.getElementById(data.resultData[0][i].engName).value = data.resultData[0][i].curValue;
+					document.getElementById(data.resultData[1][i].engName).value = data.resultData[1][i].curValue;
 				}
 			}
 		}
