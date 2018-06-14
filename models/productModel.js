@@ -338,14 +338,14 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
 
   async.parallel(
     {
-      delConfigTemp: function(callback1){
+      delConfigTemp: function(callback1) {
           let sql = `DELETE FROM ${dbConfig.tables.configdata_temp} WHERE chip=? AND model=?`;
           db.conn.query(sql,[chip,model],function(err,rows,fields){
             if (err) return callback1(err,null);
             callback1(null,"delConfigTemp OK");
           });
       },
-      delSettingsTemp: function(callback1){
+      delSettingsTemp: function(callback1) {
         let sql = `DELETE FROM ${dbConfig.tables.settingsdata_temp} WHERE chip=? AND model=?`;
         db.conn.query(sql,[chip,model],function(err,rows,fields){
           if (err) return callback1(err,null);
@@ -357,7 +357,7 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
       console.log(results);
       if(err) return callback(err,null);
       _update(baseInfo, configInfo, settingsInfo, callback);
-  })
+  });
 }
 
 function _update(baseInfo, configInfo, settingsInfo, callback) {

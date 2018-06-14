@@ -207,14 +207,19 @@ DeviceModel.prototype.addTargetProduct = function (name, arr, callback) {
 
 /**
  * @param {修改TP的内容，这会影响到已经配置好该TP的正式产品}
- * @param {需要更新1个表，mkdata表，这时相关产品需要重新生成TP文件，并静默上传git仓库，不需要再进行审核步骤}
+ * @param {需要更新2个表，mkdata表，props表，这时相关产品需要重新生成TP文件，并静默上传git仓库，不需要再进行审核步骤}
  * @param {无法满足需要进行审核的步骤，主要是逻辑复杂，在提交是进一步确认是否修改即可}
  * @param {当确认提交后，平台会自动生成对应产品的mk文件，这里无论是待审核还是正式产品，都会重新生成mk文件}
  */
-DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
+DeviceModel.prototype.updateTargetProduct = function (data, callback) {
 
-  console.log(name);
-  console.log(arr);
+  console.log(data.name);
+  console.log(data.mkArr);
+  console.log(data.propsArr);
+  let name = data.name;
+  let mkArr = data.mkArr;
+  let propsArr = data.propsArr;
+
   let ep = new eventproxy();
   ep.bind('error', function (err) {
       logger.error("updateTargetProduct 捕获到错误-->" + err);
@@ -222,7 +227,7 @@ DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
       callback(err,null);
   });
 
-  ep.after('insert_result', arr.length, function (list) {
+  ep.after('insert_result', mkArr.length + propsArr.length , function (list) {
       console.log(list);
       // 这个接口可能有问题
       generator.generateByTargetProduct(name, function(err,result){
@@ -235,20 +240,44 @@ DeviceModel.prototype.updateTargetProduct = function (name, arr, callback) {
       // callback(null,"updateTargetProduct OK");
   });
 
-  let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
-  db.conn.query(sql,[name],function(err,rows,fields){
-    if (err) {
-      logger.error("删除mkdata中tp数据失败" + err);
-      return callback(err,null);
-    }
-
-    for (let i = 0; i < arr.length; i++) {
-        let sql = `INSERT INTO ${dbConfig.tables.mkdata} (targetProduct, engName) VALUES (?,?)`;
-        let sql_param = [name, arr[i].engName];
-        db.conn.query(sql,sql_param,function(err,rows,fields) {
-          if (err) return ep.emit('error', err);
-          ep.emit('insert_result', 'ok' + i);
+  async.parallel(
+    {
+      delMKdata: function(callback1) {
+          let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
+          db.conn.query(sql,[name],function(err,rows,fields){
+            if (err) return callback1(err,null);
+            callback1(null,"delMKdata OK");
+          });
+      },
+      delPropsdata: function(callback1) {
+        let sql = `DELETE FROM ${dbConfig.tables.propsdata} WHERE targetProduct = ?`;
+        db.conn.query(sql,[name],function(err,rows,fields){
+          if (err) return callback1(err,null);
+          callback1(null,"delPropsdata OK");
         });
+      }
+  },
+  function(err, results) {
+      console.log(results);
+      if(err) {
+        logger.error("删除tp数据失败" + err);
+        return callback(err,null);
+      }
+      for (let i = 0; i < mkArr.length; i++) {
+          let sql = `INSERT INTO ${dbConfig.tables.mkdata} (targetProduct, engName) VALUES (?,?)`;
+          let sql_param = [name, mkArr[i].engName];
+          db.conn.query(sql,sql_param,function(err,rows,fields) {
+            if (err) return ep.emit('error', err);
+            ep.emit('insert_result', 'ok' + i);
+          });
+      }
+      for (let j = 0; j < propsArr.length; j++) {
+          let sql = `INSERT INTO ${dbConfig.tables.propsdata} (targetProduct, engName, curValue) VALUES (?,?,?)`;
+          let sql_param = [name, propsArr[j].engName,propsArr[j].curValue];
+          db.conn.query(sql,sql_param,function(err,rows,fields) {
+            if (err) return ep.emit('error', err);
+            ep.emit('insert_result', 'ok' + j);
+          });
       }
   });
 }
