@@ -456,7 +456,7 @@ function tpsubmit(){
 			_mkArray.push(_objItem);
 		}
 	}
-	_mkArray = JSON.stringify(_mkArray);
+//	_mkArray = JSON.stringify(_mkArray);
 	var _propArray = [];
 	for (var i=0; i<$(".propitem").length; i++) {
 		var _objItem = {
@@ -465,7 +465,7 @@ function tpsubmit(){
 		};
 		_propArray.push(_objItem);
 	}
-	_propArray = JSON.stringify(_propArray);
+//	_propArray = JSON.stringify(_propArray);
 	
 	if ($('#page3Modal').attr("status") == 1) {
 		console.log("新增或者复制的提交");
@@ -477,8 +477,17 @@ function tpsubmit(){
 		} else{
 			console.log(tpArray.indexOf(_tpValue));
 			if (tpArray.indexOf(_tpValue) == "-1") {
-				var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'","arr2":'+_propArray+'}';
+				
+				var updateObj = {
+					"name" : _tpValue,
+					"mkArr" : _mkArray,
+					"propsArr" : _propArray
+				}
+				console.log(updateObj);
+				var _update = JSON.stringify(updateObj);
+				var node = '{"data":' + _update + '}';
 				console.log(node);
+				
 				sendHTTPRequest(coocaaVersion+"/targetproduct/add", node, addOrChangeResult);
 			} else{
 				document.getElementById("page3Modal1ErrorInfo").style.display = "block";
