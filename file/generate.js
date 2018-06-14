@@ -1,8 +1,8 @@
 // TO-DO  
 // 1. return 的处理
 
-var test_flag = 1;
 var version = "6.0";
+var test_flag = 1;
 
 var mysql = require('mysql');
 var dbparam = {
@@ -45,8 +45,11 @@ var infoTxt = "";
 var sql = ";";
 
 var filelist;                           // 产生的文件列表
-var filecnt = 0;                        // 产生的文件列表数量计数
+var filetotal = 0;                      // 产生的文件列表数量计数
 var shellFileName;
+
+var product_maps;                       // 所有targetProduct与机芯机型的对应表
+var maps_total = 0;                     // 对应表总数
 
 var i, j, k;
 var generator = new Generator();
@@ -88,6 +91,14 @@ function CreateTarget(targetProduct)
     return newtarget;
 }
 
+function CreateProductMap(targetProduct)
+{
+    var newtarget = new Object;
+    newtarget.name = targetProduct;
+    newtarget.chipModelList = new Array;
+    return newtarget;
+}
+
 function targetArrayIndex(arr, targetProduct)
 {
 	var i = arr.length;
@@ -96,6 +107,20 @@ function targetArrayIndex(arr, targetProduct)
 		if (i < 0)
 			break;
 		if (arr[i].name == targetProduct) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+function chipModelArrayIndex(arr, chip, model)
+{
+    var i = arr.length;
+	while (i--)
+	{
+		if (i < 0)
+			break;
+		if (arr[i].chip == chip && arr[i].model == model) {
 			return i;
 		}
 	}
@@ -155,7 +180,9 @@ function generateFiles(
     targetCnt = 0;
     
     filelist = new Array();
-    filecnt = 0;
+    filetotal = 0;
+    
+    product_maps = new Array();
 
     connection = mysql.createConnection(dbparam);
 	connection.connect();
@@ -469,10 +496,60 @@ function step_query_prop_data(connection)
 	}
 	else
 	{
-	    console.log("***********************\n");
-	    connection.end();
-        generate_files();
+	    step_query_all_products_info(connection);
 	}
+}
+
+function step_query_all_products_info(connection)
+{
+    sql = "select chip, model, targetProduct from " + tab_products + " order by targetProduct;";
+        
+    writerlog.w("开始查询: " + sql + "\n");
+        
+    connection.query(sql, function (err, result) {
+        if(err){
+            console.log('[SELECT ERROR] - ', err.message);
+            writerlog.w("查询出错: " + err.message + "\n");
+            return;
+        }
+            
+        writerlog.w("SQL查询成功 0 \n");
+        console.log(result);
+            
+        for (var i in result)
+        {
+            var curchip = result[i].chip;
+            var curmodel = result[i].model;
+            var curTargetProduct = result[i].targetProduct;
+            var index1 = targetArrayIndex(product_maps, curTargetProduct);
+            var curmap;
+            if (index1 < 0)
+            {
+                curmap = CreateProductMap(curTargetProduct);
+                product_maps[maps_total] = curmap;
+                maps_total++;
+            }
+            else
+            {
+                curmap = product_maps[index1];
+            }
+            
+            var index2 = chipModelArrayIndex(curmap.chipModelList, curchip, curmodel);
+            if (index2 < 0)
+            {
+                var index3 = curmap.chipModelList.length;
+                var newChipModel = new Object;
+                newChipModel.chip = curchip;
+                newChipModel.model = curmodel;
+                curmap.chipModelList[index3] = newChipModel;
+            }
+            
+        }
+        
+        console.log("***********************\n");
+        connection.end();
+        generate_files();
+    });
 }
 
 function generate_files()
@@ -504,14 +581,14 @@ function generate_files()
     			}
     			writer.writeGeneralConfigEnd(temp_config_filename);
     
-                filelist[filecnt++] = CreateFileInfo(temp_config_filename, "general_config.xml", allInfos[infoCnt].chip, allInfos[infoCnt].model, "general_config");
+                filelist[filetotal++] = CreateFileInfo(temp_config_filename, "general_config.xml", allInfos[infoCnt].chip, allInfos[infoCnt].model, "general_config");
     		}
     		else if (curitem.type == "system_settings")
     		{
     		    writerlog.w("生成临时的setting文件 \n");
     		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, curitem, getTmpDir(), 
     		        function(tempName, finalName, chip, model, typeStr){
-    		            filelist[filecnt++] = CreateFileInfo(tempName, finalName, chip, model, typeStr);
+    		            filelist[filetotal++] = CreateFileInfo(tempName, finalName, chip, model, typeStr);
     		        });
     		}
     		else
@@ -533,6 +610,8 @@ function generate_files()
 		generate_prop_file(curtarget);
         targetCnt++;
 	}
+	
+	generate_device_tab();
 
 	if (action_type == "preview")
 	{
@@ -567,13 +646,42 @@ function generate_files()
 	}
 	else        // 非预览则复制并提交文件到git
 	{
-        ////var pushret = copyFileAndCommit();
-        ////if (pushret)
+        var pushret = copyFileAndCommit();
+        if (pushret)
         ;
 	}
 	
 	if (mod_callback != null)
 	    mod_callback(0, "");
+}
+
+function generate_device_tab()
+{
+    var deviceTabFileName = getTempDevTabFileName();
+    var str = '\n';
+	
+	str += '### This file is automatically generated, do not edit it   \n';
+	str += '### This file Recorded each device corresponding to the    \n';
+	str += '### CoocaaOS customization mk,                             \n';
+	str += '### As well as the corresponding product configuration     \n\n\n';
+
+    fs.writeFileSync(deviceTabFileName, str);
+    
+    for (var i in product_maps)
+    {
+        var configItem = product_maps[i].name + " :=";
+        for (var j in product_maps[i].chipModelList)
+        {
+            configItem += " " + product_maps[i].chipModelList[j].chip + "_" + product_maps[i].chipModelList[j].model;
+        }
+        configItem += "\n";
+        fs.appendFileSync(deviceTabFileName, configItem);
+    }
+    
+    var endStr = "\n\n\n\n";
+    fs.appendFileSync(deviceTabFileName, endStr);
+    
+    filelist[filetotal++] = CreateFileInfo(deviceTabFileName, "device_tab.mk", null, null, "mk");
 }
 
 function generateMkFile(target_info)
@@ -610,7 +718,7 @@ function generateMkFile(target_info)
 	}
 	writer.writeAndroidmkEnd(mk_filename);
 
-    filelist[filecnt++] = CreateFileInfo(mk_filename, targetName + ".mk", null, null, "mk");
+    filelist[filetotal++] = CreateFileInfo(mk_filename, targetName + ".mk", null, null, "mk");
 }
 
 // build.prop
@@ -633,7 +741,7 @@ function generate_prop_file(target_info)
     
     fs.appendFileSync(prop_filename, '\n\n\n\n');
 
-    filelist[filecnt++] = CreateFileInfo(prop_filename, targetName + ".prop", null, null, "prop");
+    filelist[filetotal++] = CreateFileInfo(prop_filename, targetName + ".prop", null, null, "prop");
 }
 
 function getTempGernalConfigFileName(chip, model)
@@ -646,16 +754,18 @@ function getTempMkFileName(targetProductName)
     return getTmpDir() + targetProductName + ".mk";
 }
 
+function getTempDevTabFileName()
+{
+    return getTmpDir() + "device_tab.mk";
+}
+
 function getTempPropFileName(targetProductName)
 {
     return getTmpDir() + targetProductName + ".prop";
 }
 
 function copyFileAndCommit()
-{
-    //var filelist;
-    //var filecnt = 0;
-    
+{    
     shellFileName =  getTmpDir() + "shell_script.sh";
     
     var cmd;
@@ -701,7 +811,7 @@ function copyFileAndCommit()
 	    }
 	    else
 	    {
-	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/pcfg-setting-config/";
+	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/config/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
 	    }
 	    commitmsg += "修改" + config_file_relpath + ";\n";
