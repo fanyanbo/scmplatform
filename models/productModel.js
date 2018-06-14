@@ -268,10 +268,8 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, props
   console.log(baseInfo);
   console.log(configInfo[0]);
   console.log(settingsInfo[0]);
-  console.log(propsInfo);
   console.log(configInfo.length);
   console.log(settingsInfo.length);
-  console.log(propsInfo.length);
 
   let ep = new eventproxy();
 
@@ -282,7 +280,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, props
       callback(err,null);
   });
 
-  ep.after('insert_result', configInfo.length + settingsInfo.length + propsInfo.length + 1, function (list) {
+  ep.after('insert_result', configInfo.length + settingsInfo.length + 1, function (list) {
       // 所有查询的内容都存在list数组中
       callback(null,null);
   });
@@ -327,21 +325,12 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, props
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
     });
   }
-
-  let sql3 = `INSERT INTO ${dbConfig.tables.propsdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
-  for(let i=0; i<propsInfo.length; i++) {
-    let sql3_param = [chip,model,propsInfo[i].engName,propsInfo[i].curValue];
-    db.conn.query(sql3,sql3_param,function(err,rows,fields){
-      if (err) return ep.emit('error', err);
-      ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
-    });
-  }
 }
 
 /**
  * @param {注意：更新时应该先清空某产品的临时表内容，再插入新数据}
  */
-ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, propsInfo, callback) {
+ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, callback) {
   console.log(baseInfo);
   let baseInfoObj = JSON.parse(baseInfo);
   let chip = baseInfoObj.chip;
@@ -362,23 +351,16 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, pr
           if (err) return callback1(err,null);
           callback1(null,"delSettingsTemp OK");
         });
-      },
-      delPropsTemp: function(callback1){
-        let sql = `DELETE FROM ${dbConfig.tables.propsdata_temp} WHERE chip=? AND model=?`;
-        db.conn.query(sql,[chip,model],function(err,rows,fields){
-          if (err) return callback1(err,null);
-          callback1(null,"delPropsTemp OK");
-        });
       }
   },
   function(err, results) {
       console.log(results);
       if(err) return callback(err,null);
-      _update(baseInfo, configInfo, settingsInfo, propsInfo, callback);
+      _update(baseInfo, configInfo, settingsInfo, callback);
   })
 }
 
-function _update(baseInfo, configInfo, settingsInfo, propsInfo, callback) {
+function _update(baseInfo, configInfo, settingsInfo, callback) {
 
   let baseInfoObj = JSON.parse(baseInfo);
   let chip = baseInfoObj.chip;
@@ -434,16 +416,6 @@ function _update(baseInfo, configInfo, settingsInfo, propsInfo, callback) {
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
-    });
-  }
-
-  let sql3 = `INSERT INTO ${dbConfig.tables.propsdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
-  for(let k=0; k<settingsInfo.length;k++) {
-    let sql3_param = [chip,model,propsInfo[k].engName,propsInfo[k].curValue];
-    console.log(sql3_param + k);
-    db.conn.query(sql3,sql3_param,function(err,rows,fields){
-      if (err) return ep.emit('error', err);
-      ep.emit('insert_result',"INSERT INTO propsdata_temp OK");
     });
   }
 }
@@ -504,8 +476,7 @@ ProductModel.prototype.review = function (data, callback) {
       let sql_list = [
                       `DELETE FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?`,
                       `DELETE FROM  ${dbConfig.tables.configdata} WHERE chip = ? AND model = ?`,
-                      `DELETE FROM  ${dbConfig.tables.settingsdata} WHERE chip = ? AND model = ?`,
-                      `DELETE FROM  ${dbConfig.tables.propsdata} WHERE chip = ? AND model = ?`
+                      `DELETE FROM  ${dbConfig.tables.settingsdata} WHERE chip = ? AND model = ?`
                     ];
       for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
           db.conn.query(sql_list[i],[chip, model],ep.group('delete_result'));
