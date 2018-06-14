@@ -209,7 +209,7 @@ DeviceModel.prototype.addTargetProduct = function (data, callback) {
   }
 
   for (let j = 0; j < propsArr.length; j++) { //数据结果与调用顺序无关
-    let sql2 = `INSERT INTO ${dbConfig.tables.mkdata}(targetProduct,engName,curValue) values (?,?,?)`;
+    let sql2 = `INSERT INTO ${dbConfig.tables.propsdata}(targetProduct,engName,curValue) values (?,?,?)`;
     let sql_params2 = [name ,propsArr[j].engName,propsArr[j].curValue];
     db.conn.query(sql2,sql_params2,function(err,rows,fields) {
       if (err) return ep.emit('error', err);
