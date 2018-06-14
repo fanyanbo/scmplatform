@@ -262,20 +262,20 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
         return callback(err,null);
       }
       for (let i = 0; i < mkArr.length; i++) {
-          let sql = `INSERT INTO ${dbConfig.tables.mkdata} (targetProduct, engName) VALUES (?,?)`;
-          let sql_param = [name, mkArr[i].engName];
-          db.conn.query(sql,sql_param,function(err,rows,fields) {
+          let sql0 = `INSERT INTO ${dbConfig.tables.mkdata} (targetProduct, engName) VALUES (?,?)`;
+          let sql_param0 = [name, mkArr[i].engName];
+          console.log("sql_param0=" + sql_param0);
+          db.conn.query(sql0,sql_param0,function(err,rows,fields) {
             if (err) return ep.emit('error', err);
-            console.log("==> i=" + i);
             ep.emit('insert_result', 'ok' + i);
           });
       }
       for (let j = 0; j < propsArr.length; j++) {
-          let sql = `INSERT INTO ${dbConfig.tables.propsdata} (targetProduct, engName, curValue) VALUES (?,?,?)`;
-          let sql_param = [name, propsArr[j].engName,propsArr[j].curValue];
-          db.conn.query(sql,sql_param,function(err,rows,fields) {
+          let sql1 = `INSERT INTO ${dbConfig.tables.propsdata} (targetProduct, engName, curValue) VALUES (?,?,?)`;
+          let sql_param1 = [name, propsArr[j].engName,propsArr[j].curValue];
+          console.log("sql_param1=" + sql_param1);
+          db.conn.query(sql1,sql_param1,function(err,rows,fields) {
             if (err) return ep.emit('error', err);
-            console.log("==> j=" + j);
             ep.emit('insert_result', 'ok' + j);
           });
       }
