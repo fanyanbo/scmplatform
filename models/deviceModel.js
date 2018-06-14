@@ -257,7 +257,6 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
       }
   },
   function(err, results) {
-      console.log("==>" + results);
       if(err) {
         logger.error("删除tp数据失败" + err);
         return callback(err,null);
@@ -267,6 +266,7 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
           let sql_param = [name, mkArr[i].engName];
           db.conn.query(sql,sql_param,function(err,rows,fields) {
             if (err) return ep.emit('error', err);
+            console.log("==> i=" + i);
             ep.emit('insert_result', 'ok' + i);
           });
       }
@@ -275,6 +275,7 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
           let sql_param = [name, propsArr[j].engName,propsArr[j].curValue];
           db.conn.query(sql,sql_param,function(err,rows,fields) {
             if (err) return ep.emit('error', err);
+            console.log("==> j=" + j);
             ep.emit('insert_result', 'ok' + j);
           });
       }
