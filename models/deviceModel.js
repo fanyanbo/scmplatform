@@ -214,12 +214,11 @@ DeviceModel.prototype.addTargetProduct = function (name, arr, callback) {
  */
 DeviceModel.prototype.updateTargetProduct = function (data, callback) {
 
-  console.log(data.name);
-  console.log(data.mkArr);
-  console.log(data.propsArr);
   let name = data.name;
   let mkArr = data.mkArr;
   let propsArr = data.propsArr;
+  console.log(mkArr.length);
+  console.log(propsArr.length);
 
   let ep = new eventproxy();
   ep.bind('error', function (err) {
