@@ -226,7 +226,7 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
       ep.unbind();
       callback(err,null);
   });
-
+  console.log("========fuck0");
   ep.after('insert_result', mkArr.length + propsArr.length , function (list) {
       console.log(list);
       // 这个接口可能有问题
@@ -239,10 +239,11 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
       });
       // callback(null,"updateTargetProduct OK");
   });
-
+  console.log("========fuck1");
   async.parallel(
     {
       delMKdata: function(callback1) {
+         console.log("========fuck2");
           let sql = `DELETE FROM ${dbConfig.tables.mkdata} WHERE targetProduct = ?`;
           db.conn.query(sql,[name],function(err,rows,fields){
             if (err) return callback1(err,null);
@@ -251,6 +252,7 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
           });
       },
       delPropsdata: function(callback1) {
+        console.log("========fuck3");
         let sql = `DELETE FROM ${dbConfig.tables.propsdata} WHERE targetProduct = ?`;
         db.conn.query(sql,[name],function(err,rows,fields) {
           if (err) return callback1(err,null);
@@ -260,7 +262,7 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
       }
   },
   function(err, results) {
-      console.log("==>" + results);
+      console.log("==>fuck4" + results);
       if(err) {
         logger.error("删除tp数据失败" + err);
         return callback(err,null);
@@ -283,7 +285,7 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
             ep.emit('insert_result', 'ok' + j);
           });
       }
-  });
+  })
 }
 
 /**

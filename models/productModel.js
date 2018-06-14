@@ -357,7 +357,7 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
       console.log(results);
       if(err) return callback(err,null);
       _update(baseInfo, configInfo, settingsInfo, callback);
-  });
+  })
 }
 
 function _update(baseInfo, configInfo, settingsInfo, callback) {
