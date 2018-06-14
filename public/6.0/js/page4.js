@@ -961,10 +961,6 @@ function PropDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
 		document.getElementById(arr[i].engName).value = arr[i].curValue;
 	}
-	for (var i=0; i<$(".propitem").length; i++) {
-		console.log("1-----");
-		$(".propitem:eq("+i+")").attr("disabled","disabled");
-	}
 }
 
 function buttonstyle(type,state){
@@ -1013,6 +1009,9 @@ function buttonstyle(type,state){
         }
         for (var i=0; i<$(".mkitems").length; i++) {
 			$(".mkitems:eq("+i+")").attr("disabled","disabled");
+		}
+        for (var i=0; i<$(".propitem").length; i++) {
+			$(".propitem:eq("+i+")").attr("disabled","disabled");
 		}
         $("#lable4Chip").attr("disabled","disabled");
 		$("#lable4Model").attr("disabled","disabled");
