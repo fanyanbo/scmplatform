@@ -1,3 +1,6 @@
+// TO-DO  
+// 1. return 的处理
+
 var test_flag = 1;
 var version = "6.0";
 
@@ -71,12 +74,6 @@ function CreateInfo(chip, model)
 	newinfo.list[1].needConfig = true;
 	newinfo.list[1].result = new Object;
 
-	newinfo.list[2] = new Object;
-	newinfo.list[2].type = "prop";				// 属性列表
-	newinfo.list[2].tmpFileName = "";			// 生成的文件名(临时文件)
-	newinfo.list[2].needConfig = true;
-	newinfo.list[2].result = new Object;
-
 	return newinfo;
 }
 
@@ -86,6 +83,8 @@ function CreateTarget(targetProduct)
     newtarget.name = targetProduct;
     newtarget.mklist = new Array;
     newtarget.mkFileName = "";
+    newtarget.props = new Array;
+    newtarget.propsFileName = "";
     return newtarget;
 }
 
@@ -359,13 +358,6 @@ function step_query_all_config(connection)
     				" and a.model=\"" +
     				allInfos[infoCnt].model + "\";";
     	}
-    	else if (list[configid].type == "prop")
-    	{
-    		sql = "select engName, curValue from " + tab_propsdata + " where chip = \"" +
-    				allInfos[infoCnt].chip + "\"" +
-    				" and model=\"" +
-    				allInfos[infoCnt].model + "\";";
-    	}
     	else
     		return;
     
@@ -388,7 +380,7 @@ function step_query_all_config(connection)
     		console.log(typeof(result));
     
     		allInfos[infoCnt].curConfigId++;
-    		if (allInfos[infoCnt].curConfigId >= 3)
+    		if (allInfos[infoCnt].curConfigId >= 2)
     		{
     			allInfos[infoCnt].curConfigId = 0;
     			infoCnt++;
@@ -439,6 +431,44 @@ function step_query_mkdata_item(connection)
 	}
 	else
 	{
+	    targetCnt = 0;
+	    step_query_prop_data(connection);
+	}
+}
+
+function step_query_prop_data(connection)
+{
+    if (targetCnt < targetTotal)
+	{
+		var curTargetProduct = allTargets[targetCnt].name;
+		var result = 0;
+		sql = "select engName,curValue from " + tab_propsdata + " where targetProduct=\"" +
+					curTargetProduct + "\";";
+
+		writerlog.w("开始查询: " + sql + "\n");
+
+		connection.query(sql, function (err, result){
+			if(err){
+				console.log('[SELECT ERROR] - ', err.message);
+				writerlog.w("查询出错: " + err.message + "\n");
+				return;
+			}
+
+			writerlog.w("SQL查询成功 3 \n");
+
+            console.log("AAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB: " + curTargetProduct);
+
+			for (j in result)
+			{
+                allTargets[targetCnt].props[j] = result[j];
+			}
+
+		    targetCnt++;
+		    step_query_prop_data(connection)
+		});
+	}
+	else
+	{
 	    console.log("***********************\n");
 	    connection.end();
         generate_files();
@@ -484,14 +514,6 @@ function generate_files()
     		            filelist[filecnt++] = CreateFileInfo(tempName, finalName, chip, model, typeStr);
     		        });
     		}
-    		else if (curitem.type == "prop")
-    		{
-    		    writerlog.w("生成临时的prop文件 \n");
-    		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, curitem, getTmpDir(), 
-    		        function(tempName, finalName, chip, model, typeStr){
-    		            filelist[filecnt++] = CreateFileInfo(tempName, finalName, chip, model, typeStr);
-    		        });
-    		}
     		else
     			continue;
     
@@ -508,6 +530,7 @@ function generate_files()
 		var curtarget = allTargets[targetCnt];
 		//console.log("AAAAA 2 : " + curtarget.name);
 		generateMkFile(curtarget);
+		generate_prop_file(curtarget);
         targetCnt++;
 	}
 
@@ -519,7 +542,7 @@ function generate_files()
 	    
 	    var content1 = fs.readFileSync(getTempGernalConfigFileName(allInfos[infoCnt].chip, allInfos[infoCnt].model), "utf-8");
         var content2 = fs.readFileSync(getTempMkFileName(allTargets[targetCnt].name), "utf-8");
-        var content4 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-build.prop", "utf-8");
+        var content4 = fs.readFileSync(getTempPropFileName(allTargets[targetCnt].name), "utf-8");
 
         var content3_1 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_main.xml", "utf-8");
         var content3_2 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_guide.xml", "utf-8");
@@ -544,8 +567,8 @@ function generate_files()
 	}
 	else        // 非预览则复制并提交文件到git
 	{
-        var pushret = copyFileAndCommit();
-        if (pushret)
+        ////var pushret = copyFileAndCommit();
+        ////if (pushret)
         ;
 	}
 	
@@ -590,6 +613,28 @@ function generateMkFile(target_info)
     filelist[filecnt++] = CreateFileInfo(mk_filename, targetName + ".mk", null, null, "mk");
 }
 
+// build.prop
+function generate_prop_file(target_info)
+{
+    let playerType = "";
+    let targetName = target_info.name;
+    let props = target_info.props;
+
+    var prop_filename = getTempPropFileName(targetName);
+
+    writerlog.w("生成临时的prop文件 " + prop_filename + "\n");
+
+    fs.writeFileSync(prop_filename, ' \n');
+    
+    for (let i in props)
+    {        
+        fs.appendFileSync(prop_filename, props[i].engName + '=' + props[i].curValue + '\n');
+    }
+    
+    fs.appendFileSync(prop_filename, '\n\n\n\n');
+
+    filelist[filecnt++] = CreateFileInfo(prop_filename, targetName + ".prop", null, null, "prop");
+}
 
 function getTempGernalConfigFileName(chip, model)
 {
@@ -599,6 +644,11 @@ function getTempGernalConfigFileName(chip, model)
 function getTempMkFileName(targetProductName)
 {
     return getTmpDir() + targetProductName + ".mk";
+}
+
+function getTempPropFileName(targetProductName)
+{
+    return getTmpDir() + targetProductName + ".prop";
 }
 
 function copyFileAndCommit()
@@ -639,14 +689,14 @@ function copyFileAndCommit()
 	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/config/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
 	    }
-	    else if (fileinfo.typeStr == "build.prop")
+	    else if (fileinfo.typeStr == "prop")
 	    {
-	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/prop/";
+	        config_dir_relpath = "property/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
 	    }
 	    else if (fileinfo.typeStr == "mk")
 	    {
-	        config_dir_relpath = "";
+	        config_dir_relpath = "makefile/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
 	    }
 	    else
@@ -859,6 +909,7 @@ function show_callback(errno, result)
 //generator.generate("6S57", "K5S",  null);
 //generator.generateByModel("E6000", null);
 //generator.preview("5S02", "15U",  show_preview_text_test);
+//generator.generate("5S02a", "15U",  show_callback);
 //generator.generateByTargetProduct("p201", show_callback);
 
 

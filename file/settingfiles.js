@@ -543,27 +543,6 @@ function write_midware_ini(sqlresult, chip, model, tmpdir, genFileCallBack)
     genFileCallBack(tmpFileName, "driverbase_net_config.ini", chip, model, "driverbase_net_config");
 }
 
-// build.prop
-function write_prop_file(sqlresult, chip, model, tmpdir, genFileCallBack)
-{
-    var x;
-    var curClass = "";
-    var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-build.prop";
-           
-    writerlog.w("生成临时的  build.prop  \n");
-           
-    fs.writeFileSync(tmpFileName, ' \n');
-    
-    for (let i in sqlresult)
-    {        
-        fs.appendFileSync(tmpFileName, sqlresult[i].engName + '=' + sqlresult[i].curValue + '\n');
-    }
-    
-    fs.appendFileSync(tmpFileName, '\n\n\n\n');
-    
-    genFileCallBack(tmpFileName, "build.prop", chip, model, "build.prop");
-}
 
 
 
