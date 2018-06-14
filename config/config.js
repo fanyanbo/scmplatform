@@ -60,7 +60,7 @@ var config = {
   log_file_level: 'info',
   log_console_level: 'trace',
   //设置当前输出路径：file,console,default
-  log_cur: 'file',
+  log_cur: 'console',
 
   // 邮箱配置
   mail_opts: {
