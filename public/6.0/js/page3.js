@@ -460,7 +460,8 @@ function tpsubmit(){
 	var _propArray = [];
 	for (var i=0; i<$(".propitem").length; i++) {
 		var _objItem = {
-			"engName": $(".propitem:eq("+i+")").val()
+			"engName": $(".propitem:eq("+i+")").attr("id"),
+			"curValue": $(".propitem:eq("+i+")").val()
 		};
 		_propArray.push(_objItem);
 	}
@@ -550,7 +551,8 @@ function tpsubmit2(){
 	var _propArray = [];
 	for (var i=0; i<$(".propitem").length; i++) {
 		var _objItem = {
-			"engName": $(".propitem:eq("+i+")").val()
+			"engName": $(".propitem:eq("+i+")").attr("id"),
+			"curValue": $(".propitem:eq("+i+")").val()
 		};
 		_propArray.push(_objItem);
 	}
