@@ -505,14 +505,14 @@ function tpsubmit(){
 		}
 	}
 	_mkArray = JSON.stringify(_mkArray);
-	var _propArray = [];
+//	var _propArray = [];
 	for (var i=0; i<$(".propitems").length; i++) {
 		var _objItem = {
 			"engName":$(".propitems")[i].val();
 		};
 		_propArray.push(_objItem);
 	}
-	_propArray = JSON.stringify(_propArray);
+//	_propArray = JSON.stringify(_propArray);
 	
 	if ($('#page3Modal').attr("status") == 1) {
 		console.log("新增或者复制的提交");
