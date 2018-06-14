@@ -6,6 +6,8 @@ var tpArray = new Array();
 var tpName = "";
 var MKAddArray = new Array();
 var MKDeleteArray = new Array();
+var changeProp = new Array();
+
 var oldRadioName = "";
 var radioNameTemp = "";
 var coocaaVersion = "/v6.0";
@@ -40,9 +42,6 @@ function QueryResult(){
 				pageTableInit(instantSearch);
 			}
 		}
-		//var node = '{}';
-		//sendHTTPRequest(coocaaVersion+"/module/queryCategory", node, modelQueryResult);
-		
 		sendHTTPRequest(coocaaVersion+"/product/queryAll", '{}', allQueryResult);
 	}
 }
@@ -119,22 +118,6 @@ function buttonInitAfter(){
 		$("#page3_tp_submit2").css("display","none");
 		var _eachtpAIndex = $(".eachpreview").index($(this));
 		eachOperate(_eachtpAIndex, 2);
-	});
-	//删除eachdelete
-	$(".eachdelete").click(function(){
-		var _eachtpAIndex = $(".eachdelete").index($(this));
-		var thisEnName = $(".eachtpvalue")[_eachtpAIndex].innerText;
-		var thisEnNameCut = "";
-		if(thisEnName.length>10){
-			thisEnNameCut = thisEnName.substring(0,10)+"...";  
-		}else{
-			thisEnNameCut = thisEnName;
-		}
-		console.log(thisEnName);
-		resetAllInfo();
-		var node = '{"targetproduct":"' + thisEnName + '"}';
-		console.log(node);
-		sendHTTPRequest(coocaaVersion+"/product/queryMKByTp", node, getMKByTPResult);
 	});
 }
 
@@ -306,9 +289,6 @@ function eachOperate(index,num){
 	document.getElementById("page3_TP").value = thisEnName;
 	
 	$('#page3Modal').modal();
-	$("#page3Modal").find("li")[0].className = "presentation active";
-	$("#page3Modal").find("li")[1].className = "presentation";
-	
 	if (num == 0) {
 		$("#page3_title").html("编辑tp的名称");
 		$("#page3_TP").attr("disabled","disabled");
@@ -350,14 +330,14 @@ function page3Add(){
 	resetAllInfo();
 	console.log($('#page3Modal').attr("hasquery"));
 	if ($('#page3Modal').attr("hasquery") == "false") {
-//		var node = '{}';
-//		sendHTTPRequest(coocaaVersion+"/module/queryCategory", node, modelQueryResult);
-		
 		sendHTTPRequest(coocaaVersion+"/product/queryAll", '{}', allQueryResult);
 	}else{
 		console.log("已经请求过了");
 		for (var i=0; i<$(".mkitems").length; i++) {
 			document.getElementsByClassName("mkitems")[i].removeAttribute('disabled');
+		}
+		for (var i=0; i<$(".propitem").length; i++) {
+			document.getElementsByClassName("propitem")[i].removeAttribute('disabled');
 		}
 	}
 }
@@ -368,6 +348,15 @@ function resetAllInfo(){
 	}
 	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
 	document.getElementsByClassName("mkradio")[0].checked = true;
+	
+	for (var k=0; k<$(".propitem").length; k++) {
+		$(".propitem:eq("+k+")").val($(".propitem:eq("+k+")").attr("defaultvalue"));
+	}
+	
+	$("#page3Modal").find("li")[0].className = "presentation active";
+	$("#page3Modal").find("li")[1].className = "presentation";
+	$("#myPreviewBodyOne").attr("class", "tab-pane active");
+	$("#myPreviewBodyTwo").attr("class", "tab-pane");
 }
 
 //页面加载时新增页的查询功能
@@ -419,42 +408,6 @@ function propQueryData1(arr1,arr2) {
 	}
 }
 //function modelQueryResult(){
-//	if(this.readyState == 4) {
-//		if(this.status == 200) {
-//			var data = JSON.parse(this.responseText);
-//			console.log(data);
-//			if(data.resultCode == "0") {
-//				var _myMKBox = document.getElementById("page3MkTbody");
-//				for(var i = 0; i < data.resultData.length; i++) {
-//					_myMKBox.innerHTML += '<div class="moduleitems eachpartbox" category="'+ data.resultData[i].category +'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></div>';
-//				}
-//			}
-//		}
-//		sendHTTPRequest(coocaaVersion+"/module/query", '{}', modelQueryResult2);
-//	}
-//}
-//function modelQueryResult2(){
-//	if(this.readyState == 4) {
-//		if(this.status == 200) {
-//			var data = JSON.parse(this.responseText);
-//			console.log(data);
-//			if(data.resultCode == "0") {
-//				var arr2 = data.resultData;
-//				var kk = 0;
-//				for (var j=0; j< $(".moduleitems").length; j++) {
-//					for(var i = 0; i < arr2.length; i++) {
-//						if(arr2[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
-//							kk = i;
-//							mkDataInsert(kk, $(".moduleitems")[j], arr2);
-//						}
-//					}
-//				}
-//				document.getElementsByClassName("mkradio")[0].setAttribute('checked', 'true');
-//			}
-//		}
-//		$('#page3Modal').attr("hasquery","true");
-//	}
-//}
 function mkDataInsert(kk, obj, data) {
 	if (data[kk].category == "PlayerLibrary") {
 		obj.innerHTML += "<div class='col-xs-3'><input id='"+data[kk].engName+"' cnName='"+data[kk].cnName+"' type='radio' class='mkitems mkradio' value='' name='PlayerLibrary'><span category='" + data[kk].category + "' gitPath='" + data[kk].gitPath + "' name='" + data[kk].engName + "' title='" + data[kk].descText + "'>" + data[kk].cnName + "</span></div>";
@@ -505,12 +458,12 @@ function tpsubmit(){
 	}
 	_mkArray = JSON.stringify(_mkArray);
 	var _propArray = [];
-//	for (var i=0; i<$(".propitems").length; i++) {
-//		var _objItem = {
-//			"engName":$(".propitems")[i].val();
-//		};
-//		_propArray.push(_objItem);
-//	}
+	for (var i=0; i<$(".propitem").length; i++) {
+		var _objItem = {
+			"engName": $(".propitem:eq("+i+")").val()
+		};
+		_propArray.push(_objItem);
+	}
 	_propArray = JSON.stringify(_propArray);
 	
 	if ($('#page3Modal').attr("status") == 1) {
@@ -540,10 +493,8 @@ function tpsubmit(){
 				console.log(radioNameTemp);
 			}
 		}
-		console.log(MKAddArray);
-		console.log(MKDeleteArray);
-		console.log(radioNameTemp +"---"+ oldRadioName);
-		if (radioNameTemp == oldRadioName&&MKAddArray.length==0&&MKDeleteArray==0) {
+		console.log(radioNameTemp +"---"+ oldRadioName +"---" + MKDeleteArray.length +"---" + MKAddArray.length +"---" + changeProp.length);
+		if (radioNameTemp == oldRadioName&&MKAddArray.length==0&&MKDeleteArray.length==0&&changeProp.length==0) {
 			console.log("未做修改");
 			$("#page3Modal1ErrorInfo").css("display","block");
 			$("#page3Modal1ErrorInfo").html("未做任何修改");
@@ -595,7 +546,16 @@ function tpsubmit2(){
 		}
 	}
 	_mkArray = JSON.stringify(_mkArray);
-	var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'}';
+	
+	var _propArray = [];
+	for (var i=0; i<$(".propitem").length; i++) {
+		var _objItem = {
+			"engName": $(".propitem:eq("+i+")").val()
+		};
+		_propArray.push(_objItem);
+	}
+	_propArray = JSON.stringify(_propArray);
+	var node = '{"name":"'+_tpValue+'","arr":'+_mkArray+'","arr2":'+_propArray+'}';
 	console.log(node);
 	sendHTTPRequest(coocaaVersion+"/targetproduct/update", node, addOrChangeResult);
 }
@@ -607,12 +567,19 @@ function getMKByTPResult() {
 			console.log(data);
 			if(data.resultCode == "0") {
 				var type = $('#page3Modal').attr("status");
+				
+				for (var i=0; i<data.resultData[1].length; i++) {
+					document.getElementById(data.resultData[1][i].engName).value = data.resultData[1][i].curValue;
+				}
 				//0-编辑、1-复制、2-预览
 				if(type == 2){
 					console.log("预览");
 					for (var i=0; i<$(".mkitems").length; i++) {
 						$(".mkitems:eq("+i+")").attr("disabled","disabled");
 						$(".mkitems:eq("+i+")").parent().css("display","none");
+					}
+					for (var i=0; i<$(".propitem").length; i++) {
+						$(".propitem:eq("+i+")").attr("disabled","disabled");
 					}
 				}else{
 					if (type == 0) {
@@ -627,6 +594,11 @@ function getMKByTPResult() {
 								$(".mkitems:eq("+i+")").attr("onchange","changeMK(this)");
 							}
 						}
+						for (var i=0; i<$(".propitem").length; i++) {
+							$(".propitem:eq("+i+")").removeAttr("disabled");
+							$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").val());
+							$(".propitem:eq("+i+")").attr("onchange","changeProps(this)");
+						}
 					} else if(type == 1){
 						console.log("复制");
 						for (var i=0; i<$(".mkitems").length; i++) {
@@ -634,18 +606,23 @@ function getMKByTPResult() {
 							$(".mkitems:eq("+i+")").removeAttr("onchange");
 							$(".mkitems:eq("+i+")").parent().css("display","block");
 						}
+						for (var i=0; i<$(".propitem").length; i++) {
+							$(".propitem:eq("+i+")").removeAttr("disabled");
+							$(".propitem:eq("+i+")").removeAttr("onchange");
+						}
 					}
 				}
-				for (var i=0; i<data.resultData.length; i++) {
-					document.getElementById(data.resultData[i].engName).setAttribute("checked","");
-					document.getElementById(data.resultData[i].engName).checked = true;
-					$("#"+data.resultData[i].engName).parent().css("display","block");
-					if ($("#"+data.resultData[i].engName).attr("type") == "radio") {
-						oldRadioName = $("#"+data.resultData[i].engName).attr("cnname");
-						$("#"+data.resultData[i].engName).attr("oldvalue","1");
-						console.log(oldRadioName);
+				for (var i=0; i<data.resultData[0].length; i++) {
+					document.getElementById(data.resultData[0][i].engName).setAttribute("checked","");
+					document.getElementById(data.resultData[0][i].engName).checked = true;
+					$("#"+data.resultData[0][i].engName).parent().css("display","block");
+					if ($("#"+data.resultData[0][i].engName).attr("type") == "radio") {
+						oldRadioName = $("#"+data.resultData[0][i].engName).attr("cnname");
+						radioNameTemp = oldRadioName;
+						$("#"+data.resultData[0][i].engName).attr("oldvalue","1");
 					}
 				}
+				console.log(oldRadioName);
 			}
 		}
 	}
@@ -664,6 +641,7 @@ function addOrChangeResult(){
 }
 
 function changeMK(obj){
+	console.log(obj.checked+"--"+obj.getAttribute("oldvalue"));
     if (obj.checked && (obj.getAttribute("oldvalue") == '0')) {
     	console.log("增加");
         obj.setAttribute("oldvalue","1");
@@ -698,6 +676,34 @@ function changeRadio(obj){
 		$(".mkradio")[i].setAttribute('oldvalue', '0');
 	}
 	obj.setAttribute("oldvalue","1");
+}
+
+function changeProps(obj){
+	var x = obj.value;
+    console.log(x);
+    console.log(obj.getAttribute("oldvalue"));
+    if(x == obj.getAttribute("oldvalue")){
+        Array.prototype.indexOf = function(val) {
+            for (var i = 0; i < this.length; i++) {
+                if (this[i] == val) return i;
+            }
+            return -1;
+        };
+        Array.prototype.remove = function(val) {
+            var index = this.indexOf(val);
+            if (index > -1) {
+                this.splice(index, 1);
+            }
+        };
+        changeProp.remove(obj.getAttribute("id"));
+        console.log("changeProp= "+changeProp);
+    }
+    else{
+        if (changeProp.indexOf(obj.getAttribute("id")) == -1){
+            changeProp.push(obj.getAttribute("id"));
+            console.log("changeProp= "+changeProp);
+        }
+    }
 }
 
 //刷新功能

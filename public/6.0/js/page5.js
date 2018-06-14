@@ -609,12 +609,12 @@ function editSure(){
 	var _base = getBaseValue();
 	var _config = getConfigValue();
 	var _sys = getSysValue();
-	var _prop = getPropValue();
+	//var _prop = getPropValue();
 	_base = JSON.stringify(_base);
 	_config = JSON.stringify(_config);
 	_sys = JSON.stringify(_sys);
-	_prop = JSON.stringify(_prop);
-	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + ',"propsInfo":' + _prop + '}';
+	//_prop = JSON.stringify(_prop);
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
 	console.log(node);
 	sendHTTPRequest(coocaaVersion+"/product/update", node, setEditInfo);
 }
@@ -959,8 +959,9 @@ function PropDataInsert2(type, arr){
 	}
 	if (type == 2) {
 		for (var i=0; i<$(".propitem").length; i++) {
-			$(".propitem:eq("+i+")").attr("onchange","changeProps(this)");
-			$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
+			$(".propitem:eq("+i+")").attr("disabled","disabled");
+//			$(".propitem:eq("+i+")").attr("onchange","changeProps(this)");
+//			$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
 		}
 	}
 }
@@ -1183,20 +1184,20 @@ function getConfigValue(){
 	}
 	return configData;
 }
-function getPropValue(){
-	var propData = [];
-	console.log($(".propitem").length);
-	for (var i=0; i<$(".propitem").length; i++) {
-		var oApropInfo = {
-			"engName": "",
-			"curValue": ""
-		};
-		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
-		oApropInfo.curValue = $(".propitem")[i].value;
-		propData.push(oApropInfo);
-	}
-	return propData;
-}
+//function getPropValue(){
+//	var propData = [];
+//	console.log($(".propitem").length);
+//	for (var i=0; i<$(".propitem").length; i++) {
+//		var oApropInfo = {
+//			"engName": "",
+//			"curValue": ""
+//		};
+//		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
+//		oApropInfo.curValue = $(".propitem")[i].value;
+//		propData.push(oApropInfo);
+//	}
+//	return propData;
+//}
 function getSysValue(){
 	var sysData = [];
 	for (var i=0; i<$(".sysitems").length; i++) {
