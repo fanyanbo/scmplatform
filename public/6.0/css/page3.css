@@ -106,6 +106,15 @@
 .CJJ-Table tfoot td{
 	padding-top: 10px;
 }
+
+#page3 input[type="radio"]{
+	height: 15px;
+    width: 17px;
+}
+#page3 input[type="checkbox"]{
+	height: 15px;
+    width: 17px;
+}
 .new_productBox{
 	height: 35px;
 }

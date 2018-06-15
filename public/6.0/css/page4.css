@@ -103,6 +103,14 @@
 #page4{
 	min-width: 900px;
 }
+#page4 input[type="radio"]{
+	height: 15px;
+    width: 17px;
+}
+#page4 input[type="checkbox"]{
+	height: 15px;
+    width: 17px;
+}
 body .modal-footer{
 	text-align: center;
 }

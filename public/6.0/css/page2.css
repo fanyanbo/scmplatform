@@ -111,6 +111,15 @@
     border: none !important;
 }
 
+#page2 input[type="radio"]{
+	height: 15px;
+    width: 17px;
+}
+#page2 input[type="checkbox"]{
+	height: 15px;
+    width: 17px;
+}
+
 .new_productBox{
 	height: 35px;
 }

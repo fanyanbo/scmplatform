@@ -103,6 +103,14 @@
 #page5{
 	min-width: 900px;
 }
+#page5 input[type="radio"]{
+	height: 15px;
+    width: 17px;
+}
+#page5 input[type="checkbox"]{
+	height: 15px;
+    width: 17px;
+}
 body .modal-footer{
 	text-align: center;
 }

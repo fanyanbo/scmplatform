@@ -98,7 +98,7 @@ function handleTableData(arr) {
 			"number" : (i+1),
 			"model": arr[i].model,
 			"chip": arr[i].chip,
-			"size": "50",
+			"size": arr[i].panel,
 			"target_product": arr[i].targetProduct,
 			"AndroidVersion": arr[i].androidVersion,
 			"chipmodel": arr[i].soc,
@@ -118,7 +118,7 @@ function pageTableInit(data1) {
 	//前台分页的样子
 	$('#page2_table').CJJTable({
 		'title': ["序号", "机型", "机芯", "尺寸", "TP", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
-		'body': ["number", "model", "chip", "size","target_product", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
+		'body': ["number", "model", "chip", "size", "target_product", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
 		'display': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
@@ -505,10 +505,17 @@ function buttonInitAfter() {
 		console.log("点击的是第" + _cIndex + "个 eachcheck class");
 		$("#page1_check_chip").html($(".new_productBox .chip")[_cIndex].innerHTML);
 		$("#page1_check_model").html($(".new_productBox .model")[_cIndex].innerHTML);
-		$("#page1_check_targetProduct").html($(".new_productBox .target_product")[_cIndex].innerHTML);
+		$("#page1_check_panel").html($(".new_productBox .size")[_cIndex].innerHTML);
 		$('#page1_examine').modal();
 		
-		var node = '{"chip":"'+$(".new_productBox .chip")[_cIndex].innerHTML+'","model":"'+$(".new_productBox .model")[_cIndex].innerHTML+'"}';
+		var searchObj = {
+			"chip" : $(".new_productBox .chip")[_cIndex].innerHTML,
+			"model" : $(".new_productBox .model")[_cIndex].innerHTML,
+			"panel" : $(".new_productBox .size")[_cIndex].innerHTML
+		}
+		var _search = JSON.stringify(searchObj);
+		var node = '{"data":' + _search + '}';
+		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
 	});
 	$(".eachedit").click(function() {
@@ -946,11 +953,11 @@ function getAndCheckAndSendAllData(){
 		}
 	}
 	var _style = document.getElementById("addSize").style.display;
-	var _sizevalue = $("#lable2Size1").val();
-	console.log(_style+"----"+_sizevalue);
+	var _panelvalue = $("#lable2Size1").val();
+	console.log(_style+"----"+_panelvalue);
 	console.log(_style != "none");
 	if(_style != "none"){
-		if (_sizevalue==null||_sizevalue=="") {
+		if (_panelvalue==null||_panelvalue=="") {
 			nullName = nullName + 1;
 			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
 			document.getElementById("page2Modal1ErrorInfo").innerHTML = "尺寸项不能为空";
@@ -994,7 +1001,7 @@ function getAndCheckAndSendAllData(){
 				var checkObj = {
 					"chip" : $("#lable2Chip").val(),
 					"model" : $("#lable2Model").val(),
-					"size" : $("#lable2Size1").val()
+					"panel" : $("#lable2Size1").val()
 				}
 				var _check = JSON.stringify(checkObj);
 				var node = '{"data":' + _check + '}';
@@ -1256,15 +1263,16 @@ function getBaseValue(){
 	var _style = document.getElementById("addSize").style.display;
 	console.log(_style != "none");
 	if(_style != "none"){
-		var _size = 0;
+		var _panel = 0;
 	}else{
-		var _size = $("#lable2Size1").val();
-		_size = parseInt(_size);
+		var _panel = $("#lable2Size1").val();
+		_panel = parseInt(_panel);
 	}
 	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,
 		"model" : _model,
+		"panel" : _panel,
 		"targetProduct" : _tp,
 		"androidVersion" : _android,
 		"soc" : _soc,
@@ -1274,8 +1282,7 @@ function getBaseValue(){
 		"auditState" : 1,
 		"modifyState" : 2,
 		"platform" : _platform,
-		"userName" : loginusername,
-		"size" : _size
+		"userName" : loginusername
 	}
 	baseObj = JSON.stringify(baseObj);
 	return baseObj;
