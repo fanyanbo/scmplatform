@@ -209,10 +209,9 @@ exports.queryAll = function (req, res, next) {
  * @param {注：查询某个机芯&机型的全部信息}
  */
 exports.queryAllByMachine = function (req, res, next) {
-    let chip = req.body.chip;
-    let model = req.body.model;
-    let panel = req.body.panel;
-    productModel.queryAllByMachine(chip, model, panel, function(err,results) {
+
+    let data = req.body.data;
+    productModel.queryAllByMachine(data, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
@@ -224,10 +223,9 @@ exports.queryAllByMachine = function (req, res, next) {
  * @param {注：查询某个机芯&机型的全部临时信息（之前有过修改，还处于待审核状态)}
  */
 exports.queryAllByMachineTemp = function (req, res, next) {
-    let chip = req.body.chip;
-    let model = req.body.model;
-    let panel = req.body.panel;
-    productModel.queryAllByMachineTemp(chip, model, panel, function(err,results) {
+
+    let data = req.body.data;
+    productModel.queryAllByMachineTemp(data, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }

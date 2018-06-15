@@ -199,7 +199,11 @@ ProductModel.prototype.queryAll = function (callback) {
 /**
  * @param {注：查询某个机芯&机型的全部信息}
  */
-ProductModel.prototype.queryAllByMachine = function (chip, model, panel, callback) {
+ProductModel.prototype.queryAllByMachine = function (data, callback) {
+
+  let chip = data.chip;
+  let model = data.model;
+  let panel = data.panel;
   let ep = new eventproxy();
   let sql_list = [
                   `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?`,
@@ -232,7 +236,11 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, panel, callbac
 /**
  * @param {注：查询某个机芯&机型的全部临时信息（之前有过修改，还处于待审核状态)}
  */
-ProductModel.prototype.queryAllByMachineTemp = function (chip, model, panel, callback) {
+ProductModel.prototype.queryAllByMachineTemp = function (data, callback) {
+
+  let chip = data.chip;
+  let model = data.model;
+  let panel = data.panel;
   let ep = new eventproxy();
   let sql_list = [
                   `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?`,
