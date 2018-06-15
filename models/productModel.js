@@ -98,6 +98,20 @@ ProductModel.prototype.queryByChipModel = function (data, callback) {
   });
 }
 
+ProductModel.prototype.queryByChipModelPanel = function (data, callback) {
+  let chip = data.chip;
+  let model = data.model;
+  let panel = data.panel;
+  let sql = `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?`;
+  let sql_params = [chip,model,panel];
+  db.conn.query(sql,sql_params,function(err,rows,fields) {
+    if (err) {
+        return callback(err);
+    }
+    callback(null, rows);
+  });
+}
+
 ProductModel.prototype.queryMKAndPropsByTargetProduct = function (targetproduct, callback) {
   let ep = new eventproxy();
   let sql_list = [
