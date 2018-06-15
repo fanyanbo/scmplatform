@@ -162,9 +162,8 @@ exports.queryByModule = function (req, res, next) {
  * @param {注：查询某个机芯机型的修改历史记录}
  */
 exports.queryHistory = function (req, res, next) {
-    let chip = req.body.chip;
-    let model = req.body.model;
-    productModel.queryHistory(chip,model,function(err,results) {
+    let data = req.body.data;
+    productModel.queryHistory(data,function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
@@ -212,7 +211,8 @@ exports.queryAll = function (req, res, next) {
 exports.queryAllByMachine = function (req, res, next) {
     let chip = req.body.chip;
     let model = req.body.model;
-    productModel.queryAllByMachine(chip, model, function(err,results) {
+    let panel = req.body.panel;
+    productModel.queryAllByMachine(chip, model, panel, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }
@@ -226,7 +226,8 @@ exports.queryAllByMachine = function (req, res, next) {
 exports.queryAllByMachineTemp = function (req, res, next) {
     let chip = req.body.chip;
     let model = req.body.model;
-    productModel.queryAllByMachineTemp(chip, model, function(err,results) {
+    let panel = req.body.panel;
+    productModel.queryAllByMachineTemp(chip, model, panel, function(err,results) {
       if(err) {
         return output.error(req,res,err);
       }

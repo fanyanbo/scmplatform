@@ -58,12 +58,12 @@ ProductModel.prototype.queryByRegEx = function (data, callback) {
 }
 
 /**
- * @param {注：查询某个机芯机型的修改历史记录，state：0->审核已通过 1->待审核 2->审核未通过}
+ * @param {注：查询某个机芯机型尺寸的修改历史记录，state：0->审核已通过 1->待审核 2->审核未通过}
  */
-ProductModel.prototype.queryHistory = function (chip, model, callback) {
-
-  var sql = `SELECT * FROM ${dbConfig.tables.modifyhistory} WHERE chip = ? AND model = ? order by modifyTime desc`;
-  let sql_params = [chip, model];
+ProductModel.prototype.queryHistory = function (data,callback) {
+  console.log(data);
+  var sql = `SELECT * FROM ${dbConfig.tables.modifyhistory} WHERE chip = ? AND model = ? AND panel = ? order by modifyTime desc`;
+  let sql_params = [data.chip, data.model, data.panel];
   db.conn.query(sql,sql_params,function(err,rows,fields){
     if (err) {
         console.log(err);
@@ -199,14 +199,14 @@ ProductModel.prototype.queryAll = function (callback) {
 /**
  * @param {注：查询某个机芯&机型的全部信息}
  */
-ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
+ProductModel.prototype.queryAllByMachine = function (chip, model, panel, callback) {
   let ep = new eventproxy();
   let sql_list = [
-                  `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?`,
-                  `SELECT * FROM ${dbConfig.tables.configdata} WHERE chip = ? AND model = ?`,
-                  `SELECT * FROM ${dbConfig.tables.settingsdata} WHERE chip = ? AND model = ?`,
-                  `SELECT * FROM ${dbConfig.tables.propsdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?)`,
-                  `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?)`
+                  `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?`,
+                  `SELECT * FROM ${dbConfig.tables.configdata} WHERE chip = ? AND model = ? AND panel = ?`,
+                  `SELECT * FROM ${dbConfig.tables.settingsdata} WHERE chip = ? AND model = ? AND panel = ?`,
+                  `SELECT * FROM ${dbConfig.tables.propsdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?)`,
+                  `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?)`
                 ];
 
   ep.bind('error', function (err) {
@@ -225,21 +225,21 @@ ProductModel.prototype.queryAllByMachine = function (chip, model, callback) {
   });
 
   for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
-    db.conn.query(sql_list[i],[chip,model],ep.group('query_result'));
+    db.conn.query(sql_list[i],[chip,model,panel],ep.group('query_result'));
   }
 }
 
 /**
  * @param {注：查询某个机芯&机型的全部临时信息（之前有过修改，还处于待审核状态)}
  */
-ProductModel.prototype.queryAllByMachineTemp = function (chip, model, callback) {
+ProductModel.prototype.queryAllByMachineTemp = function (chip, model, panel, callback) {
   let ep = new eventproxy();
   let sql_list = [
-                  `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?`,
-                  `SELECT * FROM ${dbConfig.tables.configdata_temp} WHERE chip = ? AND model = ?`,
-                  `SELECT * FROM ${dbConfig.tables.settingsdata_temp} WHERE chip = ? AND model = ?`,
-                  `SELECT * FROM ${dbConfig.tables.propsdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?)`,
-                  `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?)`
+                  `SELECT * FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?`,
+                  `SELECT * FROM ${dbConfig.tables.configdata_temp} WHERE chip = ? AND model = ? AND panel = ?`,
+                  `SELECT * FROM ${dbConfig.tables.settingsdata_temp} WHERE chip = ? AND model = ? AND panel = ?`,
+                  `SELECT * FROM ${dbConfig.tables.propsdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?)`,
+                  `SELECT * FROM ${dbConfig.tables.mkdata} WHERE targetProduct in (SELECT targetProduct FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?)`
                 ];
 
   ep.bind('error', function (err) {
@@ -259,7 +259,7 @@ ProductModel.prototype.queryAllByMachineTemp = function (chip, model, callback) 
   });
 
   for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
-    db.conn.query(sql_list[i],[chip,model],ep.group('query_result'));
+    db.conn.query(sql_list[i],[chip,model,panel],ep.group('query_result'));
   }
 }
 
@@ -288,6 +288,7 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
   let baseInfoObj = JSON.parse(baseInfo);
   let chip = baseInfoObj.chip;
   let model = baseInfoObj.model;
+  let panel = baseInfoObj.panel;
   let targetProduct = baseInfoObj.targetProduct;
   let auditState = baseInfoObj.auditState;
   let modifyState = baseInfoObj.modifyState;
@@ -299,27 +300,27 @@ ProductModel.prototype.add = function (baseInfo, configInfo, settingsInfo, callb
   let gitBranch = baseInfoObj.gitBranch;
   let userName = baseInfoObj.userName;
 
-  let sql0 = `INSERT INTO ${dbConfig.tables.products}(chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,\
-    gitBranch,userName) values (?,?,?,?,?,?,?,?,?,?,?,?)`;
-  let sql0_param = [chip,model,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,gitBranch,userName];
+  let sql0 = `INSERT INTO ${dbConfig.tables.products}(chip,model,panel,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,\
+    gitBranch,userName) values (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
+  let sql0_param = [chip,model,panel,targetProduct,auditState,modifyState,androidVersion,memorySize,EMMC,soc,platform,gitBranch,userName];
   console.log(sql0_param);
   db.conn.query(sql0,sql0_param,function(err,rows,fields){
     if (err) return ep.emit('error', err);
     ep.emit('insert_result',"INSERT INTO products OK");
   });
 
-  let sql1 = `INSERT INTO ${dbConfig.tables.configdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
+  let sql1 = `INSERT INTO ${dbConfig.tables.configdata_temp}(chip,model,panel,engName,curValue) values (?,?,?,?,?)`;
   for(let i=0; i<configInfo.length; i++) {
-    let sql1_param = [chip,model,configInfo[i].engName,configInfo[i].curValue];
+    let sql1_param = [chip,model,panel,configInfo[i].engName,configInfo[i].curValue];
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO configdata_temp OK");
     });
   }
 
-  let sql2 = `INSERT INTO ${dbConfig.tables.settingsdata_temp}(chip,model,engName) values (?,?,?)`;
+  let sql2 = `INSERT INTO ${dbConfig.tables.settingsdata_temp}(chip,model,panel,engName) values (?,?,?,?)`;
   for(let i=0; i<settingsInfo.length; i++) {
-    let sql2_param = [chip,model,settingsInfo[i].engName];
+    let sql2_param = [chip,model,panel,settingsInfo[i].engName];
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
       ep.emit('insert_result',"INSERT INTO settingsdata_temp OK");
@@ -335,19 +336,19 @@ ProductModel.prototype.update = function (baseInfo, configInfo, settingsInfo, ca
   let baseInfoObj = JSON.parse(baseInfo);
   let chip = baseInfoObj.chip;
   let model = baseInfoObj.model;
-
+  let panel = baseInfoObj.panel;
   async.parallel(
     {
       delConfigTemp: function(callback1) {
-          let sql = `DELETE FROM ${dbConfig.tables.configdata_temp} WHERE chip=? AND model=?`;
-          db.conn.query(sql,[chip,model],function(err,rows,fields){
+          let sql = `DELETE FROM ${dbConfig.tables.configdata_temp} WHERE chip=? AND model=? AND panel=?`;
+          db.conn.query(sql,[chip,model,panel],function(err,rows,fields){
             if (err) return callback1(err,null);
             callback1(null,"delConfigTemp OK");
           });
       },
       delSettingsTemp: function(callback1) {
-        let sql = `DELETE FROM ${dbConfig.tables.settingsdata_temp} WHERE chip=? AND model=?`;
-        db.conn.query(sql,[chip,model],function(err,rows,fields){
+        let sql = `DELETE FROM ${dbConfig.tables.settingsdata_temp} WHERE chip=? AND model=? AND panel=?`;
+        db.conn.query(sql,[chip,model,panel],function(err,rows,fields){
           if (err) return callback1(err,null);
           callback1(null,"delSettingsTemp OK");
         });
@@ -365,6 +366,7 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
   let baseInfoObj = JSON.parse(baseInfo);
   let chip = baseInfoObj.chip;
   let model = baseInfoObj.model;
+  let panel = baseInfoObj.panel;
   let targetProduct = baseInfoObj.targetProduct;
   let auditState = baseInfoObj.auditState;
   let modifyState = baseInfoObj.modifyState;
@@ -391,17 +393,17 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
   });
 
   let sql0 = `UPDATE ${dbConfig.tables.products} SET auditState=1,modifyState=1,androidVersion=?,memorySize=?,EMMC=?,targetProduct=?,soc=?,platform=?,gitBranch=?, \
-  userName=? WHERE chip=? AND model=?`;
-  let sql0_param = [androidVersion,memorySize,EMMC,targetProduct,soc,platform,gitBranch,userName,chip,model];
+  userName=? WHERE chip=? AND model=? AND panel=?`;
+  let sql0_param = [androidVersion,memorySize,EMMC,targetProduct,soc,platform,gitBranch,userName,chip,model,panel];
   console.log(sql0_param);
   db.conn.query(sql0,sql0_param,function(err,rows,fields){
     if (err) return ep.emit('error', err);
     ep.emit('insert_result',"INSERT INTO products OK");
   });
 
-  let sql1 = `INSERT INTO ${dbConfig.tables.configdata_temp}(chip,model,engName,curValue) values (?,?,?,?)`;
+  let sql1 = `INSERT INTO ${dbConfig.tables.configdata_temp}(chip,model,panel,engName,curValue) values (?,?,?,?,?)`;
   for(let i=0; i<configInfo.length;i++) {
-    let sql1_param = [chip,model,configInfo[i].engName,configInfo[i].curValue];
+    let sql1_param = [chip,model,panel,configInfo[i].engName,configInfo[i].curValue];
     console.log(sql1_param + i);
     db.conn.query(sql1,sql1_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
@@ -409,9 +411,9 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
     });
   }
 
-  let sql2 = `INSERT INTO ${dbConfig.tables.settingsdata_temp}(chip,model,engName) values (?,?,?)`;
+  let sql2 = `INSERT INTO ${dbConfig.tables.settingsdata_temp}(chip,model,panel,engName) values (?,?,?,?)`;
   for(let j=0; j<settingsInfo.length;j++) {
-    let sql2_param = [chip,model,settingsInfo[j].engName];
+    let sql2_param = [chip,model,panel,settingsInfo[j].engName];
     console.log(sql2_param + j);
     db.conn.query(sql2,sql2_param,function(err,rows,fields){
       if (err) return ep.emit('error', err);
@@ -422,8 +424,8 @@ function _update(baseInfo, configInfo, settingsInfo, callback) {
 
 ProductModel.prototype.addHistory = function (data, callback) {
   console.log(data);
-  let sql = `INSERT INTO ${dbConfig.tables.modifyhistory}(chip,model,state,userName,content,reason) values (?,?,?,?,?,?)`;
-  let sql_param = [data.chip,data.model,data.state,data.userName,data.content,data.reason];
+  let sql = `INSERT INTO ${dbConfig.tables.modifyhistory}(chip,model,panel,state,userName,content,reason) values (?,?,?,?,?,?,?)`;
+  let sql_param = [data.chip,data.model,data.panel,data.state,data.userName,data.content,data.reason];
   console.log(sql_param);
   db.conn.query(sql,sql_param,function(err,rows,fields){
     if (err) return callback(err);
@@ -438,8 +440,9 @@ ProductModel.prototype.preview = function (data, callback) {
     console.log("preview data:" + data);
     let chip = data.chip;
     let model = data.model;
+    let panel = data.panel;
     let flag = data.flag; //0表示正式产品预览，1表示待审核或审核未通过产品预览
-    generator.preview(chip, model, flag, function(err, results){
+    generator.preview(chip, model, panel, flag, function(err, results){
       if (err) {
           logger.error("获取预览信息发生错误:" + err);
           return callback(err);
@@ -457,6 +460,7 @@ ProductModel.prototype.review = function (data, callback) {
     console.log(data);
     let chip = data.chip;
     let model = data.model;
+    let panel = data.panel;
     let flag = data.flag; //0表示审核通过，1表示不通过
     let operate = data.operate;//1表示新增，2表示修改，3表示删除
     let sql;
@@ -474,26 +478,26 @@ ProductModel.prototype.review = function (data, callback) {
           return callback(null, "删除产品成功");
       });
       let sql_list = [
-                      `DELETE FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ?`,
-                      `DELETE FROM  ${dbConfig.tables.configdata} WHERE chip = ? AND model = ?`,
-                      `DELETE FROM  ${dbConfig.tables.settingsdata} WHERE chip = ? AND model = ?`
+                      `DELETE FROM ${dbConfig.tables.products} WHERE chip = ? AND model = ? AND panel = ?`,
+                      `DELETE FROM  ${dbConfig.tables.configdata} WHERE chip = ? AND model = ? AND panel = ?`,
+                      `DELETE FROM  ${dbConfig.tables.settingsdata} WHERE chip = ? AND model = ? AND panel = ?`
                     ];
       for (var i = 0; i < sql_list.length; i++) { //数据结构与调用顺序有关
-          db.conn.query(sql_list[i],[chip, model],ep.group('delete_result'));
+          db.conn.query(sql_list[i],[chip, model, panel],ep.group('delete_result'));
       }
     } else {
       if(flag === 0){
-        sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?`;
-        db.conn.query(sql,[chip, model],function(err,rows,fields){
+        sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ? AND panel = ?`;
+        db.conn.query(sql,[chip, model, panel],function(err,rows,fields){
           if (err) return callback(err);
-          let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 0 WHERE chip = ? AND model = ?`;
-          db.conn.query(sql1,[chip, model],function(err,rows,fields){
+          let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 0 WHERE chip = ? AND model = ? AND panel = ?`;
+          db.conn.query(sql1,[chip, model, panel],function(err,rows,fields){
             if (err) {
               logger.debug("更新历史表时出错：" + err);
               return callback(err);
             }
             //当更新产品表和修改历史表成功后，执行生成文件的操作
-            generator.generate(chip, model, function(err,result){
+            generator.generate(chip, model, panel, function(err,result){
               if(err) {
                 logger.debug("在审核生成文件时出错：" + err);
                 return callback(err);
@@ -504,14 +508,14 @@ ProductModel.prototype.review = function (data, callback) {
           });
         });
       } else {
-        sql = `UPDATE ${dbConfig.tables.products} set auditState = 2 WHERE chip = ? AND model = ?`;
-        db.conn.query(sql,[chip, model],function(err,rows,fields){
+        sql = `UPDATE ${dbConfig.tables.products} set auditState = 2 WHERE chip = ? AND model = ? AND panel = ?`;
+        db.conn.query(sql,[chip, model, panel],function(err,rows,fields){
           if (err) {
             logger.error("调用审核不通过接口，更新产品表状态时错误" + err);
             return callback(err);
           }
-          let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 2 WHERE chip = ? AND model = ? AND state = 1`;
-          db.conn.query(sql1,[chip, model],function(err,rows,fields){
+          let sql1 = `UPDATE ${dbConfig.tables.modifyhistory} set state = 2 WHERE chip = ? AND model = ?  AND panel = ? AND state = 1`;
+          db.conn.query(sql1,[chip, model, panel],function(err,rows,fields){
             if (err) return callback(err);
             callback(null, rows);
           });
@@ -526,9 +530,10 @@ ProductModel.prototype.review = function (data, callback) {
 ProductModel.prototype.delete = function (data, callback) {
     let chip = data.chip;
     let model = data.model;
+    let panel = data.panel;
     let userName = data.userName;
-    var sql = `UPDATE ${dbConfig.tables.products} set auditState = 1, modifyState = 3, userName = ? WHERE chip = ? AND model = ?`;
-    let sql_params = [userName, chip, model];
+    var sql = `UPDATE ${dbConfig.tables.products} set auditState = 1, modifyState = 3, userName = ? WHERE chip = ? AND model = ? AND panel = ?`;
+    let sql_params = [userName, chip, model, panel];
     console.log(sql_params);
     db.conn.query(sql,sql_params,function(err,rows,fields){
       if (err) {
@@ -544,8 +549,9 @@ ProductModel.prototype.delete = function (data, callback) {
 ProductModel.prototype.deleteRecovery = function (data, callback) {
     let chip = data.chip;
     let model = data.model;
-    var sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ?`;
-    let sql_params = [chip, model];
+    let panel = data.panel;
+    var sql = `UPDATE ${dbConfig.tables.products} set auditState = 0, modifyState = 0 WHERE chip = ? AND model = ? AND panel = ?`;
+    let sql_params = [chip, model, panel];
     console.log(sql_params);
     db.conn.query(sql,sql_params,function(err,rows,fields){
       if (err) {

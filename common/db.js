@@ -1,5 +1,6 @@
 var mysql = require( 'mysql');
 var config = require('../config/config');
+var logger = require('./logger');
 
 // 从远程复制数据库
 // mysqldump scm -h 172.20.5.239 -uscmplatform -pscmplatform --add-drop-table | mysql scm -u root -proot
