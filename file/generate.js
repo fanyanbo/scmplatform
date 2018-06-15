@@ -1,5 +1,6 @@
 // TO-DO  
 // 1. return 的处理
+// 2. 排序
 
 var version = "6.0";
 var test_flag = 1;
@@ -56,11 +57,12 @@ var generator = new Generator();
 
 function Generator(){}
 
-function CreateInfo(chip, model)
+function CreateInfo(chip, model, panel)
 {
 	var newinfo = new Object;
 	newinfo.chip = chip;						// 机芯
 	newinfo.model = model;						// 机型
+	newinfo.panel = panel;                      // 屏幕大小
 	newinfo.targetProduct = "";					// 对应的机芯机型的targetProduct
 	newinfo.curConfigId = 0;					// 当前已处理好configID
 	newinfo.list = new Array();
@@ -127,13 +129,14 @@ function chipModelArrayIndex(arr, chip, model)
 	return -1;
 }
 
-function CreateFileInfo(tempName, finalName, chip, model, typeStr)
+function CreateFileInfo(tempName, finalName, chip, model, panel, typeStr)
 {
 	var fileInfo = new Object;
     fileInfo.tempName = tempName;                   // 临时文件名
     fileInfo.finalName = finalName;                 // 最终文件名
     fileInfo.chip = chip;
     fileInfo.model = model;
+    fileInfo.panel = panel;
     fileInfo.typeStr = typeStr;
     return fileInfo;
 }
@@ -141,6 +144,7 @@ function CreateFileInfo(tempName, finalName, chip, model, typeStr)
 function generateFiles( 
                         chip,		    // 机芯
                         model,          // 机型
+                        panel,          // 屏幕尺寸
                         actionType,     // 动作类型(preview为预览)
                         tempflag,       // 是否使用临时表
                         callback		// 回调函数
@@ -189,13 +193,13 @@ function generateFiles(
 	
     if (action_type ==  "preview")
     {
-        allInfos[infoTotal] = CreateInfo(chip, model);
+        allInfos[infoTotal] = CreateInfo(chip, model, panel);
         infoTotal++;
         doit(connection, action_type);
     }
     else if (action_type == "chip_and_model")
     {
-        allInfos[infoTotal] = CreateInfo(chip, model);
+        allInfos[infoTotal] = CreateInfo(chip, model, panel);
         infoTotal++;
         
         if (version == "6.0")
@@ -221,7 +225,7 @@ function generateFiles(
     else if (action_type == "chip_only")
     {
         var result = 0;
-        sql = "select model from " + tab_products + " where chip=\"" +
+        sql = "select model, panel from " + tab_products + " where chip=\"" +
         			chip + "\";";
         
         writerlog.w("开始查询: " + sql + "\n");
@@ -239,7 +243,8 @@ function generateFiles(
             for (var i in result)
             {
                 var curValue = result[i].model;
-                allInfos[infoTotal] = CreateInfo(chip, curValue);
+                var curPanel = result[i].panel;
+                allInfos[infoTotal] = CreateInfo(chip, curValue, curPanel);
                 infoTotal++;
             }
             doit(connection, action_type);
@@ -248,7 +253,7 @@ function generateFiles(
     else if (action_type == "model_only")
     {
         var result = 0;
-        sql = "select chip from " + tab_products + " where model=\"" +
+        sql = "select chip, panel from " + tab_products + " where model=\"" +
         			model + "\";";
         
         writerlog.w("开始查询: " + sql + "\n");
@@ -266,7 +271,8 @@ function generateFiles(
             for (var i in result)
             {
                 var curValue = result[i].chip;
-                allInfos[infoTotal] = CreateInfo(curValue, model);
+                var curPanel = result[i].panel;
+                allInfos[infoTotal] = CreateInfo(curValue, model, curPanel);
                 infoTotal++;
             }
             doit(connection, action_type);
@@ -367,6 +373,7 @@ function step_query_all_config(connection)
     {
     	var chip = allInfos[infoCnt].chip;
     	var model = allInfos[infoCnt].model;
+    	var panel = allInfos[infoCnt].panel;
     	var configid = allInfos[infoCnt].curConfigId;
     	var list = allInfos[infoCnt].list;
     
@@ -375,7 +382,10 @@ function step_query_all_config(connection)
     		sql = "select a.engName, a.curValue, b.descText from " + tab_configdata + " a, configs b where a.engName=b.engName and a.chip=\"" +
     				allInfos[infoCnt].chip + "\"" +
     				" and a.model=\"" +
-    				allInfos[infoCnt].model + "\";";
+    				allInfos[infoCnt].model + "\"" + 
+    				" and a.panel=" +
+    				allInfos[infoCnt].panel + ";";
+    				
     	}
     	else if (list[configid].type == "system_settings")
     	{
@@ -383,7 +393,9 @@ function step_query_all_config(connection)
     		        + " from " + tab_settingsdata + " a, settings b where a.engName = b.engName and a.chip = \"" +
     				allInfos[infoCnt].chip + "\"" +
     				" and a.model=\"" +
-    				allInfos[infoCnt].model + "\";";
+    				allInfos[infoCnt].model + "\"" + 
+    				" and a.panel=" +
+    				allInfos[infoCnt].panel + ";";
     	}
     	else
     		return;
@@ -561,7 +573,7 @@ function generate_files()
 
     	writerlog.w("机芯 = " + allInfos[infoCnt].chip + ", 机型 = " + allInfos[infoCnt].model + "\n");
     
-    	var temp_config_filename = getTempGernalConfigFileName(allInfos[infoCnt].chip, allInfos[infoCnt].model);
+    	var temp_config_filename = getTempGernalConfigFileName(allInfos[infoCnt].chip, allInfos[infoCnt].model, allInfos[infoCnt].panel);
     
     	var list = allInfos[infoCnt].list;
     	for (var L in list)
@@ -581,14 +593,15 @@ function generate_files()
     			}
     			writer.writeGeneralConfigEnd(temp_config_filename);
     
-                filelist[filetotal++] = CreateFileInfo(temp_config_filename, "general_config.xml", allInfos[infoCnt].chip, allInfos[infoCnt].model, "general_config");
+                filelist[filetotal++] = CreateFileInfo(temp_config_filename, "general_config.xml", 
+                    allInfos[infoCnt].chip, allInfos[infoCnt].model, allInfos[infoCnt].panel, "general_config");
     		}
     		else if (curitem.type == "system_settings")
     		{
     		    writerlog.w("生成临时的setting文件 \n");
-    		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, curitem, getTmpDir(), 
-    		        function(tempName, finalName, chip, model, typeStr){
-    		            filelist[filetotal++] = CreateFileInfo(tempName, finalName, chip, model, typeStr);
+    		    settingfiles.generate(allInfos[infoCnt].chip, allInfos[infoCnt].model, allInfos[infoCnt].panel, curitem, getTmpDir(), 
+    		        function(tempName, finalName, chip, model, panel, typeStr){
+    		            filelist[filetotal++] = CreateFileInfo(tempName, finalName, chip, model, panel, typeStr);
     		        });
     		}
     		else
@@ -619,18 +632,18 @@ function generate_files()
 	    infoCnt = 0;
 	    targetCnt = 0;
 	    
-	    var content1 = fs.readFileSync(getTempGernalConfigFileName(allInfos[infoCnt].chip, allInfos[infoCnt].model), "utf-8");
+	    var content1 = fs.readFileSync(getTempGernalConfigFileName(allInfos[infoCnt].chip, allInfos[infoCnt].model, allInfos[infoCnt].panel), "utf-8");
         var content2 = fs.readFileSync(getTempMkFileName(allTargets[targetCnt].name), "utf-8");
         var content4 = fs.readFileSync(getTempPropFileName(allTargets[targetCnt].name), "utf-8");
 
-        var content3_1 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_main.xml", "utf-8");
-        var content3_2 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_guide.xml", "utf-8");
-        var content3_3 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_connect.xml", "utf-8");
-        var content3_4 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-market_show_configuration.xml", "utf-8");
-        var content3_5 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_general.xml", "utf-8");
-        var content3_6 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-ssc_item.xml", "utf-8");
-        var content3_7 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-setting_picture_sound.xml", "utf-8");
-        var content3_8 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "-driverbase_net_config.ini", "utf-8");
+        var content3_1 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_main.xml", "utf-8");
+        var content3_2 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_guide.xml", "utf-8");
+        var content3_3 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_connect.xml", "utf-8");
+        var content3_4 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-market_show_configuration.xml", "utf-8");
+        var content3_5 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_general.xml", "utf-8");
+        var content3_6 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-ssc_item.xml", "utf-8");
+        var content3_7 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_picture_sound.xml", "utf-8");
+        var content3_8 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-driverbase_net_config.ini", "utf-8");
 
         var content3 = content3_1 + content3_2 + content3_3 + content3_4 + content3_5 + content3_6 + content3_7 + content3_8 ;
         if (mod_callback != null)
@@ -681,7 +694,7 @@ function generate_device_tab()
     var endStr = "\n\n\n\n";
     fs.appendFileSync(deviceTabFileName, endStr);
     
-    filelist[filetotal++] = CreateFileInfo(deviceTabFileName, "device_tab.mk", null, null, "mk");
+    filelist[filetotal++] = CreateFileInfo(deviceTabFileName, "device_tab.mk", null, null, null, "mk");
 }
 
 function generateMkFile(target_info)
@@ -718,7 +731,7 @@ function generateMkFile(target_info)
 	}
 	writer.writeAndroidmkEnd(mk_filename);
 
-    filelist[filetotal++] = CreateFileInfo(mk_filename, targetName + ".mk", null, null, "mk");
+    filelist[filetotal++] = CreateFileInfo(mk_filename, targetName + ".mk", null, null, null, "mk");
 }
 
 // build.prop
@@ -741,12 +754,12 @@ function generate_prop_file(target_info)
     
     fs.appendFileSync(prop_filename, '\n\n\n\n');
 
-    filelist[filetotal++] = CreateFileInfo(prop_filename, targetName + ".prop", null, null, "prop");
+    filelist[filetotal++] = CreateFileInfo(prop_filename, targetName + ".prop", null, null, null, "prop");
 }
 
-function getTempGernalConfigFileName(chip, model)
+function getTempGernalConfigFileName(chip, model, panel)
 {
-    return getTmpDir() + chip + "_" + model + "-general_config" + ".xml";
+    return getTmpDir() + chip + "_" + model + "_" + panel + "-general_config" + ".xml";
 }
 
 function getTempMkFileName(targetProductName)
@@ -796,7 +809,10 @@ function copyFileAndCommit()
 	    
 	    if (fileinfo.typeStr == "general_config")
 	    {
-	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/config/";
+	        if (fileinfo.panel == 0)
+	            config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/config/";
+	        else
+	            config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/" + fileinfo.panel + "/config/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
 	    }
 	    else if (fileinfo.typeStr == "prop")
@@ -811,7 +827,10 @@ function copyFileAndCommit()
 	    }
 	    else
 	    {
-	        config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/config/";
+	        if (fileinfo.panel == 0)
+	            config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/config/";
+	        else
+	            config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/" + fileinfo.panel + "/config/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
 	    }
 	    commitmsg += "修改" + config_file_relpath + ";\n";
@@ -977,29 +996,29 @@ function getTmpDir()
 //////////////////////////////////////////                    //////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Generator.prototype.generate = function(chip, model, callback)
+Generator.prototype.generate = function(chip, model, panel, callback)
 {
-    generateFiles(chip, model, "chip_and_model", 0, callback);
+    generateFiles(chip, model, panel, "chip_and_model", 0, callback);
 }
 
-Generator.prototype.preview = function(chip, model, tempflag, callback)
+Generator.prototype.preview = function(chip, model, panel, tempflag, callback)
 {
-	generateFiles(chip, model, "preview", tempflag, callback);
+	generateFiles(chip, model, panel, "preview", tempflag, callback);
 }
 
 Generator.prototype.generateByTargetProduct = function(targetProduct, callback)
 {
-    generateFiles("", targetProduct, "targetProduct", 0, callback);
+    generateFiles("", targetProduct, 0, "targetProduct", 0, callback);
 }
 
 Generator.prototype.generateByChip = function(chip, callback)
 {
-    generateFiles(chip, "", "chip_only", 0, callback);
+    generateFiles(chip, "", 0, "chip_only", 0, callback);
 }
 
 Generator.prototype.generateByModel = function(model, callback)
 {
-    generateFiles("", model, "model_only", 0, callback);
+    generateFiles("", model, 0, "model_only", 0, callback);
 }
 
 
@@ -1019,7 +1038,7 @@ function show_callback(errno, result)
 //generator.generate("6S57", "K5S",  null);
 //generator.generateByModel("E6000", null);
 //generator.preview("5S02", "15U",  show_preview_text_test);
-//generator.generate("5S02a", "15U",  show_callback);
+//generator.generate("5S02a", "15U", 0, show_callback);
 //generator.generateByTargetProduct("p201", show_callback);
 
 
