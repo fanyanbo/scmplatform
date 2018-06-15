@@ -23,6 +23,7 @@ var olrplayerid = null;
 
 var deleteChip = null;
 var deleteModel = null;
+var deletePanel = null;
 
 var fromEmail = null;
 var toEmail = "SKY058689@skyworth.com";
@@ -503,15 +504,19 @@ function buttonInitAfter() {
 	$(".eachcheck").click(function() {
 		var _cIndex = $(".eachcheck").index($(this));
 		console.log("点击的是第" + _cIndex + "个 eachcheck class");
-		$("#page1_check_chip").html($(".new_productBox .chip")[_cIndex].innerHTML);
-		$("#page1_check_model").html($(".new_productBox .model")[_cIndex].innerHTML);
-		$("#page1_check_panel").html($(".new_productBox .size")[_cIndex].innerHTML);
+		var _chip = $(".new_productBox .chip")[_cIndex].innerHTML;
+		var _model = $(".new_productBox .model")[_cIndex].innerHTML;
+		var _panel = $(".new_productBox .size")[_cIndex].innerHTML;
+		
+		$("#page1_check_chip").html(_chip);
+		$("#page1_check_model").html(_model);
+		$("#page1_check_panel").html(_panel);
 		$('#page1_examine').modal();
 		
 		var searchObj = {
-			"chip" : $(".new_productBox .chip")[_cIndex].innerHTML,
-			"model" : $(".new_productBox .model")[_cIndex].innerHTML,
-			"panel" : $(".new_productBox .size")[_cIndex].innerHTML
+			"chip" : _chip,
+			"model" : _model,
+			"panel" : parseInt(_panel)
 		}
 		var _search = JSON.stringify(searchObj);
 		var node = '{"data":' + _search + '}';
@@ -532,8 +537,10 @@ function buttonInitAfter() {
 		$("#lable1SubmitTwo").attr("catagory","5");
 		deleteChip = $(".chip")[_aIndex].innerText;
 		deleteModel = $(".model")[_aIndex].innerText;
+		deletePanel = $(".size")[_aIndex].innerText;
 		$("#myDeleteModalEnsure").attr("chip",$(".chip")[_aIndex].innerText);
 		$("#myDeleteModalEnsure").attr("model",$(".model")[_aIndex].innerText);
+		$("#myDeleteModalEnsure").attr("panel",$(".size")[_aIndex].innerText);
 		$("#myDeleteModalLabel").text("单项删除");
 		$('#myDeleteModal').modal();
 		$(".modal-backdrop").addClass("new-backdrop");
@@ -646,12 +653,17 @@ function page2AEC(number) {
 	var _type = $("#lable1SubmitTwo").attr("catagory");//1-新增、2-编辑、3-复制、4-预览、5-删除、6-增加尺寸
 	var _chip = $(".chip")[number].innerText;
 	var	_model = $(".model")[number].innerText;
-	var	_target = $(".target_product")[number].innerText;
-	
+	var	_panel = $(".size")[number].innerText;
 	console.log(_type);
 	if (_type == 2||_type == 3||_type == 6) {
 		console.log("点击了编辑或者复制或者增加尺寸" + number);
-		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
+		var editObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"panel" : parseInt(_panel)
+		}
+		var _edit = JSON.stringify(editObj);
+		var node = '{"data":' + _edit + '}';
 		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 	} else if(_type == 4) {
@@ -659,6 +671,7 @@ function page2AEC(number) {
 		var reviewObj = {
 			"chip" : _chip,
 			"model" : _model,
+			"panel" : parseInt(_panel),
 			"flag" : 0,
 		}
 		var _review = JSON.stringify(reviewObj);
@@ -997,16 +1010,21 @@ function getAndCheckAndSendAllData(){
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
 			if (type == 1|| type == 3 ||type == 6) {
+				if (type == 6) {
+					var _panel = $("#lable2Size1").val();
+				} else{
+					var _panel = 0;
+				}
 				//判断该 机芯+机型+尺寸的产品是否已存在
 				var checkObj = {
 					"chip" : $("#lable2Chip").val(),
 					"model" : $("#lable2Model").val(),
-					"panel" : $("#lable2Size1").val()
+					"panel" : parseInt(_panel)
 				}
 				var _check = JSON.stringify(checkObj);
 				var node = '{"data":' + _check + '}';
 				console.log(node);
-				sendHTTPRequest(coocaaVersion+"/product/queryByChipModel", node, checkResultInfo);
+				sendHTTPRequest(coocaaVersion+"/product/queryByChipModelPanel", node, checkResultInfo);
 			} else{
 				//弹出确认框
 				if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length+changeProp.length == 0) {
@@ -1263,16 +1281,15 @@ function getBaseValue(){
 	var _style = document.getElementById("addSize").style.display;
 	console.log(_style != "none");
 	if(_style != "none"){
-		var _panel = 0;
-	}else{
 		var _panel = $("#lable2Size1").val();
-		_panel = parseInt(_panel);
+	}else{
+		var _panel = 0;
 	}
 	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,
 		"model" : _model,
-		"panel" : _panel,
+		"panel" : parseInt(_panel),
 		"targetProduct" : _tp,
 		"androidVersion" : _android,
 		"soc" : _soc,
@@ -1331,13 +1348,15 @@ function productAddResult(){
 					var _desc = "新增该产品";
 					var _reason = "新增";
 					var _chip = $("#lable2Chip").val();
-				var _model = $("#lable2Model").val();
+					var _model = $("#lable2Model").val();
+					var _panel = 0;
 				}else if(type == 2){
 					console.log("编辑数据的日志提交");
 					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'","changeProp":"'+changeProp+'"}';
 					var _reason = document.getElementById("changeReason").value;
 					var _chip = $("#lable2Chip").val();
 					var _model = $("#lable2Model").val();
+					var _panel = 0;
 				}else if(type == 5){
 					console.log("删除数据的日志提交");
 					var _desc = '删除该机芯机型的配置表';
@@ -1345,6 +1364,7 @@ function productAddResult(){
 					console.log(_reason);
 					var _chip = $("#myDeleteModalEnsure").attr("chip");
 					var	_model = $("#myDeleteModalEnsure").attr("model");
+					var	_panel = $("#myDeleteModalEnsure").attr("panel");
 					$('#myDeleteModal').modal('hide');
 				}
 				//0审核通过\1待审核\2审核未通过
@@ -1353,6 +1373,7 @@ function productAddResult(){
 				var historyObj = {
 					"chip" : _chip,
 					"model" : _model,
+					"panel" : parseInt(_panel),
 					"reason" : _reason,
 					"state" : _state,
 					"userName" : _author,
@@ -1375,7 +1396,6 @@ function productHistoryAdd(){
 			if(data.resultCode == "0") {
 				console.log("日志数据提交成功,发送邮件");
 				document.getElementById("myEditEnsureDiv").style.display = "none";
-				//page2Fresh();
 			}
 		}
 		sendEmail();
@@ -1587,11 +1607,9 @@ function myEditorAddSubmit(num){
 	var _base = getBaseValue();
 	var _config = getConfigValue();
 	var _sys = getSysValue();
-	//var _prop = getPropValue();
 	_base = JSON.stringify(_base);
 	_config = JSON.stringify(_config);
 	_sys = JSON.stringify(_sys);
-	//_prop = JSON.stringify(_prop);
 	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys +'}';
 	console.log(node);
 	if (num == 1) {
@@ -1639,8 +1657,9 @@ function sendEmail(){
 		console.log("删除了产品");
 		var _chip = deleteChip;
 		var _model = deleteModel;
+		var _panel = deletePanel;
 		console.log(_chip+"--------"+_model);
-		var maildata = "用户："+loginusername+"<br/>删除了机芯："+_chip+",机型："+_model+"的配置文档";
+		var maildata = "用户："+loginusername+"<br/>删除了机芯："+_chip+",机型："+_model+",尺寸："+_panel+"的配置文档";
 		maildata += "<br/>请前往《待审核文件》菜单进行审核处理<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>";
 	}
     var emailObj = {
