@@ -102,7 +102,6 @@ function handleTableData(arr) {
 	var getdataArray2 = new Array();
 	for(var i = 0; i < arr.length; i++) {
 		var eachItem2 = {
-//			"checkout": "<input name='checkbox' type='checkbox' value='checkbox'/>",
 			"number" : (i+1),
 			"model": arr[i].model,
 			"chip": arr[i].chip,
@@ -349,9 +348,7 @@ function getMKByTPResult() {
 	}
 }
 function clearMKLastWork(){
-	console.log($(".mkitems").length);
 	for (var i=0; i<$(".mkitems").length; i++) {
-//		document.getElementsByClassName("mkitems")[i].removeAttribute('checked');
 		document.getElementsByClassName("mkitems")[i].checked = false;
 	}
 }
@@ -370,13 +367,11 @@ function buttonInit() {
 		closePage2Model("myAddCloseDiv");
 	});
 	$("#page2_add").click(function() {
-		//1-新增、2-修改、3-复制、4-预览、5-删除
-		$("#lable1SubmitTwo").attr("catagory","1");
-		console.log("点击了新增");
-		resetAllInfo();//删除前面的操作痕迹
+		resetAllInfo(1);//删除前面的操作痕迹
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
 		$(".page2_boxes")[0].style.display = "block";
+		$("#page2Modal1Label").html("新增");
 	});
 	$("#myDeleteModalEnsure").click(function(){
 		console.log("点击了确认框的确认按钮");
@@ -450,12 +445,10 @@ function buttonInit() {
 	$("#myEditEnsureX").click(function() {
 		console.log("修改提示框的X按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-//		page2Fresh()
 	});
 	$("#myEditCancle").click(function() {
 		console.log("修改提示框的取消按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-//		page2Fresh()
 	});
 	$("#myEditEnsure").click(function() {
 		console.log("修改配置项的提交");
@@ -507,11 +500,10 @@ function buttonInitAfter() {
 	});
 	$(".eachedit").click(function() {
 		var _aIndex = $(".eachedit").index($(this));
-		//1-新增、2-修改、3-复制、4-预览、5-删除
-		$("#lable1SubmitTwo").attr("catagory","2");
-		resetAllInfo();//删除前面的操作痕迹
+		resetAllInfo(2);//删除前面的操作痕迹
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
+		$("#page2Modal1Label").html("编辑");
 		page2AEC(_aIndex);
 		//document.getElementById("loading").style.display = "block";
 	});
@@ -531,24 +523,22 @@ function buttonInitAfter() {
 	/*单项复制*/
 	$(".eachcopy").click(function() {
 		var _aIndex = $(".eachcopy").index($(this));
-		//1-新增、2-修改、3-复制、4-预览、5-删除
-		$("#lable1SubmitTwo").attr("catagory","3");
-		resetAllInfo();//删除前面的操作痕迹
+		resetAllInfo(3);//删除前面的操作痕迹
 		page2AEC(_aIndex);
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
+		$("#page2Modal1Label").html("复制");
 		//document.getElementById("loading").style.display = "block";
 	});
 	/*单项预览*/
 	$(".eachpreview").click(function() {
 		var _aIndex = $(".eachpreview").index($(this));
-		//1-新增、2-修改、3-复制、4-预览、5-删除
-		$("#lable1SubmitTwo").attr("catagory","4");
+		resetAllInfo(4);//删除前面的操作痕迹
 		page2AEC(_aIndex);
+		$("#page2Modal1Label").html("预览");
 		//document.getElementById("loading").style.display = "block";
 	});
 	$("#page1_close1").click(function() {
-		//document.getElementById("descriptTbody").innerHTML = "";
 		document.getElementById("contenttable").innerHTML = "";
 		$("#page1_examine").modal('hide');
 	});
@@ -688,9 +678,10 @@ function clearAllInfo() {
 	document.getElementById("myPropBox").innerHTML = "";
 }
 
-function resetAllInfo(){
+function resetAllInfo(num){
 	colorstatus(0);//焦点落在第一个tabs上
-	
+	//1-新增、2-修改、3-复制、4-预览
+	$("#lable1SubmitTwo").attr("catagory",num);
 	document.getElementById("lable2Chip").value = "";
 	document.getElementById("lable2Model").value = "";
 	document.getElementById("lable2TargetProduct").value = "";
@@ -843,7 +834,7 @@ function getPreviewInfo(){
                 console.log("lxw " + "预览-成功");
 //              document.getElementById("loading").style.display = "none";
                 $("#myPreviewModalLabel").text("预览");
-				$('#myPreviewModal').modal(); //弹出编辑页（即新增页，只是每项都有数据，这个数据从后台获取）
+				$('#myPreviewModal').modal();
 				$(".modal-backdrop").addClass("new-backdrop");
 				$("#myPreviewModal").find("li")[0].className = "presentation active";
 				$("#myPreviewModal").find("li")[1].className = "presentation";
@@ -927,11 +918,6 @@ function getAndCheckAndSendAllData(){
 				sendHTTPRequest(coocaaVersion+"/product/queryByChipModel", node, checkResultInfo);
 			} else{
 				//弹出确认框
-				console.log(changeAdd);
-				console.log(changeReduce);
-				console.log(changeConf);
-				console.log(changeDev);
-				console.log(changeProp);
 				if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length+changeProp.length == 0) {
 					console.log("未做任何修改");
 					document.getElementById("page2Modal1ErrorInfo").style.display = "block";

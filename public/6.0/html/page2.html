@@ -1,19 +1,14 @@
-<!--内容列表-->
 <html>
-
 	<head>
 		<meta charset="utf-8" />
 		<title>配置文件管理</title>
-
 		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.min.css">
 		<link rel="stylesheet" type="text/css" href="../css/pages.css">
 		<link rel="stylesheet" type="text/css" href="../css/page2.css">
 		<script src="../js/jquery.min.js"></script>
 		<script src="../js/bootstrap.min.js"></script>
-
 	</head>
-
 	<body>
 		<div id="page2">
 			<fieldset class="inputandselectwidth">
@@ -212,8 +207,28 @@
 												</div>
 											</td>
 										</tr>
+										<tr id="addSize">
+											<td>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Size1" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">尺寸&nbsp;:</label>
+													<input type="text" value="" name="尺寸" id="lable2Size1" class="col-xs-6 col-xs-push-1 inputstyle2 fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+												</div>
+											</td>
+										</tr>
+										<tr id="changeSize">
+											<td>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Size2" class="control-label text-right" title="size" style="width: 41.67%;float: left;">尺寸&nbsp;:</label>
+													<select id="lable2Size2" name="尺寸" class="col-xs-6 col-xs-push-1 inputstyle2 text-left" onchange="changeSleect(this.value)"></select>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<input type="text" name="" id="sizeInput" class="col-xs-6 col-xs-push-1 inputstyle2 fuzzySearch text-left" value=""/>
+													<span id="sizeButton" for="sizeInput" class="control-label text-right" title="oSize">增加尺寸</span>
+												</div>
+											</td>
+										</tr>
 										<tr>
-											<td style="padding: 0;">
+											<td>
 												<div class="btn-group">
 													<button class="page2_tabs btn-success" style="color: black;" firstget="false">MK</button>
 													<button class="page2_tabs" firstget="false">config文件</button>

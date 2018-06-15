@@ -184,7 +184,7 @@
 	padding-left: 5px;
 }
 
-.inputstyle{
+.inputstyle,.inputstyle2{
 	background-color: #e9f5f0;
 	height: 30px;
 	padding-left: 5px;
@@ -390,4 +390,16 @@
 	overflow:scroll;
     background-color: palegoldenrod;
     padding-left: 10px;
+}
+#addSize,#changeSize{
+	display: none;
+}
+#lable2Size2{
+	
+}
+#sizeButton{
+	float: right;
+    border-radius: 5px;
+    padding: 4px 5px;
+	background-color: honeydew;
 }

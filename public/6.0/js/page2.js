@@ -344,9 +344,7 @@ function getMKByTPResult() {
 	}
 }
 function clearMKLastWork(){
-	console.log($(".mkitems").length);
 	for (var i=0; i<$(".mkitems").length; i++) {
-//		document.getElementsByClassName("mkitems")[i].removeAttribute('checked');
 		document.getElementsByClassName("mkitems")[i].checked = false;
 	}
 }
@@ -365,13 +363,11 @@ function buttonInit() {
 		closePage2Model("myAddCloseDiv");
 	});
 	$("#page2_add").click(function() {
-		//1-新增、2-修改、3-复制、4-预览、5-删除
-		$("#lable1SubmitTwo").attr("catagory","1");
-		console.log("点击了新增");
 		resetAllInfo(1);//删除前面的操作痕迹
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
 		$(".page2_boxes")[0].style.display = "block";
+		$("#page2Modal1Label").html("新增");
 	});
 	$("#myDeleteModalEnsure").click(function(){
 		console.log("点击了确认框的确认按钮");
@@ -445,12 +441,10 @@ function buttonInit() {
 	$("#myEditEnsureX").click(function() {
 		console.log("修改提示框的X按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-//		page2Fresh()
 	});
 	$("#myEditCancle").click(function() {
 		console.log("修改提示框的取消按钮");
 		document.getElementById("myEditEnsureDiv").style.display = "none";
-//		page2Fresh()
 	});
 	$("#myEditEnsure").click(function() {
 		console.log("修改配置项的提交");
@@ -475,6 +469,9 @@ function buttonInit() {
 	$("#myAddEnsureX").click(function(){
 		$("#myAddEnsureDiv").css("display","none");
 	});
+	$("#sizeButton").click(function(){
+		insertOptions();
+	});
 }
 
 function colorstatus(number){
@@ -486,6 +483,42 @@ function colorstatus(number){
 	$(".page2_boxes")[number].style.display = "block";
 	$(".page2_tabs")[number].style.backgroundColor = "#5cb85c";
 	$(".page2_tabs")[number].style.backgroundColor = "#4cae4c";
+}
+
+function insertOptions(){
+	var _size = $("#sizeInput").val();
+	if (_size==null||_size=="") {
+		document.getElementById("page2Modal1ErrorInfo").style.display = "block";
+		document.getElementById("page2Modal1ErrorInfo").innerHTML =  "新增尺寸项不能为空";
+		setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
+	}else{
+		console.log("不为空。");
+		if (isExistOption("lable2Size2",_size)) {
+			console.log("新增的值在select中存在，不可添加");
+			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
+			document.getElementById("page2Modal1ErrorInfo").innerHTML =  "新增尺寸项已经存在";
+			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
+		} else{
+			console.log("新增的值在select中不存在，可添加");
+			$("#lable2Size2").append("<option value='"+_size+"' class='sizeOptions' deletable='true'>"+_size+"<span class='glyphicon glyphicon-remove sizeDelete'></span></option>"); 
+		}
+	}
+}
+
+function isExistOption(id,value) {  
+    var isExist = false;  
+    var count = $('#'+id).find('option').length;  
+  	for(var i=0;i<count;i++){     
+     	if($('#'+id).get(0).options[i].value == value)     {     
+            isExist = true;     
+   	        break;     
+        }     
+    }     
+    return isExist;  
+}
+function changeSleect(value){
+	console.log(value);
+	
 }
 
 function buttonInitAfter() {
@@ -502,11 +535,10 @@ function buttonInitAfter() {
 	});
 	$(".eachedit").click(function() {
 		var _aIndex = $(".eachedit").index($(this));
-		//1-新增、2-修改、3-复制、4-预览、5-删除
-		$("#lable1SubmitTwo").attr("catagory","2");
 		resetAllInfo(2);//删除前面的操作痕迹
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
+		$("#page2Modal1Label").html("编辑");
 		page2AEC(_aIndex);
 		//document.getElementById("loading").style.display = "block";
 	});
@@ -526,24 +558,22 @@ function buttonInitAfter() {
 	/*单项复制*/
 	$(".eachcopy").click(function() {
 		var _aIndex = $(".eachcopy").index($(this));
-		//1-新增、2-修改、3-复制、4-预览、5-删除
-		$("#lable1SubmitTwo").attr("catagory","3");
 		resetAllInfo(3);//删除前面的操作痕迹
 		page2AEC(_aIndex);
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
+		$("#page2Modal1Label").html("复制");
 		//document.getElementById("loading").style.display = "block";
 	});
 	/*单项预览*/
 	$(".eachpreview").click(function() {
 		var _aIndex = $(".eachpreview").index($(this));
-		//1-新增、2-修改、3-复制、4-预览、5-删除
-		$("#lable1SubmitTwo").attr("catagory","4");
+		resetAllInfo(4);//删除前面的操作痕迹
 		page2AEC(_aIndex);
+		$("#page2Modal1Label").html("预览");
 		//document.getElementById("loading").style.display = "block";
 	});
 	$("#page1_close1").click(function() {
-		//document.getElementById("descriptTbody").innerHTML = "";
 		document.getElementById("contenttable").innerHTML = "";
 		$("#page1_examine").modal('hide');
 	});
@@ -712,6 +742,8 @@ function clearAllInfo() {
 
 function resetAllInfo(num){
 	colorstatus(0);//焦点落在第一个tabs上
+	//1-新增、2-修改、3-复制、4-预览
+	$("#lable1SubmitTwo").attr("catagory",num);
 	document.getElementById("lable2Chip").value = "";
 	document.getElementById("lable2Model").value = "";
 	document.getElementById("lable2TargetProduct").value = "";
@@ -721,6 +753,8 @@ function resetAllInfo(num){
 	document.getElementById("lable2Memory").value = "";
 	document.getElementById("lable2GitBranch").value = "";
 	document.getElementById("lable2Platform").value = "";
+	document.getElementById("lable2Size1").value = "";
+	document.getElementById("lable2Size2").value = "";
 	document.getElementById("lable2Chip").removeAttribute('disabled');
 	document.getElementById("lable2Chip").style.color = "black";
 	document.getElementById("lable2Model").removeAttribute('disabled');
@@ -752,10 +786,18 @@ function resetAllInfo(num){
 		} else if($(".mkitems")[k].getAttribute("type") == "radio"){
 			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
 			document.getElementsByClassName("mkitems")[k].checked = false;
+			document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
+			document.getElementsByClassName("mkradio")[0].checked = true;
 		}
 	}
-	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
-	document.getElementsByClassName("mkradio")[0].checked = true;
+	if (num == 1||num==3) {
+		//新增或者复制
+		$("#addSize").css("display","table-row");
+		$("#changeSize").css("display","none");
+	} else {
+		$("#addSize").css("display","none");
+		$("#changeSize").css("display","table-row");
+	}
 }
 
 //点击复制或者编辑
@@ -784,6 +826,7 @@ function CommonDataInsert2(type,arr){
 	$("#lable2Memory").val(arr[0].memorySize);
 	$("#lable2GitBranch").val(arr[0].gitBranch);
 	$("#lable2Platform").val(arr[0].platform);
+	
 	if (type == 2) {//编辑
 		$("#lable2Chip").val(arr[0].chip);
 		$("#lable2Chip").css("color","red");
@@ -944,10 +987,11 @@ function getAndCheckAndSendAllData(){
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
 			if (type == 1|| type == 3) {
-				//判断该机芯机型的产品是否已存在
+				//判断该 机芯+机型+尺寸的产品是否已存在
 				var checkObj = {
 					"chip" : $("#lable2Chip").val(),
-					"model" : $("#lable2Model").val()
+					"model" : $("#lable2Model").val(),
+					"size" : $("#lable2Size2").val()
 				}
 				var _check = JSON.stringify(checkObj);
 				var node = '{"data":' + _check + '}';
@@ -955,11 +999,6 @@ function getAndCheckAndSendAllData(){
 				sendHTTPRequest(coocaaVersion+"/product/queryByChipModel", node, checkResultInfo);
 			} else{
 				//弹出确认框
-				console.log(changeAdd);
-				console.log(changeReduce);
-				console.log(changeConf);
-				console.log(changeDev);
-				console.log(changeProp);
 				if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length+changeProp.length == 0) {
 					console.log("未做任何修改");
 					document.getElementById("page2Modal1ErrorInfo").style.display = "block";
@@ -1005,11 +1044,14 @@ function checkResultInfo(){
 				if (data.resultData.length == 1) {
 					//已存在
 					document.getElementById("page2Modal1ErrorInfo").style.display = "block";
-					document.getElementById("page2Modal1ErrorInfo").innerHTML = "该机芯机型的配置项已经存在。";
+					document.getElementById("page2Modal1ErrorInfo").innerHTML = "该机芯+机型+尺寸的配置项已经存在。";
 					setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 				} else{
 					//不存在
-					document.getElementById("myAddEnsureDiv").style.display = "block";
+					var _size = $("#lable2Size1").val();
+					var _info = "确定增加此项吗？只增加尺寸"+ _size+ "的配置！";
+					$("#myAddEnsureDiv").css("display","block");
+					$("#areYouSure").html(_info);
 				}
 			}
 		}
@@ -1209,6 +1251,12 @@ function getBaseValue(){
 	var _memory = $("#page2Modal1Table .inputstyle")[6].value;
 	var _branch = $("#page2Modal1Table .inputstyle")[7].value;
 	var _platform = $("#page2Modal1Table .inputstyle")[8].value;
+	console.log(document.getElementById("addSize").style.display);
+	if (document.getElementById("addSize").style.display == "table-row") {
+		var _size = $("#lable2Size1").val();
+	} else{
+		var _size = $("#lable2Size2").val();
+	}
 	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,
@@ -1222,7 +1270,8 @@ function getBaseValue(){
 		"auditState" : 1,
 		"modifyState" : 2,
 		"platform" : _platform,
-		"userName" : loginusername
+		"userName" : loginusername,
+		"size" : _size
 	}
 	baseObj = JSON.stringify(baseObj);
 	return baseObj;
@@ -1257,20 +1306,6 @@ function getSysValue(){
 	}
 	return sysData;
 }
-//function getPropValue(){
-//	var propData = [];
-//	console.log($(".propitem").length);
-//	for (var i=0; i<$(".propitem").length; i++) {
-//		var oApropInfo = {
-//			"engName": "",
-//			"curValue": ""
-//		};
-//		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
-//		oApropInfo.curValue = $(".propitem")[i].value;
-//		propData.push(oApropInfo);
-//	}
-//	return propData;
-//}
 
 function productAddResult(){
 	if(this.readyState == 4) {
