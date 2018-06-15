@@ -211,19 +211,7 @@
 											<td>
 												<div class="col-xs-4 text-left inputdiv">
 													<label for="lable2Size1" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">尺寸&nbsp;:</label>
-													<input type="text" value="" name="尺寸" id="lable2Size1" class="col-xs-6 col-xs-push-1 inputstyle2 fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
-												</div>
-											</td>
-										</tr>
-										<tr id="changeSize">
-											<td>
-												<div class="col-xs-4 text-left inputdiv">
-													<label for="lable2Size2" class="control-label text-right" title="size" style="width: 41.67%;float: left;">尺寸&nbsp;:</label>
-													<select id="lable2Size2" name="尺寸" class="col-xs-6 col-xs-push-1 inputstyle2 text-left" onchange="changeSleect(this.value)"></select>
-												</div>
-												<div class="col-xs-4 text-left inputdiv">
-													<input type="text" name="" id="sizeInput" class="col-xs-6 col-xs-push-1 inputstyle2 fuzzySearch text-left" value=""/>
-													<span id="sizeButton" for="sizeInput" class="control-label text-right" title="oSize">增加尺寸</span>
+													<input type="text" value="" name="尺寸" id="lable2Size1" class="col-xs-6 col-xs-push-1 inputstyle2 fuzzySearch text-left" onkeyup="value=value.replace(/[^0-9]/g,'') ">
 												</div>
 											</td>
 										</tr>
