@@ -51,6 +51,56 @@ function buttonInitBefore() {
 		}
 		$(".modal-backdrop").addClass("new-backdrop");
 	});
+	
+	/*枚举1各个图标的点击事件*/
+	$(".menuEdit").click(function() {
+		var _cIndex3 = $(".menuEdit").index($(this));
+		console.log(_cIndex3);
+		if(_cIndex3 == 0) {
+			console.log("lxw " + "点击的是添加");
+			var parentDiv = document.getElementsByClassName("ADCSEfficient")[0];
+			var child1 = document.createElement("div");
+			child1.setAttribute("class", "menuUnit");
+			var child2 = document.createElement("input");
+			child2.setAttribute("type", "text");
+			child2.setAttribute("class", "menuUnitInput");
+			child2.setAttribute("placeholder", "Value");
+			child1.appendChild(child2);
+			parentDiv.appendChild(child1);
+		} else if(_cIndex3 == 1) {
+			console.log("lxw " + "点击的是删除");
+			var forDeleteObject = document.getElementsByClassName("ADCSEfficient")[0];
+			var deleteObject = document.getElementsByClassName("menuUnit");
+			var curLength = deleteObject.length;
+			console.log("lxw " + curLength);
+			if(curLength != 0) {
+				forDeleteObject.removeChild(document.getElementsByClassName("menuUnit")[curLength - 1]);
+			} else {
+				console.log("lxw 已经删除完...");
+			}
+		} else if(_cIndex3 == 2) {
+			console.log("lxw " + "点击的是全部删除");
+			var appendObject = document.getElementsByClassName("ADCSEfficient")[0];
+			appendObject.innerHTML = "";
+		}
+	});
+	/*config-保存*/
+	$("#configSubmit").click(function() {
+		console.log("asdasda");
+		saveInConfig();
+	});
+	/*mk-保存*/
+	$("#moduleSubmit").click(function() {
+		saveInMK();
+	});
+	/*sys-保存*/
+	$("#sysSubmit").click(function() {
+		saveInSys();
+	});
+	/*prop-保存*/
+	$("#propSubmit").click(function() {
+		saveInProp();
+	});
 }
 
 function moduleCategoryQueryResult() {
@@ -132,28 +182,13 @@ function buttonInitAfter() {
 	/*配置管理板块-修改 */
 	var _aPart, _aIndex, _cHidedata = "";
 	$(".page7_a").click(function() {
+		console.log("sadasd");
 		_aIndex = $(".page7_a").index($(this));
 		_cHidedata = $(this).attr("hidedata");
 		_aPart = $(this).attr("part");
 		eachPartChange(_aPart, _cHidedata);
 	});
-
-	/*config-保存*/
-	$("#configSubmit").click(function() {
-		saveInConfig();
-	});
-	/*mk-保存*/
-	$("#moduleSubmit").click(function() {
-		saveInMK();
-	});
-	/*sys-保存*/
-	$("#sysSubmit").click(function() {
-		saveInSys();
-	});
-	/*prop-保存*/
-	$("#propSubmit").click(function() {
-		saveInProp();
-	});
+	
 	$(".defaultOption").click(function() {
 		var _cIndex2 = $(".defaultOption").index($(this));
 		var _box1 = $(this).attr("boxone");
@@ -168,37 +203,6 @@ function buttonInitAfter() {
 		var _box2 = $(this).attr("boxtwo");
 		document.getElementById(_box1).style.display = "block";
 		document.getElementById(_box2).style.display = "none";
-	});
-	/*枚举1各个图标的点击事件*/
-	$(".menuEdit").click(function() {
-		var _cIndex3 = $(".menuEdit").index($(this));
-		if(_cIndex3 == 0) {
-			console.log("lxw " + "点击的是添加");
-			var parentDiv = document.getElementsByClassName("ADCSEfficient")[0];
-			var child1 = document.createElement("div");
-			child1.setAttribute("class", "menuUnit");
-			var child2 = document.createElement("input");
-			child2.setAttribute("type", "text");
-			child2.setAttribute("class", "menuUnitInput");
-			child2.setAttribute("placeholder", "Value");
-			child1.appendChild(child2);
-			parentDiv.appendChild(child1);
-		} else if(_cIndex3 == 1) {
-			console.log("lxw " + "点击的是删除");
-			var forDeleteObject = document.getElementsByClassName("ADCSEfficient")[0];
-			var deleteObject = document.getElementsByClassName("menuUnit");
-			var curLength = deleteObject.length;
-			console.log("lxw " + curLength);
-			if(curLength != 0) {
-				forDeleteObject.removeChild(document.getElementsByClassName("menuUnit")[curLength - 1]);
-			} else {
-				console.log("lxw 已经删除完...");
-			}
-		} else if(_cIndex3 == 2) {
-			console.log("lxw " + "点击的是全部删除");
-			var appendObject = document.getElementsByClassName("ADCSEfficient")[0];
-			appendObject.innerHTML = "";
-		}
 	});
 }
 
@@ -254,12 +258,15 @@ function editConfigModel(data) {
 	} else {
 		$("#configString").css("display", "none");
 		$("#configTableBoxEnum").css("display", "block");
-		var oOpt = new Array();
-		oOpt = JSON.parse(data).options;
+		var oOpt = JSON.parse(data).options.replace(/"/g, '');
+		oOpt = oOpt.replace("[", "");
+		oOpt = oOpt.replace("]", "");
+		oOpt = oOpt.split(",");
+		oOpt = clear_arr_trim(oOpt);
+		console.log(oOpt);
+		console.log(oOpt.length);
 		document.getElementsByClassName("ADCSEfficient")[0].innerHTML = "";
-		console.log(JSON.parse(oOpt));
-		console.log(JSON.parse(oOpt).length);
-		for(var j = 0; j < JSON.parse(oOpt).length; j++) {
+		for(var j = 0; j < oOpt.length; j++) {
 			var parentDiv = document.getElementsByClassName("ADCSEfficient")[0];
 			var child1 = document.createElement("div");
 			child1.setAttribute("class", "menuUnit");
@@ -270,8 +277,8 @@ function editConfigModel(data) {
 			child1.appendChild(child2);
 			parentDiv.appendChild(child1);
 		};
-		for(var k = 0; k < JSON.parse(oOpt).length; k++) {
-			$(".menuUnitInput")[k].value = JSON.parse(oOpt)[k];
+		for(var k = 0; k < oOpt.length; k++) {
+			$(".menuUnitInput")[k].value = oOpt[k];
 		};
 	}
 	$("#configInstr").val(JSON.parse(data).descText);
@@ -910,3 +917,15 @@ function changeSelect(str){
 		document.getElementById("selectSecond").style.display = "block";
 	}
 }
+
+function clear_arr_trim(array) {  
+    for(var i = 0 ;i<array.length;i++)  
+    {  
+        if(array[i] == "" || typeof(array[i]) == "undefined")  
+        {  
+            array.splice(i,1);  
+            i= i-1;  
+        }  
+    }  
+    return array;  
+}  
