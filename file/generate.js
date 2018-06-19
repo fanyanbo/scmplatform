@@ -176,6 +176,8 @@ function generateFiles(
 	infoTxt = "";
 	writerlog.checkLogFile();
 	
+	infoTxt = "";
+	
 	allInfos = new Array();
 	infoTotal = 0;
 	infoCnt = 0;
@@ -187,6 +189,7 @@ function generateFiles(
     filetotal = 0;
     
     product_maps = new Array();
+    maps_total = 0;
 
     connection = mysql.createConnection(dbparam);
 	connection.connect();
@@ -514,7 +517,7 @@ function step_query_prop_data(connection)
 
 function step_query_all_products_info(connection)
 {
-    /*
+    
     sql = "select chip, model, targetProduct from " + tab_products + " order by targetProduct;";
         
     writerlog.w("开始查询: " + sql + "\n");
@@ -563,7 +566,7 @@ function step_query_all_products_info(connection)
         connection.end();
         generate_files();
     });
-    */
+    
     console.log("***********************\n");
         connection.end();
         generate_files();
