@@ -560,7 +560,7 @@ function review(obj,adminControl,deleteFlag){
 }
 //编辑
 function edit(obj,adminControl,deleteFlag){
-    document.getElementById("page4_firstTr").style.display="none";
+    document.getElementById("page5_firstTr").style.display="none";
     $("#myAddModalLabel").attr("num","2");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
 	resetAllInfo();//删除前面的操作痕迹
