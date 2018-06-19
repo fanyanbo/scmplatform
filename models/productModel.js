@@ -464,6 +464,10 @@ ProductModel.prototype.preview = function (data, callback) {
     let model = data.model;
     let panel = data.panel;
     let flag = data.flag; //0表示正式产品预览，1表示待审核或审核未通过产品预览
+    console.log("===>chip = " + chip);
+    console.log("===>model = " + model);
+    console.log("===>panel = " + panel);
+    console.log("===>flag = " + flag);
     generator.preview(chip, model, panel, flag, function(err, results){
       if (err) {
           logger.error("获取预览信息发生错误:" + err);
@@ -519,11 +523,15 @@ ProductModel.prototype.review = function (data, callback) {
               return callback(err);
             }
             //当更新产品表和修改历史表成功后，执行生成文件的操作
+            console.log("===>chip = " + chip);
+            console.log("===>model = " + model);
+            console.log("===>panel = " + panel);
             generator.generate(chip, model, panel, function(err,result){
               if(err) {
                 logger.debug("在审核生成文件时出错：" + err);
                 return callback(err);
               }
+              console.log("===>result = " + result);
               callback(null, result);
             });
             // callback(null, rows);
