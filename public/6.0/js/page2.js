@@ -375,6 +375,7 @@ function buttonInit() {
 		console.log("点击了确认框的确认按钮");
 		var _chip = $("#myDeleteModalEnsure").attr("chip");
 		var	_model = $("#myDeleteModalEnsure").attr("model");
+		var _panel = $("#myDeleteModalEnsure").attr("panel");
 		var content = document.getElementById("changeReason2").value;
 		content = content.replace(/\s*/g,"");
 		console.log(content +"---"+content.length);
@@ -385,6 +386,7 @@ function buttonInit() {
 			var deleteObj = {
 				"chip" : _chip,
 				"model" : _model,
+				"panel" : parseInt(_panel),
 				"userName" : loginusername,
 			}
 			var _delete = JSON.stringify(deleteObj);
@@ -538,13 +540,13 @@ function buttonInitAfter() {
 		deleteChip = $(".chip")[_aIndex].innerText;
 		deleteModel = $(".model")[_aIndex].innerText;
 		deletePanel = $(".size")[_aIndex].innerText;
-		$("#myDeleteModalEnsure").attr("chip",$(".chip")[_aIndex].innerText);
-		$("#myDeleteModalEnsure").attr("model",$(".model")[_aIndex].innerText);
-		$("#myDeleteModalEnsure").attr("panel",$(".size")[_aIndex].innerText);
+		$("#myDeleteModalEnsure").attr("chip",deleteChip);
+		$("#myDeleteModalEnsure").attr("model",deleteModel);
+		$("#myDeleteModalEnsure").attr("panel",deletePanel);
 		$("#myDeleteModalLabel").text("单项删除");
 		$('#myDeleteModal').modal();
 		$(".modal-backdrop").addClass("new-backdrop");
-		$("#deleteInfo").html("确定要删除"+$(".chip")[_aIndex].innerText+"-"+$(".model")[_aIndex].innerText+"的配置表吗？");
+		$("#deleteInfo").html("确定要删除"+deleteChip+"-"+deleteModel+"-"+deletePanel+"的配置表吗？");
 	});
 	/*单项复制*/
 	$(".eachcopy").click(function() {
