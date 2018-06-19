@@ -159,17 +159,16 @@ function generateFiles(
         dbparam.database = "scm";
 
     tab_products = dbConfig.tables.products;
+    tab_propsdata = dbConfig.tables.propsdata;
     if (tempflag != 0)
     {
         tab_configdata = dbConfig.tables.configdata_temp;
         tab_settingsdata = dbConfig.tables.settingsdata_temp;
-        tab_propsdata = dbConfig.tables.propsdata_temp;
     }
     else
     {
         tab_configdata = dbConfig.tables.configdata;
         tab_settingsdata = dbConfig.tables.settingsdata;
-        tab_propsdata = dbConfig.tables.propsdata;
     }
     tab_mkdata = dbConfig.tables.mkdata;
 
