@@ -1,6 +1,6 @@
 var eventproxy = require('eventproxy');
-var db = require('../common/db');
 var async = require('async');
+var db = require('../common/db');
 var logger = require('../common/logger');
 var dbConfig = require('./dbConfig');
 var generator = require('../file/generate');

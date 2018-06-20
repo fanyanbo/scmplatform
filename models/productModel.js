@@ -158,7 +158,7 @@ ProductModel.prototype.queryAll = function (callback) {
   let sql_list = [
                   "SELECT * FROM configs order by category,orderId",
                   "SELECT * FROM modules order by category,orderId",
-                  "SELECT * FROM settings",
+                  `SELECT * FROM ${dbConfig.tables.settings}`,
                   "SELECT * FROM props",
                   "SELECT * FROM configcategory order by orderId",
                   "SELECT * FROM mkcategory order by orderId",
@@ -602,13 +602,13 @@ ProductModel.prototype.queryAuditByUser = function (data, callback) {
 
     let ep = new eventproxy();
     let sql_list0 = [
-                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1`,
-                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 2`
+                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1 order by operateTime desc`,
+                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 2 order by operateTime desc`
                   ];
 
     let sql_list1 = [
-                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1 AND userName = ?`,
-                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 2 AND userName = ?`
+                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 1 AND userName = ? order by operateTime desc`,
+                    `SELECT * FROM ${dbConfig.tables.products} WHERE auditState = 2 AND userName = ? order by operateTime desc`
                   ];
 
     ep.bind('error', function (err) {

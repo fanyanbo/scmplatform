@@ -1,12 +1,13 @@
-var eventproxy = require('eventproxy');
-var db = require('../common/db');
-var logger = require('../common/logger');
-var config = require('../config/config');
+let eventproxy = require('eventproxy');
+let db = require('../common/db');
+let logger = require('../common/logger');
+let config = require('../config/config');
+let dbConfig = require('./dbConfig');
 
-var SettingsModel = function() {};
+let SettingsModel = function() {};
 
 SettingsModel.prototype.query = function (callback) {
-  let sql = "SELECT * FROM settings";
+  let sql = `SELECT * FROM ${dbConfig.tables.settings}`;
   let sql_params = [];
   console.log(sql + sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
@@ -56,7 +57,7 @@ SettingsModel.prototype.queryCategory = function (callback) {
 }
 
 SettingsModel.prototype.update = function (engName, cnName, desc, callback) {
-  let sql = "UPDATE settings SET cnName = ?, descText = ? WHERE engName = ?";
+  let sql = `UPDATE ${dbConfig.tables.settings} SET cnName = ?, descText = ? WHERE engName = ?`;
   let sql_params = [cnName,desc,engName];
   console.log(sql + sql_params);
   db.conn.query(sql,sql_params,function(err,rows,fields){
@@ -72,9 +73,9 @@ SettingsModel.prototype.update = function (engName, cnName, desc, callback) {
 SettingsModel.prototype.queryItemsByCategory = function (level, category, callback) {
   let sql;
   if(level == "level2")
-    sql = "SELECT * FROM settings WHERE level2 = ? order by orderId";
+    sql = `SELECT * FROM ${dbConfig.tables.settings} WHERE level2 = ? order by orderId`;
   else if(level == "level3")
-    sql = "SELECT * FROM settings WHERE level3 = ? order by orderId";
+    sql = `SELECT * FROM ${dbConfig.tables.settings} WHERE level3 = ? order by orderId`;
   else
     return callback("queryItemsByCategory参数错误！");
   let sql_params = [category];
@@ -104,7 +105,7 @@ SettingsModel.prototype.updateItemsOrderId = function (arr, callback) {
   });
 
   for (let i = 0; i < arr.length; i++) { //数据结果与调用顺序无关
-    let sql = "UPDATE settings SET orderId = ? WHERE engName = ?";
+    let sql = `UPDATE ${dbConfig.tables.settings} SET orderId = ? WHERE engName = ?`;
     let sql_param = [arr[i].orderId,arr[i].engName];
     db.conn.query(sql,sql_param,function(err,rows,fields) {
       if (err) return ep.emit('error', err);

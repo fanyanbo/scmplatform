@@ -11,7 +11,8 @@ var dbConfig = {
     mkdata: "v60_mkdata",
     propsdata: "v60_propsdata",
     modifyhistory: "v60_modifyhistory",
-    products: "v60_products"
+    products: "v60_products",
+    settings: "v60_settings"
   }
 };
 
