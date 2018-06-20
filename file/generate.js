@@ -159,22 +159,23 @@ function generateFiles(
         dbparam.database = "scm";
 
     tab_products = dbConfig.tables.products;
+    tab_propsdata = dbConfig.tables.propsdata;
     if (tempflag != 0)
     {
         tab_configdata = dbConfig.tables.configdata_temp;
         tab_settingsdata = dbConfig.tables.settingsdata_temp;
-        tab_propsdata = dbConfig.tables.propsdata_temp;
     }
     else
     {
         tab_configdata = dbConfig.tables.configdata;
         tab_settingsdata = dbConfig.tables.settingsdata;
-        tab_propsdata = dbConfig.tables.propsdata;
     }
     tab_mkdata = dbConfig.tables.mkdata;
 
 	infoTxt = "";
 	writerlog.checkLogFile();
+	
+	infoTxt = "";
 	
 	allInfos = new Array();
 	infoTotal = 0;
@@ -187,6 +188,7 @@ function generateFiles(
     filetotal = 0;
     
     product_maps = new Array();
+    maps_total = 0;
 
     connection = mysql.createConnection(dbparam);
 	connection.connect();
@@ -514,6 +516,7 @@ function step_query_prop_data(connection)
 
 function step_query_all_products_info(connection)
 {
+    
     sql = "select chip, model, targetProduct from " + tab_products + " order by targetProduct;";
         
     writerlog.w("开始查询: " + sql + "\n");
@@ -562,6 +565,10 @@ function step_query_all_products_info(connection)
         connection.end();
         generate_files();
     });
+    
+    console.log("***********************\n");
+        connection.end();
+        generate_files();
 }
 
 function generate_files()
@@ -665,7 +672,7 @@ function generate_files()
 	}
 	
 	if (mod_callback != null)
-	    mod_callback(0, "");
+	    mod_callback(0, "产生文件完成.");
 }
 
 function generate_device_tab()
@@ -1033,6 +1040,14 @@ function show_preview_text_test(errno, result)
 function show_callback(errno, result)
 {
     console.log("$$$$$$$$$$$$$$$$$$$$");
+    console.log("$$$$$$$$$$$$$$$$$$$$");
+    console.log("$$$$$$$$$$$$$$$$$$$$");
+    console.log("$$$$$$$$$$$$$$$$$$$$");
+    console.log("$$$$$$$$$$$$$$$$$$$$");
+    console.log("$$$$$$$$$$$$$$$$$$$$");
+    console.log("$$$$$$$$$$$$$$$$$$$$");
+    console.log("$$$$$$$$$$$$$$$$$$$$");
+    console.log("$$$$$$$$$$$$$$$$$$$$");
 }
 
 //generator.generate("6S57", "K5S",  null);
@@ -1040,6 +1055,8 @@ function show_callback(errno, result)
 //generator.preview("5S02", "15U",  show_preview_text_test);
 //generator.generate("5S02a", "15U", 0, show_callback);
 //generator.generateByTargetProduct("p201", show_callback);
+
+//generator.generate("GHD08", "K5S", 0, show_callback);
 
 
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b test
