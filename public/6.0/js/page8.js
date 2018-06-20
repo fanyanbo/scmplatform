@@ -76,20 +76,20 @@ function buttonInitAfter(){
 			console.log(_node);
 			sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
 		} else if(_curId == 1){
+			console.log("不让编辑");
+			//_node = '{"category":"' + _thisKey + '"}';
+			//_ajaxUrl = coocaaVersion+"/prop/queryByCategory";
+		} else if(_curId == 2){
 			_node = '{"category":"' + _thisKey + '"}';
 			_ajaxUrl = coocaaVersion+"/config/queryByCategory";
 			console.log(_node);
 			sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
-		} else if(_curId == 2||_curId == 3||_curId == 4||_curId == 5){
+		} else if(_curId == 3||_curId == 4||_curId == 5||_curId == 6){
 			var _thisLevel = $(".edit_box1")[_curIndex].getAttribute("level");
 			_node = '{"category":"' + _thisKey + '","level":"' + _thisLevel + '"}';
 			_ajaxUrl = coocaaVersion+"/settings/queryByCategory";
 			console.log(_node);
 			sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
-		} else if(_curId == 6){
-			console.log("不让编辑");
-			//_node = '{"category":"' + _thisKey + '"}';
-			//_ajaxUrl = coocaaVersion+"/prop/queryByCategory";
 		}
 	});
 }
@@ -120,13 +120,13 @@ function addCategoryResult(){
 				console.log("数据添加成功。");
 				$('#page8Modal').modal('hide');
 				console.log("数据添加成功");
-				if (_curId ==0||_curId==1||_curId==6) {
+				if (_curId ==0||_curId==1||_curId==2) {
 					$(".page8_tabs:eq("+_curId+")").attr("hasvalue","false");
 				} else{
-					$(".page8_tabs:eq(2)").attr("hasvalue","false");
 					$(".page8_tabs:eq(3)").attr("hasvalue","false");
 					$(".page8_tabs:eq(4)").attr("hasvalue","false");
 					$(".page8_tabs:eq(5)").attr("hasvalue","false");
+					$(".page8_tabs:eq(6)").attr("hasvalue","false");
 				}
 				tabsClick(_curId);
 				freshModuleAddHtml(1);
@@ -142,7 +142,7 @@ function addCategoryResult(){
 function editEachPage(num,array){
 	console.log(num+"--------"+array);
 	$(".page8_tabs:eq(" + (num) + ")").attr("hasvalue","true");
-	if(num==0||num==1){
+	if(num==0||num==2){
 		$(".page8_tables")[num].innerHTML = "";
 		var _eachTableItem = "";
 		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
@@ -150,14 +150,21 @@ function editEachPage(num,array){
 			_eachTableItem += "<tr><td class='col-xs-4'>"+(i+1)+"</td><td class='col-xs-4'>"+array[i].category+"</td><td class='col-xs-4'><a class='edit_box1' tablename = "+array[i].category+">编辑</a></td></tr>";
 		}
 		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
-	}else if(num==2||num==3||num==4||num==5){
+	}else if(num == 1){
+		var _eachTableItem = "";
+		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
+		for (var i=0; i<array.length; i++) {
+			_eachTableItem += "<tr><td class='col-xs-4'>"+(i+1)+"</td><td class='col-xs-4'>"+array[i].category+"</td><td class='col-xs-4'><a href='javacript:void(0);' disabled='disabled' class='edit_box1' tablename = "+array[i].category+">编辑</a></td></tr>";
+		}
+		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
+	}else if(num==3||num==4||num==5||num==6){
 		var sysSettingArray = ["系统设置","信号源工具箱","卖场演示","中间件"];
 		var _eachTableItem = "";
 		$(".page8_tables")[num].innerHTML = "";
 		var kk = 0;
 		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
 		for (var i=0; i<array.length; i++) {
-			if (array[i].level1 == sysSettingArray[num-2]) {
+			if (array[i].level1 == sysSettingArray[num-3]) {
 				kk++;
 				console.log(array[i].level3 == "");
 				if (array[i].level3 == "") {
@@ -170,15 +177,7 @@ function editEachPage(num,array){
 			}
 		}
 		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
-	}else if(num == 6){
-		var _eachTableItem = "";
-		_eachTableItem = "<thead><tr><td class='col-xs-4'>序号</td><td class='col-xs-4'>分类名称</td><td class='col-xs-4'>操作</td></tr></thead><tbody>";
-		for (var i=0; i<array.length; i++) {
-			_eachTableItem += "<tr><td class='col-xs-4'>"+(i+1)+"</td><td class='col-xs-4'>"+array[i].category+"</td><td class='col-xs-4'><a href='javacript:void(0);' disabled='disabled' class='edit_box1' tablename = "+array[i].category+">编辑</a></td></tr>";
-		}
-		$(".page8_tables")[num].innerHTML = _eachTableItem + "</tbody>";
 	}
-	
 }
 
 function creatTableByData(data){
@@ -244,11 +243,11 @@ function addSubmit(){
 	if (_curIndex3 == 0) {
 		ajaxUrl3 = coocaaVersion+"/module/addCategory";
 	} else if(_curIndex3 == 1){
-		ajaxUrl3 = coocaaVersion+"/config/addCategory";
-	} else if(_curIndex3 == 2||_curIndex3 == 3||_curIndex3 == 4||_curIndex3 == 5){
-		ajaxUrl3 = coocaaVersion+"/sys/addCategory";
-	} else if(_curIndex3 == 6){
 		ajaxUrl3 = coocaaVersion+"/prop/addCategory";
+	} else if(_curIndex3 == 2){
+		ajaxUrl3 = coocaaVersion+"/config/addCategory";
+	} else if(_curIndex3 == 3||_curIndex3 == 4||_curIndex3 == 5||_curIndex3 == 6){
+		ajaxUrl3 = coocaaVersion+"/sys/addCategory";
 	}
 	var _category = $("#page8Container").val();
 	var node33 = '{"category":"' + _category + '"}';
@@ -263,13 +262,12 @@ function changeSubmit(){
 	if (_curId == 0) {
 		_ajaxUrl = coocaaVersion+"/module/updateItemsOrderId";
 	} else if(_curId == 1){
-		_ajaxUrl = coocaaVersion+"/config/updateItemsOrderId";
-	} else if(_curId == 2||_curId == 3||_curId == 4||_curId == 5){
-		_ajaxUrl = coocaaVersion+"/settings/updateItemsOrderId";
-	} else if(_curId == 6){
 		_ajaxUrl = coocaaVersion+"/prop/updateItemsOrderId";
+	} else if(_curId == 2){
+		_ajaxUrl = coocaaVersion+"/config/updateItemsOrderId";
+	} else if(_curId == 3||_curId == 4||_curId == 5||_curId == 6){
+		_ajaxUrl = coocaaVersion+"/settings/updateItemsOrderId";
 	}
-	
 	var _node = [];
 	for (var i=0; i<$(".sequence_value").length; i++) {
 		var _objItem = {
@@ -297,20 +295,20 @@ function updateCategoryResult(){
 				console.log("数据修改成功。");
 				$('#paged8_dialog_box1').modal('hide');
 				console.log("数据添加成功");
-				if (_curId ==0||_curId==1||_curId==6) {
+				if (_curId ==0||_curId==1||_curId==2) {
 					$(".page8_tabs:eq("+_curId+")").attr("hasvalue","false");
 				} else{
-					$(".page8_tabs:eq(2)").attr("hasvalue","false");
 					$(".page8_tabs:eq(3)").attr("hasvalue","false");
 					$(".page8_tabs:eq(4)").attr("hasvalue","false");
 					$(".page8_tabs:eq(5)").attr("hasvalue","false");
+					$(".page8_tabs:eq(6)").attr("hasvalue","false");
 				}
 				tabsClick(_curId);
 				freshModuleAddHtml(1);
 			}else{
 				console.log(data.resultDesc);
 				$("#chipMangInfo")[0].innerHTML = "数据添加失败！";
-				setTimeout('$("#chipMangInfo")[0].innerHTML = "　"',3000);
+				setTimeout("document.getElementById('chipMangInfo').style.display = 'none';", 3000);
 			}
 		}
 	}
@@ -331,11 +329,11 @@ function tabsClick(num){
 		if (num == 0) {
 			ajaxUrl = coocaaVersion+"/module/queryCategory";
 		} else if(num == 1){
-			ajaxUrl = coocaaVersion+"/config/queryCategory";
-		} else if(num == 2||num == 3||num == 4||num == 5){
-			ajaxUrl = coocaaVersion+"/settings/queryCategory";
-		} else if(num == 6){
 			ajaxUrl = coocaaVersion+"/prop/queryCategory";
+		} else if(num == 2){
+			ajaxUrl = coocaaVersion+"/config/queryCategory";
+		} else if(num == 3||num == 4||num == 5||num == 6){
+			ajaxUrl = coocaaVersion+"/settings/queryCategory";
 		}
 		sendHTTPRequest(ajaxUrl, '{}', categoryQueryResult);
 	} else{
