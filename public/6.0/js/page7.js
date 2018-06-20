@@ -28,13 +28,19 @@ function buttonInitBefore() {
 			$("#moduleSubmit").attr("hidedata", 1);
 			$("#moduleSubmit").attr("oldValue", "null");
 			clearMKPart();
-		}  else if(_bIndex == 1) {
+		} else if(_bIndex == 1) {
+			console.log("点击Prop的新增按钮");
+			$('#page7_prop').modal();
+			$("#propSubmit").attr("hidedata", 1);
+			$("#propSubmit").attr("oldValue", "null");
+			clearPropPart();
+		}  else if(_bIndex == 2) {
 			console.log("点击Config文件页的新增按钮");
 			$('#page7_config').modal();
 			$("#configSubmit").attr("hidedata", 1);
 			$("#configSubmit").attr("oldValue", "null");
 			clearConfigPart(1);
-		} else if(_bIndex == 2 || _bIndex == 3 || _bIndex == 4 || _bIndex == 5) {
+		} else if(_bIndex == 3 || _bIndex == 4 || _bIndex == 5 || _bIndex == 6) {
 			console.log("点击系统设置大项的新增按钮");
 			$('#page7_sys').modal();
 			$("#sysSubmit").attr("hidedata", 1);
@@ -42,12 +48,6 @@ function buttonInitBefore() {
 			$("#sysSubmit").attr("oldValue", "null");
 			editEachSelect(_bIndex);
 			clearSysPart(_bIndex);
-		} else if(_bIndex == 6) {
-			console.log("点击Prop的新增按钮");
-			$('#page7_prop').modal();
-			$("#propSubmit").attr("hidedata", 1);
-			$("#propSubmit").attr("oldValue", "null");
-			clearPropPart();
 		}
 		$(".modal-backdrop").addClass("new-backdrop");
 	});
@@ -120,21 +120,6 @@ function moduleCategoryQueryResult() {
 		sendHTTPRequest(coocaaVersion+"/module/query", '{}', moduleQueryResult);
 	}
 }
-
-function configQueryResult() {
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(1)").attr("hasvalue","true");
-				editEachPage("1",data.resultData);
-			}
-		}
-		buttonInitAfter();
-	}
-}
-
 function moduleQueryResult() {
 	if(this.readyState == 4) {
 		if(this.status == 200) {
@@ -148,36 +133,49 @@ function moduleQueryResult() {
 		buttonInitAfter();
 	}
 }
-
-function settingQueryResult() {
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(2)").attr("hasvalue","true");
-				$(".page7_tabs:eq(3)").attr("hasvalue","true");
-				$(".page7_tabs:eq(4)").attr("hasvalue","true");
-				$(".page7_tabs:eq(5)").attr("hasvalue","true");
-				editEachPage("5",data.resultData);
-			}
-		}
-		buttonInitAfter();
-	}
-}
 function propQueryResult() {
 	if(this.readyState == 4) {
 		if(this.status == 200) {
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(6)").attr("hasvalue","true");
-				editEachPage("6",data.resultData);
+				$(".page7_tabs:eq(1)").attr("hasvalue","true");
+				editEachPage("1",data.resultData);
 			}
 		}
 		buttonInitAfter();
 	}
 }
+function configQueryResult() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$(".page7_tabs:eq(2)").attr("hasvalue","true");
+				editEachPage("2",data.resultData);
+			}
+		}
+		buttonInitAfter();
+	}
+}
+function settingQueryResult() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$(".page7_tabs:eq(3)").attr("hasvalue","true");
+				$(".page7_tabs:eq(4)").attr("hasvalue","true");
+				$(".page7_tabs:eq(5)").attr("hasvalue","true");
+				$(".page7_tabs:eq(6)").attr("hasvalue","true");
+				editEachPage("5",data.resultData);
+			}
+		}
+		buttonInitAfter();
+	}
+}
+
 function buttonInitAfter() {
 	/*配置管理板块-修改 */
 	var _aPart, _aIndex, _cHidedata = "";
@@ -216,13 +214,20 @@ function eachPartChange(part, data) {
 		clearMKPart();
 		editMKModel(data);
 	} else if(part == 1) {
+		console.log("Prop子项的修改");
+		$('#page7_prop').modal();
+		$("#propSubmit").attr("hidedata", 2);
+		$("#propSubmit").attr("oldValue", data);
+		clearPropPart();
+		editPropModel(data);
+	} else if(part == 2) {
 		console.log("config子项的修改");
 		$('#page7_config').modal();
 		$("#configSubmit").attr("hidedata", 2);
 		$("#configSubmit").attr("oldValue", data);
 		clearConfigPart(2);
 		editConfigModel(data);
-	} else if(part == 2 || part == 3 || part == 4 || part == 5) {
+	} else if(part == 3 || part == 4 || part == 5 || part == 6) {
 		console.log("系统设置子项的修改");
 //		$('#page7_sys').modal();
 //		$("#sysSubmit").attr("hidedata", 2);
@@ -231,15 +236,7 @@ function eachPartChange(part, data) {
 //		editEachSelect(part);
 //		clearSysPart(part);
 //		editSysModel(part, data);
-	} else if(part == 6) {
-		console.log("Prop子项的修改");
-		$('#page7_prop').modal();
-		$("#propSubmit").attr("hidedata", 2);
-		$("#propSubmit").attr("oldValue", data);
-		clearPropPart();
-		editPropModel(data);
 	}
-	
 	$(".modal-backdrop").addClass("new-backdrop");
 }
 
@@ -566,7 +563,6 @@ function saveInSys() {
 function saveInMK() {
 	var _Hidendata3 = $("#moduleSubmit").attr("hidedata");
 	var _oldValue3 = $("#moduleSubmit").attr("oldValue");
-	console.log(_oldValue3);
 
 	var newModuleCzName = document.getElementById("moduleCName").value;
 	var newModuleEnName = document.getElementById("moduleEName").value;
@@ -578,7 +574,6 @@ function saveInMK() {
 	newModuleEnName = newModuleEnName.replace(/(^\s*)|(\s*$)/g, "");
 	newModuleSrc = newModuleSrc.replace(/(^\s*)|(\s*$)/g, "");
 	newModuleInstr = newModuleInstr.replace(/(^\s*)|(\s*$)/g, "");
-	console.log("lxw " + newModuleCzName + "--" + newModuleEnName + "--" + newModuleSrc + "--" + newModuleInstr + "--" + newModuleSelect);
 
 	if(newModuleCzName == "" || newModuleEnName == "" || newModuleSrc == "" || newModuleInstr == "") {
 		console.log("存在空项");
@@ -612,7 +607,6 @@ function saveInMK() {
 function saveInProp() {
 	var _Hidendata = $("#propSubmit").attr("hidedata");
 	var _oldValue3 = $("#propSubmit").attr("oldValue");
-	console.log(_Hidendata+"-----------"+_oldValue3);
 
 	var node = null; //向后台传递的数据
 	var newPropEnName = $("#propEName").val();
@@ -661,17 +655,17 @@ function returnAddOrUpdateInfo() {
 					$("#page7_module").modal('hide');
 					$(".page7_tabs:eq(0)").attr("hasvalue","false");
 				} else if(_curId==1){
-					$("#page7_config").modal('hide');
-					$(".page7_tabs:eq(1)").attr("hasvalue","false");
-				} else if(_curId==6){
 					$("#page7_prop").modal('hide');
-					$(".page7_tabs:eq(6)").attr("hasvalue","false");
-				}else{
-					$("#page7_sys").modal('hide');
+					$(".page7_tabs:eq(1)").attr("hasvalue","false");
+				} else if(_curId==2){
+					$("#page7_config").modal('hide');
 					$(".page7_tabs:eq(2)").attr("hasvalue","false");
+				} else{
+					$("#page7_sys").modal('hide');
 					$(".page7_tabs:eq(3)").attr("hasvalue","false");
 					$(".page7_tabs:eq(4)").attr("hasvalue","false");
 					$(".page7_tabs:eq(5)").attr("hasvalue","false");
+					$(".page7_tabs:eq(6)").attr("hasvalue","false");
 				}
 				tabsClick(_curId);
 				freshModuleAddHtml(1);
@@ -684,12 +678,12 @@ function returnAddOrUpdateInfo() {
 					document.getElementById("moduleErrorInfo").innerHTML = "添加失败！该内容或已存在。";
 					setTimeout("document.getElementById('moduleErrorInfo').innerHTML='　'", 3000);
 				} else if(_curId==1){
-					document.getElementById("configErrorInfo").innerHTML = "添加失败！该内容或已存在。";
-					setTimeout("document.getElementById('configErrorInfo').innerHTML='　'", 3000);
-				} else if(_curId==6){
 					document.getElementById("propErrorInfo").innerHTML = "添加失败！该内容或已存在。";
 					setTimeout("document.getElementById('propErrorInfo').innerHTML='　'", 3000);
-				}else{
+				} else if(_curId==2){
+					document.getElementById("configErrorInfo").innerHTML = "添加失败！该内容或已存在。";
+					setTimeout("document.getElementById('configErrorInfo').innerHTML='　'", 3000);
+				} else{
 					document.getElementById("sysErrorInfo").innerHTML = "添加失败！该内容或已存在。";
 					setTimeout("document.getElementById('sysErrorInfo').innerHTML='　'", 3000);
 				}
@@ -714,12 +708,12 @@ function tabsClick(num) {
 		var ajaxUrl = "";
 		if(num == 0) {
 			ajaxUrl = coocaaVersion+"/module/queryCategory";
-		} else if(num == 1) {
-			ajaxUrl = coocaaVersion+"/config/queryCategory";
-		} else if(num == 2 || num == 3 || num == 4 || num == 5) {
-			ajaxUrl = coocaaVersion+"/settings/queryCategory";
-		} else if(num == 6){
+		} else if(num == 1){
 			ajaxUrl = coocaaVersion+"/prop/queryCategory";
+		} else if(num == 2) {
+			ajaxUrl = coocaaVersion+"/config/queryCategory";
+		} else if(num == 3 || num == 4 || num == 5 || num == 6) {
+			ajaxUrl = coocaaVersion+"/settings/queryCategory";
 		}
 		sendHTTPRequest(ajaxUrl, '{}', categoryQueryResult);
 	} else {
@@ -745,6 +739,15 @@ function categoryQueryResult() {
 					}
 					sendHTTPRequest(coocaaVersion+"/module/query", '{}', moduleQueryResult);
 				} else if(_curId==1){
+					$("#propSelect").attr("hasvalue", "true");
+					var _myPropTbody = document.getElementById("myPropTbody");
+					_myPropTbody.innerHTML = "";
+					for(var i = 0; i < data.resultData.length; i++) {
+						document.getElementById("propSelect").options.add(new Option(data.resultData[i].category));
+						_myPropTbody.innerHTML += '<tr><td class="propitems" category="'+ data.resultData[i].category +'" id="propTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
+					}
+					sendHTTPRequest(coocaaVersion+"/prop/query", '{}', propQueryResult);
+				} else if(_curId==2){
 					$("#configSelect").attr("hasvalue", "true");
 					var _myConfigTbody = document.getElementById("myConfigTbody");
 					_myConfigTbody.innerHTML = "";
@@ -753,7 +756,7 @@ function categoryQueryResult() {
 						_myConfigTbody.innerHTML += '<tr><td class="configitems" category="'+ data.resultData[i].category +'" id="configTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
 					}
 					sendHTTPRequest(coocaaVersion+"/config/query", '{}', configQueryResult);
-				} else if(_curId==2||_curId==3||_curId==4||_curId==5) {
+				} else if(_curId==3||_curId==4||_curId==5||_curId==6) {
 					$("#selectFirst").attr("hasvalue", "true");
 					var _mySysSettingTbody = document.getElementById("mySysSettingTbody");
 					var _mySourceBoxTbody = document.getElementById("mySourceBoxTbody");
@@ -818,18 +821,7 @@ function categoryQueryResult() {
 							}
 						}
 					}
-					console.log(_twoLevelLinkageArrayOne);
-					console.log(_twoLevelLinkageArrayTwo);
-					console.log(_twoLevelLinkageArrayThree);
 					sendHTTPRequest(coocaaVersion+"/settings/query", '{}', settingQueryResult);
-				} else if(_curId==6){
-					var _myPropTbody = document.getElementById("myPropTbody");
-					_myPropTbody.innerHTML = "";
-					for(var i = 0; i < data.resultData.length; i++) {
-						document.getElementById("propSelect").options.add(new Option(data.resultData[i].category));
-						_myPropTbody.innerHTML += '<tr><td class="propitems" category="'+ data.resultData[i].category +'" id="propTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
-					}
-					sendHTTPRequest(coocaaVersion+"/prop/query", '{}', propQueryResult);
 				}
 			}
 		}
@@ -837,7 +829,6 @@ function categoryQueryResult() {
 }
 
 function editEachPage(num,array){
-	console.log(num+"--------"+array);
 	if(num==0){
 		for (var j=0; j< $(".moduleitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
@@ -847,10 +838,18 @@ function editEachPage(num,array){
 			}
 		}
 	} else if(num==1){
+		for (var j=0; j< $(".propitems").length; j++) {
+			for(var i = 0; i < array.length; i++) {
+				if(array[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
+					$(".propitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].engName + "</a></div>";
+				}
+			}
+		}
+	} else if(num==2){
 		for (var j=0; j< $(".configitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
 				if(array[i].category == $(".configitems:eq(" + (j) + ")").attr("category")) {
-					$(".configitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+					$(".configitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 				}
 			}
 		}
@@ -859,20 +858,12 @@ function editEachPage(num,array){
 			for(var i = 0; i < array.length; i++) {
 				if(array[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
 					if (array[i].level3 === null || array[i].level3 == "") {
-						$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+						$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='5' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 					} else{
 						if (array[i].level3 == $(".settingsitems:eq(" + (j) + ")").attr("level3")) {
-							$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+							$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='5' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 						}
 					}
-				}
-			}
-		}
-	} else if(num==6){
-		for (var j=0; j< $(".propitems").length; j++) {
-			for(var i = 0; i < array.length; i++) {
-				if(array[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
-					$(".propitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='6' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].engName + "</a></div>";
 				}
 			}
 		}

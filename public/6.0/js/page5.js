@@ -65,33 +65,28 @@ function handleTableData(arr) {
 	var getdataArray2 = new Array();
 	console.log("level= "+ level + "loginusername = " +loginusername + "fromEmail = " + fromEmail);
 	for(var i = 0; i < arr.length; i++) {
+		var _panel = arr[i].panel;
+		if (_panel == 0) {
+			_panel = "默认";
+		}
 		var eachItem2 = {
-			"number": "",
-			"model": "",
-			"chip": "",
-			"size": "", 
-			"chipmodel": "",
-			"AndroidVersion": "",
-			"memory": "",
+			"number": (i+1),
+			"model": arr[i].model,
+			"chip": arr[i].chip,
+			"size": _panel, 
+			"chipmodel": arr[i].soc,
+			"AndroidVersion": arr[i].androidVersion,
+			"memory": arr[i].memorySize,
 			"type": "",
-			"author": "",
+			"author": arr[i].userName,
 			"reason": "<button class='btn-success eachlook'>查看</button>",
-			"time" : "",
+			"time" : arr[i].operateTime,
 			"operate": ""
 		};
 		//auditState(0审核通过\1待审核\2审核未通过
 		//modifyState(0正常\1修改\2增加\3删除)
 		var operateType = arr[i].modifyState;
 		var	userName = loginusername;
-		eachItem2.number = (i+1);
-		eachItem2.model = arr[i].model;
-		eachItem2.chip = arr[i].chip;
-		eachItem2.size = arr[i].panel;
-		eachItem2.chipmodel = arr[i].soc;
-		eachItem2.AndroidVersion = arr[i].androidVersion;
-		eachItem2.memory = arr[i].memorySize;
-		eachItem2.author = arr[i].userName;
-		eachItem2.time = arr[i].operateTime;
 		if (operateType == 0) {
 			eachItem2.type = "正常";
 		} else if(operateType == 1){
@@ -1161,10 +1156,10 @@ function getPreviewInfo(){
 				$("#myPreviewModal").find("li")[1].className = "presentation";
 				$("#myPreviewModal").find("li")[2].className = "presentation";
                	
-               	document.getElementById("myPreviewBodyOne").innerHTML = data.resultData.text1;
-                document.getElementById("myPreviewBodyTwo").innerHTML = data.resultData.text2;
-                document.getElementById("myPreviewBodyThree").innerHTML = data.resultData.text3;
-            	document.getElementById("myPreviewBodyFour").innerHTML = data.resultData.text4;
+               	document.getElementById("myPreviewBodyOne").innerHTML = data.resultData.text2;
+                document.getElementById("myPreviewBodyTwo").innerHTML = data.resultData.text4;
+                document.getElementById("myPreviewBodyThree").innerHTML = data.resultData.text1;
+            	document.getElementById("myPreviewBodyFour").innerHTML = data.resultData.text3;
             } else{
                 console.log("lxw " + "预览-失败");
                 document.getElementById("myPreviewBodyOne").innerHTML = "信息出错，请刷新";

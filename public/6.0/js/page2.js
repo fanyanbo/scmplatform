@@ -95,11 +95,16 @@ function targetproductQueryResult() {
 function handleTableData(arr) {
 	var getdataArray2 = new Array();
 	for(var i = 0; i < arr.length; i++) {
+		if (arr[i].panel == 0) {
+			var _panel = "默认";
+		}else{
+			var _panel = arr[i].panel;
+		}
 		var eachItem2 = {
 			"number" : (i+1),
 			"model": arr[i].model,
 			"chip": arr[i].chip,
-			"size": arr[i].panel,
+			"size": _panel,
 			"target_product": arr[i].targetProduct,
 			"AndroidVersion": arr[i].androidVersion,
 			"chipmodel": arr[i].soc,

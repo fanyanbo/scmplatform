@@ -434,7 +434,7 @@ function searchResource(){
 					}
 					tpObjItem.number = (i+1);
 					tpObjItem.target_product = '<span class="eachtpvalue">'+data.resultData[i].name+'</span>';
-					tpObjItem.operate = '<a class="eachedit" href="#"><span class="glyphicon glyphicon-pencil"></span></a><a class="eachdelete" href="#"><span class="glyphicon glyphicon-remove"></span></a><a class="eachcopy" href="#"><span class="glyphicon glyphicon-copy"></span></a><a class="eachpreview" href="#"><span class="glyphicon glyphicon glyphicon-eye-open"></span></a>';
+					tpObjItem.operate = '<button class="btn-success eachedit">编辑</button><button class="btn-success eachcopy">复制</button><button class="btn-success eachpreview">预览</button>';
 					instantSearch2.push(tpObjItem);
 				}
 				pageTableInit(instantSearch2);
