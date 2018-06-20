@@ -485,7 +485,12 @@ function saveInConfig() {
 			var valueTwo = null;
 			for(var i = 0; i < $(".menuUnit").length; i++) {
 				valueTwo = newConfigMenuDiv.getElementsByTagName("input")[i].value;
-				newConfigOptions.push(valueTwo);
+				console.log(valueTwo);
+				if (valueTwo == "" || typeof(valueTwo) == "undefined") {
+					console.log("为空");
+				}else{
+					newConfigOptions.push(valueTwo);
+				}
 			}
 			newConfigString = newConfigOptions[0];
 		}
