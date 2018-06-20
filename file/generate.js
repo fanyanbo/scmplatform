@@ -666,8 +666,8 @@ function generate_files()
 	}
 	else        // 非预览则复制并提交文件到git
 	{
-        var pushret = copyFileAndCommit();
-        if (pushret)
+        //var pushret = copyFileAndCommit();
+        //if (pushret)
         ;
 	}
 	
