@@ -242,17 +242,25 @@ function addSubmit(){
 	var _curIndex3 = $("#page8Submit").attr("clickid");
 	if (_curIndex3 == 0) {
 		ajaxUrl3 = coocaaVersion+"/module/addCategory";
+		var _category = $("#page8Container").val();
+		var node33 = '{"category":"' + _category + '"}';
+		console.log(node33);
+		sendHTTPRequest(ajaxUrl3, node33, addCategoryResult);
 	} else if(_curIndex3 == 1){
 		ajaxUrl3 = coocaaVersion+"/prop/addCategory";
+		var _category = $("#page8Container").val();
+		var node33 = '{"category":"' + _category + '"}';
+		console.log(node33);
+		sendHTTPRequest(ajaxUrl3, node33, addCategoryResult);
 	} else if(_curIndex3 == 2){
 		ajaxUrl3 = coocaaVersion+"/config/addCategory";
+		var _category = $("#page8Container").val();
+		var node33 = '{"category":"' + _category + '"}';
+		console.log(node33);
+		sendHTTPRequest(ajaxUrl3, node33, addCategoryResult);
 	} else if(_curIndex3 == 3||_curIndex3 == 4||_curIndex3 == 5||_curIndex3 == 6){
 		ajaxUrl3 = coocaaVersion+"/sys/addCategory";
 	}
-	var _category = $("#page8Container").val();
-	var node33 = '{"category":"' + _category + '"}';
-	console.log(node33);
-	sendHTTPRequest(ajaxUrl3, node33, addCategoryResult);
 }
 
 function changeSubmit(){

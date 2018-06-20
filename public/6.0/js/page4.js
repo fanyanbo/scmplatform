@@ -204,7 +204,9 @@ function buttonInitAfter(){
 		$("#page4_check_chip").html(_chip);
 		$("#page4_check_model").html(_model);
 		$("#page4_check_size").html(_panel);
-		
+		if(_panel == "默认"){
+			_panel = 0;
+		}
 		var _checkObj = {
 			"chip" : _chip,
 			"model" : _model,
@@ -541,6 +543,9 @@ function review(obj,adminControl,deleteFlag){
 	var _chip = obj.parentNode.parentNode.children[2].innerHTML;
 	var _model = obj.parentNode.parentNode.children[1].innerHTML;
 	var _panel = obj.parentNode.parentNode.children[3].innerHTML;
+	if(_panel == "默认"){
+		_panel = 0;
+	}
 	_author = obj.parentNode.parentNode.children[8].innerHTML;
 	
 	var _reviewObj = {
@@ -564,7 +569,9 @@ function edit(obj,adminControl,deleteFlag){
 	var _model = obj.parentNode.parentNode.children[1].innerHTML;
 	var _panel = obj.parentNode.parentNode.children[3].innerHTML;
 	_author = obj.parentNode.parentNode.children[8].innerHTML;
-	
+	if(_panel == "默认"){
+		_panel = 0;
+	}
 	var _editObj = {
 		"chip" : _chip,
 		"model" : _model,
@@ -580,6 +587,9 @@ function recover(obj,deleteFlag){
 	recoverChip = obj.parentNode.parentNode.children[2].innerHTML;
 	recoverModel = obj.parentNode.parentNode.children[1].innerHTML;
 	recoverSize = obj.parentNode.parentNode.children[3].innerHTML;
+	if(recoverSize == "默认"){
+		recoverSize = 0;
+	}
 	_author = obj.parentNode.parentNode.children[8].innerHTML;
 	
 	$("#reviewDialog2").attr("ochip",recoverChip);

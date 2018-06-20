@@ -364,10 +364,10 @@ function buttonInit() {
 	document.getElementById("myEditEnsureModalEnsure").onclick = closeparentpage;
 	
 	$("#myEnsureCancle").click(function() {
-		closePage2Model("myAddCloseDiv");
+		document.getElementById("myAddCloseDiv").style.display = "none";
 	});
 	$("#myEnsureX").click(function() {
-		closePage2Model("myAddCloseDiv");
+		document.getElementById("myAddCloseDiv").style.display = "none";
 	});
 	$("#page2_add").click(function() {
 		resetAllInfo(1);//删除前面的操作痕迹
@@ -456,7 +456,7 @@ function buttonInit() {
 		document.getElementById("myEditEnsureDiv").style.display = "none";
 	});
 	$("#myEditEnsure").click(function() {
-		console.log("修改配置项的提交");
+		console.log("修改配置项或者新增尺寸项的提交");
 		var content = document.getElementById("changeReason").value;
 		content = content.replace(/\s*/g,"");
 		console.log(content +"---"+content.length);
@@ -464,7 +464,13 @@ function buttonInit() {
 			document.getElementById("errorChangeInfo").style.display = "inline-block";
 			setTimeout("document.getElementById('errorChangeInfo').style.display = 'none';", 3000);
 		} else{
-			myEditorAddSubmit(1);
+			var type = $("#lable1SubmitTwo").attr("catagory");
+			console.log(type);
+			if(type == 6){
+				myEditorAddSubmit(2);
+			}else{
+				myEditorAddSubmit(1);
+			}
 		}
 	});
 	$("#myAddEnsure").click(function() {
@@ -661,6 +667,9 @@ function page2AEC(number) {
 	var _chip = $(".chip")[number].innerText;
 	var	_model = $(".model")[number].innerText;
 	var	_panel = $(".size")[number].innerText;
+	if(_panel == "默认"){
+		_panel = 0;
+	}
 	console.log(_type);
 	if (_type == 2||_type == 3||_type == 6) {
 		console.log("点击了编辑或者复制或者增加尺寸" + number);
@@ -828,6 +837,7 @@ function getPointProductInfo(){
 }
 
 function CommonDataInsert2(type,arr){
+	console.log(arr);
 	$("#lable2AndroidVersion").val(arr[0].androidVersion);
 	$("#lable2ChipMode").val(arr[0].soc);
 	$("#lable2Emmc").val(arr[0].EMMC);
@@ -837,15 +847,13 @@ function CommonDataInsert2(type,arr){
 	$("#lable2TargetProduct").val(arr[0].targetProduct);
 	
 	//2-编辑、3-复制、6-增加尺寸
-	if (type == 2) {
+	if (type == 2||type == 6) {
 		$("#lable2Chip").val(arr[0].chip);
 		$("#lable2Chip").css("color","red");
 		$("#lable2Chip").attr("disabled","disabled");
 		$("#lable2Model").val(arr[0].model);
 		$("#lable2Model").css("color","red");
 		$("#lable2Model").attr("disabled","disabled");
-//		$("#lable2TargetProduct").css("color","red");
-//		$("#lable2TargetProduct").attr("disabled","disabled");
 		
 		$("#lable2AndroidVersion").attr("oldvalue",arr[0].androidVersion);
 		$("#lable2ChipMode").attr("oldvalue",arr[0].chipModel);
@@ -860,13 +868,6 @@ function CommonDataInsert2(type,arr){
         $("#lable2Emmc").attr("onchange","changeDevice(this)");
         $("#lable2GitBranch").attr("onchange","changeDevice(this)");
         $("#lable2Platform").attr("onchange","changeDevice(this)");
-	}else if(type == 6){
-		$("#lable2Chip").val(arr[0].chip);
-		$("#lable2Chip").css("color","red");
-		$("#lable2Chip").attr("disabled","disabled");
-		$("#lable2Model").val(arr[0].model);
-		$("#lable2Model").css("color","red");
-		$("#lable2Model").attr("disabled","disabled");
 	}else if(type == 3){
 		$("#lable2Chip").css("color","black");
 		document.getElementById("lable2Chip").removeAttribute('disabled');
@@ -881,7 +882,7 @@ function ConfigDataInsert2(type, arr){
 		$("#"+arr[i].engName).val(arr[i].curValue);
 		$("#"+arr[i].engName).attr("value",arr[i].curValue);
 	}
-	if (type == 2) {
+	if (type == 2||type == 6) {
 		for (var i=0; i<$(".configitems").length; i++) {
 			$(".configitems:eq("+i+")").attr("onchange","changeConfig(this)");
 			$(".configitems:eq("+i+")").attr("oldvalue",$(".configitems:eq("+i+")").attr("value"));
@@ -898,7 +899,7 @@ function MKDataInsert2(type, arr){
 	}
 }
 function SysDataInsert2(type, arr){
-	if (type == 2) {
+	if (type == 2||type == 6) {
 		for (var i=0; i<$(".sysitems").length; i++) {
 			$(".sysitems:eq("+i+")").attr("onchange","changeSettings(this)");
 			$(".sysitems:eq("+i+")").attr("oldvalue","0");
@@ -914,7 +915,7 @@ function PropDataInsert2(type, arr){
 		console.log(arr[i].engName+"---"+arr[i].curValue);
 		document.getElementById(arr[i].engName).value = arr[i].curValue;
 	}
-	if (type == 2) {
+	if (type == 2||type==6) {
 		for (var i=0; i<$(".propitem").length; i++) {
 			$(".propitem:eq("+i+")").attr("onchange","changeProps(this)");
 			$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
@@ -930,7 +931,6 @@ function getPreviewInfo(){
             console.log(data);
             if(data.resultCode == 0) {
                 console.log("lxw " + "预览-成功");
-//              document.getElementById("loading").style.display = "none";
                 $("#myPreviewModalLabel").text("预览");
 				$('#myPreviewModal').modal();
 				$(".modal-backdrop").addClass("new-backdrop");
@@ -957,6 +957,8 @@ function getPreviewInfo(){
 function getAndCheckAndSendAllData(){
 	var type = $("#lable1SubmitTwo").attr("catagory");
 	console.log(type);
+	$("#txt0").css("display", "none");
+	document.getElementById("txt00").innerHTML = "";
 	//判断基本项是否为空
 	var nullName = 0;
 	for (var i=0; i<$("#page2Modal1Table .inputstyle").length; i++) {
@@ -1016,7 +1018,7 @@ function getAndCheckAndSendAllData(){
 			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
-			if (type == 1|| type == 3 ||type == 6) {
+			if (type==1||type==3||type==6) {
 				if (type == 6) {
 					var _panel = $("#lable2Size1").val();
 				} else{
@@ -1083,9 +1085,40 @@ function checkResultInfo(){
 					setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 				} else{
 					//不存在
-					var _info = "确定增加此项吗？";
-					$("#myAddEnsureDiv").css("display","block");
-					$("#areYouSure").html(_info);
+					var type = $("#lable1SubmitTwo").attr("catagory");
+					console.log(type);
+					if(type==6){//弹出确认框
+						console.log("做了修改");
+						$("#txt0").css("display", "block");
+						document.getElementById("txt00").innerHTML = $("#lable2Size1").val();
+						document.getElementById("myEditEnsureDiv").style.display = "block";
+						if (changeDev.length != 0) {
+					        $("#txt1").css("display", "block");
+					        document.getElementById("txt11").innerHTML = changeDev;
+						}
+					    if(changeAdd.length != 0){
+					        $("#txt2").css("display", "block");
+					        document.getElementById("txt22").innerHTML = changeAdd;
+					    }
+					    if (changeReduce.length != 0) {
+					        $("#txt3").css("display", "block");
+					        document.getElementById("txt33").innerHTML = changeReduce;
+					    }
+					    if (changeConf.length != 0) {
+					        $("#txt4").css("display", "block");
+					        $("#txt44").val(changeConf);
+					        document.getElementById("txt44").innerHTML = changeConf;
+					    }
+					    if (changeProp.length != 0) {
+					        $("#txt5").css("display", "block");
+					        $("#txt55").val(changeProp);
+					        document.getElementById("txt55").innerHTML = changeProp;
+					    }
+					}else{
+						var _info = "确定增加此项吗？";
+						$("#myAddEnsureDiv").css("display","block");
+						$("#areYouSure").html(_info);
+					}
 				}
 			}
 		}
@@ -1134,15 +1167,15 @@ function page2Export() {
 	document.getElementById("dlink").click();
 }
 
-function closePage2Model(objname) {
-	document.getElementById(objname).style.display = "none";
-}
-
 function closeparentpage() {
 	document.getElementById("myAddCloseDiv").style.display = "none";
 	document.getElementById("myEditModalLabel").style.display = "none";
 	$("#page2Modal1").modal('hide');
-	//page2Fresh();
+	changeAdd = [];//保存新增模块信息
+	changeReduce = [];//保存删除模块信息
+	changeConf = [];//保存修改配置信息
+	changeDev = [];//保存修改设备信息
+	changeProp = [];//保存修改属性信息
 }
 
 function configQueryData1(arr1,arr2) {
@@ -1350,13 +1383,16 @@ function productAddResult(){
 			if(data.resultCode == "0") {
 				console.log("数据提交成功");
 				var type = $("#lable1SubmitTwo").attr("catagory");
-				if(type == 1||type == 3){
+				if(type==1||type==3||type==6){
 					console.log("新增或者复制数据的日志提交");
 					var _desc = "新增该产品";
 					var _reason = "新增";
 					var _chip = $("#lable2Chip").val();
 					var _model = $("#lable2Model").val();
 					var _panel = 0;
+					if (type==6) {
+						_panel = $("#lable2Size1").val();
+					}
 				}else if(type == 2){
 					console.log("编辑数据的日志提交");
 					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'","changeProp":"'+changeProp+'"}';
