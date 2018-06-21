@@ -792,7 +792,7 @@ function resetAllInfo(num){
 		$(".propitem")[i].value = $(".propitem")[i].getAttribute("defaultvalue");
 	}
 	for (var j=0; j<$(".sysitems").length; j++) {
-		if(num== 1){
+		if(num==1&&$(".sysitems")[j].getAttribute("defaultSelected")==1){
 			$(".sysitems")[j].checked = true;
 		}else{
 			$(".sysitems")[j].checked = false;
@@ -1219,10 +1219,10 @@ function settingsQueryData1(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
 				if (arr2[i].level3 === null || arr2[i].level3 == "") {
-					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' defaultSelected='"+arr2[i].defaultSelected+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 				} else{
 					if (arr2[i].level3 == $(".settingsitems:eq(" + (j) + ")").attr("level3")) {
-						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' defaultSelected='"+arr2[i].defaultSelected+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 					}
 				}
 			}

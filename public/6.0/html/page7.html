@@ -95,7 +95,7 @@
 						<label for="configCName" class="control-label configlable">中文名称：</label>
 						<label for="configEName" class="control-label configlable">英文名称：</label><br/>
 						<input type="text" value="" id="configCName" class="configinput">
-						<input type="text" value="" id="configEName" class="configinput"><br/>
+						<input type="text" value="" id="configEName" class="configinput" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'');"><br/>
 						<label for="configDefaulted" class="control-label configlable">默认参考值：</label><br/>
 						<div id="configDefaulted">
 							<button class="defaultOption" boxone="configString" boxtwo="configTableBoxEnum">字符串</button>
@@ -137,7 +137,7 @@
 						<label for="moduleCName" class="control-label">模块中文名：</label><br/>
 						<input type="text" value="" id="moduleCName"><br/>
 						<label for="moduleEName" class="control-label">模块英文名：</label><br/>
-						<input type="text" value="" id="moduleEName"><br/>
+						<input type="text" value="" id="moduleEName" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'');"><br/>
 						<label for="moduleSrc" class="control-label">模块路径：</label><br/>
 						<input type="text" value="" id="moduleSrc"><br/>
 						<label for="moduleInstr" class="control-label">描述：</label><br/>
@@ -159,7 +159,7 @@
 						<label for="sysCName" class="control-label" style="margin-bottom: 0px;">模块中文名：</label><br/>
 						<input type="text" value="" id="sysCName"><br/>
 						<label for="sysEName" class="control-label" style="margin-bottom: 0px;">模块英文名：</label><br/>
-						<input type="text" value="" id="sysEName"><br/>
+						<input type="text" value="" id="sysEName" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'');"><br/>
 						<label for="sysInstr" class="control-label" style="margin-bottom: 0px;">描述：</label><br/>
 						<textarea id="sysInstr" rows="2" cols="" class="configtextarea"></textarea><br/>
 						<label for="selectFirst" class="control-label" style="margin-bottom: 0px;">所属分类：</label><br/>
@@ -178,7 +178,7 @@
 					<div class="modal-body">
 						<button type="button" id="propClose" data-dismiss="modal">关闭</button>
 						<label for="propEName" class="control-label" style="margin-bottom: 0px;">属性英文名：</label><br/>
-						<input type="text" value="" id="propEName"><br/>
+						<input type="text" value="" id="propEName" onkeyup="this.value=this.value.replace(/(^\s+)|(\s+$)/g,'');"><br/>
 						<label for="propDefaulted" class="control-label proplable">默认参考值：</label><br/>
 						<textarea id="propString" rows="3" cols="" class="configtextarea"></textarea><br/>
 						<label for="propInstr" class="control-label" style="margin-bottom: 0px;">描述：</label><br/>
