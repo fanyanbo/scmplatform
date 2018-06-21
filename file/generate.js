@@ -17,6 +17,7 @@ var dbparam = {
 var os = require('os');
 var fs = require('fs');
 var writer = require("./writer");
+var git = require("./gitcommit");
 var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 var dbConfig = require('../models/dbConfig');
@@ -41,6 +42,7 @@ var tab_configdata;                     // 数据库中,配置数据表名
 var tab_settingsdata;                   // 数据库中,设置数据表名
 var tab_propsdata;                      // 数据库中,属性数据表名
 var tab_mkdata;                         // 数据库中,mk数据表名
+var tab_settings;                       // 数据库中,设置表名
 
 var infoTxt = "";
 var sql = ";";
@@ -164,11 +166,13 @@ function generateFiles(
     {
         tab_configdata = dbConfig.tables.configdata_temp;
         tab_settingsdata = dbConfig.tables.settingsdata_temp;
+        tab_settings = dbConfig.tables.settings;
     }
     else
     {
         tab_configdata = dbConfig.tables.configdata;
         tab_settingsdata = dbConfig.tables.settingsdata;
+        tab_settings = dbConfig.tables.settings;
     }
     tab_mkdata = dbConfig.tables.mkdata;
 
@@ -205,9 +209,9 @@ function generateFiles(
         infoTotal++;
         
         if (version == "6.0")
-            sql = "call v60_copy_temp_to_data(\"" + chip + "\", \"" + model + "\");";
+            sql = "call v60_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
         else if (version == "6.5")
-            sql = "call v65_copy_temp_to_data(\"" + chip + "\", \"" + model + "\");";
+            sql = "call v65_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
         
         console.log("同步临时数据到正式数据");
         writerlog.w("同步临时data到正式data : " + sql + "\n");
@@ -392,7 +396,7 @@ function step_query_all_config(connection)
     	else if (list[configid].type == "system_settings")
     	{
     		sql = "select a.engName, b.cnName, b.xmlFileName, b.xmlText, b.xmlNode1, b.xmlNode2, b.level2_order, b.level3_order, b.orderId, b.descText "
-    		        + " from " + tab_settingsdata + " a, settings b where a.engName = b.engName and a.chip = \"" +
+    		        + " from " + tab_settingsdata + " a, " + tab_settings + " b where a.engName = b.engName and a.chip = \"" +
     				allInfos[infoCnt].chip + "\"" +
     				" and a.model=\"" +
     				allInfos[infoCnt].model + "\"" + 
@@ -565,10 +569,6 @@ function step_query_all_products_info(connection)
         connection.end();
         generate_files();
     });
-    
-    console.log("***********************\n");
-        connection.end();
-        generate_files();
 }
 
 function generate_files()
@@ -666,8 +666,8 @@ function generate_files()
 	}
 	else        // 非预览则复制并提交文件到git
 	{
-        //var pushret = copyFileAndCommit();
-        //if (pushret)
+        var pushret = copyFileAndCommit();
+        if (pushret)
         ;
 	}
 	
@@ -785,6 +785,13 @@ function getTempPropFileName(targetProductName)
 }
 
 function copyFileAndCommit()
+{
+    git.commit(version, filelist, null);
+    
+    return 0;
+}
+
+function copyFileAndCommit2()
 {    
     shellFileName =  getTmpDir() + "shell_script.sh";
     
@@ -792,7 +799,7 @@ function copyFileAndCommit()
     var commitmsg = "";
 	var shcmd = "#!/bin/sh\n\n";
 	
-	var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限 
+	var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限
 	
 	cmd = "cd " + gitdir + " \n";
 	shcmd += "echo " + cmd;
