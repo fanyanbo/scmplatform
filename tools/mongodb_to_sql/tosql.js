@@ -298,7 +298,6 @@ function convert_products_table(dbo)
 			sqltext += '\"' + data.chipModel + '\", ';
 			sqltext += '\"' + "" + '\", ';
 			sqltext += "current_timestamp() ";
-
 			sqltext += ");\n";
 			
 			product_sql_list[product_sql_cnt] = sqltext;

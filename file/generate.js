@@ -670,9 +670,6 @@ function generate_files()
         if (pushret)
         ;
 	}
-	
-	if (mod_callback != null)
-	    mod_callback(0, "产生文件完成.");
 }
 
 function generate_device_tab()
@@ -786,12 +783,27 @@ function getTempPropFileName(targetProductName)
 
 function copyFileAndCommit()
 {
-    git.commit(version, filelist, null);
+    var rand1 = Math.ceil(1000 * Math.random());
+    var rand2 = Math.ceil(1000 * Math.random());
+    var rand3 = Math.ceil(1000 * Math.random());
+    var rand4 = Math.ceil(1000 * Math.random());
+    var rand5 = Math.ceil(1000 * Math.random());
+    var commit_sn = "" + rand1 + "-" + rand2 + "-" + rand3 + "-" + rand4 + "-" + rand5;
+    
+    writerlog.w("GIT 提交SN为  commit_sn = " + commit_sn + "\n");
+    
+    var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限
+    var gitbranch = getGitBranch(version);
+    
+    git.commit(commit_sn, version, gitdir, gitbranch, filelist, function(err, text){
+        if (mod_callback != null)
+	        mod_callback(0, "产生文件完成.");
+    });
     
     return 0;
 }
 
-function copyFileAndCommit2()
+function copyFileAndCommit_old()
 {    
     shellFileName =  getTmpDir() + "shell_script.sh";
     
@@ -1065,10 +1077,18 @@ function show_callback(errno, result)
 
 //generator.generate("GHD08", "K5S", 0, show_callback);
 
+//generator.generate("8A23", "15A55", 0, show_callback);
 
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b test
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.0
-
+// ssh://source.skyworth.com/skyworth/CoocaaOS/Custom
 
 module.exports = generator;
+
+
+// git 配置:
+//git config --global url.ssh://scmptfm@source.skyworth.com:29419.insteadof ssh://source.skyworth.com
+//git config --global url.ssh://scmptfm@172.20.5.240:29419.insteadof ssh://172.20.5.240
+//git config --global user.name scmptfm
+//git config --global user.email scmptfm@skyworth.com
 
