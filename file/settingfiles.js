@@ -493,7 +493,7 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
 }
 
 // panel_common_pq.ini
-function write_panel_common_pq_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack)
+function write_panel_common_pq_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
@@ -538,7 +538,7 @@ function write_panel_common_pq_ini(obj.result, chip, model, panel, tmpdir, genFi
 }
 
 // panel_common_board.ini
-function write_panel_common_board_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack)
+function write_panel_common_board_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
