@@ -23,7 +23,8 @@ SettingFiles.prototype.generate = function(chip, model, panel, obj, tmpdir, genF
         write_setting_general_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_ssc_item_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         setting_picture_sound(obj.result, chip, model, panel, tmpdir, genFileCallBack);
-        write_midware_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_panel_common_pq_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_panel_common_board_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack);
     }
 }
 
@@ -491,15 +492,15 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     genFileCallBack(tmpFileName, "setting_picture_sound.xml", chip, model, panel, "setting_picture_sound");
 }
 
-// driverbase_net_config.ini
-function write_midware_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
+// panel_common_pq.ini
+function write_panel_common_pq_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-driverbase_net_config.ini";
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-panel_common_pq.ini";
     
-    writerlog.w("生成临时的 driverbase_net_config.ini \n");
+    writerlog.w("生成临时的 panel_common_pq.ini \n");
     
     x = 0;
     for (let i in sqlresult)
@@ -509,7 +510,7 @@ function write_midware_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBac
         //console.log(item);
         //console.log("AAAAAAAA : " + item.xmlFileName);
         
-        if (item.xmlFileName == "driverbase_net_config.ini")
+        if (item.xmlFileName == "panel_common_pq.ini")
         {
             //console.log(item);
             //console.log("AAAAAAAA : " + item.xmlFileName);
@@ -525,10 +526,7 @@ function write_midware_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBac
         if (curClass != fileinfo[i].xmlNode1)
         {
             let iniCollect;
-            if (fileinfo[i].xmlNode1 == "输入信号源")
-                iniCollect = "SOURCE";
-            else
-                iniCollect = "SCALE";
+            iniCollect = "PQ";
             fs.appendFileSync(tmpFileName, '[' + iniCollect + ']\n');
             curClass = fileinfo[i].xmlNode1;
         }
@@ -536,7 +534,52 @@ function write_midware_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBac
         fs.appendFileSync(tmpFileName, fileinfo[i].engName + ' = true\n');
     }
     
-    genFileCallBack(tmpFileName, "driverbase_net_config.ini", chip, model, panel, "driverbase_net_config");
+    genFileCallBack(tmpFileName, "panel_common_pq.ini", chip, model, panel, "panel_common_pq");
+}
+
+// panel_common_board.ini
+function write_panel_common_board_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack)
+{
+    var x;
+    var curClass = "";
+    var fileinfo = new Array();
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-panel_common_board.ini";
+    
+    writerlog.w("生成临时的 panel_common_board.ini \n");
+    
+    x = 0;
+    for (let i in sqlresult)
+    {
+        let item = sqlresult[i];
+        
+        //console.log(item);
+        //console.log("AAAAAAAA : " + item.xmlFileName);
+        
+        if (item.xmlFileName == "panel_common_board.ini")
+        {
+            //console.log(item);
+            //console.log("AAAAAAAA : " + item.xmlFileName);
+            fileinfo[x] = item;
+            x++;
+        }
+    }
+        
+    fs.writeFileSync(tmpFileName, ' \n');
+    
+    for (let i in fileinfo)
+    {
+        if (curClass != fileinfo[i].xmlNode1)
+        {
+            let iniCollect;
+            iniCollect = "board";
+            fs.appendFileSync(tmpFileName, '[' + iniCollect + ']\n');
+            curClass = fileinfo[i].xmlNode1;
+        }
+        
+        fs.appendFileSync(tmpFileName, fileinfo[i].engName + ' = true\n');
+    }
+    
+    genFileCallBack(tmpFileName, "panel_common_board.ini", chip, model, panel, "panel_common_board");
 }
 
 

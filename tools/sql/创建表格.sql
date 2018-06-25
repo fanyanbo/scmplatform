@@ -230,18 +230,6 @@ CREATE TABLE `v60_mkdata` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
--- Table structure for `v60_mkdata_temp`
--- ----------------------------
-DROP TABLE IF EXISTS `v60_mkdata_temp`;
-CREATE TABLE `v60_mkdata_temp` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `targetProduct` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `engName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `targetProduct_index` (`targetProduct`(128))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
 -- Table structure for `v60_modifyhistory`
 -- ----------------------------
 DROP TABLE IF EXISTS `v60_modifyhistory`;
@@ -297,21 +285,6 @@ CREATE TABLE `v60_propsdata` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
--- Table structure for `v60_propsdata_temp`
--- ----------------------------
-DROP TABLE IF EXISTS `v60_propsdata_temp`;
-CREATE TABLE `v60_propsdata_temp` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `chip` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `engName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `curValue` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `chip_index` (`chip`(8)),
-  KEY `model_index` (`model`(8))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
 -- Table structure for `v60_settings`
 -- ----------------------------
 DROP TABLE IF EXISTS `v60_settings`;
@@ -319,13 +292,13 @@ CREATE TABLE `v60_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `engName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cnName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `defaultSelected` int(11) DEFAULT '0',
   `level1` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level2` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level3` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `level2_order` int(11) NOT NULL,
   `level3_order` int(11) NOT NULL,
   `orderId` int(11) NOT NULL,
-  `defaultSelected` int(11) DEFAULT '0',
   `descText` mediumtext COLLATE utf8mb4_unicode_ci,
   `xmlText` varchar(4095) COLLATE utf8mb4_unicode_ci NOT NULL,
   `xmlFileName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -410,18 +383,6 @@ CREATE TABLE `v62_mkdata` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
--- Table structure for `v62_mkdata_temp`
--- ----------------------------
-DROP TABLE IF EXISTS `v62_mkdata_temp`;
-CREATE TABLE `v62_mkdata_temp` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `targetProduct` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `engName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `targetProduct_index` (`targetProduct`(128))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
 -- Table structure for `v62_modifyhistory`
 -- ----------------------------
 DROP TABLE IF EXISTS `v62_modifyhistory`;
@@ -477,21 +438,6 @@ CREATE TABLE `v62_propsdata` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
--- Table structure for `v62_propsdata_temp`
--- ----------------------------
-DROP TABLE IF EXISTS `v62_propsdata_temp`;
-CREATE TABLE `v62_propsdata_temp` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `chip` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `engName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `curValue` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `chip_index` (`chip`(8)),
-  KEY `model_index` (`model`(8))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- ----------------------------
 -- Table structure for `v62_settings`
 -- ----------------------------
 DROP TABLE IF EXISTS `v62_settings`;
@@ -499,13 +445,13 @@ CREATE TABLE `v62_settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `engName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cnName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `defaultSelected` int(11) DEFAULT '0',
   `level1` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level2` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level3` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `level2_order` int(11) NOT NULL,
   `level3_order` int(11) NOT NULL,
   `orderId` int(11) NOT NULL,
-  `defaultSelected` int(11) DEFAULT '0',
   `descText` mediumtext COLLATE utf8mb4_unicode_ci,
   `xmlText` varchar(4095) COLLATE utf8mb4_unicode_ci NOT NULL,
   `xmlFileName` char(255) COLLATE utf8mb4_unicode_ci NOT NULL,
