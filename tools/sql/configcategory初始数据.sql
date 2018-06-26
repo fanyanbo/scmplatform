@@ -24,3 +24,6 @@ INSERT INTO `configcategory` VALUES ('4', 'TV通道', '4');
 INSERT INTO `configcategory` VALUES ('5', '本地媒体', '5');
 INSERT INTO `configcategory` VALUES ('6', '其他功能', '6');
 
+
+
+

@@ -3,7 +3,7 @@
 // 2. 排序
 
 var version = "6.0";
-var test_flag = 1;
+var test_flag = 0;
 
 var mysql = require('mysql');
 var dbparam = {
@@ -21,6 +21,7 @@ var git = require("./gitcommit");
 var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 var dbConfig = require('../models/dbConfig');
+var config = require('../common/config');
 
 var connection;							// 数据库连接
 var action_type;                        // 当前动作为预览还是git提交
@@ -158,7 +159,8 @@ function generateFiles(
     if (test_flag)
         dbparam.database = "scm_test";
     else
-        dbparam.database = "scm";
+        dbparam.database = config.mysql.database;
+    dbparam.host = config.mysql.host;
 
     tab_products = dbConfig.tables.products;
     tab_propsdata = dbConfig.tables.propsdata;
@@ -941,7 +943,7 @@ function gitpush(shellFileName, callback)
 function getGitDir(systemVersion)
 {
 	var gitdir;
-	if (test_flag)
+	if (true)//(test_flag)
 	{
 	    gitdir = os.homedir() + "/scmv3_git/test/Custom/";
 	}

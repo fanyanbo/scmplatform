@@ -1,6 +1,6 @@
 var fs = require('fs');
 var os = require('os');
-
+var path = require('path');
 // 写LOG
 
 function WriterLog(){}
@@ -11,6 +11,12 @@ WriterLog.prototype.w = function(text1)
     var newDate = new Date();
     newDate.setTime(timestamp);
     var str = newDate.toLocaleString();
+    
+    fs.exists(getLogFileName(), function(exists) {  
+        if (!exists)
+            fs.writeFileSync(getLogFileName(), "\n");
+    });
+    
     fs.appendFileSync(getLogFileName(), str + " : ");
     fs.appendFileSync(getLogFileName(), text1);
 }
@@ -37,7 +43,9 @@ function getLogFileName()
     }
     else
     {
-        return "/home/scmplatform/scmplatform_file_writer_log.txt";
+        var dir = path.join(__dirname, '../logs');
+        //console.log("########################################################  " + dir);
+        return dir + "/scmplatform_file_writer_log.txt";
     }
 }
 

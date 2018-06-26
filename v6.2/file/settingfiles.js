@@ -5,7 +5,7 @@ function SettingFiles(){}
 
 ////  测试时
 
-SettingFiles.prototype.generate = function(chip, model, obj, tmpdir)
+SettingFiles.prototype.generate = function(chip, model, panel, obj, tmpdir, genFileCallBack)
 {
     let x,y,z;
     
@@ -16,27 +16,24 @@ SettingFiles.prototype.generate = function(chip, model, obj, tmpdir)
     
     if (obj.type == "system_settings")
     {
-        write_setting_main_xml(obj.result, chip, model, tmpdir);
-        write_setting_guide_xml(obj.result, chip, model, tmpdir);
-        write_setting_connect_xml(obj.result, chip, model, tmpdir);
-        write_market_show_configuration_xml(obj.result, chip, model, tmpdir);
-        write_setting_general_xml(obj.result, chip, model, tmpdir);
-        write_ssc_item_xml(obj.result, chip, model, tmpdir);
-        setting_picture_sound(obj.result, chip, model, tmpdir);
-        write_midware_ini(obj.result, chip, model, tmpdir);
-    }
-    else if (obj.type == "prop")
-    {
-        write_prop_file(obj.result, chip, model, tmpdir);
+        write_setting_main_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_setting_guide_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_setting_connect_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_market_show_configuration_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_setting_general_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_ssc_item_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        setting_picture_sound(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_panel_common_pq_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_panel_common_board_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack);
     }
 }
 
 // setting_main.xml
-function write_setting_main_xml(sqlresult, chip, model, tmpdir)
+function write_setting_main_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-setting_main.xml";
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-setting_main.xml";
     
     writerlog.w("生成临时的 setting_main.xml \n");
     
@@ -69,14 +66,16 @@ function write_setting_main_xml(sqlresult, chip, model, tmpdir)
         fs.appendFileSync(tmpFileName, "\n");
     }
     fs.appendFileSync(tmpFileName, "</Setting>\n");
+    
+    genFileCallBack(tmpFileName, "setting_main.xml", chip, model, panel, "setting_main");
 }
 
 // setting_guide.xml
-function write_setting_guide_xml(sqlresult, chip, model, tmpdir)
+function write_setting_guide_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-setting_guide.xml";
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-setting_guide.xml";
     
     writerlog.w("生成临时的 setting_guide.xml \n");
     
@@ -134,14 +133,16 @@ function write_setting_guide_xml(sqlresult, chip, model, tmpdir)
     fs.appendFileSync(tmpFileName, '<!-- pageName="BT" 只有产品标配蓝牙遥控器才配置此项，此项配置的前提是内置蓝牙--> \n');
     fs.appendFileSync(tmpFileName, '<!--在需要配置此项的时候，需要确认标配蓝牙遥控器是否支持按语音键进行一键配对，如支持需要增加配置参数isSupportVoiceKeyPair="true"，不支持的话不需要配置此参数--> \n');
     fs.appendFileSync(tmpFileName, '<!--注意同机芯-机型不同尺寸标配蓝牙遥控器可能有所不同，如不清楚请找项目经理进行详细确认--> \n');
+    
+    genFileCallBack(tmpFileName, "setting_guide.xml", chip, model, panel, "setting_guide");
 }
 
 // setting_connect.xml
-function write_setting_connect_xml(sqlresult, chip, model, tmpdir)
+function write_setting_connect_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-setting_connect.xml";
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-setting_connect.xml";
     
     writerlog.w("生成临时的 setting_connect.xml \n");
     
@@ -174,14 +175,16 @@ function write_setting_connect_xml(sqlresult, chip, model, tmpdir)
         fs.appendFileSync(tmpFileName, "\n");
     }
     fs.appendFileSync(tmpFileName, "</Setting>\n");
+    
+    genFileCallBack(tmpFileName, "setting_connect.xml", chip, model, panel, "setting_connect");
 }
 
 // market_show_configuration.xml
-function write_market_show_configuration_xml(sqlresult, chip, model, tmpdir)
+function write_market_show_configuration_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-market_show_configuration.xml";
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-market_show_configuration.xml";
     
     writerlog.w("生成临时的 market_show_configuration.xml \n");
     
@@ -214,15 +217,17 @@ function write_market_show_configuration_xml(sqlresult, chip, model, tmpdir)
         fs.appendFileSync(tmpFileName, "\n");
     }
     fs.appendFileSync(tmpFileName, "</Config>\n");
+    
+    genFileCallBack(tmpFileName, "market_show_configuration.xml", chip, model, panel, "market_show_configuration");
 }
 
 // setting_general.xml
-function write_setting_general_xml(sqlresult, chip, model, tmpdir)
+function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-setting_general.xml";
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-setting_general.xml";
     
     writerlog.w("生成临时的 setting_general.xml \n");
     
@@ -266,16 +271,18 @@ function write_setting_general_xml(sqlresult, chip, model, tmpdir)
     }
     fs.appendFileSync(tmpFileName, "    </SettingItem>\n");
     fs.appendFileSync(tmpFileName, "</SettingItem>  \n\n\n\n\n");
+    
+    genFileCallBack(tmpFileName, "setting_general.xml", chip, model, panel, "setting_general");
 }
 
 
 // ssc_item.xml
-function write_ssc_item_xml(sqlresult, chip, model, tmpdir)
+function write_ssc_item_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-ssc_item.xml";
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-ssc_item.xml";
     
     writerlog.w("生成临时的 ssc_item.xml \n");
     
@@ -320,14 +327,16 @@ function write_ssc_item_xml(sqlresult, chip, model, tmpdir)
     }
     fs.appendFileSync(tmpFileName, '    </' + curClass + '>\n\n');
     fs.appendFileSync(tmpFileName, "</Source>  \n\n\n\n\n");
+    
+    genFileCallBack(tmpFileName, "ssc_item.xml", chip, model, panel, "ssc_item");
 }
 
 // setting_picture_sound.xml
-function setting_picture_sound(sqlresult, chip, model, tmpdir)
+function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-setting_picture_sound.xml";
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-setting_picture_sound.xml";
     var curClass1 = "";
     var curClass2 = "";
     var curMainClass = "";
@@ -479,17 +488,19 @@ function setting_picture_sound(sqlresult, chip, model, tmpdir)
     fs.appendFileSync(tmpFileName, '        </SettingItem>   \n');
     fs.appendFileSync(tmpFileName, '    </SettingItem>  \n');
     fs.appendFileSync(tmpFileName, "</SettingItem>  \n\n\n\n\n");
+    
+    genFileCallBack(tmpFileName, "setting_picture_sound.xml", chip, model, panel, "setting_picture_sound");
 }
 
-// driverbase_net_config.ini
-function write_midware_ini(sqlresult, chip, model, tmpdir)
+// panel_common_pq.ini
+function write_panel_common_pq_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-driverbase_net_config.ini";
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-panel_common_pq.ini";
     
-    writerlog.w("生成临时的 driverbase_net_config.ini \n");
+    writerlog.w("生成临时的 panel_common_pq.ini \n");
     
     x = 0;
     for (let i in sqlresult)
@@ -499,7 +510,7 @@ function write_midware_ini(sqlresult, chip, model, tmpdir)
         //console.log(item);
         //console.log("AAAAAAAA : " + item.xmlFileName);
         
-        if (item.xmlFileName == "driverbase_net_config.ini")
+        if (item.xmlFileName == "panel_common_pq.ini")
         {
             //console.log(item);
             //console.log("AAAAAAAA : " + item.xmlFileName);
@@ -515,10 +526,7 @@ function write_midware_ini(sqlresult, chip, model, tmpdir)
         if (curClass != fileinfo[i].xmlNode1)
         {
             let iniCollect;
-            if (fileinfo[i].xmlNode1 == "输入信号源")
-                iniCollect = "SOURCE";
-            else
-                iniCollect = "SCALE";
+            iniCollect = "PQ";
             fs.appendFileSync(tmpFileName, '[' + iniCollect + ']\n');
             curClass = fileinfo[i].xmlNode1;
         }
@@ -526,27 +534,54 @@ function write_midware_ini(sqlresult, chip, model, tmpdir)
         fs.appendFileSync(tmpFileName, fileinfo[i].engName + ' = true\n');
     }
     
+    genFileCallBack(tmpFileName, "panel_common_pq.ini", chip, model, panel, "panel_common_pq");
 }
 
-// build.prop
-function write_prop_file(sqlresult, chip, model, tmpdir)
+// panel_common_board.ini
+function write_panel_common_board_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
     var x;
     var curClass = "";
     var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "-build.prop";
-           
-    writerlog.w("生成临时的  build.prop  \n");
-           
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-panel_common_board.ini";
+    
+    writerlog.w("生成临时的 panel_common_board.ini \n");
+    
+    x = 0;
+    for (let i in sqlresult)
+    {
+        let item = sqlresult[i];
+        
+        //console.log(item);
+        //console.log("AAAAAAAA : " + item.xmlFileName);
+        
+        if (item.xmlFileName == "panel_common_board.ini")
+        {
+            //console.log(item);
+            //console.log("AAAAAAAA : " + item.xmlFileName);
+            fileinfo[x] = item;
+            x++;
+        }
+    }
+        
     fs.writeFileSync(tmpFileName, ' \n');
     
-    for (let i in sqlresult)
-    {        
-        fs.appendFileSync(tmpFileName, sqlresult[i].engName + '=' + sqlresult[i].curValue + '\n');
+    for (let i in fileinfo)
+    {
+        if (curClass != fileinfo[i].xmlNode1)
+        {
+            let iniCollect;
+            iniCollect = "board";
+            fs.appendFileSync(tmpFileName, '[' + iniCollect + ']\n');
+            curClass = fileinfo[i].xmlNode1;
+        }
+        
+        fs.appendFileSync(tmpFileName, fileinfo[i].engName + ' = true\n');
     }
     
-    fs.appendFileSync(tmpFileName, '\n\n\n\n');
+    genFileCallBack(tmpFileName, "panel_common_board.ini", chip, model, panel, "panel_common_board");
 }
+
 
 
 
