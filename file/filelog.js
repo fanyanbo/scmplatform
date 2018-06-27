@@ -43,7 +43,7 @@ function getLogFileName()
     }
     else
     {
-        var dir = path.join(__dirname, '../logs');
+        var dir = os.homedir();
         //console.log("########################################################  " + dir);
         return dir + "/scmplatform_file_writer_log.txt";
     }
