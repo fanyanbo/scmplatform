@@ -160,7 +160,7 @@ function generateFiles(
     else
         dbparam.database = "scm";
         
-    dbparam.host = config.mysql.host;
+    //dbparam.host = config.mysql.host;
 
     tab_products = dbConfig.tables.products;
     tab_propsdata = dbConfig.tables.propsdata;

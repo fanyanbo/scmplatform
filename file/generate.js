@@ -160,7 +160,7 @@ function generateFiles(
     else
         dbparam.database = "scm";
         
-    dbparam.host = config.mysql.host;
+    //dbparam.host = config.mysql.host;
 
     tab_products = dbConfig.tables.products;
     tab_propsdata = dbConfig.tables.propsdata;
@@ -1074,7 +1074,7 @@ function show_callback(errno, result)
 
 //generator.generate("6S57", "K5S",  null);
 //generator.generateByModel("E6000", null);
-//generator.preview("5S02", "15U",  show_preview_text_test);
+//generator.preview("8N01", "G730S", 0, 0, show_preview_text_test);
 //generator.generate("5S02a", "15U", 0, show_callback);
 //generator.generateByTargetProduct("p201", show_callback);
 
