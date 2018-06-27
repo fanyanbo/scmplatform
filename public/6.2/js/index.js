@@ -4,7 +4,7 @@ var loginusername = null; //访问session之后存取登录用户名
 var loginlevel = null;
 var loginEmail = null; //当前用户的邮箱地址
 var loginStatus = null;
-var coocaaVersion = "/v6.5";
+var coocaaVersion = "/v6.2";
 
 $(function() {
 	sendHTTPRequest("/verify", '{}', loginResult);

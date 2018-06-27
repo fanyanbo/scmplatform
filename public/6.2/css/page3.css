@@ -106,6 +106,15 @@
 .CJJ-Table tfoot td{
 	padding-top: 10px;
 }
+
+#page3 input[type="radio"]{
+	height: 15px;
+    width: 17px;
+}
+#page3 input[type="checkbox"]{
+	height: 15px;
+    width: 17px;
+}
 .new_productBox{
 	height: 35px;
 }
@@ -115,38 +124,7 @@
 #page3 .modal-footer{
 	text-align: center;
 }
-.auto_hidden {
-	width: 150px;
-	position: absolute;
-	text-align: left;
-	display: none;
-}
 
-.auto_show {
-	width: 150px;
-	position: absolute;
-	text-align: left;
-	z-index: 9999;
-	/* 设置对象的层叠顺序 */
-	display: block;
-	max-height: 100px;
-	overflow: auto;
-}
-
-.auto_onmouseover {
-	color: #ffffff;
-	background-color: highlight;
-	text-align: left;
-	width: 100%;
-	padding-left: 5px;
-}
-
-.auto_onmouseout {
-	color: #000000;
-	width: 100%;
-	background-color: #ffffff;
-	padding-left: 5px;
-}
 #page3_table{
 	width: 100%;
 }
@@ -172,7 +150,7 @@
 	border-radius: 5px;
 	text-align: center;
 }
-#page3_TP{
+#page3_TP,#page3_TP2{
     border: 1px solid black;
     top: 17px;
     position: absolute;
@@ -195,13 +173,9 @@
 }
 
 #page3_targetProduct{
-	margin-left: 0.5em;
-    height: 32px;
-    width: 182px;
-    text-align: center;
-    padding-left: 0px;
-    background-color: #FFFFFF;
-    border: 1px solid cadetblue;
+    background-color: #e9f5f0;
+    height: 30px;
+    margin-right: 5px;
 }
 #page3_add{
 	margin-left: 20px;
@@ -223,9 +197,10 @@
 #myEditEnsureDiv .mybody{
 	font-size: 16px;
 }
-#productName{
+#productName,#tptochipmodel{
 	text-align: center;
 	font-size: 18px;
+	color: red;
 }
 .grouptitle{
 	display: inherit;
@@ -243,4 +218,88 @@
 	margin-top: 5px;
 	clear: both;
 	font-size: 18px;
+	overflow: auto;
+	padding-bottom: 5px;
+    border-bottom: 1px solid black;
+}
+
+.auto_hidden {
+	width: 150px;
+	position: absolute;
+	text-align: left;
+	display: none;
+}
+
+.auto_show {
+	width: 150px;
+	position: absolute;
+	text-align: left;
+	z-index: 9999;
+	/* 设置对象的层叠顺序 */
+	display: block;
+	max-height: 200px;
+	background-color: #94A6B0;
+	overflow: auto;
+}
+
+.auto_onmouseover {
+	color: #ffffff;
+	background-color: highlight;
+	text-align: left;
+	width: 100%;
+	padding-left: 0px;
+}
+
+.auto_onmouseout {
+	color: #000000;
+	width: 100%;
+	background-color: #94A6B0;
+	padding-left: 0px;
+}
+
+#myPreviewModal{
+	width: 90%;
+    margin: 0 auto;
+}
+#myPreviewModal .mybody textarea{
+	overflow:scroll;
+    background-color: palegoldenrod;
+    padding-left: 10px;
+}
+
+.modalwidth{
+	position: relative;
+	width: 98%;
+	padding-left: 2%;
+	padding-top: 4%;
+	margin: 0;
+}
+.myheader{
+	padding-bottom: 5px;
+	border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #66AFE9;
+}
+.mybody{
+	padding-bottom: 0px;
+}
+.myfooter{
+	border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: #66AFE9;
+    padding: 5px;
+}
+#myPreviewBodyOne,#myPreviewBodyTwo{
+	width: 100%;
+    margin-bottom: 10px;
+    padding-top: 3px;
+    /*min-height: 350px;*/
+    font-size: 16px;
+    background-color: aliceblue;
+}
+#reviewTpName{
+	text-align: center;
+    font-size: 20px;
+    margin-bottom: 3px;
+    background-color: aliceblue;
 }

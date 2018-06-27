@@ -23,12 +23,14 @@ var olrplayerid = null;
 
 var deleteChip = null;
 var deleteModel = null;
+var deletePanel = null;
 
 var fromEmail = null;
+var toEmail = "SKY058689@skyworth.com";
 var level = null;
 var loginusername = null;
 
-var coocaaVersion = "/v6.5";
+var coocaaVersion = "/v6.2";
 
 $(function() {
 	fromEmail = parent.loginEmail;
@@ -54,14 +56,6 @@ function productQuery() {
 				for (var i=0; i<data.resultData.length; i++) {
 					if (data.resultData[i].auditState == 0) {
 						arr.push(data.resultData[i]);
-					}else if(data.resultData[i].auditState == 1){
-						console.log('111111111111');
-						parent.document.getElementsByClassName("email")[0].style.display = "block";
-						parent.document.getElementsByClassName("email")[1].style.display = "inline-block";
-					}else if(data.resultData[i].auditState == 2){
-						console.log('22222222222');
-						parent.document.getElementsByClassName("email")[0].style.display = "block";
-						parent.document.getElementsByClassName("email")[2].style.display = "inline-block";
 					}
 				}
 				_myArray = arr;
@@ -101,10 +95,16 @@ function targetproductQueryResult() {
 function handleTableData(arr) {
 	var getdataArray2 = new Array();
 	for(var i = 0; i < arr.length; i++) {
+		if (arr[i].panel == 0) {
+			var _panel = "默认";
+		}else{
+			var _panel = arr[i].panel;
+		}
 		var eachItem2 = {
 			"number" : (i+1),
 			"model": arr[i].model,
 			"chip": arr[i].chip,
+			"size": _panel,
 			"target_product": arr[i].targetProduct,
 			"AndroidVersion": arr[i].androidVersion,
 			"chipmodel": arr[i].soc,
@@ -112,7 +112,7 @@ function handleTableData(arr) {
 			"memory": arr[i].memorySize,
 			"gitbranch": arr[i].gitBranch,
 			"history": "<button class='eachcheck btn-success' href='#'>查看</button>",
-			"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil' title='修改'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove' title='删除'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy' title='复制'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open' title='预览'></span></a>"
+			"operate": "<a class='eachedit' href='#'><span class='glyphicon glyphicon-pencil' title='修改'></span></a><a class='eachdelete' href='#'><span class='glyphicon glyphicon-remove' title='删除'></span></a><a class='eachcopy' href='#'><span class='glyphicon glyphicon-copy' title='复制'></span></a><a class='eachpreview' href='#'><span class='glyphicon glyphicon glyphicon-eye-open' title='预览'></span></a><a class='eachsize' href='#'><span class='glyphicon glyphicon glyphicon-plus' title='增加尺寸'></span></a>"
 		};
 		getdataArray2.push(eachItem2);
 	}
@@ -123,9 +123,9 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页的样子
 	$('#page2_table').CJJTable({
-		'title': ["序号", "机型", "机芯", "TP", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
-		'body': ["number", "model", "chip", "target_product", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
-		'display': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
+		'title': ["序号", "机型", "机芯", "尺寸", "TP", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
+		'body': ["number", "model", "chip", "size", "target_product", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
+		'display': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
 		'url': data1 //数据源 必填
@@ -339,9 +339,12 @@ function getMKByTPResult() {
 			if(data.resultCode == "0") {
 				clearMKLastWork();
 				
-				for (var i=0; i<data.resultData.length; i++) {
-					document.getElementById(data.resultData[i].engName).setAttribute('checked', '');
-					document.getElementById(data.resultData[i].engName).checked = true;
+				for (var i=0; i<data.resultData[0].length; i++) {
+					document.getElementById(data.resultData[0][i].engName).setAttribute('checked', '');
+					document.getElementById(data.resultData[0][i].engName).checked = true;
+				}
+				for (var i=0; i<data.resultData[1].length; i++) {
+					document.getElementById(data.resultData[1][i].engName).value = data.resultData[1][i].curValue;
 				}
 			}
 		}
@@ -361,10 +364,10 @@ function buttonInit() {
 	document.getElementById("myEditEnsureModalEnsure").onclick = closeparentpage;
 	
 	$("#myEnsureCancle").click(function() {
-		closePage2Model("myAddCloseDiv");
+		document.getElementById("myAddCloseDiv").style.display = "none";
 	});
 	$("#myEnsureX").click(function() {
-		closePage2Model("myAddCloseDiv");
+		document.getElementById("myAddCloseDiv").style.display = "none";
 	});
 	$("#page2_add").click(function() {
 		resetAllInfo(1);//删除前面的操作痕迹
@@ -377,6 +380,7 @@ function buttonInit() {
 		console.log("点击了确认框的确认按钮");
 		var _chip = $("#myDeleteModalEnsure").attr("chip");
 		var	_model = $("#myDeleteModalEnsure").attr("model");
+		var _panel = $("#myDeleteModalEnsure").attr("panel");
 		var content = document.getElementById("changeReason2").value;
 		content = content.replace(/\s*/g,"");
 		console.log(content +"---"+content.length);
@@ -387,6 +391,7 @@ function buttonInit() {
 			var deleteObj = {
 				"chip" : _chip,
 				"model" : _model,
+				"panel" : parseInt(_panel),
 				"userName" : loginusername,
 			}
 			var _delete = JSON.stringify(deleteObj);
@@ -451,7 +456,7 @@ function buttonInit() {
 		document.getElementById("myEditEnsureDiv").style.display = "none";
 	});
 	$("#myEditEnsure").click(function() {
-		console.log("修改配置项的提交");
+		console.log("修改配置项或者新增尺寸项的提交");
 		var content = document.getElementById("changeReason").value;
 		content = content.replace(/\s*/g,"");
 		console.log(content +"---"+content.length);
@@ -459,7 +464,13 @@ function buttonInit() {
 			document.getElementById("errorChangeInfo").style.display = "inline-block";
 			setTimeout("document.getElementById('errorChangeInfo').style.display = 'none';", 3000);
 		} else{
-			myEditorAddSubmit(1);
+			var type = $("#lable1SubmitTwo").attr("catagory");
+			console.log(type);
+			if(type == 6){
+				myEditorAddSubmit(2);
+			}else{
+				myEditorAddSubmit(1);
+			}
 		}
 	});
 	$("#myAddEnsure").click(function() {
@@ -486,16 +497,43 @@ function colorstatus(number){
 	$(".page2_tabs")[number].style.backgroundColor = "#4cae4c";
 }
 
+function isExistOption(id,value) {  
+    var isExist = false;  
+    var count = $('#'+id).find('option').length;  
+  	for(var i=0;i<count;i++){     
+     	if($('#'+id).get(0).options[i].value == value)     {     
+            isExist = true;     
+   	        break;     
+        }     
+    }     
+    return isExist;  
+}
+function changeSleect(value){
+	console.log(value);
+	
+}
+
 function buttonInitAfter() {
 	$(".eachcheck").click(function() {
 		var _cIndex = $(".eachcheck").index($(this));
 		console.log("点击的是第" + _cIndex + "个 eachcheck class");
-		$("#page1_check_chip").html($(".new_productBox .chip")[_cIndex].innerHTML);
-		$("#page1_check_model").html($(".new_productBox .model")[_cIndex].innerHTML);
-		$("#page1_check_targetProduct").html($(".new_productBox .target_product")[_cIndex].innerHTML);
+		var _chip = $(".new_productBox .chip")[_cIndex].innerHTML;
+		var _model = $(".new_productBox .model")[_cIndex].innerHTML;
+		var _panel = $(".new_productBox .size")[_cIndex].innerHTML;
+		
+		$("#page1_check_chip").html(_chip);
+		$("#page1_check_model").html(_model);
+		$("#page1_check_panel").html(_panel);
 		$('#page1_examine').modal();
 		
-		var node = '{"chip":"'+$(".new_productBox .chip")[_cIndex].innerHTML+'","model":"'+$(".new_productBox .model")[_cIndex].innerHTML+'"}';
+		var searchObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"panel" : parseInt(_panel)
+		}
+		var _search = JSON.stringify(searchObj);
+		var node = '{"data":' + _search + '}';
+		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
 	});
 	$(".eachedit").click(function() {
@@ -505,7 +543,6 @@ function buttonInitAfter() {
 		$(".modal-backdrop").addClass("new-backdrop");
 		$("#page2Modal1Label").html("编辑");
 		page2AEC(_aIndex);
-		//document.getElementById("loading").style.display = "block";
 	});
 	$(".eachdelete").click(function() {
 		var _aIndex = $(".eachdelete").index($(this));
@@ -513,12 +550,14 @@ function buttonInitAfter() {
 		$("#lable1SubmitTwo").attr("catagory","5");
 		deleteChip = $(".chip")[_aIndex].innerText;
 		deleteModel = $(".model")[_aIndex].innerText;
-		$("#myDeleteModalEnsure").attr("chip",$(".chip")[_aIndex].innerText);
-		$("#myDeleteModalEnsure").attr("model",$(".model")[_aIndex].innerText);
+		deletePanel = $(".size")[_aIndex].innerText;
+		$("#myDeleteModalEnsure").attr("chip",deleteChip);
+		$("#myDeleteModalEnsure").attr("model",deleteModel);
+		$("#myDeleteModalEnsure").attr("panel",deletePanel);
 		$("#myDeleteModalLabel").text("单项删除");
 		$('#myDeleteModal').modal();
 		$(".modal-backdrop").addClass("new-backdrop");
-		$("#deleteInfo").html("确定要删除"+$(".chip")[_aIndex].innerText+"-"+$(".model")[_aIndex].innerText+"的配置表吗？");
+		$("#deleteInfo").html("确定要删除"+deleteChip+"-"+deleteModel+"-"+deletePanel+"的配置表吗？");
 	});
 	/*单项复制*/
 	$(".eachcopy").click(function() {
@@ -528,7 +567,6 @@ function buttonInitAfter() {
 		$("#page2Modal1").modal();
 		$(".modal-backdrop").addClass("new-backdrop");
 		$("#page2Modal1Label").html("复制");
-		//document.getElementById("loading").style.display = "block";
 	});
 	/*单项预览*/
 	$(".eachpreview").click(function() {
@@ -536,8 +574,18 @@ function buttonInitAfter() {
 		resetAllInfo(4);//删除前面的操作痕迹
 		page2AEC(_aIndex);
 		$("#page2Modal1Label").html("预览");
-		//document.getElementById("loading").style.display = "block";
 	});
+	
+	/*单项增加尺寸*/
+	$(".eachsize").click(function() {
+		var _aIndex = $(".eachsize").index($(this));
+		resetAllInfo(6);//删除前面的操作痕迹
+		page2AEC(_aIndex);
+		$("#page2Modal1").modal();
+		$(".modal-backdrop").addClass("new-backdrop");
+		$("#page2Modal1Label").html("增加尺寸");
+	});
+	
 	$("#page1_close1").click(function() {
 		document.getElementById("contenttable").innerHTML = "";
 		$("#page1_examine").modal('hide');
@@ -613,17 +661,25 @@ function page2Reset() {
 	document.getElementById("page2_gitbranch").value = "";
 	page2Select(); //重置时是否需要重新查询，这个需要分析
 }
-//新增、编辑、复制、预览 功能
+//新增、编辑、复制、预览、增加尺寸 功能
 function page2AEC(number) {
-	var _type = $("#lable1SubmitTwo").attr("catagory");//1-新增、2-编辑、3-复制、4-预览
+	var _type = $("#lable1SubmitTwo").attr("catagory");//1-新增、2-编辑、3-复制、4-预览、5-删除、6-增加尺寸
 	var _chip = $(".chip")[number].innerText;
 	var	_model = $(".model")[number].innerText;
-	var	_target = $(".target_product")[number].innerText;
-	
+	var	_panel = $(".size")[number].innerText;
+	if(_panel == "默认"){
+		_panel = 0;
+	}
 	console.log(_type);
-	if (_type == 2||_type == 3) {
-		console.log("点击了编辑或者复制" + number);
-		var node = '{"chip":"'+_chip+'","model":"'+_model+'"}';
+	if (_type == 2||_type == 3||_type == 6) {
+		console.log("点击了编辑或者复制或者增加尺寸" + number);
+		var editObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"panel" : parseInt(_panel)
+		}
+		var _edit = JSON.stringify(editObj);
+		var node = '{"data":' + _edit + '}';
 		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/queryAllByMachine", node, getPointProductInfo);
 	} else if(_type == 4) {
@@ -631,6 +687,7 @@ function page2AEC(number) {
 		var reviewObj = {
 			"chip" : _chip,
 			"model" : _model,
+			"panel" : parseInt(_panel),
 			"flag" : 0,
 		}
 		var _review = JSON.stringify(reviewObj);
@@ -654,6 +711,33 @@ function allQueryResult() {
             }
 			colorstatus(0);
 		};
+		var searchObj = {
+			"userName" : loginusername,
+			"level" : level
+		}
+		var _search = JSON.stringify(searchObj);
+		var node = '{"data":' + _search + '}';
+		console.log(node);
+		sendHTTPRequest(coocaaVersion+"/product/queryAuditByUser", node, productTempQuery);
+	}
+}
+function productTempQuery() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
+			if(data.resultCode == "0") {
+				if(data.resultData[0].length > 0){
+					parent.document.getElementsByClassName("email")[0].style.display = "block";
+					parent.document.getElementsByClassName("email")[1].style.display = "inline-block";
+				}
+				if(data.resultData[1].length > 0){
+					parent.document.getElementsByClassName("email")[0].style.display = "block";
+					parent.document.getElementsByClassName("email")[2].style.display = "inline-block";
+				}
+			}
+		}
 	}
 }
 
@@ -680,7 +764,7 @@ function clearAllInfo() {
 
 function resetAllInfo(num){
 	colorstatus(0);//焦点落在第一个tabs上
-	//1-新增、2-修改、3-复制、4-预览
+	//1-新增、2-修改、3-复制、4-预览、5-删除、6-增加尺寸
 	$("#lable1SubmitTwo").attr("catagory",num);
 	document.getElementById("lable2Chip").value = "";
 	document.getElementById("lable2Model").value = "";
@@ -691,7 +775,6 @@ function resetAllInfo(num){
 	document.getElementById("lable2Memory").value = "";
 	document.getElementById("lable2GitBranch").value = "";
 	document.getElementById("lable2Platform").value = "";
-	document.getElementById("lable2Chip").removeAttribute('disabled');
 	document.getElementById("lable2Chip").style.color = "black";
 	document.getElementById("lable2Model").removeAttribute('disabled');
 	document.getElementById("lable2Model").style.color = "black";
@@ -705,8 +788,15 @@ function resetAllInfo(num){
 			$(".configitems")[i].value = $(".configitems")[i].getAttribute("defaultvalue");
 		}
 	}
+	for (var i=0; i<$(".propitem").length; i++) {
+		$(".propitem")[i].value = $(".propitem")[i].getAttribute("defaultvalue");
+	}
 	for (var j=0; j<$(".sysitems").length; j++) {
-		$(".sysitems")[j].checked = false;
+		if(num==1&&$(".sysitems")[j].getAttribute("defaultSelected")==1){
+			$(".sysitems")[j].checked = true;
+		}else{
+			$(".sysitems")[j].checked = false;
+		}
 	}
 	for (var k=0; k<$(".mkitems").length; k++) {
 		if ($(".mkitems")[k].getAttribute("type") == "checkbox") {
@@ -715,13 +805,19 @@ function resetAllInfo(num){
 		} else if($(".mkitems")[k].getAttribute("type") == "radio"){
 			document.getElementsByClassName("mkitems")[k].setAttribute('checked', '');
 			document.getElementsByClassName("mkitems")[k].checked = false;
+			document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
+			document.getElementsByClassName("mkradio")[0].checked = true;
 		}
 	}
-	document.getElementsByClassName("mkradio")[0].setAttribute('checked', '');
-	document.getElementsByClassName("mkradio")[0].checked = true;
+	//1-新增、2-修改、3-复制、4-预览、5-删除、6-增加尺寸
+	if(num==6){
+		$("#addSize").css("display","table-row");
+	}else{
+		$("#addSize").css("display","none");
+	}
 }
 
-//点击复制或者编辑
+//点击复制或者编辑或者增加尺寸
 function getPointProductInfo(){
 	if(this.readyState == 4) {
         if(this.status == 200) {
@@ -729,7 +825,7 @@ function getPointProductInfo(){
             console.log(data);
             if(data.resultCode == 0){
             	console.log("数据返回成功");
-            	var _type = $("#lable1SubmitTwo").attr("catagory");//2-编辑、3-复制
+            	var _type = $("#lable1SubmitTwo").attr("catagory");//2-编辑、3-复制、6-增加尺寸
             	CommonDataInsert2(_type,data.resultData[0]);
             	ConfigDataInsert2(_type,data.resultData[1]);
             	SysDataInsert2(_type,data.resultData[2]);
@@ -741,22 +837,23 @@ function getPointProductInfo(){
 }
 
 function CommonDataInsert2(type,arr){
+	console.log(arr);
 	$("#lable2AndroidVersion").val(arr[0].androidVersion);
 	$("#lable2ChipMode").val(arr[0].soc);
 	$("#lable2Emmc").val(arr[0].EMMC);
 	$("#lable2Memory").val(arr[0].memorySize);
 	$("#lable2GitBranch").val(arr[0].gitBranch);
 	$("#lable2Platform").val(arr[0].platform);
-	if (type == 2) {//编辑
+	$("#lable2TargetProduct").val(arr[0].targetProduct);
+	
+	//2-编辑、3-复制、6-增加尺寸
+	if (type == 2||type == 6) {
 		$("#lable2Chip").val(arr[0].chip);
 		$("#lable2Chip").css("color","red");
 		$("#lable2Chip").attr("disabled","disabled");
 		$("#lable2Model").val(arr[0].model);
 		$("#lable2Model").css("color","red");
 		$("#lable2Model").attr("disabled","disabled");
-		$("#lable2TargetProduct").val(arr[0].targetProduct);
-		$("#lable2TargetProduct").css("color","red");
-		$("#lable2TargetProduct").attr("disabled","disabled");
 		
 		$("#lable2AndroidVersion").attr("oldvalue",arr[0].androidVersion);
 		$("#lable2ChipMode").attr("oldvalue",arr[0].chipModel);
@@ -771,10 +868,12 @@ function CommonDataInsert2(type,arr){
         $("#lable2Emmc").attr("onchange","changeDevice(this)");
         $("#lable2GitBranch").attr("onchange","changeDevice(this)");
         $("#lable2Platform").attr("onchange","changeDevice(this)");
-	}else{
-		console.log(type);
+	}else if(type == 3){
+		$("#lable2Chip").css("color","black");
 		document.getElementById("lable2Chip").removeAttribute('disabled');
+		$("#lable2Model").css("color","black");
 		document.getElementById("lable2Model").removeAttribute('disabled');
+		$("#lable2TargetProduct").css("color","black");
 		document.getElementById("lable2TargetProduct").removeAttribute('disabled');
 	}
 }
@@ -783,7 +882,7 @@ function ConfigDataInsert2(type, arr){
 		$("#"+arr[i].engName).val(arr[i].curValue);
 		$("#"+arr[i].engName).attr("value",arr[i].curValue);
 	}
-	if (type == 2) {
+	if (type == 2||type == 6) {
 		for (var i=0; i<$(".configitems").length; i++) {
 			$(".configitems:eq("+i+")").attr("onchange","changeConfig(this)");
 			$(".configitems:eq("+i+")").attr("oldvalue",$(".configitems:eq("+i+")").attr("value"));
@@ -800,7 +899,7 @@ function MKDataInsert2(type, arr){
 	}
 }
 function SysDataInsert2(type, arr){
-	if (type == 2) {
+	if (type == 2||type == 6) {
 		for (var i=0; i<$(".sysitems").length; i++) {
 			$(".sysitems:eq("+i+")").attr("onchange","changeSettings(this)");
 			$(".sysitems:eq("+i+")").attr("oldvalue","0");
@@ -816,7 +915,7 @@ function PropDataInsert2(type, arr){
 		console.log(arr[i].engName+"---"+arr[i].curValue);
 		document.getElementById(arr[i].engName).value = arr[i].curValue;
 	}
-	if (type == 2) {
+	if (type == 2||type==6) {
 		for (var i=0; i<$(".propitem").length; i++) {
 			$(".propitem:eq("+i+")").attr("onchange","changeProps(this)");
 			$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
@@ -832,7 +931,6 @@ function getPreviewInfo(){
             console.log(data);
             if(data.resultCode == 0) {
                 console.log("lxw " + "预览-成功");
-//              document.getElementById("loading").style.display = "none";
                 $("#myPreviewModalLabel").text("预览");
 				$('#myPreviewModal').modal();
 				$(".modal-backdrop").addClass("new-backdrop");
@@ -859,6 +957,8 @@ function getPreviewInfo(){
 function getAndCheckAndSendAllData(){
 	var type = $("#lable1SubmitTwo").attr("catagory");
 	console.log(type);
+	$("#txt0").css("display", "none");
+	document.getElementById("txt00").innerHTML = "";
 	//判断基本项是否为空
 	var nullName = 0;
 	for (var i=0; i<$("#page2Modal1Table .inputstyle").length; i++) {
@@ -871,6 +971,18 @@ function getAndCheckAndSendAllData(){
 			i = $("#page2Modal1Table .inputstyle").length;
 			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
 			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项不能为空";
+			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
+		}
+	}
+	var _style = document.getElementById("addSize").style.display;
+	var _panelvalue = $("#lable2Size1").val();
+	console.log(_style+"----"+_panelvalue);
+	console.log(_style != "none");
+	if(_style != "none"){
+		if (_panelvalue==null||_panelvalue=="") {
+			nullName = nullName + 1;
+			document.getElementById("page2Modal1ErrorInfo").style.display = "block";
+			document.getElementById("page2Modal1ErrorInfo").innerHTML = "尺寸项不能为空";
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		}
 	}
@@ -906,16 +1018,22 @@ function getAndCheckAndSendAllData(){
 			document.getElementById("page2Modal1ErrorInfo").innerHTML = _curInput + "项的值不存在";
 			setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 		} else{
-			if (type == 1|| type == 3) {
-				//判断该机芯机型的产品是否已存在
+			if (type==1||type==3||type==6) {
+				if (type == 6) {
+					var _panel = $("#lable2Size1").val();
+				} else{
+					var _panel = 0;
+				}
+				//判断该 机芯+机型+尺寸的产品是否已存在
 				var checkObj = {
 					"chip" : $("#lable2Chip").val(),
-					"model" : $("#lable2Model").val()
+					"model" : $("#lable2Model").val(),
+					"panel" : parseInt(_panel)
 				}
 				var _check = JSON.stringify(checkObj);
 				var node = '{"data":' + _check + '}';
 				console.log(node);
-				sendHTTPRequest(coocaaVersion+"/product/queryByChipModel", node, checkResultInfo);
+				sendHTTPRequest(coocaaVersion+"/product/queryByChipModelPanel", node, checkResultInfo);
 			} else{
 				//弹出确认框
 				if (changeAdd.length+changeReduce.length+changeConf.length+changeDev.length+changeProp.length == 0) {
@@ -963,11 +1081,44 @@ function checkResultInfo(){
 				if (data.resultData.length == 1) {
 					//已存在
 					document.getElementById("page2Modal1ErrorInfo").style.display = "block";
-					document.getElementById("page2Modal1ErrorInfo").innerHTML = "该机芯机型的配置项已经存在。";
+					document.getElementById("page2Modal1ErrorInfo").innerHTML = "该机芯+机型+尺寸的配置项已经存在。";
 					setTimeout("document.getElementById('page2Modal1ErrorInfo').style.display = 'none';", 3000);
 				} else{
 					//不存在
-					document.getElementById("myAddEnsureDiv").style.display = "block";
+					var type = $("#lable1SubmitTwo").attr("catagory");
+					console.log(type);
+					if(type==6){//弹出确认框
+						console.log("做了修改");
+						$("#txt0").css("display", "block");
+						document.getElementById("txt00").innerHTML = $("#lable2Size1").val();
+						document.getElementById("myEditEnsureDiv").style.display = "block";
+						if (changeDev.length != 0) {
+					        $("#txt1").css("display", "block");
+					        document.getElementById("txt11").innerHTML = changeDev;
+						}
+					    if(changeAdd.length != 0){
+					        $("#txt2").css("display", "block");
+					        document.getElementById("txt22").innerHTML = changeAdd;
+					    }
+					    if (changeReduce.length != 0) {
+					        $("#txt3").css("display", "block");
+					        document.getElementById("txt33").innerHTML = changeReduce;
+					    }
+					    if (changeConf.length != 0) {
+					        $("#txt4").css("display", "block");
+					        $("#txt44").val(changeConf);
+					        document.getElementById("txt44").innerHTML = changeConf;
+					    }
+					    if (changeProp.length != 0) {
+					        $("#txt5").css("display", "block");
+					        $("#txt55").val(changeProp);
+					        document.getElementById("txt55").innerHTML = changeProp;
+					    }
+					}else{
+						var _info = "确定增加此项吗？";
+						$("#myAddEnsureDiv").css("display","block");
+						$("#areYouSure").html(_info);
+					}
 				}
 			}
 		}
@@ -1016,15 +1167,15 @@ function page2Export() {
 	document.getElementById("dlink").click();
 }
 
-function closePage2Model(objname) {
-	document.getElementById(objname).style.display = "none";
-}
-
 function closeparentpage() {
 	document.getElementById("myAddCloseDiv").style.display = "none";
 	document.getElementById("myEditModalLabel").style.display = "none";
 	$("#page2Modal1").modal('hide');
-	//page2Fresh();
+	changeAdd = [];//保存新增模块信息
+	changeReduce = [];//保存删除模块信息
+	changeConf = [];//保存修改配置信息
+	changeDev = [];//保存修改设备信息
+	changeProp = [];//保存修改属性信息
 }
 
 function configQueryData1(arr1,arr2) {
@@ -1068,10 +1219,10 @@ function settingsQueryData1(arr1,arr2) {
 		for(var i = 0; i < arr2.length; i++) {
 			if(arr2[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
 				if (arr2[i].level3 === null || arr2[i].level3 == "") {
-					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+					$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' defaultSelected='"+arr2[i].defaultSelected+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 				} else{
 					if (arr2[i].level3 == $(".settingsitems:eq(" + (j) + ")").attr("level3")) {
-						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
+						$(".settingsitems")[j].innerHTML += "<div class='col-xs-3'><input id='"+arr2[i].engName+"' type='checkbox' class='sysitems' cnName='"+arr2[i].cnName+"' descText='"+arr2[i].descText+"' defaultSelected='"+arr2[i].defaultSelected+"' engName='"+arr2[i].engName+"' level1='" + arr2[i].level1 + "' level2='" + arr2[i].level2 + "' level3='" + arr2[i].level3 + "' value=''><span title='" + arr2[i].descText + "'>" + arr2[i].cnName + "</span></div>";
 					}
 				}
 			}
@@ -1154,7 +1305,7 @@ function sysDataInsert1(i, obj, num, arr1){
 	}
 }
 function propDataInsert1(kk, obj, data) {
-	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
+	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"' disabled></div>";
 }
 
 function getBaseValue(){
@@ -1167,10 +1318,18 @@ function getBaseValue(){
 	var _memory = $("#page2Modal1Table .inputstyle")[6].value;
 	var _branch = $("#page2Modal1Table .inputstyle")[7].value;
 	var _platform = $("#page2Modal1Table .inputstyle")[8].value;
+	var _style = document.getElementById("addSize").style.display;
+	console.log(_style != "none");
+	if(_style != "none"){
+		var _panel = $("#lable2Size1").val();
+	}else{
+		var _panel = 0;
+	}
 	//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 	var baseObj = {
 		"chip" : _chip,
 		"model" : _model,
+		"panel" : parseInt(_panel),
 		"targetProduct" : _tp,
 		"androidVersion" : _android,
 		"soc" : _soc,
@@ -1215,20 +1374,6 @@ function getSysValue(){
 	}
 	return sysData;
 }
-function getPropValue(){
-	var propData = [];
-	console.log($(".propitem").length);
-	for (var i=0; i<$(".propitem").length; i++) {
-		var oApropInfo = {
-			"engName": "",
-			"curValue": ""
-		};
-		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
-		oApropInfo.curValue = $(".propitem")[i].value;
-		propData.push(oApropInfo);
-	}
-	return propData;
-}
 
 function productAddResult(){
 	if(this.readyState == 4) {
@@ -1238,18 +1383,23 @@ function productAddResult(){
 			if(data.resultCode == "0") {
 				console.log("数据提交成功");
 				var type = $("#lable1SubmitTwo").attr("catagory");
-				if(type == 1||type == 3){
+				if(type==1||type==3||type==6){
 					console.log("新增或者复制数据的日志提交");
 					var _desc = "新增该产品";
 					var _reason = "新增";
 					var _chip = $("#lable2Chip").val();
-				var _model = $("#lable2Model").val();
+					var _model = $("#lable2Model").val();
+					var _panel = 0;
+					if (type==6) {
+						_panel = $("#lable2Size1").val();
+					}
 				}else if(type == 2){
 					console.log("编辑数据的日志提交");
 					var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'","changeProp":"'+changeProp+'"}';
 					var _reason = document.getElementById("changeReason").value;
 					var _chip = $("#lable2Chip").val();
 					var _model = $("#lable2Model").val();
+					var _panel = 0;
 				}else if(type == 5){
 					console.log("删除数据的日志提交");
 					var _desc = '删除该机芯机型的配置表';
@@ -1257,6 +1407,7 @@ function productAddResult(){
 					console.log(_reason);
 					var _chip = $("#myDeleteModalEnsure").attr("chip");
 					var	_model = $("#myDeleteModalEnsure").attr("model");
+					var	_panel = $("#myDeleteModalEnsure").attr("panel");
 					$('#myDeleteModal').modal('hide');
 				}
 				//0审核通过\1待审核\2审核未通过
@@ -1265,6 +1416,7 @@ function productAddResult(){
 				var historyObj = {
 					"chip" : _chip,
 					"model" : _model,
+					"panel" : parseInt(_panel),
 					"reason" : _reason,
 					"state" : _state,
 					"userName" : _author,
@@ -1287,7 +1439,6 @@ function productHistoryAdd(){
 			if(data.resultCode == "0") {
 				console.log("日志数据提交成功,发送邮件");
 				document.getElementById("myEditEnsureDiv").style.display = "none";
-				//page2Fresh();
 			}
 		}
 		sendEmail();
@@ -1310,7 +1461,8 @@ function productHistoryQuery(){
 					$("#noChangeHistory").html(" ");
 					$("#noChangeHistory").css("display","none");
 					
-					var _tableInnerHtml = "<thead><tr><th>修改内容</th><th>修改原因</th><th style='min-width: 55px;'>状态</th><th>提交者</th><th>提交时间</th></tr></thead>"
+					var _tableInnerHtml = "<thead><tr><th>修改内容</th><th>修改原因</th><th>提交时间</th><th>提交者</th><th style='min-width: 55px;'>状态</th></tr></thead>"
+					//for (var i=(data.resultData.length-1); i>=0; i--) {
 					for (var i=0; i<data.resultData.length; i++) {
 						var _state = "";
 						if (data.resultData[i].state == 0) {
@@ -1360,8 +1512,7 @@ function productHistoryQuery(){
 						if (_deleteArray2.length != 0){
 							_desc += "<span>"+_deleteArray2+"</span><br/>";
 						}
-						
-						_tableInnerHtml += "<tbody id='descriptTbody'><tr><td>"+_desc+"</td><td>"+data.resultData[i].reason+"</td><td>"+_state+"</td><td>"+data.resultData[i].userName+"</td><td>"+data.resultData[i].modifyTime+"</td></tr></tbody>";
+						_tableInnerHtml += "<tbody id='descriptTbody'><tr><td>"+_desc+"</td><td>"+data.resultData[i].reason+"</td><td>"+data.resultData[i].modifyTime+"</td><td>"+data.resultData[i].userName+"</td><td>"+_state+"</td></tr></tbody>";
 					}
 					document.getElementById("contenttable").innerHTML = _tableInnerHtml;
 				}
@@ -1499,12 +1650,10 @@ function myEditorAddSubmit(num){
 	var _base = getBaseValue();
 	var _config = getConfigValue();
 	var _sys = getSysValue();
-	var _prop = getPropValue();
 	_base = JSON.stringify(_base);
 	_config = JSON.stringify(_config);
 	_sys = JSON.stringify(_sys);
-	_prop = JSON.stringify(_prop);
-	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + ',"propsInfo":' + _prop +'}';
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys +'}';
 	console.log(node);
 	if (num == 1) {
 		sendHTTPRequest(coocaaVersion+"/product/update", node, productAddResult);
@@ -1551,21 +1700,27 @@ function sendEmail(){
 		console.log("删除了产品");
 		var _chip = deleteChip;
 		var _model = deleteModel;
+		var _panel = deletePanel;
 		console.log(_chip+"--------"+_model);
-		var maildata = "用户："+loginusername+"<br/>删除了机芯："+_chip+",机型："+_model+"的配置文档";
+		var maildata = "用户："+loginusername+"<br/>删除了机芯："+_chip+",机型："+_model+",尺寸："+_panel+"的配置文档";
 		maildata += "<br/>请前往《待审核文件》菜单进行审核处理<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>";
 	}
     var emailObj = {
 		"desc" : maildata,
 		"from" : fromEmail,
-		"to" : "SKY058689@skyworth.com",
+		"to" : toEmail,
 		"subject" : "软件配置平台通知-自动发送，请勿回复"
 	}
 	var _email = JSON.stringify(emailObj);
 	var node = '{"data":' + _email + '}';
 	console.log(node);
-    //sendHTTPRequest("/sendMail", node, mailfun);
-    page2Fresh();
+	
+	if(level == 1){
+		console.log("管理员编辑、修改或者删除，不用发邮件。");
+		page2Fresh();
+	}else{
+		sendHTTPRequest("/sendMail", node, mailfun);
+	}
 }
 
 //邮件函数回调

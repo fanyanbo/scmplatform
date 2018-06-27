@@ -11,7 +11,7 @@ var _myArray = [];
 var level = null;
 var loginusername = null;
 var fromEmail = null;
-var toEmail = "SKY058689@skyworth.com";
+var toEmail = null;
 var emailReason = null;
 var _author = null;
 var adminControl = null;
@@ -24,17 +24,23 @@ var changeProp = [];
 
 var recoverChip = null;
 var recoverModel = null;
+var recoverSize = null;
 
-var coocaaVersion = "/v6.5";
+var coocaaVersion = "/v6.2";
 
 $(function() {
 	level = parent.loginlevel;
     loginusername = parent.loginusername;
     fromEmail = parent.loginEmail;
-	
-	var node = '{"offset":"-1","rows":"10"}';
-	sendHTTPRequest(coocaaVersion+"/product/queryByPage", node, productQuery);
-	
+	console.log(loginusername+"---"+level);
+	var searchObj = {
+		"userName" : loginusername,
+		"level" : level
+	}
+	var _search = JSON.stringify(searchObj);
+	var node = '{"data":' + _search + '}';
+	console.log(node);
+	sendHTTPRequest(coocaaVersion+"/product/queryAuditByUser", node, productQuery);
 	buttonInitBefore();
 });
 
@@ -46,10 +52,8 @@ function productQuery() {
 			//auditState(0审核通过\1待审核\2审核未通过)、modifyState(0正常\1修改\2增加\3删除)
 			if(data.resultCode == "0") {
 				var arr = new Array();
-				for (var i=0; i<data.resultData.length; i++) {
-					if (data.resultData[i].auditState == 2) {
-						arr.push(data.resultData[i]);
-					}
+				for (var i=0; i<data.resultData[1].length; i++) {
+					arr.push(data.resultData[1][i]);
 				}
 				handleTableData(arr);
 			}
@@ -61,31 +65,28 @@ function handleTableData(arr) {
 	var getdataArray2 = new Array();
 	console.log("level= "+ level + "loginusername = " +loginusername + "fromEmail = " + fromEmail);
 	for(var i = 0; i < arr.length; i++) {
+		var _panel = arr[i].panel;
+		if (_panel == 0) {
+			_panel = "默认";
+		}
 		var eachItem2 = {
-			"number": "",
-			"model": "",
-			"chip": "",
-			"chipmodel": "",
-			"AndroidVersion": "",
-			"memory": "",
+			"number": (i+1),
+			"model": arr[i].model,
+			"chip": arr[i].chip,
+			"size": _panel, 
+			"chipmodel": arr[i].soc,
+			"AndroidVersion": arr[i].androidVersion,
+			"memory": arr[i].memorySize,
 			"type": "",
-			"author": "",
+			"author": arr[i].userName,
 			"reason": "<button class='btn-success eachlook'>查看</button>",
-			"time" : "",
+			"time" : arr[i].operateTime,
 			"operate": ""
 		};
 		//auditState(0审核通过\1待审核\2审核未通过
 		//modifyState(0正常\1修改\2增加\3删除)
 		var operateType = arr[i].modifyState;
 		var	userName = loginusername;
-		eachItem2.number = (i+1);
-		eachItem2.model = arr[i].model;
-		eachItem2.chip = arr[i].chip;
-		eachItem2.chipmodel = arr[i].soc;
-		eachItem2.AndroidVersion = arr[i].androidVersion;
-		eachItem2.memory = arr[i].memorySize;
-		eachItem2.author = arr[i].userName;
-		eachItem2.time = arr[i].operateTime;
 		if (operateType == 0) {
 			eachItem2.type = "正常";
 		} else if(operateType == 1){
@@ -131,9 +132,9 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页
 	$('#page5_table').CJJTable({
-		'title': ["序号", "机型", "机芯", "芯片型号", "安卓版本", "内存", "类型", "提交者", "修改历史", "时间", "操作"],
-		'body': ["number", "model", "chip", "chipmodel", "AndroidVersion", "memory", "type", "author", "reason", "time", "operate"], //tbody td 取值的字段 必填
-		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
+		'title': ["序号", "机型", "机芯", "尺寸", "芯片型号", "安卓版本", "内存", "类型", "提交者", "修改历史", "时间", "操作"],
+		'body': ["number", "model", "chip", "size", "chipmodel", "AndroidVersion", "memory", "type", "author", "reason", "time", "operate"], //tbody td 取值的字段 必填
+		'display': [2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
 		'pageLength': data1.length, //选填
 		'url': data1 //数据源 必填
@@ -195,23 +196,37 @@ function colorstatus(number){
 
 function buttonInitAfter(){
 	$(".eachlook").click(function() {
-		var _Index = $(".eachlook").index($(this));
-		console.log("点击的是第" + _Index + "个 查看项。");
-		console.log($("#page5_table2 .chip")[_Index].innerHTML);
-		console.log($("#page5_table2 .model")[_Index].innerHTML);
-		$("#page5_check_chip").html($("#page5_table2 .chip")[_Index].innerHTML);
-		$("#page5_check_model").html($("#page5_table2 .model")[_Index].innerHTML);
+		var _index = $(".eachlook").index($(this));
 		$('#page5_examine').modal();
-		var node = '{"chip":"'+$("#page5_table2 .chip")[_Index].innerHTML+'","model":"'+$("#page5_table2 .model")[_Index].innerHTML+'"}';
+		var _chip = $("#page5_table2 .chip")[_index].innerHTML;
+		var _model =  $("#page5_table2 .model")[_index].innerHTML;
+		var _panel = $("#page5_table2 .size")[_index].innerHTML;
+		$("#page5_check_chip").html(_chip);
+		$("#page5_check_model").html(_model);
+		$("#page5_check_size").html(_panel);
+		
+		if(_panel == "默认"){
+			_panel = 0;
+		}
+		var _checkObj = {
+			"chip" : _chip,
+			"model" : _model,
+			"panel" : parseInt(_panel)
+		}
+		var _check = JSON.stringify(_checkObj);
+		var node = '{"data":' + _check + '}';
+		console.log(node);
 		sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery);
 	});
 	$("#ReviewCat").click(function() {
 		console.log("点击了审核页面的预览");
 		var _chip = $("#lable5Chip").val();
 		var _model = $("#lable5Model").val();
+		var _panel = $("#lable5Chip").attr("curPanel");
 		var reviewObj = {
 			"chip" : _chip,
 			"model" : _model,
+			"panel" : parseInt(_panel),
 			"flag" : 1,
 		}
 		var _review = JSON.stringify(reviewObj);
@@ -506,7 +521,7 @@ function sysDataInsert1(i, obj, num, arr1){
 	}
 }
 function propDataInsert1(kk, obj, data) {
-	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"'></div>";
+	obj.innerHTML += "<div class='col-xs-6' style='margin-bottom:2px;'><span class='col-xs-6' title='"+data[kk].descText+"'>"+data[kk].engName+":</span><input class='col-xs-6 propitem' type='text' category='"+data[kk].category+"' descText='"+data[kk].descText+"' id='"+data[kk].engName+"' value='"+data[kk].defaultValue+"' defaultValue='"+data[kk].defaultValue+"' disabled></div>";
 }
 
 //审核
@@ -523,43 +538,65 @@ function review(obj,adminControl,deleteFlag){
         }       
     }
     resetAllInfo();//删除前面的操作痕迹
-	var a = $(".eachaudit").index($(obj));
-	var b = $(".eachedit").index($(obj));
-	console.log(a+"||||"+b);
-	var _index = Math.abs(a)*Math.abs(b);
-	console.log(_index);
-	_author = $("#page5_table2 .author")[_index].innerHTML;
 	$("#myAddModalLabel").attr("num","1");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
-	var node = '{"chip":"'+$("#page5_table2 .chip")[_index].innerHTML+'","model":"'+$("#page5_table2 .model")[_index].innerHTML+'"}';
+	
+	var _chip = obj.parentNode.parentNode.children[2].innerHTML;
+	var _model = obj.parentNode.parentNode.children[1].innerHTML;
+	var _panel = obj.parentNode.parentNode.children[3].innerHTML;
+	if(_panel == "默认"){
+		_panel = 0;
+	}
+	_author = obj.parentNode.parentNode.children[8].innerHTML;
+	
+	var _reviewObj = {
+		"chip" : _chip,
+		"model" : _model,
+		"panel" : parseInt(_panel)
+	}
+	var _review = JSON.stringify(_reviewObj);
+	var node = '{"data":' + _review + '}';
+	console.log(node);
 	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachineTemp", node, getPointProductInfo);
 }
 //编辑
 function edit(obj,adminControl,deleteFlag){
-//	document.getElementById("loading").style.display = "block";
-    $("#changeDescDiv").css("display","none");
+    document.getElementById("page5_firstTr").style.display="none";
     $("#myAddModalLabel").attr("num","2");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
 	resetAllInfo();//删除前面的操作痕迹
-	var a = $(".eachaudit").index($(obj));
-	var b = $(".eachedit").index($(obj));
-	console.log(a+"||||"+b);
-	var _index = Math.abs(a)*Math.abs(b);
-	console.log(_index);
-	_author = $("#page5_table2 .author")[_index].innerHTML;
-	var node = '{"chip":"'+$("#page5_table2 .chip")[_index].innerHTML+'","model":"'+$("#page5_table2 .model")[_index].innerHTML+'"}';
+	
+	var _chip = obj.parentNode.parentNode.children[2].innerHTML;
+	var _model = obj.parentNode.parentNode.children[1].innerHTML;
+	var _panel = obj.parentNode.parentNode.children[3].innerHTML;
+	if(_panel == "默认"){
+		_panel = 0;
+	}
+	_author = obj.parentNode.parentNode.children[8].innerHTML;
+	
+	var _editObj = {
+		"chip" : _chip,
+		"model" : _model,
+		"panel" : parseInt(_panel)
+	}
+	var _edit = JSON.stringify(_editObj);
+	var node = '{"data":' + _edit + '}';
+	console.log(node);
 	sendHTTPRequest(coocaaVersion+"/product/queryAllByMachineTemp", node, getPointProductInfo);
 }
 //恢复
 function recover(obj,deleteFlag){
-	var a = $(".eachaudit").index($(obj));
-	var b = $(".eachedit").index($(obj));
-	var _index = Math.abs(a)*Math.abs(b);
-	recoverChip = $("#page5_table2 .chip")[_index].innerHTML;
-	recoverModel = $("#page5_table2 .model")[_index].innerHTML;
-	_author = $("#page5_table2 .author")[_index].innerHTML;
+	recoverChip = obj.parentNode.parentNode.children[2].innerHTML;
+	recoverModel = obj.parentNode.parentNode.children[1].innerHTML;
+	recoverSize = obj.parentNode.parentNode.children[3].innerHTML;
+	if (recoverSize == "默认") {
+		recoverSize = 0;
+	}
+	_author = obj.parentNode.parentNode.children[8].innerHTML;
+	
 	$("#reviewDialog2").attr("ochip",recoverChip);
 	$("#reviewDialog2").attr("omodel",recoverModel);
+	$("#reviewDialog2").attr("opanel",recoverSize);
 	$("#myAddModalLabel2").attr("num","3");//1-审核、2-编辑、3-恢复
 	$("#myAddModalLabel2").attr("type",deleteFlag);//(0正常\1修改\2增加\3删除)
     document.getElementById("mydialog2").style.display = "block";
@@ -576,16 +613,16 @@ function recover(obj,deleteFlag){
 function reviewSure(state){
 	var _chip = $("#lable5Chip").val();
 	var _model = $("#lable5Model").val();
+	var _panel = $("#lable5Chip").attr("curPanel");
 	var _flag = null;
 	if($("#mydialog").attr("buttontype") == 0||$("#mydialog").attr("buttontype") == 1){
 		_flag = $("#mydialog").attr("buttontype");
-		_flag = parseInt(_flag);
-		state = parseInt(state);
 		var recoveObj = {
 			"chip" : _chip,
 			"model" : _model,
-			"flag" : _flag,
-			"operate": state
+			"panel" : parseInt(_panel),
+			"flag" : parseInt(_flag),
+			"operate" : parseInt(state)
 		}
 		console.log(recoveObj);
 		var _recove = JSON.stringify(recoveObj);
@@ -603,23 +640,24 @@ function editSure(){
 	var _base = getBaseValue();
 	var _config = getConfigValue();
 	var _sys = getSysValue();
-	var _prop = getPropValue();
+	//var _prop = getPropValue();
 	_base = JSON.stringify(_base);
 	_config = JSON.stringify(_config);
 	_sys = JSON.stringify(_sys);
-	_prop = JSON.stringify(_prop);
-	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + ',"propsInfo":' + _prop + '}';
+	//_prop = JSON.stringify(_prop);
+	var node = '{"baseInfo":' + _base + ',"configInfo":' + _config + ',"settingsInfo":' + _sys + '}';
 	console.log(node);
 	sendHTTPRequest(coocaaVersion+"/product/update", node, setEditInfo);
 }
 //恢复的提交
 function recoverSure(){
-	var chip = $("#reviewDialog2").attr("ochip");
-	var model = $("#reviewDialog2").attr("omodel");
-	console.log(chip+"------"+model);
+	var _chip = $("#reviewDialog2").attr("ochip");
+	var _model = $("#reviewDialog2").attr("omodel");
+	var _panel = $("#reviewDialog2").attr("opanel");
 	var recoveObj = {
-		"chip" : chip,
-		"model" : model
+		"chip" : _chip,
+		"model" : _model,
+		"panel" : parseInt(_panel)
 	}
 	var _recove = JSON.stringify(recoveObj);
 	var node = '{"data":' + _recove + '}';
@@ -658,6 +696,7 @@ function setEditInfo(){
 				var _reason = document.getElementById("changeReason").value;
 				var _chip = $("#lable5Chip").val();
 				var _model = $("#lable5Model").val();
+				var _panel = $("#lable5Chip").attr("curPanel");
 				//0审核通过\1待审核\2审核未通过
 				var _state = "1";
 				var _author = loginusername;
@@ -707,32 +746,32 @@ function sendEmail(){
 	if (_num == 1) {
 		var _chip = $("#lable5Chip").val();
 		var _model = $("#lable5Model").val();
-		console.log(_chip+"--------"+_model);
+		var _panel = $("#lable5Chip").attr("curPanel");
 		var _buttontype = $("#mydialog").attr("buttontype");
 		if (_type == 1) {
-			if (_buttontype == 0) {
+			if (_buttontype == 1) {
 				//修改操作审核不通过
 				console.log(emailReason);
-				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，原因是："+emailReason+"请前往《审核未通过文件》菜单进行修改并再次提交";
-			} else if(_buttontype == 1){
+				var maildata = "您修改的机芯："+_chip+",机型："+_model+",尺寸："+parseInt(_panel)+" 的配置文档暂未通过审核，原因是："+emailReason+"请前往《审核未通过文件》菜单进行修改并再次提交";
+			} else if(_buttontype == 0){
 				//修改操作审核通过
-				var maildata = "您修改的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
+				var maildata = "您修改的机芯："+_chip+",机型："+_model+",尺寸："+parseInt(_panel)+" 的配置文档已经通过审核，请确认";
 			}
 		} else if (_type == 2) {
-			if (_buttontype == 0) {
+			if (_buttontype == 1) {
 				//增加操作审核不通过
-				var maildata = "您增加的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
-			} else if(_buttontype == 1){
+				var maildata = "您增加的机芯："+_chip+",机型："+_model+",尺寸："+parseInt(_panel)+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
+			} else if(_buttontype == 0){
 				//增加操作审核通过
-				var maildata = "您增加的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
+				var maildata = "您增加的机芯："+_chip+",机型："+_model+",尺寸："+parseInt(_panel)+" 的配置文档已经通过审核，请确认";
 			}
 		} else if(_type == 3){
-			if (_buttontype == 0) {
+			if (_buttontype == 1) {
 				//删除操作审核不通过
-				var maildata = "您删除的机芯："+_chip+",机型："+_model+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
-			} else if(_buttontype == 1){
+				var maildata = "您删除的机芯："+_chip+",机型："+_model+",尺寸："+parseInt(_panel)+" 的配置文档暂未通过审核，请前往《审核未通过文件》菜单进行修改并再次提交";
+			} else if(_buttontype == 0){
 				//删除操作审核通过
-				var maildata = "您删除的机芯："+_chip+",机型："+_model+" 的配置文档已经通过审核，请确认";
+				var maildata = "您删除的机芯："+_chip+",机型："+_model+",尺寸："+parseInt(_panel)+" 的配置文档已经通过审核，请确认";
 			}
 		}
 		
@@ -740,9 +779,10 @@ function sendEmail(){
 		console.log("编辑");
 		var _chip = $("#lable5Chip").val();
 		var _model = $("#lable5Model").val();
+		var _panel = $("#lable5Chip").attr("curPanel");
 		var _desc = '{"changeDev":"'+changeDev+'","changeAdd":"'+changeAdd+'","changeReduce":"'+changeReduce+'","changeConf":"'+changeConf+'","changeProp":"'+changeProp+'"}';
 		console.log(_desc);
-		var maildata = "用户："+loginusername+"<br/>针对机芯："+_chip+",机型："+_model+"做出了如下修改：";
+		var maildata = "用户："+loginusername+"<br/>针对机芯："+_chip+",机型："+_model+",尺寸："+parseInt(_panel)+"做出了如下修改：";
 	    if(changeDev.length != 0) {
 	    	maildata += "<br/>修改设备信息："+ changeDev;
 	    }
@@ -762,8 +802,9 @@ function sendEmail(){
 		console.log("恢复");
 		var _chip = recoverChip;
 		var _model = recoverModel;
+		var _panel = recoverSize;
 		console.log(_chip+"--------"+_model);
-		var maildata = "用户："+loginusername+"<br/>恢复删除机芯："+_chip+",机型："+_model+"的配置文档";
+		var maildata = "用户："+loginusername+"<br/>恢复删除机芯："+_chip+",机型："+_model+",尺寸："+parseInt(_panel)+"的配置文档";
 	}
 	
 	maildata += "<br/> -----<br/>进入配置平台请点击 <a href='http://172.20.132.225:3000/v2/scmplatform/index.html'>scmplatform</a>";
@@ -776,8 +817,8 @@ function sendEmail(){
 	var _email = JSON.stringify(emailObj);
 	var node = '{"data":' + _email + '}';
 	console.log(node);
-    //sendHTTPRequest("/sendMail", node, mailfun);
-    page5fresh(1);
+	
+    sendHTTPRequest("/sendMail", node, mailfun);
 }
 //邮件函数回调
 function mailfun(){
@@ -811,7 +852,16 @@ function getPointProductInfo(){
 				$('#page5Modal1').modal();
 				$(".modal-backdrop").addClass("new-backdrop");
 				
-				var node = '{"chip":"'+$("#lable5Chip").val()+'","model":"'+$("#lable5Model").val()+'"}';
+				var _chip = data.resultData[0][0].chip;
+				var _model = data.resultData[0][0].model;
+				var _panel = data.resultData[0][0].panel;
+				var _historyObj = {
+					"chip" : _chip,
+					"model" : _model,
+					"panel" : parseInt(_panel)
+				}
+				var _history = JSON.stringify(_historyObj);
+				var node = '{"data":' + _history + '}';
 				console.log(node);
 				sendHTTPRequest(coocaaVersion+"/product/queryHistory", node, productHistoryQuery2);
             }
@@ -835,8 +885,8 @@ function productHistoryQuery2(){
 					$("#changeDescDiv").css("display","block");
 					$("#addDescDiv").css("display","none");
 					var _desc = "";
-					var _reason = data.resultData[data.resultData.length-1].reason;
-					var _content = data.resultData[data.resultData.length-1].content;
+					var _reason = data.resultData[0].reason;
+					var _content = data.resultData[0].content;
 					console.log(isJSON_test(_content));
 					if (isJSON_test(_content)) {
 						_content = JSON.parse(_content);
@@ -848,10 +898,9 @@ function productHistoryQuery2(){
 							changeReduce: "",
 							changeConf : "",
 							changeProp: "",
-							deleteObj : data.resultData[data.resultData.length-1].content
+							deleteObj : data.resultData[0].content
 						};
 					}
-					console.log(_content);
 					var _devArray,_addArray,_deleteArray,_confArray,_propsArray = "";
 					
 					var _devArray = _content.changeDev;//.splice(",")
@@ -887,10 +936,9 @@ function productHistoryQuery2(){
 }
 
 function CommonDataInsert2(type,arr){
-	console.log(type);
-	console.log(arr);
 	$("#lable5Chip").val(arr[0].chip);
 	$("#lable5Model").val(arr[0].model);
+	$("#lable5Chip").attr("curPanel",arr[0].panel);
 	$("#lable5TP").val(arr[0].targetProduct);
 	$("#lable5AndroidVersion").val(arr[0].androidVersion);
 	$("#lable5ChipMode").val(arr[0].soc);
@@ -952,12 +1000,6 @@ function PropDataInsert2(type, arr){
 	for (var i=0; i<arr.length; i++) {
 		document.getElementById(arr[i].engName).value = arr[i].curValue;
 	}
-	if (type == 2) {
-		for (var i=0; i<$(".propitem").length; i++) {
-			$(".propitem:eq("+i+")").attr("onchange","changeProps(this)");
-			$(".propitem:eq("+i+")").attr("oldvalue",$(".propitem:eq("+i+")").attr("value"));
-		}
-	}
 }
 
 function buttonstyle(type,state){
@@ -1006,6 +1048,9 @@ function buttonstyle(type,state){
         }
         for (var i=0; i<$(".mkitems").length; i++) {
 			$(".mkitems:eq("+i+")").attr("disabled","disabled");
+		}
+        for (var i=0; i<$(".propitem").length; i++) {
+			$(".propitem:eq("+i+")").attr("disabled","disabled");
 		}
         $("#lable5Chip").attr("disabled","disabled");
 		$("#lable5Model").attr("disabled","disabled");
@@ -1123,10 +1168,10 @@ function getPreviewInfo(){
 				$("#myPreviewModal").find("li")[1].className = "presentation";
 				$("#myPreviewModal").find("li")[2].className = "presentation";
                	
-               	document.getElementById("myPreviewBodyOne").innerHTML = data.resultData.text1;
-                document.getElementById("myPreviewBodyTwo").innerHTML = data.resultData.text2;
-                document.getElementById("myPreviewBodyThree").innerHTML = data.resultData.text3;
-            	document.getElementById("myPreviewBodyFour").innerHTML = data.resultData.text4;
+               	document.getElementById("myPreviewBodyOne").innerHTML = data.resultData.text2;
+                document.getElementById("myPreviewBodyTwo").innerHTML = data.resultData.text4;
+                document.getElementById("myPreviewBodyThree").innerHTML = data.resultData.text1;
+            	document.getElementById("myPreviewBodyFour").innerHTML = data.resultData.text3;
             } else{
                 console.log("lxw " + "预览-失败");
                 document.getElementById("myPreviewBodyOne").innerHTML = "信息出错，请刷新";
@@ -1140,6 +1185,7 @@ function getPreviewInfo(){
 function getBaseValue(){
 	var _chip = $("#page5Modal1Table .inputstyle")[0].value;
 	var _model = $("#page5Modal1Table .inputstyle")[1].value;
+	var _panel = $("#page5Modal1Table .inputstyle:eq(0)").attr("curPanel");;
 	var _tp = $("#page5Modal1Table .inputstyle")[2].value;
 	var _android = $("#page5Modal1Table .inputstyle")[3].value;
 	var _soc = $("#page5Modal1Table .inputstyle")[4].value;
@@ -1151,6 +1197,7 @@ function getBaseValue(){
 	var baseObj = {
 		"chip" : _chip,
 		"model" : _model,
+		"panel" : parseInt(_panel),
 		"targetProduct" : _tp,
 		"androidVersion" : _android,
 		"soc" : _soc,
@@ -1178,20 +1225,20 @@ function getConfigValue(){
 	}
 	return configData;
 }
-function getPropValue(){
-	var propData = [];
-	console.log($(".propitem").length);
-	for (var i=0; i<$(".propitem").length; i++) {
-		var oApropInfo = {
-			"engName": "",
-			"curValue": ""
-		};
-		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
-		oApropInfo.curValue = $(".propitem")[i].value;
-		propData.push(oApropInfo);
-	}
-	return propData;
-}
+//function getPropValue(){
+//	var propData = [];
+//	console.log($(".propitem").length);
+//	for (var i=0; i<$(".propitem").length; i++) {
+//		var oApropInfo = {
+//			"engName": "",
+//			"curValue": ""
+//		};
+//		oApropInfo.engName = $(".propitem")[i].getAttribute("id");
+//		oApropInfo.curValue = $(".propitem")[i].value;
+//		propData.push(oApropInfo);
+//	}
+//	return propData;
+//}
 function getSysValue(){
 	var sysData = [];
 	for (var i=0; i<$(".sysitems").length; i++) {
@@ -1351,7 +1398,8 @@ function productHistoryQuery(){
 					$("#contenttable").css("display","inline-table");
 					$("#noChangeHistory").html(" ");
 					$("#noChangeHistory").css("display","none");
-					for (var i=0; i<data.resultData.length; i++) {
+					//for (var i<(data.resultData.length-1); i>=0; i--) {
+					for (var i=(data.resultData.length-1); i>=0; i--) {
 						var _state = "";
 						if (data.resultData[i].state == 0) {
 							_state = "审核通过";
@@ -1376,7 +1424,6 @@ function productHistoryQuery(){
 								deleteObj : data.resultData[i].content
 							};
 						}
-						console.log(_content);
 						var _devArray,_addArray,_deleteArray,_confArray,_propsArray = "";
 						
 						var _devArray = _content.changeDev;//.splice(",")
@@ -1407,13 +1454,13 @@ function productHistoryQuery(){
 						_cell1.innerHTML = data.resultData[i].reason;
 						var _cell2 = _row.insertCell(2);
 						_cell2.style.textAlign = "center";
-						_cell2.innerHTML = _state;
+						_cell2.innerHTML = data.resultData[i].modifyTime;
 						var _cell3 = _row.insertCell(3);
 						_cell3.style.textAlign = "center";
 						_cell3.innerHTML = data.resultData[i].userName;
 						var _cell4 = _row.insertCell(4);
 						_cell4.style.textAlign = "center";
-						_cell4.innerHTML = data.resultData[i].modifyTime;
+						_cell4.innerHTML = _state;
 					}
 				}
 			}
@@ -1462,14 +1509,11 @@ function isJSON_test(str) {
     if (typeof str == 'string') {
         try {
             var obj=JSON.parse(str);
-            console.log('转换成功：'+obj);
             return true;
         } catch(e) {
-            console.log('error：'+str+'!!!'+e);
             return false;
         }
     }
-    console.log('It is not a string!')
 }
 
 function getCommitterEmail(author){
@@ -1484,8 +1528,8 @@ function getEmailResult(){
             console.log(data);
             if(data.resultCode == 0) {
             	console.log(data.resultData[0].email);
-            	toEmail = "linxinwang@skyworth.com";//测试用
-//          	toEmail = data.resultData[0].email;
+//          	toEmail = "linxinwang@skyworth.com";//测试用
+              	toEmail = data.resultData[0].email;
             }
         };
 	}

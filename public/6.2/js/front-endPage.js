@@ -47,8 +47,9 @@
             }
             $( _this.$element.selector+" table tfoot").html("");
             if (Math.ceil(_this.options.pageLength/ _this.options.pageNUmber) == 1) {
+                console.log(_this.$element.selector);
                 $( _this.$element.selector+" .nextPage").css("display", "none");
-                $(_this.$element.selector+" .endPage").css("display", "none");
+                $( _this.$element.selector+" .endPage").css("display", "none");
             }
             var maxpagenumberBoxBigbox = "";
             var maxpagenumberBoxBig = "";
@@ -157,7 +158,6 @@
             var number = $(e.$element.selector+ " .typeNumber").val();
             $(e.$element.selector+ " .typeNumber").val(number * 1 + 1);
             e.page($(e.$element.selector+ " .typeNumber").val(), e.options.pageNUmber, maxpagenumberBox,json,e.$element, e);
-    
         },
         nextTableLi:function(e,maxpagenumberBox,json,that){
             var val = that.html();

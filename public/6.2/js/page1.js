@@ -1,7 +1,7 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
 var getdataArray = new Array();
-var coocaaVersion = "/v6.5";
+var coocaaVersion = "/v6.2";
 
 $(function() {
 	console.log("hello");

@@ -7,13 +7,9 @@
 }
 .page8_boxes{
 	display: none;
-	max-height: 425px;
 	overflow: auto;
 }
 .page8_tabs{
-    /*border-radius: 5px;
-    padding: 2px 4px;
-    background-color: buttonface;*/
    	display: inline-table;
 	padding: 0px 5px;
 	border-radius: 6px;

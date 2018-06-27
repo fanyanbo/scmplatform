@@ -97,7 +97,6 @@
             if(Math.ceil(_this.options.pageLength/_this.options.pageNUmber)<2){
                 $(_this.$element.selector+ ' .endPage').hide();
                 $(_this.$element.selector+ ' .nextPage').hide();
-//              $(_this.$element.selector+ ' tfoot').hide();
             }
             $(_this.$element.selector+ ' .tfootRight input').unbind('keyup').keyup(function(){
                 _this.inputKeyup(_this,maxpagenumberBox,json);

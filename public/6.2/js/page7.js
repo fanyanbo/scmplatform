@@ -5,12 +5,12 @@ var _twoLevelLinkageArrayTwo = [[],[],[],[]];
 var _twoLevelLinkageArrayThree = [[],[],[],[]];
 var _myArray = [];
 
-var coocaaVersion = "/v6.5";
+var coocaaVersion = "/v6.2";
 
 $(function() {
 	$(".page7_boxes")[0].style.display = "block";
 	buttonInitBefore();
-	sendHTTPRequest(coocaaVersion+"/config/queryCategory", '{}', configCategoryQueryResult);
+	sendHTTPRequest(coocaaVersion+"/module/queryCategory", '{}', moduleCategoryQueryResult);
 });
 
 function buttonInitBefore() {
@@ -23,18 +23,24 @@ function buttonInitBefore() {
 		_bIndex = $(".page7_boxes .btn").index($(this));
 		console.log(_bIndex);
 		if(_bIndex == 0) {
-			console.log("点击Config文件页的新增按钮");
-			$('#page7_config').modal();
-			$("#configSubmit").attr("hidedata", 1);
-			$("#configSubmit").attr("oldValue", "null");
-			clearConfigPart(1);
-		}  else if(_bIndex == 1) {
 			console.log("点击MK的新增按钮");
 			$('#page7_module').modal();
 			$("#moduleSubmit").attr("hidedata", 1);
 			$("#moduleSubmit").attr("oldValue", "null");
 			clearMKPart();
-		} else if(_bIndex == 2 || _bIndex == 3 || _bIndex == 4 || _bIndex == 5) {
+		} else if(_bIndex == 1) {
+			console.log("点击Prop的新增按钮");
+			$('#page7_prop').modal();
+			$("#propSubmit").attr("hidedata", 1);
+			$("#propSubmit").attr("oldValue", "null");
+			clearPropPart();
+		}  else if(_bIndex == 2) {
+			console.log("点击Config文件页的新增按钮");
+			$('#page7_config').modal();
+			$("#configSubmit").attr("hidedata", 1);
+			$("#configSubmit").attr("oldValue", "null");
+			clearConfigPart(1);
+		} else if(_bIndex == 3 || _bIndex == 4 || _bIndex == 5 || _bIndex == 6) {
 			console.log("点击系统设置大项的新增按钮");
 			$('#page7_sys').modal();
 			$("#sysSubmit").attr("hidedata", 1);
@@ -42,135 +48,14 @@ function buttonInitBefore() {
 			$("#sysSubmit").attr("oldValue", "null");
 			editEachSelect(_bIndex);
 			clearSysPart(_bIndex);
-		} else if(_bIndex == 6) {
-			console.log("点击Prop的新增按钮");
-			$('#page7_prop').modal();
-			$("#propSubmit").attr("hidedata", 1);
-			$("#propSubmit").attr("oldValue", "null");
-			clearPropPart();
 		}
 		$(".modal-backdrop").addClass("new-backdrop");
 	});
-}
-function configCategoryQueryResult() {
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			if(data.resultCode == "0") {
-				$("#configSelect").attr("hasvalue", "true");
-				var _myConfigTbody = document.getElementById("myConfigTbody");
-				for(var i = 0; i < data.resultData.length; i++) {
-					document.getElementById("configSelect").options.add(new Option(data.resultData[i].category));
-					_myConfigTbody.innerHTML += '<tr><td class="configitems" category="'+ data.resultData[i].category +'" id="configTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
-				}
-			}
-		}
-		sendHTTPRequest(coocaaVersion+"/config/query", '{}', configQueryResult);
-	}
-}
-
-function configQueryResult() {
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(0)").attr("hasvalue","true");
-				editEachPage("0",data.resultData);
-			}
-		}
-		buttonInitAfter();
-	}
-}
-
-function moduleQueryResult() {
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(1)").attr("hasvalue","true");
-				editEachPage("1",data.resultData);
-			}
-		}
-		buttonInitAfter();
-	}
-}
-
-function settingQueryResult() {
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(2)").attr("hasvalue","true");
-				$(".page7_tabs:eq(3)").attr("hasvalue","true");
-				$(".page7_tabs:eq(4)").attr("hasvalue","true");
-				$(".page7_tabs:eq(5)").attr("hasvalue","true");
-				editEachPage("5",data.resultData);
-			}
-		}
-		buttonInitAfter();
-	}
-}
-function propQueryResult() {
-	if(this.readyState == 4) {
-		if(this.status == 200) {
-			var data = JSON.parse(this.responseText);
-			console.log(data);
-			if(data.resultCode == "0") {
-				$(".page7_tabs:eq(6)").attr("hasvalue","true");
-				editEachPage("6",data.resultData);
-			}
-		}
-		buttonInitAfter();
-	}
-}
-function buttonInitAfter() {
-	/*配置管理板块-修改 */
-	var _aPart, _aIndex, _cHidedata = "";
-	$(".page7_a").click(function() {
-		_aIndex = $(".page7_a").index($(this));
-		_cHidedata = $(this).attr("hidedata");
-		_aPart = $(this).attr("part");
-		eachPartChange(_aPart, _cHidedata);
-	});
-
-	/*config-保存*/
-	$("#configSubmit").click(function() {
-		saveInConfig();
-	});
-	/*mk-保存*/
-	$("#moduleSubmit").click(function() {
-		saveInMK();
-	});
-	/*sys-保存*/
-	$("#sysSubmit").click(function() {
-		saveInSys();
-	});
-	/*prop-保存*/
-	$("#propSubmit").click(function() {
-		saveInProp();
-	});
-	$(".defaultOption").click(function() {
-		var _cIndex2 = $(".defaultOption").index($(this));
-		var _box1 = $(this).attr("boxone");
-		var _box2 = $(this).attr("boxtwo");
-		console.log(_box1 + "---" + _box2);
-		document.getElementById(_box1).style.display = "block";
-		document.getElementById(_box2).style.display = "none";
-	});
-	$(".defaultOption2").click(function() {
-		var _cIndex2 = $(".defaultOption2").index($(this));
-		var _box1 = $(this).attr("boxone");
-		var _box2 = $(this).attr("boxtwo");
-		document.getElementById(_box1).style.display = "block";
-		document.getElementById(_box2).style.display = "none";
-	});
+	
 	/*枚举1各个图标的点击事件*/
 	$(".menuEdit").click(function() {
 		var _cIndex3 = $(".menuEdit").index($(this));
+		console.log(_cIndex3);
 		if(_cIndex3 == 0) {
 			console.log("lxw " + "点击的是添加");
 			var parentDiv = document.getElementsByClassName("ADCSEfficient")[0];
@@ -199,25 +84,150 @@ function buttonInitAfter() {
 			appendObject.innerHTML = "";
 		}
 	});
+	/*config-保存*/
+	$("#configSubmit").click(function() {
+		console.log("asdasda");
+		saveInConfig();
+	});
+	/*mk-保存*/
+	$("#moduleSubmit").click(function() {
+		saveInMK();
+	});
+	/*sys-保存*/
+	$("#sysSubmit").click(function() {
+		saveInSys();
+	});
+	/*prop-保存*/
+	$("#propSubmit").click(function() {
+		saveInProp();
+	});
+}
+
+function moduleCategoryQueryResult() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$("#moduleSelect").attr("hasvalue", "true");
+				var _myMKTbody = document.getElementById("myMKTbody");
+				for(var i = 0; i < data.resultData.length; i++) {
+					document.getElementById("moduleSelect").options.add(new Option(data.resultData[i].category));
+					_myMKTbody.innerHTML += '<tr><td class="moduleitems" category="'+ data.resultData[i].category +'" id="moduleTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
+				}
+			}
+		}
+		sendHTTPRequest(coocaaVersion+"/module/query", '{}', moduleQueryResult);
+	}
+}
+function moduleQueryResult() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$(".page7_tabs:eq(0)").attr("hasvalue","true");
+				editEachPage("0",data.resultData);
+			}
+		}
+		buttonInitAfter();
+	}
+}
+function propQueryResult() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$(".page7_tabs:eq(1)").attr("hasvalue","true");
+				editEachPage("1",data.resultData);
+			}
+		}
+		buttonInitAfter();
+	}
+}
+function configQueryResult() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$(".page7_tabs:eq(2)").attr("hasvalue","true");
+				editEachPage("2",data.resultData);
+			}
+		}
+		buttonInitAfter();
+	}
+}
+function settingQueryResult() {
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				$(".page7_tabs:eq(3)").attr("hasvalue","true");
+				$(".page7_tabs:eq(4)").attr("hasvalue","true");
+				$(".page7_tabs:eq(5)").attr("hasvalue","true");
+				$(".page7_tabs:eq(6)").attr("hasvalue","true");
+				editEachPage("5",data.resultData);
+			}
+		}
+		buttonInitAfter();
+	}
+}
+
+function buttonInitAfter() {
+	/*配置管理板块-修改 */
+	var _aPart, _aIndex, _cHidedata = "";
+	$(".page7_a").click(function() {
+		console.log("sadasd");
+		_aIndex = $(".page7_a").index($(this));
+		_cHidedata = $(this).attr("hidedata");
+		_aPart = $(this).attr("part");
+		eachPartChange(_aPart, _cHidedata);
+	});
+	
+	$(".defaultOption").click(function() {
+		var _cIndex2 = $(".defaultOption").index($(this));
+		var _box1 = $(this).attr("boxone");
+		var _box2 = $(this).attr("boxtwo");
+		console.log(_box1 + "---" + _box2);
+		document.getElementById(_box1).style.display = "block";
+		document.getElementById(_box2).style.display = "none";
+	});
+	$(".defaultOption2").click(function() {
+		var _cIndex2 = $(".defaultOption2").index($(this));
+		var _box1 = $(this).attr("boxone");
+		var _box2 = $(this).attr("boxtwo");
+		document.getElementById(_box1).style.display = "block";
+		document.getElementById(_box2).style.display = "none";
+	});
 }
 
 function eachPartChange(part, data) {
 	console.log(part + "---" + data);
 	if(part == 0) {
-		console.log("config子项的修改");
-		$('#page7_config').modal();
-		$("#configSubmit").attr("hidedata", 2);
-		$("#configSubmit").attr("oldValue", data);
-		clearConfigPart(2);
-		editConfigModel(data);
-	} else if(part == 1) {
 		console.log("MK子项的修改");
 		$('#page7_module').modal();
 		$("#moduleSubmit").attr("hidedata", 2);
 		$("#moduleSubmit").attr("oldValue", data);
 		clearMKPart();
 		editMKModel(data);
-	} else if(part == 2 || part == 3 || part == 4 || part == 5) {
+	} else if(part == 1) {
+		console.log("Prop子项的修改");
+		$('#page7_prop').modal();
+		$("#propSubmit").attr("hidedata", 2);
+		$("#propSubmit").attr("oldValue", data);
+		clearPropPart();
+		editPropModel(data);
+	} else if(part == 2) {
+		console.log("config子项的修改");
+		$('#page7_config').modal();
+		$("#configSubmit").attr("hidedata", 2);
+		$("#configSubmit").attr("oldValue", data);
+		clearConfigPart(2);
+		editConfigModel(data);
+	} else if(part == 3 || part == 4 || part == 5 || part == 6) {
 		console.log("系统设置子项的修改");
 //		$('#page7_sys').modal();
 //		$("#sysSubmit").attr("hidedata", 2);
@@ -226,15 +236,7 @@ function eachPartChange(part, data) {
 //		editEachSelect(part);
 //		clearSysPart(part);
 //		editSysModel(part, data);
-	} else if(part == 6) {
-		console.log("Prop子项的修改");
-		$('#page7_prop').modal();
-		$("#propSubmit").attr("hidedata", 2);
-		$("#propSubmit").attr("oldValue", data);
-		clearPropPart();
-		editPropModel(data);
 	}
-	
 	$(".modal-backdrop").addClass("new-backdrop");
 }
 
@@ -253,12 +255,15 @@ function editConfigModel(data) {
 	} else {
 		$("#configString").css("display", "none");
 		$("#configTableBoxEnum").css("display", "block");
-		var oOpt = new Array();
-		oOpt = JSON.parse(data).options;
+		var oOpt = JSON.parse(data).options.replace(/"/g, '');
+		oOpt = oOpt.replace("[", "");
+		oOpt = oOpt.replace("]", "");
+		oOpt = oOpt.split(",");
+		oOpt = clear_arr_trim(oOpt);
+		console.log(oOpt);
+		console.log(oOpt.length);
 		document.getElementsByClassName("ADCSEfficient")[0].innerHTML = "";
-		console.log(JSON.parse(oOpt));
-		console.log(JSON.parse(oOpt).length);
-		for(var j = 0; j < JSON.parse(oOpt).length; j++) {
+		for(var j = 0; j < oOpt.length; j++) {
 			var parentDiv = document.getElementsByClassName("ADCSEfficient")[0];
 			var child1 = document.createElement("div");
 			child1.setAttribute("class", "menuUnit");
@@ -269,8 +274,8 @@ function editConfigModel(data) {
 			child1.appendChild(child2);
 			parentDiv.appendChild(child1);
 		};
-		for(var k = 0; k < JSON.parse(oOpt).length; k++) {
-			$(".menuUnitInput")[k].value = JSON.parse(oOpt)[k];
+		for(var k = 0; k < oOpt.length; k++) {
+			$(".menuUnitInput")[k].value = oOpt[k];
 		};
 	}
 	$("#configInstr").val(JSON.parse(data).descText);
@@ -477,7 +482,12 @@ function saveInConfig() {
 			var valueTwo = null;
 			for(var i = 0; i < $(".menuUnit").length; i++) {
 				valueTwo = newConfigMenuDiv.getElementsByTagName("input")[i].value;
-				newConfigOptions.push(valueTwo);
+				console.log(valueTwo);
+				if (valueTwo == "" || typeof(valueTwo) == "undefined") {
+					console.log("为空");
+				}else{
+					newConfigOptions.push(valueTwo);
+				}
 			}
 			newConfigString = newConfigOptions[0];
 		}
@@ -541,13 +551,11 @@ function saveInSys() {
 			console.log("lxw sys 新增");
 			var node = '{"engName":"' + newSysEName + '","cnName":"' + newSysCName + '","level1":"' + newSysSelect1 + '","level2":"' + newSysSelect2 + '","level3":"' + newSysSelect3 + '","desc":"' + newSysInstr + '"}';
 			console.log(node);
-			//sendHTTPRequest(coocaaVersion+"/module/add", node, returnSysAddInfo);
 		} else {
 			console.log("lxw sys 修改");
 			_oldValue2 = JSON.parse(_oldValue2);
 			var node = '{"engName":"' + newSysEName + '","cnName":"' + newSysCName + '","level1":"' + newSysSelect1 + '","level2":"' + newSysSelect2 + '","level3":"' + newSysSelect3 + '","desc":"' + newSysInstr + '"}';
 			console.log("lxw " + node);
-			//sendHTTPRequest(coocaaVersion+"/module/update", node, returnSysAddInfo);
 		}
 	}
 }
@@ -555,7 +563,6 @@ function saveInSys() {
 function saveInMK() {
 	var _Hidendata3 = $("#moduleSubmit").attr("hidedata");
 	var _oldValue3 = $("#moduleSubmit").attr("oldValue");
-	console.log(_oldValue3);
 
 	var newModuleCzName = document.getElementById("moduleCName").value;
 	var newModuleEnName = document.getElementById("moduleEName").value;
@@ -567,7 +574,6 @@ function saveInMK() {
 	newModuleEnName = newModuleEnName.replace(/(^\s*)|(\s*$)/g, "");
 	newModuleSrc = newModuleSrc.replace(/(^\s*)|(\s*$)/g, "");
 	newModuleInstr = newModuleInstr.replace(/(^\s*)|(\s*$)/g, "");
-	console.log("lxw " + newModuleCzName + "--" + newModuleEnName + "--" + newModuleSrc + "--" + newModuleInstr + "--" + newModuleSelect);
 
 	if(newModuleCzName == "" || newModuleEnName == "" || newModuleSrc == "" || newModuleInstr == "") {
 		console.log("存在空项");
@@ -601,7 +607,6 @@ function saveInMK() {
 function saveInProp() {
 	var _Hidendata = $("#propSubmit").attr("hidedata");
 	var _oldValue3 = $("#propSubmit").attr("oldValue");
-	console.log(_Hidendata+"-----------"+_oldValue3);
 
 	var node = null; //向后台传递的数据
 	var newPropEnName = $("#propEName").val();
@@ -647,20 +652,20 @@ function returnAddOrUpdateInfo() {
 			if(data.resultCode == "0") {
 				console.log("数据添加成功");
 				if (_curId ==0) {
-					$("#page7_config").modal('hide');
+					$("#page7_module").modal('hide');
 					$(".page7_tabs:eq(0)").attr("hasvalue","false");
 				} else if(_curId==1){
-					$("#page7_module").modal('hide');
-					$(".page7_tabs:eq(1)").attr("hasvalue","false");
-				} else if(_curId==6){
 					$("#page7_prop").modal('hide');
-					$(".page7_tabs:eq(6)").attr("hasvalue","false");
-				}else{
-					$("#page7_sys").modal('hide');
+					$(".page7_tabs:eq(1)").attr("hasvalue","false");
+				} else if(_curId==2){
+					$("#page7_config").modal('hide');
 					$(".page7_tabs:eq(2)").attr("hasvalue","false");
+				} else{
+					$("#page7_sys").modal('hide');
 					$(".page7_tabs:eq(3)").attr("hasvalue","false");
 					$(".page7_tabs:eq(4)").attr("hasvalue","false");
 					$(".page7_tabs:eq(5)").attr("hasvalue","false");
+					$(".page7_tabs:eq(6)").attr("hasvalue","false");
 				}
 				tabsClick(_curId);
 				freshModuleAddHtml(1);
@@ -670,15 +675,15 @@ function returnAddOrUpdateInfo() {
 				setTimeout("document.getElementById('configErrorInfo').innerHTML='　'", 3000);
 				
 				if (_curId ==0) {
-					document.getElementById("configErrorInfo").innerHTML = "添加失败！该内容或已存在。";
-					setTimeout("document.getElementById('configErrorInfo').innerHTML='　'", 3000);
-				} else if(_curId==1){
 					document.getElementById("moduleErrorInfo").innerHTML = "添加失败！该内容或已存在。";
 					setTimeout("document.getElementById('moduleErrorInfo').innerHTML='　'", 3000);
-				} else if(_curId==6){
+				} else if(_curId==1){
 					document.getElementById("propErrorInfo").innerHTML = "添加失败！该内容或已存在。";
 					setTimeout("document.getElementById('propErrorInfo').innerHTML='　'", 3000);
-				}else{
+				} else if(_curId==2){
+					document.getElementById("configErrorInfo").innerHTML = "添加失败！该内容或已存在。";
+					setTimeout("document.getElementById('configErrorInfo').innerHTML='　'", 3000);
+				} else{
 					document.getElementById("sysErrorInfo").innerHTML = "添加失败！该内容或已存在。";
 					setTimeout("document.getElementById('sysErrorInfo').innerHTML='　'", 3000);
 				}
@@ -702,13 +707,13 @@ function tabsClick(num) {
 	if(_hasValue == "false") {
 		var ajaxUrl = "";
 		if(num == 0) {
-			ajaxUrl = coocaaVersion+"/config/queryCategory";
-		} else if(num == 1) {
 			ajaxUrl = coocaaVersion+"/module/queryCategory";
-		} else if(num == 2 || num == 3 || num == 4 || num == 5) {
-			ajaxUrl = coocaaVersion+"/settings/queryCategory";
-		} else if(num == 6){
+		} else if(num == 1){
 			ajaxUrl = coocaaVersion+"/prop/queryCategory";
+		} else if(num == 2) {
+			ajaxUrl = coocaaVersion+"/config/queryCategory";
+		} else if(num == 3 || num == 4 || num == 5 || num == 6) {
+			ajaxUrl = coocaaVersion+"/settings/queryCategory";
 		}
 		sendHTTPRequest(ajaxUrl, '{}', categoryQueryResult);
 	} else {
@@ -725,15 +730,6 @@ function categoryQueryResult() {
 				var _curId = $("#tabClickIndex").attr("curId");
 				console.log(_curId);
 				if (_curId==0) {
-					$("#configSelect").attr("hasvalue", "true");
-					var _myConfigTbody = document.getElementById("myConfigTbody");
-					_myConfigTbody.innerHTML = "";
-					for(var i = 0; i < data.resultData.length; i++) {
-						document.getElementById("configSelect").options.add(new Option(data.resultData[i].category));
-						_myConfigTbody.innerHTML += '<tr><td class="configitems" category="'+ data.resultData[i].category +'" id="configTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
-					}
-					sendHTTPRequest(coocaaVersion+"/config/query", '{}', configQueryResult);
-				} else if(_curId==1){
 					$("#moduleSelect").attr("hasvalue", "true");
 					var _myMKTbody = document.getElementById("myMKTbody");
 					_myMKTbody.innerHTML = "";
@@ -742,7 +738,25 @@ function categoryQueryResult() {
 						_myMKTbody.innerHTML += '<tr><td class="moduleitems" category="'+ data.resultData[i].category +'" id="moduleTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
 					}
 					sendHTTPRequest(coocaaVersion+"/module/query", '{}', moduleQueryResult);
-				} else if(_curId==2||_curId==3||_curId==4||_curId==5) {
+				} else if(_curId==1){
+					$("#propSelect").attr("hasvalue", "true");
+					var _myPropTbody = document.getElementById("myPropTbody");
+					_myPropTbody.innerHTML = "";
+					for(var i = 0; i < data.resultData.length; i++) {
+						document.getElementById("propSelect").options.add(new Option(data.resultData[i].category));
+						_myPropTbody.innerHTML += '<tr><td class="propitems" category="'+ data.resultData[i].category +'" id="propTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
+					}
+					sendHTTPRequest(coocaaVersion+"/prop/query", '{}', propQueryResult);
+				} else if(_curId==2){
+					$("#configSelect").attr("hasvalue", "true");
+					var _myConfigTbody = document.getElementById("myConfigTbody");
+					_myConfigTbody.innerHTML = "";
+					for(var i = 0; i < data.resultData.length; i++) {
+						document.getElementById("configSelect").options.add(new Option(data.resultData[i].category));
+						_myConfigTbody.innerHTML += '<tr><td class="configitems" category="'+ data.resultData[i].category +'" id="configTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
+					}
+					sendHTTPRequest(coocaaVersion+"/config/query", '{}', configQueryResult);
+				} else if(_curId==3||_curId==4||_curId==5||_curId==6) {
 					$("#selectFirst").attr("hasvalue", "true");
 					var _mySysSettingTbody = document.getElementById("mySysSettingTbody");
 					var _mySourceBoxTbody = document.getElementById("mySourceBoxTbody");
@@ -807,18 +821,7 @@ function categoryQueryResult() {
 							}
 						}
 					}
-					console.log(_twoLevelLinkageArrayOne);
-					console.log(_twoLevelLinkageArrayTwo);
-					console.log(_twoLevelLinkageArrayThree);
 					sendHTTPRequest(coocaaVersion+"/settings/query", '{}', settingQueryResult);
-				} else if(_curId==6){
-					var _myPropTbody = document.getElementById("myPropTbody");
-					_myPropTbody.innerHTML = "";
-					for(var i = 0; i < data.resultData.length; i++) {
-						document.getElementById("propSelect").options.add(new Option(data.resultData[i].category));
-						_myPropTbody.innerHTML += '<tr><td class="propitems" category="'+ data.resultData[i].category +'" id="propTr'+data.resultData[i].orderId+'"><div class="grouptitle" title="'+data.resultData[i].category+'">'+data.resultData[i].category+'</div></td></tr>';
-					}
-					sendHTTPRequest(coocaaVersion+"/prop/query", '{}', propQueryResult);
 				}
 			}
 		}
@@ -826,20 +829,27 @@ function categoryQueryResult() {
 }
 
 function editEachPage(num,array){
-	console.log(num+"--------"+array);
 	if(num==0){
-		for (var j=0; j< $(".configitems").length; j++) {
+		for (var j=0; j< $(".moduleitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
-				if(array[i].category == $(".configitems:eq(" + (j) + ")").attr("category")) {
-					$(".configitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='0' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+				if(array[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
+					$(".moduleitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='0' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 				}
 			}
 		}
 	} else if(num==1){
-		for (var j=0; j< $(".moduleitems").length; j++) {
+		for (var j=0; j< $(".propitems").length; j++) {
 			for(var i = 0; i < array.length; i++) {
-				if(array[i].category == $(".moduleitems:eq(" + (j) + ")").attr("category")) {
-					$(".moduleitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+				if(array[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
+					$(".propitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='1' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].engName + "</a></div>";
+				}
+			}
+		}
+	} else if(num==2){
+		for (var j=0; j< $(".configitems").length; j++) {
+			for(var i = 0; i < array.length; i++) {
+				if(array[i].category == $(".configitems:eq(" + (j) + ")").attr("category")) {
+					$(".configitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 				}
 			}
 		}
@@ -848,20 +858,12 @@ function editEachPage(num,array){
 			for(var i = 0; i < array.length; i++) {
 				if(array[i].level2 == $(".settingsitems:eq(" + (j) + ")").attr("level2")) {
 					if (array[i].level3 === null || array[i].level3 == "") {
-						$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+						$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='5' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 					} else{
 						if (array[i].level3 == $(".settingsitems:eq(" + (j) + ")").attr("level3")) {
-							$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='2' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
+							$(".settingsitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' disabled='disabled' part='5' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].cnName + "</a></div>";
 						}
 					}
-				}
-			}
-		}
-	} else if(num==6){
-		for (var j=0; j< $(".propitems").length; j++) {
-			for(var i = 0; i < array.length; i++) {
-				if(array[i].category == $(".propitems:eq(" + (j) + ")").attr("category")) {
-					$(".propitems")[j].innerHTML += "<div class='col-xs-4 subitem'><a class='page7_a' part='6' hidedata='" + JSON.stringify(array[i]) + "' title='" + array[i].engName + "' name='" + array[i].engName + "'>" + array[i].engName + "</a></div>";
 				}
 			}
 		}
@@ -911,3 +913,15 @@ function changeSelect(str){
 		document.getElementById("selectSecond").style.display = "block";
 	}
 }
+
+function clear_arr_trim(array) {  
+    for(var i = 0 ;i<array.length;i++)  
+    {  
+        if(array[i] == "" || typeof(array[i]) == "undefined")  
+        {  
+            array.splice(i,1);  
+            i= i-1;  
+        }  
+    }  
+    return array;  
+}  

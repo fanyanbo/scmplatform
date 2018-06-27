@@ -41,8 +41,10 @@
 										<div class="col-xs-12" id="changeDescDiv">
 											<div class="col-xs-12 form-group text-left inputdiv" id="reasonBox">
 												<span class="col-xs-12" id="changeDescTitle"><b>当前文件做了如下更改，请注意审核：</b></span>
-												<div id="reviewContent0" class="col-xs-6 text-center">修改内容</div><div id="reviewReason0" class="col-xs-6 text-center">修改原因</div>
-												<div id="reviewContent" class="col-xs-6"></div><div id="reviewReason" class="col-xs-6 text-center"></div>
+												<table class="table-bordered" id="historyTable" style="width: 100%;">
+													<tr><th id="reviewContent0" style="width: 50%;text-align: center;">修改内容</th><th id="reviewReason0" style="width: 50%;text-align: center;">修改原因</th></tr>
+													<tr><td id="reviewContent"></td><td id="reviewReason"></td></tr>
+												</table>
 											</div>
 										</div>
 										<div class="col-xs-12" id="addDescDiv">
@@ -121,7 +123,7 @@
 											<select id="lable4Platform" name="平台" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 												<option value="Hisi">Hisi</option>
 												<option value="Mstar">Mstar</option>
-												<option value="Mstar">RTK</option>
+												<option value="RTK">RTK</option>
 												<option value="Amlogic">Amlogic</option>
 												<option value="Nova">Nova</option>
 											</select>
@@ -131,19 +133,22 @@
 								<tr>
 									<td style="padding: 0;">
 										<div class="btn-group">
-											<button class="page4_tabs btn-success" style="color: black;">config文件</button>
-											<button class="page4_tabs">MK</button>
+											<button class="page4_tabs btn-success" style="color: black;">MK</button>
+											<button class="page4_tabs">Prop</button>
+											<button class="page4_tabs">config文件</button>
 											<button class="page4_tabs">系统设置</button>
 											<button class="page4_tabs">信号源工具箱</button>
 											<button class="page4_tabs">卖场演示</button>
 											<button class="page4_tabs">中间件</button>
-											<button class="page4_tabs">Prop</button>
-										</div>
-										<div class="col-xs-12 page4_boxes row">
-											<div id="myConfigBox" class="eachpartbox"></div>
 										</div>
 										<div class="col-xs-12 page4_boxes row">
 											<div id="myMkBox" class="eachpartbox"></div>
+										</div>
+										<div class="col-xs-12 page4_boxes row">
+											<div id="myPropBox" class="eachpartbox"></div>
+										</div>
+										<div class="col-xs-12 page4_boxes row">
+											<div id="myConfigBox" class="eachpartbox"></div>
 										</div>
 										<div class="col-xs-12 page4_boxes row">
 											<div id="mySysSettingBox" class="eachpartbox"></div>
@@ -156,9 +161,6 @@
 										</div>
 										<div class="col-xs-12 page4_boxes row">
 											<div id="myMiddlewareBox" class="eachpartbox"></div>
-										</div>
-										<div class="col-xs-12 page4_boxes row">
-											<div id="myPropBox" class="eachpartbox"></div>
 										</div>
 									</td>
 								</tr>
@@ -245,24 +247,24 @@
 					<div class="modal-body mybody">
 						<ul class="nav nav-pills nav-justified" role="tablist">
 							<li role="presentation" class="presentation active">
-								<a href="#myPreviewBodyOne" aria-controls="myPreviewBodyOne" role="tab" data-toggle="tab">Config文件</a>
+								<a href="#myPreviewBodyOne" aria-controls="myPreviewBodyOne" role="tab" data-toggle="tab">MK文件</a>
 							</li>
 							<li role="presentation" class="presentation">
-								<a href="#myPreviewBodyTwo" aria-controls="myPreviewBodyTwo" role="tab" data-toggle="tab">MK文件</a>
+								<a href="#myPreviewBodyTwo" aria-controls="myPreviewBodyTwo" role="tab" data-toggle="tab">Prop文件</a>
 							</li>
 							<li role="presentation" class="presentation">
-								<a href="#myPreviewBodyThree" aria-controls="myPreviewBodyThree" role="tab" data-toggle="tab">Settings文件</a>
+								<a href="#myPreviewBodyThree" aria-controls="myPreviewBodyThree" role="tab" data-toggle="tab">Config文件</a>
 							</li>
 							<li role="presentation" class="presentation">
-								<a href="#myPreviewBodyFour" aria-controls="myPreviewBodyFour" role="tab" data-toggle="tab">Prop文件</a>
+								<a href="#myPreviewBodyFour" aria-controls="myPreviewBodyFour" role="tab" data-toggle="tab">Settings文件</a>
 							</li>
 						</ul>
 						<!-- Tab panes -->
 						<div class="tab-content">
-							<textarea wrap="off" style="overflow:scroll;" role="tabpanel" class="tab-pane active" id="myPreviewBodyOne" disabled></textarea>
-							<textarea wrap="off" style="overflow:scroll;" role="tabpanel" class="tab-pane" id="myPreviewBodyTwo" disabled></textarea>
-							<textarea wrap="off" style="overflow:scroll;" role="tabpanel" class="tab-pane" id="myPreviewBodyThree" disabled></textarea>
-							<textarea wrap="off" style="overflow:scroll;" role="tabpanel" class="tab-pane" id="myPreviewBodyFour" disabled></textarea>
+							<textarea wrap="off" role="tabpanel" class="tab-pane active" id="myPreviewBodyOne" disabled></textarea>
+							<textarea wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyTwo" disabled></textarea>
+							<textarea wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyThree" disabled></textarea>
+							<textarea wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyFour" disabled></textarea>
 						</div>
 					</div>
 					<div class="modal-footer myfooter">
@@ -282,6 +284,7 @@
 						<h4 class="modal-title text-left right" id="page4_examineLabel">
 							<span><b>机芯：</b></span><span id="page4_check_chip"></span>
 							<span><b>机型：</b></span><span id="page4_check_model"></span>
+							<span><b>尺寸：</b></span><span id="page4_check_size"></span>
 						</h4>
 					</div>
 					<div class="modal-body">
@@ -290,9 +293,9 @@
 								<tr>
 									<th>修改内容</th>
 									<th>修改原因</th>
-									<th style="min-width: 55px;">状态</th>
-									<th>提交者</th>
 									<th>提交时间</th>
+									<th>提交者</th>
+									<th style="min-width: 55px;">状态</th>
 								</tr>
 							</thead>
 							<tbody id="descriptTbody">

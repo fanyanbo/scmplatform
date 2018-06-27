@@ -200,29 +200,40 @@
 													<select id="lable2Platform" name="平台" class="col-xs-6 col-xs-push-1 inputstyle text-left">
 														<option value="Hisi">Hisi</option>
 														<option value="Mstar">Mstar</option>
-														<option value="Mstar">RTK</option>
+														<option value="RTK">RTK</option>
 														<option value="Amlogic">Amlogic</option>
 														<option value="Nova">Nova</option>
 													</select>
 												</div>
 											</td>
 										</tr>
+										<tr id="addSize">
+											<td>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Size1" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">尺寸&nbsp;:</label>
+													<input type="text" value="" name="尺寸" id="lable2Size1" class="col-xs-6 col-xs-push-1 inputstyle2 fuzzySearch text-left" onkeyup="value=value.replace(/[^0-9]/g,'') ">
+												</div>
+											</td>
+										</tr>
 										<tr>
-											<td style="padding: 0;">
+											<td>
 												<div class="btn-group">
-													<button class="page2_tabs btn-success" style="color: black;" firstget="false">config文件</button>
-													<button class="page2_tabs" firstget="false">MK</button>
+													<button class="page2_tabs btn-success" style="color: black;" firstget="false">MK</button>
+													<button class="page2_tabs" firstget="false">Prop</button>
+													<button class="page2_tabs" firstget="false">config文件</button>
 													<button class="page2_tabs" firstget="false">系统设置</button>
 													<button class="page2_tabs" firstget="false">信号源工具箱</button>
 													<button class="page2_tabs" firstget="false">卖场演示</button>
 													<button class="page2_tabs" firstget="false">中间件</button>
-													<button class="page2_tabs" firstget="false">Prop</button>
-												</div>
-												<div class="col-xs-12 page2_boxes row">
-													<div id="myConfigBox" class="eachpartbox"></div>
 												</div>
 												<div class="col-xs-12 page2_boxes row">
 													<div id="myMkBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myPropBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myConfigBox" class="eachpartbox"></div>
 												</div>
 												<div class="col-xs-12 page2_boxes row">
 													<div id="mySysSettingBox" class="eachpartbox"></div>
@@ -235,9 +246,6 @@
 												</div>
 												<div class="col-xs-12 page2_boxes row">
 													<div id="myMiddlewareBox" class="eachpartbox"></div>
-												</div>
-												<div class="col-xs-12 page2_boxes row">
-													<div id="myPropBox" class="eachpartbox"></div>
 												</div>
 											</td>
 										</tr>
@@ -253,6 +261,7 @@
 											<div class="modal-body">
 												<span class="changetitle">修改内容</span>
 												<div id="changeContent" style="font-size: 14px;text-align: left;">
+													<span id="txt0">新增特殊尺寸：<span id="txt00"></span><br/></span>
 													<span id="txt1">修改设备信息：<span id="txt11"></span><br/></span>
 													<span id="txt2">新增模块：<span id="txt22"></span><br/></span>
 													<span id="txt3">删除模块：<span id="txt33"></span><br/></span>
@@ -381,7 +390,7 @@
 								<h4 class="modal-title text-left right" id="page1_examineLabel">
 									<span><b>机芯：</b></span><span id="page1_check_chip"></span>
 									<span><b>机型：</b></span><span id="page1_check_model"></span>
-									<!--<span><b>target_product：</b></span><span id="page1_check_targetProduct"></span>-->
+									<span><b>尺寸：</b></span><span id="page1_check_panel"></span>
 								</h4>
 							</div>
 							<div class="modal-body">

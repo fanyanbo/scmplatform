@@ -103,6 +103,14 @@
 #page4{
 	min-width: 900px;
 }
+#page4 input[type="radio"]{
+	height: 15px;
+    width: 17px;
+}
+#page4 input[type="checkbox"]{
+	height: 15px;
+    width: 17px;
+}
 body .modal-footer{
 	text-align: center;
 }
@@ -147,6 +155,9 @@ body .modal-footer{
 	margin-top: 5px;
 	clear: both;
 	font-size: 18px;
+	overflow: auto;
+	padding-bottom: 5px;
+    border-bottom: 1px solid black;
 }
 .close1 {
     float: right;
@@ -315,33 +326,17 @@ body .modal-footer{
 #reviewReason0,#reviewContent0,#reviewReason,#reviewContent{
     padding-left: 4px;
     padding-right: 4px;
+    max-height: 68px;
+    border: 1px solid red;
     overflow: auto;
 }
-#reviewContent0{
-	border-top: 1px solid white;
-	border-left: 1px solid white;
-	border-right: 1px solid white;
-}
-#reviewReason0{
-	border-top: 1px solid white;
-	border-right: 1px solid white;
-}
-#reviewContent{
-	border-top: 1px solid white;
-	border-left: 1px solid white;
-	border-right: 1px solid white;
-	border-bottom: 1px solid white;
-	height: 68px;
-}
-#reviewReason,#reviewContent{
-	border-top: 1px solid white;
-	height: 68px;
-	border-right: 1px solid white;
-	border-bottom: 1px solid white;
+#reviewReason{
+	text-align: center;
 }
 #changeDescTitle{
 	padding-left: 0px;
     padding-right: 0px;
+    color: red;
 }
 #reasonBox{
 	padding-left: 0px;

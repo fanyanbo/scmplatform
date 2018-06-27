@@ -98,6 +98,9 @@ body{
 	margin-right: 10px;
     font-size: 18px;
 }
+#index_branch .dropdown-menu li{
+	margin-right: 0px;
+}
 #index_branch li a:hover{
 	background-color: rgba(0,0,0,0);
 }
@@ -108,4 +111,7 @@ body{
     float: left;
     top: 12px;
     margin-right: 10px;
+}
+#index_branch .dropdown-menu li :hover{
+	background-color: dodgerblue;
 }
