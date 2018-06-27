@@ -288,7 +288,7 @@ function convert_products_table(dbo)
 			var data = docs[i];
 
 			sqltext =  "insert into v60_products ";
-			sqltext += "(chip, model, memorySize, EMMC, targetProduct, soc, gitBranch, operateTime) values \n    ";
+			sqltext += "(chip, model, memorySize, EMMC, targetProduct, soc, androidVersion, gitBranch, operateTime) values \n    ";
 			sqltext += "(";
 			sqltext += '\"' + data.chip + '\", ';
 			sqltext += '\"' + data.model + '\", ';
@@ -296,6 +296,7 @@ function convert_products_table(dbo)
 			sqltext += '\"' + "4GB" + '\", ';
 			sqltext += '\"' + data.targetProduct + '\", ';
 			sqltext += '\"' + data.chipModel + '\", ';
+			sqltext += '\"' + data.androidVersion + '\", ';
 			sqltext += '\"' + "" + '\", ';
 			sqltext += "current_timestamp() ";
 			sqltext += ");\n";

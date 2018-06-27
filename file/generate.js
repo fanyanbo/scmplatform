@@ -2,7 +2,7 @@
 // 1. return 的处理
 // 2. 排序
 
-var version = "6.0";
+var version = "6.2";
 var test_flag = 0;
 
 var mysql = require('mysql');
@@ -1074,7 +1074,7 @@ function show_callback(errno, result)
 
 //generator.generate("6S57", "K5S",  null);
 //generator.generateByModel("E6000", null);
-//generator.preview("8N01", "G730S", 0, 0, show_preview_text_test);
+generator.preview("8N01", "G730S", 0, 0, show_preview_text_test);
 //generator.generate("5S02a", "15U", 0, show_callback);
 //generator.generateByTargetProduct("p201", show_callback);
 
