@@ -21,7 +21,6 @@ var git = require("./gitcommit");
 var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 var dbConfig = require('../models/dbConfig');
-var config = require('../common/config');
 
 var connection;							// 数据库连接
 var action_type;                        // 当前动作为预览还是git提交
@@ -159,7 +158,8 @@ function generateFiles(
     if (test_flag)
         dbparam.database = "scm_test";
     else
-        dbparam.database = config.mysql.database;
+        dbparam.database = "scm";
+        
     dbparam.host = config.mysql.host;
 
     tab_products = dbConfig.tables.products;
