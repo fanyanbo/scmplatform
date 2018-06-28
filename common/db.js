@@ -1,14 +1,14 @@
-var mysql = require( 'mysql');
-var config = require('../config/config');
-var logger = require('./logger');
+let mysql = require( 'mysql');
+let config = require('../config/config');
+let logger = require('./logger');
 
 // 从远程复制数据库
 // mysqldump scm -h 172.20.5.239 -uscmplatform -pscmplatform --add-drop-table | mysql scm -u root -proot
 
-var conn;
+let conn;
 function handleError () {
     conn = mysql.createConnection(config.mysql);
-
+    logger.info("createConnection to mysql on scmplatform...");
     //连接错误，2秒重试
     conn.connect(function (err) {
         if (err) {
@@ -21,6 +21,7 @@ function handleError () {
         logger.error('db error', err);
         // 如果是连接断开，自动重新连接
         if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            logger.info("Try to handle reconnection...");
             handleError();
         } else {
             throw err;
