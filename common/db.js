@@ -8,7 +8,7 @@ let logger = require('./logger');
 let conn;
 function handleError () {
     conn = mysql.createConnection(config.mysql);
-    logger.info("createConnection to mysql on scmplatform...");
+    logger.error("createConnection to mysql on scmplatform...");
     //连接错误，2秒重试
     conn.connect(function (err) {
         if (err) {
@@ -20,8 +20,8 @@ function handleError () {
     conn.on('error', function (err) {
         logger.error('db error', err);
         // 如果是连接断开，自动重新连接
-        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
-            logger.info("Try to handle reconnection...");
+        if (err.code == 'PROTOCOL_CONNECTION_LOST') {
+            logger.error("Try to handle reconnection...");
             handleError();
         } else {
             throw err;
