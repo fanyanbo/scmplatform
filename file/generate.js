@@ -212,8 +212,8 @@ function generateFiles(
         
         if (version == "6.0")
             sql = "call v60_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
-        else if (version == "6.5")
-            sql = "call v65_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
+        else if (version == "6.2")
+            sql = "call v62_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
         
         console.log("同步临时数据到正式数据");
         writerlog.w("同步临时data到正式data : " + sql + "\n");
@@ -943,7 +943,7 @@ function gitpush(shellFileName, callback)
 function getGitDir(systemVersion)
 {
 	var gitdir;
-	if (true)//(test_flag)
+	if (test_flag)
 	{
 	    gitdir = os.homedir() + "/scmv3_git/test/Custom/";
 	}
@@ -951,8 +951,8 @@ function getGitDir(systemVersion)
 	{
 	    if (systemVersion == "6.0")
             gitdir = os.homedir() + "/scmv3_git/60/Custom/";
-        else if (systemVersion == "6.5")
-            gitdir = os.homedir() + "/scmv3_git/65/Custom/";
+        else if (systemVersion == "6.2")
+            gitdir = os.homedir() + "/scmv3_git/62/Custom/";
         else
             gitdir = os.homedir() + "/scmv3_git/test/Custom/";
 	}
@@ -971,8 +971,8 @@ function getGitBranch(systemVersion)
 	{
 	    if (systemVersion == "6.0")
             gitbranch = "CCOS/Rel6.0";
-    	else if (systemVersion == "6.5")
-            gitbranch = "CCOS/Rel6.5";
+    	else if (systemVersion == "6.2")
+            gitbranch = "CCOS/Rel6.2";
         else
             gitbranch = "test";
 	}
