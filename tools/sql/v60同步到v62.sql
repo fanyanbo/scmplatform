@@ -1,5 +1,5 @@
-insert into v62_products (chip, model, memorySize, EMMC, targetProduct, soc, gitBranch, platform)
-	select chip, model, memorySize, EMMC, targetProduct, soc, gitBranch, platform from v60_products;
+insert into v62_products (chip, model, memorySize, EMMC, targetProduct, soc, gitBranch, platform, androidVersion)
+	select chip, model, memorySize, EMMC, targetProduct, soc, gitBranch, platform,androidVersion from v60_products;
 
 insert into v62_mkdata(targetProduct, engName)
 	select targetProduct, engName from v60_mkdata;
