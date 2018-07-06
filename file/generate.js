@@ -2,7 +2,7 @@
 // 1. return 的处理
 // 2. 排序
 
-var version = "6.2";
+var version = "6.0";
 var test_flag = 0;
 
 var mysql = require('mysql');
@@ -701,7 +701,7 @@ function generate_device_tab()
     var endStr = "\n\n\n\n";
     fs.appendFileSync(deviceTabFileName, endStr);
     
-    filelist[filetotal++] = CreateFileInfo(deviceTabFileName, "device_tab.mk", null, null, null, "mk");
+    filelist[filetotal++] = CreateFileInfo(deviceTabFileName, "device_tab.mk", null, null, null, "deviceTab");
 }
 
 function generateMkFile(target_info)

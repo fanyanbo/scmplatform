@@ -326,6 +326,11 @@ int process_cmd(char * str)
 			dir_relpath = "makefile/";
 			file_relpath = dir_relpath + allinfo.fileinfo[i].finalName;
 		}
+		else if (allinfo.fileinfo[i].typeStr == "deviceTab")
+		{
+			dir_relpath = "";
+			file_relpath = dir_relpath + allinfo.fileinfo[i].finalName;
+		}
 		else
 		{
 			if (allinfo.fileinfo[i].panel == "0")
