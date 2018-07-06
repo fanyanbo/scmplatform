@@ -23,6 +23,7 @@ var index = require('./routes/index');
 var signRouter = require('./routes/sign_router');
 var apiRouterV6_0 = require('./routes/api_router_v6.0');
 var apiRouterV6_2 = require('./routes/api_router_v6.2');
+var schedule = require('./common/schedule');
 
 var app = express();
 
@@ -70,6 +71,8 @@ app.use(function(req, res, next) {
   next(err);
 });
 
+schedule.startQuerySchedule();
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -84,6 +87,7 @@ app.use(function(err, req, res, next) {
 process.on('uncaughtException', function (err) {
   logger.error(err.stack);
   logger.error("Node NOT Exiting...");
+  schedule.cancelSchedule();
 });
 
 module.exports = app;
