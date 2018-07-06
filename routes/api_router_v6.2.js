@@ -33,6 +33,8 @@ router.post('/product/addHistory', product.addHistory);          //新增产品�
 router.post('/product/update', product.update);                  //更新产品信息
 router.post('/product/queryByPage', product.queryByPage);        //分页查询产品信息
 router.post('/product/queryByRegEx', product.queryByRegEx);      //模糊查询产品信息
+router.post('/product/queryByChipModel', product.queryByChipModel);  //根据机芯机型查询产品信息
+router.post('/product/queryByChipModelPanel', product.queryByChipModelPanel);  //根据机芯机型尺寸查询产品信息
 router.post('/product/queryHistory', product.queryHistory);      //查询某产品的历史修改记录
 router.post('/product/queryByModule', product.queryByModule);    //查询配置有某个模块的所有产品
 router.post('/product/queryProductsByTp', product.queryProductsByTargetProduct);//根据targetproduct查询所有配置该TP的产品
@@ -40,6 +42,7 @@ router.post('/product/queryMKByTp', product.queryMKAndPropsByTargetProduct);  //
 router.post('/product/queryAll', product.queryAll);
 router.post('/product/queryAllByMachine', product.queryAllByMachine);
 router.post('/product/queryAllByMachineTemp', product.queryAllByMachineTemp);
+router.post('/product/queryAuditByUser', product.queryAuditByUser);
 router.post('/product/preview', product.preview);
 router.post('/product/review', product.review);
 router.post('/product/delete', product.delete);
