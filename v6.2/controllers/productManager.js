@@ -5,6 +5,11 @@ var logger = require('../../common/logger');
 var output = require('../../common/output');
 var productModel = require('../models/productModel');
 
+/**
+ * @param {HttpRequest} req
+ * @param {HttpResponse} res
+ * @param {Function} next
+ */
 exports.add = function (req, res, next) {
 
   let baseInfo = req.body.baseInfo;

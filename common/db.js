@@ -22,6 +22,7 @@ function handleError () {
         // 如果是连接断开，自动重新连接
         if (err.code == 'PROTOCOL_CONNECTION_LOST') {
             logger.error("Try to handle reconnection...");
+            conn.end();
             handleError();
         } else {
             throw err;

@@ -4,6 +4,11 @@ var logger = require(config.rootPath + '/common/logger');
 var output = require(config.rootPath + '/common/output');
 var moduleModel = require('../models/moduleModel');
 
+/**
+ * @param {HttpRequest} req
+ * @param {HttpResponse} res
+ * @param {Function} next
+ */
 exports.query = function (req, res, next) {
   moduleModel.query(function(err,results) {
     if(err) {
