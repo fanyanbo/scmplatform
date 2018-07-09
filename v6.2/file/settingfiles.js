@@ -299,9 +299,9 @@ function sequence_setting_general_xml(a, b)
     else if (b.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
         b_level = 3;
         
-    if (a.a_level > b.b_level)
+    if (a_level > b_level)
         return 1;
-    else if (a.a_level < b.b_level)
+    else if (a_level < b_level)
         return -1;
     else
         return 0;
