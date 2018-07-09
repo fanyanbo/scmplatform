@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50560
 File Encoding         : 65001
 
-Date: 2018-07-09 19:28:10
+Date: 2018-07-09 19:50:22
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -128,7 +128,8 @@ INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_SOUND_SPDIF_BOX', 'SPIDF输
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_AUDIO_OUTPUT', '声音输出', '1', '系统设置', '声音设置', '声音输出设置', '0', '0', '1', '系统设置-音画设置-声音设置-声音输出设置-声音输出', '<SettingItem name=\"SKY_CFG_TV_AUDIO_OUTPUT\" association=\"SKY_CFG_TV_SOUND_SPDIF\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_OUTPUT_SETTINGS');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_SOUND_SPDIF', 'SPDIF输出', '0', '系统设置', '声音设置', '声音输出设置', '0', '0', '2', '系统设置-音画设置-声音设置-声音输出设置-SPDIF输出,后改名为：数字音频输出', '<SettingItem name=\"SKY_CFG_TV_SOUND_SPDIF\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_OUTPUT_SETTINGS');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_BOOT_VIDEO_SOUND_SWITCH', '开机音频输出', '1', '系统设置', '声音设置', '声音输出设置', '0', '0', '3', '系统设置-音画设置-声音设置-声音输出设置-开机音频输出，开始定放通用设置，后来决定放到这里', '<SettingItem name=\"SKY_CFG_TV_BOOT_VIDEO_SOUND_SWITCH\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_OUTPUT_SETTINGS');
-INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_INSTALL_MODE', '电视安装方式', '0', '系统设置', '声音设置', '声音输出设置', '0', '0', '4', '系统设置-音画设置-声音设置-电视安装方式,后改名为：声音场景（W8等机器有此项）', '<SettingItem name=\"SKY_CFG_TV_INSTALL_MODE\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_OUTPUT_SETTINGS');
+INSERT INTO `v62_settings` VALUES (null, 'SKY_GFG_TV_VOICE_DELAY', '声音延时', '0', '系统设置', '声音设置', '声音输出设置', '0', '0', '4', '系统设置-音画设置-声音设置-声音输出设置-声音延时，此功能仅在支持DolbyAtmos的机器上的测试和认证版本体现，量产版本不体现', '<SettingItem name=\"SKY_GFG_TV_VOICE_DELAY\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_OUTPUT_SETTINGS');
+INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_INSTALL_MODE', '电视安装方式', '0', '系统设置', '声音设置', '声音输出设置', '0', '0', '5', '系统设置-音画设置-声音设置-电视安装方式,后改名为：声音场景（W8等机器有此项）', '<SettingItem name=\"SKY_CFG_TV_INSTALL_MODE\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_OUTPUT_SETTINGS');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_ATMOS_SOUND_EFFECTS', 'ATMOS音效', '0', '系统设置', '声音设置', 'ATMOS专业音效设置', '0', '0', '1', '系统设置-音画设置-声音设置-ATMOS专业音效设置-ATMOS音效', '<SettingItem name=\"SKY_CFG_TV_ATMOS_SOUND_EFFECTS\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_ATMOS_DRC', '动态范围控制', '0', '系统设置', '声音设置', 'ATMOS专业音效设置', '0', '0', '2', '系统设置-音画设置-声音设置-ATMOS专业音效设置-动态范围控制', '<SettingItem name=\"SKY_CFG_TV_ATMOS_DRC\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_ATMOS_SUBWOOFER_VOLUME', '重低音微调', '0', '系统设置', '声音设置', 'ATMOS专业音效设置', '0', '0', '3', '系统设置-音画设置-声音设置-ATMOS专业音效设置-重低音微调', '<SettingItem name=\"SKY_CFG_TV_ATMOS_SUBWOOFER_VOLUME\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS');
