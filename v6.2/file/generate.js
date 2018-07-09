@@ -655,14 +655,14 @@ function generate_files()
         var content3_8 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-panel_common_pq.ini", "utf-8");
         var content3_9 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-panel_common_board.ini", "utf-8");
 
-        var content3 =  content3_1 + '\n\n\n' + 
-                        content3_2 + '\n\n\n' + 
-                        content3_3 + '\n\n\n' + 
-                        content3_4 + '\n\n\n' + 
-                        content3_5 + '\n\n\n' + 
-                        content3_6 + '\n\n\n' + 
-                        content3_7 + '\n\n\n' + 
-                        content3_8 + '\n\n\n' + 
+        var content3 =  content3_1 + '\n\n\n\n\n' + 
+                        content3_2 + '\n\n\n\n\n' + 
+                        content3_3 + '\n\n\n\n\n' + 
+                        content3_4 + '\n\n\n\n\n' + 
+                        content3_5 + '\n\n\n\n\n' + 
+                        content3_6 + '\n\n\n\n\n' + 
+                        content3_7 + '\n\n\n\n\n' + 
+                        content3_8 + '\n\n\n\n\n' + 
                         content3_9;
                         
         if (mod_callback != null)

@@ -338,6 +338,8 @@ function write_market_show_configuration_xml(sqlresult, chip, model, panel, tmpd
         }
     }
     
+    fileinfo.sort(sequence_market_show_configuration_xml);
+    
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
     fs.appendFileSync(tmpFileName, '<!--  market_show_configuration.xml  --> \n');
     fs.appendFileSync(tmpFileName, "<Config>\n");
@@ -355,7 +357,37 @@ function write_market_show_configuration_xml(sqlresult, chip, model, panel, tmpd
     genFileCallBack(tmpFileName, "market_show_configuration.xml", chip, model, panel, "market_show_configuration");
 }
 
-
+function sequence_market_show_configuration_xml(a, b)
+{
+    if (a.level2 == b.level2)
+    {
+        if (a.orderId > b.orderId)
+            return 1;
+        else if (a.orderId < b.orderId)
+            return -1;
+        else
+            return 0;
+    }
+    
+    ////////////////////////////////////////////
+    var a_level2 = 0, b_level2 = 0;
+    if (a.level2 == "图像演示")
+        a_level2 = 1;
+    else if (a.level2 == "声音演示")
+        a_level2 = 2;
+    
+    if (b.level2 == "图像演示")
+        b_level2 = 1;
+    else if (b.level2 == "声音演示")
+        b_level2 = 2;
+        
+    if (a_level2 > b_level2)
+        return 1;
+    else if (a_level2 < b_level2)
+        return -1;
+    else
+        return 0;
+}
 
 // ssc_item.xml
 function write_ssc_item_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
