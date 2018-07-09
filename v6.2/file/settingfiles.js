@@ -54,6 +54,8 @@ function write_setting_main_xml(sqlresult, chip, model, panel, tmpdir, genFileCa
         }
     }
     
+    fileinfo.sort(sequence_setting_main_xml);
+    
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
     fs.appendFileSync(tmpFileName, "<Setting>\n");
     for (let i in fileinfo)
@@ -68,6 +70,16 @@ function write_setting_main_xml(sqlresult, chip, model, panel, tmpdir, genFileCa
     fs.appendFileSync(tmpFileName, "</Setting>\n");
     
     genFileCallBack(tmpFileName, "setting_main.xml", chip, model, panel, "setting_main");
+}
+
+function sequence_setting_main_xml(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
 }
 
 // setting_guide.xml
