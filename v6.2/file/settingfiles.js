@@ -771,6 +771,8 @@ function write_panel_common_pq_ini(sqlresult, chip, model, panel, tmpdir, genFil
             x++;
         }
     }
+    
+    fileinfo.sort(sequence_panel_common_pq_ini);
         
     fs.writeFileSync(tmpFileName, ' \n');
     
@@ -788,6 +790,16 @@ function write_panel_common_pq_ini(sqlresult, chip, model, panel, tmpdir, genFil
     }
     
     genFileCallBack(tmpFileName, "panel_common_pq.ini", chip, model, panel, "panel_common_pq");
+}
+
+function sequence_panel_common_pq_ini(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
 }
 
 // panel_common_board.ini
@@ -816,6 +828,8 @@ function write_panel_common_board_ini(sqlresult, chip, model, panel, tmpdir, gen
             x++;
         }
     }
+    
+    fileinfo.sort(sequence_panel_common_board_ini);
         
     fs.writeFileSync(tmpFileName, ' \n');
     
@@ -835,6 +849,15 @@ function write_panel_common_board_ini(sqlresult, chip, model, panel, tmpdir, gen
     genFileCallBack(tmpFileName, "panel_common_board.ini", chip, model, panel, "panel_common_board");
 }
 
+function sequence_panel_common_board_ini(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
+}
 
 
 
