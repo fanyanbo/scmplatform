@@ -359,7 +359,7 @@ function write_market_show_configuration_xml(sqlresult, chip, model, panel, tmpd
 
 function sequence_market_show_configuration_xml(a, b)
 {
-    if (a.level2 == b.level2)
+    if (a.xmlNode2 == b.xmlNode2)
     {
         if (a.orderId > b.orderId)
             return 1;
@@ -371,14 +371,14 @@ function sequence_market_show_configuration_xml(a, b)
     
     ////////////////////////////////////////////
     var a_level2 = 0, b_level2 = 0;
-    if (a.level2 == "图像演示")
+    if (a.xmlNode2 == "image")
         a_level2 = 1;
-    else if (a.level2 == "声音演示")
+    else if (a.xmlNode2 == "sound")
         a_level2 = 2;
     
-    if (b.level2 == "图像演示")
+    if (b.xmlNode2 == "image")
         b_level2 = 1;
-    else if (b.level2 == "声音演示")
+    else if (b.xmlNode2 == "sound")
         b_level2 = 2;
         
     if (a_level2 > b_level2)
