@@ -187,6 +187,8 @@ function write_setting_connect_xml(sqlresult, chip, model, panel, tmpdir, genFil
         }
     }
     
+    fileinfo.sort(sequence_setting_connect_xml);
+    
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
     fs.appendFileSync(tmpFileName, "<Setting>\n");
     for (let i in fileinfo)
@@ -202,6 +204,84 @@ function write_setting_connect_xml(sqlresult, chip, model, panel, tmpdir, genFil
     
     genFileCallBack(tmpFileName, "setting_connect.xml", chip, model, panel, "setting_connect");
 }
+
+function sequence_setting_connect_xml(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
+}
+
+// setting_general.xml
+function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
+{
+    var x;
+    var curClass = "";
+    var fileinfo = new Array();
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-setting_general.xml";
+    
+    writerlog.w("生成临时的 setting_general.xml \n");
+    
+    x = 0;
+    for (let i in sqlresult)
+    {
+        let item = sqlresult[i];
+        
+        //console.log(item);
+        //console.log("AAAAAAAA : " + item.xmlFileName);
+        
+        if (item.xmlFileName == "setting_general.xml")
+        {
+            //console.log(item);
+            //console.log("AAAAAAAA : " + item.xmlFileName);
+            fileinfo[x] = item;
+            x++;
+        }
+    }
+    
+    fileinfo.sort(sequence_setting_general_xml);
+        
+    
+    fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<SettingItem name="SKY_CFG_TV_GENERAL_SETTING" type="TYPE_ROOT"> \n\n');
+    for (let i in fileinfo)
+    {
+        if (curClass != fileinfo[i].xmlNode1)
+        {
+            if (i != 0)
+            {
+                fs.appendFileSync(tmpFileName, '    </SettingItem>\n\n');
+            }
+            fs.appendFileSync(tmpFileName, '    <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_TITLE">  \n');
+            curClass = fileinfo[i].xmlNode1;
+        }
+        fs.appendFileSync(tmpFileName, "        ");
+        fs.appendFileSync(tmpFileName, "<!-- ");
+        fs.appendFileSync(tmpFileName, fileinfo[i].descText);
+        fs.appendFileSync(tmpFileName, " -->\n        ");
+        fs.appendFileSync(tmpFileName, fileinfo[i].xmlText);
+        fs.appendFileSync(tmpFileName, "\n");
+    }
+    fs.appendFileSync(tmpFileName, "    </SettingItem>\n");
+    fs.appendFileSync(tmpFileName, "</SettingItem>  \n\n\n\n\n");
+    
+    genFileCallBack(tmpFileName, "setting_general.xml", chip, model, panel, "setting_general");
+}
+
+
+function sequence_setting_general_xml(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
+}
+
 
 // market_show_configuration.xml
 function write_market_show_configuration_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
@@ -245,59 +325,6 @@ function write_market_show_configuration_xml(sqlresult, chip, model, panel, tmpd
     genFileCallBack(tmpFileName, "market_show_configuration.xml", chip, model, panel, "market_show_configuration");
 }
 
-// setting_general.xml
-function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
-{
-    var x;
-    var curClass = "";
-    var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-setting_general.xml";
-    
-    writerlog.w("生成临时的 setting_general.xml \n");
-    
-    x = 0;
-    for (let i in sqlresult)
-    {
-        let item = sqlresult[i];
-        
-        //console.log(item);
-        //console.log("AAAAAAAA : " + item.xmlFileName);
-        
-        if (item.xmlFileName == "setting_general.xml")
-        {
-            //console.log(item);
-            //console.log("AAAAAAAA : " + item.xmlFileName);
-            fileinfo[x] = item;
-            x++;
-        }
-    }
-        
-    
-    fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
-    fs.appendFileSync(tmpFileName, '<SettingItem name="SKY_CFG_TV_GENERAL_SETTING" type="TYPE_ROOT"> \n\n');
-    for (let i in fileinfo)
-    {
-        if (curClass != fileinfo[i].xmlNode1)
-        {
-            if (i != 0)
-            {
-                fs.appendFileSync(tmpFileName, '    </SettingItem>\n\n');
-            }
-            fs.appendFileSync(tmpFileName, '    <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_TITLE">  \n');
-            curClass = fileinfo[i].xmlNode1;
-        }
-        fs.appendFileSync(tmpFileName, "        ");
-        fs.appendFileSync(tmpFileName, "<!-- ");
-        fs.appendFileSync(tmpFileName, fileinfo[i].descText);
-        fs.appendFileSync(tmpFileName, " -->\n        ");
-        fs.appendFileSync(tmpFileName, fileinfo[i].xmlText);
-        fs.appendFileSync(tmpFileName, "\n");
-    }
-    fs.appendFileSync(tmpFileName, "    </SettingItem>\n");
-    fs.appendFileSync(tmpFileName, "</SettingItem>  \n\n\n\n\n");
-    
-    genFileCallBack(tmpFileName, "setting_general.xml", chip, model, panel, "setting_general");
-}
 
 
 // ssc_item.xml
