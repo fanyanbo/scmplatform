@@ -415,7 +415,8 @@ function write_ssc_item_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBa
             x++;
         }
     }
-        
+       
+    fileinfo.sort(sequence_ssc_item_xml); 
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
     fs.appendFileSync(tmpFileName, '<!--  ssc_item.xml  --> \n');
@@ -443,6 +444,38 @@ function write_ssc_item_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBa
     fs.appendFileSync(tmpFileName, "</Source>  \n\n\n\n\n");
     
     genFileCallBack(tmpFileName, "ssc_item.xml", chip, model, panel, "ssc_item");
+}
+
+function sequence_ssc_item_xml(a, b)
+{
+    if (a.xmlNode1 == b.xmlNode1)
+    {
+        if (a.orderId > b.orderId)
+            return 1;
+        else if (a.orderId < b.orderId)
+            return -1;
+        else
+            return 0;
+    }
+    
+    ////////////////////////////////////////////
+    var a_level2 = 0, b_level2 = 0;
+    if (a.xmlNode1 == "source_quick_entry")
+        a_level2 = 1;
+    else if (a.xmlNode1 == "source_setting")
+        a_level2 = 2;
+    
+    if (b.xmlNode1 == "source_quick_entry")
+        b_level2 = 1;
+    else if (b.xmlNode1 == "source_setting")
+        b_level2 = 2;
+        
+    if (a_level2 > b_level2)
+        return 1;
+    else if (a_level2 < b_level2)
+        return -1;
+    else
+        return 0;
 }
 
 // setting_picture_sound.xml
