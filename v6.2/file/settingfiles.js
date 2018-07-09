@@ -670,6 +670,8 @@ function sequence_setting_picture_sound_xml(a, b)
                 a_L2 = 4;
             else if (a.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 a_L2 = 5;
+            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                a_L2 = 6;
                 
             if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 b_L2 = 1;
@@ -681,6 +683,8 @@ function sequence_setting_picture_sound_xml(a, b)
                 b_L2 = 4;
             else if (b.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 b_L2 = 5;
+            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                b_L2 = 6;
             
             if (a_L2 > b_L2)
                 return 1;
@@ -697,6 +701,8 @@ function sequence_setting_picture_sound_xml(a, b)
                 a_L2 = 2;
             else if (a.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 a_L2 = 3;
+            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+                a_L2 = 4;
                 
             if (b.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
                 b_L2 = 1;
@@ -704,6 +710,8 @@ function sequence_setting_picture_sound_xml(a, b)
                 b_L2 = 2;
             else if (b.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 b_L2 = 3;
+            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+                b_L2 = 4;
             
             if (a_L2 > b_L2)
                 return 1;

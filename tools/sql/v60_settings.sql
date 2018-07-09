@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50560
 File Encoding         : 65001
 
-Date: 2018-07-09 19:50:22
+Date: 2018-07-09 20:32:23
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -36,7 +36,7 @@ CREATE TABLE `v62_settings` (
   `xmlNode2` char(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `engName_index` (`engName`(64))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- ----------------------------
 -- Records of v62_settings
@@ -120,6 +120,7 @@ INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_DNR', '降噪', '1', '系�
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_CC_DE_CONTOUR', '精密平滑处理', '0', '系统设置', '图像设置', '高级清晰度设置', '0', '0', '4', '系统设置-音画设置-图像设置-高级清晰度设置-默认平滑处理，可改名为：精密平滑处理', '<SettingItem name=\"SKY_CFG_CC_DE_CONTOUR\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_PICTURE_SETTING', 'SKY_CFG_TV_SHARPNESS_SETTING');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_CC_DE_BLOCK', '块噪声消除', '0', '系统设置', '图像设置', '高级清晰度设置', '0', '0', '5', '系统设置-音画设置-图像设置-高级清晰度设置-块噪声消除，蚊状噪声消除 两个合并为一个：MPEG降噪', '<SettingItem name=\"SKY_CFG_CC_DE_BLOCK\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_PICTURE_SETTING', 'SKY_CFG_TV_SHARPNESS_SETTING');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_CC_MEMC', '动态图像校正MEMC', '0', '系统设置', '图像设置', '运动设置', '0', '0', '1', '系统设置-音画设置-图像设置-运动设置-动态图像校正MEMC', '<SettingItem name=\"SKY_CFG_CC_MEMC\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_PICTURE_SETTING', 'SKY_CFG_TV_MOTION_SETTING');
+INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_PICTURE_RESET', '恢复默认值', '1', '系统设置', '图像设置', '恢复默认值', '0', '0', '1', '系统设置-音画设置-图像设置-恢复默认值', '<SettingItem name=\"SKY_CFG_TV_PICTURE_RESET\" type=\"TYPE_DIALOG\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_PICTURE_SETTING', 'SKY_CFG_TV_PICTURE_RESET');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_NEW_EQUALIZER', '新版均衡器', '1', '系统设置', '声音设置', '基础设置', '0', '0', '1', '系统设置-音画设置-声音设置-基础设置-新版均衡器', '<SettingItem name=\"SKY_CFG_TV_NEW_EQUALIZER\" type=\"TYPE_CONTAINER\" transparent=\"true\"><SettingItem name=\"SKY_CFG_TV_NEW_EQUALIZER_BASS\"></SettingItem><SettingItem name=\"SKY_CFG_TV_NEW_EQUALIZER_MIDBASS\"></SettingItem><SettingItem name=\"SKY_CFG_TV_NEW_EQUALIZER_ALTO\"></SettingItem><SettingItem name=\"SKY_CFG_TV_NEW_EQUALIZER_ALT\"></SettingItem><SettingItem name=\"SKY_CFG_TV_NEW_EQUALIZER_TREBLE\"></SettingItem></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_ADJUST_SETTINGS');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_SURROUND', '环绕声、Atoms音效、DTS音效', '1', '系统设置', '声音设置', '基础设置', '0', '0', '2', '系统设置-音画设置-声音设置-基础设置-环绕声、Atoms音效、DTS音效', '<SettingItem name=\"SKY_CFG_TV_SURROUND\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_ADJUST_SETTINGS');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_INTEL_CONTROL_VOLUME', '智能音量控制', '1', '系统设置', '声音设置', '基础设置', '0', '0', '3', '系统设置-音画设置-声音设置-基础设置-智能音量控制', '<SettingItem name=\"SKY_CFG_TV_INTEL_CONTROL_VOLUME\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_ADJUST_SETTINGS');
@@ -139,6 +140,7 @@ INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_ATMOS_MIDDLE_VOLUME', '中�
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_ATMOS_SURROUND_LEFT_VOLUME_ADJUST', '左环绕声微调', '0', '系统设置', '声音设置', 'ATMOS专业音效设置', '0', '0', '7', '系统设置-音画设置-声音设置-ATMOS专业音效设置-左环绕声微调', '<SettingItem name=\"SKY_CFG_TV_ATMOS_SURROUND_LEFT_VOLUME_ADJUST\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_ATMOS_SURROUND_RIGHT_VOLUME_ADJUST', '右环绕声微调', '0', '系统设置', '声音设置', 'ATMOS专业音效设置', '0', '0', '8', '系统设置-音画设置-声音设置-ATMOS专业音效设置-右环绕声微调', '<SettingItem name=\"SKY_CFG_TV_ATMOS_SURROUND_RIGHT_VOLUME_ADJUST\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS');
 INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_ATMOS_PANORAMIC_VOLUME_ADJUST', '全景音量微调', '0', '系统设置', '声音设置', 'ATMOS专业音效设置', '0', '0', '9', '系统设置-音画设置-声音设置-ATMOS专业音效设置-全景音量微调', '<SettingItem name=\"SKY_CFG_TV_ATMOS_PANORAMIC_VOLUME_ADJUST\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS');
+INSERT INTO `v62_settings` VALUES (null, 'SKY_CFG_TV_SOUND_RESET', '恢复默认值', '1', '系统设置', '声音设置', '恢复默认值', '0', '0', '1', '系统设置-音画设置-声音设置-恢复默认值', '<SettingItem name=\"SKY_CFG_TV_SOUND_RESET\" type=\"TYPE_DIALOG\"></SettingItem>', 'setting_picture_sound.xml', 'SKY_CFG_TV_SOUND_SETTING', 'SKY_CFG_TV_SOUND_RESET');
 INSERT INTO `v62_settings` VALUES (null, 'MARKET_SHOW_PIXEL_CONTROL_LIGHT', '像素控光', '0', '卖场演示', '图像演示', '', '0', '0', '1', '卖场演示-选择开关 - 卖场演示中是否显示“像素控光”演示', '<item type=\"Boolean\" key=\"PIXEL_CONTROL_LIGHT\" value=\"true\" />', 'market_show_configuration.xml', 'Config', 'image');
 INSERT INTO `v62_settings` VALUES (null, 'MARKET_SHOW_LIMIT_CONTRAST', '像素控光-极限对比', '0', '卖场演示', '图像演示', '', '0', '0', '2', '卖场演示-选择开关 - 卖场演示中是否显示“像素控光-极限对比”演示', '<item type=\"Boolean\" key=\"LIMIT_CONTRAST\" value=\"true\" />', 'market_show_configuration.xml', 'Config', 'image');
 INSERT INTO `v62_settings` VALUES (null, 'MARKET_SHOW_FAST_RESPONSE', '像素控光-极速响应', '0', '卖场演示', '图像演示', '', '0', '0', '3', '卖场演示-选择开关 - 卖场演示中是否显示“像素控光-极速响应”演示', '<item type=\"Boolean\" key=\"FAST_RESPONSE\" value=\"true\" />', 'market_show_configuration.xml', 'Config', 'image');
