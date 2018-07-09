@@ -243,7 +243,6 @@ function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFil
     }
     
     fileinfo.sort(sequence_setting_general_xml);
-        
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
     fs.appendFileSync(tmpFileName, '<SettingItem name="SKY_CFG_TV_GENERAL_SETTING" type="TYPE_ROOT"> \n\n');
@@ -274,9 +273,35 @@ function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFil
 
 function sequence_setting_general_xml(a, b)
 {
-    if (a.orderId > b.orderId)
+    if (a.xmlNode1 == b.xmlNode1)
+    {
+        if (a.orderId > b.orderId)
+            return 1;
+        else if (a.orderId < b.orderId)
+            return -1;
+        else
+            return 0;
+    }
+    
+    ////////////////////////////////////////////
+    var a_level = 0, b_level = 0;
+    if (a.xmlNode1 == "SKY_CFG_TV_PERSONALIZE_SETTING")
+        a_level = 1;
+    else if (a.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
+        a_level = 2;
+    else if (a.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+        a_level = 3;
+    
+    if (b.xmlNode1 == "SKY_CFG_TV_PERSONALIZE_SETTING")
+        b_level = 1;
+    else if (b.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
+        b_level = 2;
+    else if (b.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+        b_level = 3;
+        
+    if (a.a_level > b.b_level)
         return 1;
-    else if (a.orderId < b.orderId)
+    else if (a.a_level < b.b_level)
         return -1;
     else
         return 0;
