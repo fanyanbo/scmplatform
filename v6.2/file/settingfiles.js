@@ -509,6 +509,8 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
         }
     }
     
+    fileinfo.sort(sequence_setting_picture_sound_xml); 
+    
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8"?>\n');
     fs.appendFileSync(tmpFileName, '<!--  setting_picture_sound.xml  --> \n');
     fs.appendFileSync(tmpFileName, '<!-- 20171208 新版音画设置 -->  \n');
@@ -639,6 +641,97 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     
     genFileCallBack(tmpFileName, "setting_picture_sound.xml", chip, model, panel, "setting_picture_sound");
 }
+
+function sequence_setting_picture_sound_xml(a, b)
+{
+    if (a.xmlNode1 == b.xmlNode1)
+    {
+        var a_L2 = 0, b_L2 = 0;
+        
+        if (a.xmlNode2 == b.xmlNode2)
+        {
+            if (a.orderId > b.orderId)
+                return 1;
+            else if (a.orderId < b.orderId)
+                return -1;
+            else
+                return 0;
+        }
+        
+        if (a.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
+        {
+            if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+                a_L2 = 1;
+            else if (a.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+                a_L2 = 2;
+            else if (a.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+                a_L2 = 3;
+            else if (a.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+                a_L2 = 4;
+            else if (a.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+                a_L2 = 5;
+                
+            if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+                b_L2 = 1;
+            else if (b.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+                b_L2 = 2;
+            else if (b.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+                b_L2 = 3;
+            else if (b.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+                b_L2 = 4;
+            else if (b.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+                b_L2 = 5;
+            
+            if (a_L2 > b_L2)
+                return 1;
+            else if (a_L2 < b_L2)
+                return -1;
+            else
+                return 0;
+        }
+        else if (a.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
+        {
+            if (a.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
+                a_L2 = 1;
+            else if (a.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+                a_L2 = 2;
+                
+            if (b.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
+                b_L2 = 1;
+            else if (b.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+                b_L2 = 2;
+            
+            if (a_L2 > b_L2)
+                return 1;
+            else if (a_L2 < b_L2)
+                return -1;
+            else
+                return 0;
+        }
+        return 0;
+    }
+    
+    ////////////////////////////////////////////
+    var a_L1 = 0, b_L1 = 0;
+    
+    if (a.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
+        a_L1 = 1;
+    else if (a.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
+        a_L1 = 2;
+    
+    if (b.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
+        b_L1 = 1;
+    else if (b.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
+        b_L1 = 2;
+        
+    if (a_L1 > b_L1)
+        return 1;
+    else if (a_L1 < b_L1)
+        return -1;
+    else
+        return 0;
+}
+
 
 // panel_common_pq.ini
 function write_panel_common_pq_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
