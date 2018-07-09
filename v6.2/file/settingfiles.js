@@ -107,6 +107,8 @@ function write_setting_guide_xml(sqlresult, chip, model, panel, tmpdir, genFileC
             x++;
         }
     }
+    
+    fileinfo.sort(sequence_setting_guide_xml);
 
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
     fs.appendFileSync(tmpFileName, '<!--  \n');
@@ -147,6 +149,16 @@ function write_setting_guide_xml(sqlresult, chip, model, panel, tmpdir, genFileC
     fs.appendFileSync(tmpFileName, '<!--注意同机芯-机型不同尺寸标配蓝牙遥控器可能有所不同，如不清楚请找项目经理进行详细确认--> \n');
     
     genFileCallBack(tmpFileName, "setting_guide.xml", chip, model, panel, "setting_guide");
+}
+
+function sequence_setting_guide_xml(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
 }
 
 // setting_connect.xml
