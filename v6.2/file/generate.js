@@ -648,8 +648,8 @@ function generate_files()
         var content3_1 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_main.xml", "utf-8");
         var content3_2 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_guide.xml", "utf-8");
         var content3_3 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_connect.xml", "utf-8");
-        var content3_4 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-market_show_configuration.xml", "utf-8");
-        var content3_5 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_general.xml", "utf-8");
+        var content3_4 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_general.xml", "utf-8");
+        var content3_5 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-market_show_configuration.xml", "utf-8");
         var content3_6 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-ssc_item.xml", "utf-8");
         var content3_7 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_picture_sound.xml", "utf-8");
         var content3_8 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-panel_common_pq.ini", "utf-8");

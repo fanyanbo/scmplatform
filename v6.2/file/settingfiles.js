@@ -19,8 +19,8 @@ SettingFiles.prototype.generate = function(chip, model, panel, obj, tmpdir, genF
         write_setting_main_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_setting_guide_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_setting_connect_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
-        write_market_show_configuration_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_setting_general_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_market_show_configuration_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_ssc_item_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         setting_picture_sound(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_panel_common_pq_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack);
@@ -57,6 +57,7 @@ function write_setting_main_xml(sqlresult, chip, model, panel, tmpdir, genFileCa
     fileinfo.sort(sequence_setting_main_xml);
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_main.xml  --> \n');
     fs.appendFileSync(tmpFileName, "<Setting>\n");
     for (let i in fileinfo)
     {
@@ -111,6 +112,7 @@ function write_setting_guide_xml(sqlresult, chip, model, panel, tmpdir, genFileC
     fileinfo.sort(sequence_setting_guide_xml);
 
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_guide.xml  --> \n');
     fs.appendFileSync(tmpFileName, '<!--  \n');
     fs.appendFileSync(tmpFileName, '作用描述：酷开6.x系统开机引导配置文件setting_guide.xml \n');
     fs.appendFileSync(tmpFileName, '注意： \n');
@@ -190,6 +192,7 @@ function write_setting_connect_xml(sqlresult, chip, model, panel, tmpdir, genFil
     fileinfo.sort(sequence_setting_connect_xml);
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_connect.xml  --> \n');
     fs.appendFileSync(tmpFileName, "<Setting>\n");
     for (let i in fileinfo)
     {
@@ -245,6 +248,7 @@ function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFil
     fileinfo.sort(sequence_setting_general_xml);
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_general.xml  --> \n');
     fs.appendFileSync(tmpFileName, '<SettingItem name="SKY_CFG_TV_GENERAL_SETTING" type="TYPE_ROOT"> \n\n');
     for (let i in fileinfo)
     {
@@ -335,6 +339,7 @@ function write_market_show_configuration_xml(sqlresult, chip, model, panel, tmpd
     }
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  market_show_configuration.xml  --> \n');
     fs.appendFileSync(tmpFileName, "<Config>\n");
     for (let i in fileinfo)
     {
@@ -381,6 +386,7 @@ function write_ssc_item_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBa
         
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  ssc_item.xml  --> \n');
     fs.appendFileSync(tmpFileName, '<Source> \n\n');
     fs.appendFileSync(tmpFileName, '  <SourceHeader version="1.00" />\n\n');
     for (let i in fileinfo)
@@ -439,6 +445,7 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     }
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8"?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_picture_sound.xml  --> \n');
     fs.appendFileSync(tmpFileName, '<!-- 20171208 新版音画设置 -->  \n');
     fs.appendFileSync(tmpFileName, '<SettingItem name="SKY_CFG_TV_PICTURE_SOUND_SETTING" type="TYPE_ROOT" transparent="true"> \n');
     fs.appendFileSync(tmpFileName, '    <!-- 音画设置 --> \n');
