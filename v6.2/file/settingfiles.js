@@ -693,13 +693,17 @@ function sequence_setting_picture_sound_xml(a, b)
         {
             if (a.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
                 a_L2 = 1;
-            else if (a.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_OUTPUT_SETTINGS")
                 a_L2 = 2;
+            else if (a.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+                a_L2 = 3;
                 
             if (b.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
                 b_L2 = 1;
-            else if (b.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_OUTPUT_SETTINGS")
                 b_L2 = 2;
+            else if (b.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+                b_L2 = 3;
             
             if (a_L2 > b_L2)
                 return 1;
