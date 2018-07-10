@@ -487,8 +487,6 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     var curClass1 = "";
     var curClass2 = "";
     var curMainClass = "";
-    var add_SKY_CFG_TV_PICTURE_MODE = false;
-    var add_SKY_CFG_TV_SOUND_MODE = false;
     
     writerlog.w("生成临时的 setting_picture_sound.xml \n");
     
@@ -520,7 +518,6 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     
     
     let j = 0;
-    let class1_cnt = 0;
     
     for (let i in fileinfo)
     {
@@ -545,30 +542,10 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
             fs.appendFileSync(tmpFileName, '        <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_GROUP_ROOT" transparent="true">\n');
             curClass1 = fileinfo[i].xmlNode1;
             j = 0;
-            
-            if (class1_cnt == 0)
-                add_SKY_CFG_TV_PICTURE_MODE = true;
-            else
-                add_SKY_CFG_TV_SOUND_MODE = true;
-            class1_cnt++;
         }
             
         if (curClass2 != fileinfo[i].xmlNode2)
         {
-            if (add_SKY_CFG_TV_PICTURE_MODE)
-            {
-                fs.appendFileSync(tmpFileName, '            <!-- 图像模式 -->\n');
-                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_MODE"></SettingItem>\n');
-                add_SKY_CFG_TV_PICTURE_MODE = false;
-            }
-            if (add_SKY_CFG_TV_SOUND_MODE)
-            {
-                fs.appendFileSync(tmpFileName, '            <!-- 声音模式-->\n');
-                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_MODE"></SettingItem>\n');
-                add_SKY_CFG_TV_SOUND_MODE = false;
-            }
-            
-            
             if (j != 0)
             {
                 fs.appendFileSync(tmpFileName, '            </SettingItem>\n');
@@ -590,6 +567,11 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
                 fs.appendFileSync(tmpFileName, '            <!-- 图像恢复默认 -->\n');
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG">\n');
             }
+            else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
+            {
+                fs.appendFileSync(tmpFileName, '            <!-- 图像模式 -->\n');
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_MODE">\n');
+            }
                 
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_ADJUST_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
@@ -602,6 +584,11 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
                 fs.appendFileSync(tmpFileName, '            <!-- 声音恢复默认 -->\n');
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_RESET" type="TYPE_DIALOG">\n');
             }
+            else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_MODE")
+            {
+                fs.appendFileSync(tmpFileName, '            <!-- 声音模式 -->\n');
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_MODE">\n');
+            }
             else
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="' + fileinfo[i].xmlNode2 + '" type="TYPE_GROUP_ROOT" transparent="true">\n');
             curClass2 = fileinfo[i].xmlNode2;
@@ -609,7 +596,8 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
         
         j++;
         
-        if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_RESET" || fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+        if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_RESET" || fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_RESET" ||
+            fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_MODE" || fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_MODE")
             continue;
         
         fs.appendFileSync(tmpFileName, "                ");
@@ -647,31 +635,35 @@ function sequence_setting_picture_sound_xml(a, b)
         
         if (a.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
         {
-            if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+            if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
                 a_L2 = 1;
-            else if (a.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 a_L2 = 2;
-            else if (a.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
                 a_L2 = 3;
-            else if (a.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
                 a_L2 = 4;
-            else if (a.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
                 a_L2 = 5;
-            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+            else if (a.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 a_L2 = 6;
+            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                a_L2 = 7;
                 
-            if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+            if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
                 b_L2 = 1;
-            else if (b.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 b_L2 = 2;
-            else if (b.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
                 b_L2 = 3;
-            else if (b.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
                 b_L2 = 4;
-            else if (b.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
                 b_L2 = 5;
-            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+            else if (b.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 b_L2 = 6;
+            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                b_L2 = 7;
             
             if (a_L2 > b_L2)
                 return 1;
@@ -682,23 +674,27 @@ function sequence_setting_picture_sound_xml(a, b)
         }
         else if (a.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
         {
-            if (a.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
+            if (a.xmlNode2 == "SKY_CFG_TV_SOUND_MODE")
                 a_L2 = 1;
-            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_OUTPUT_SETTINGS")
+            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
                 a_L2 = 2;
-            else if (a.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_OUTPUT_SETTINGS")
                 a_L2 = 3;
-            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+            else if (a.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 a_L2 = 4;
+            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+                a_L2 = 5;
                 
-            if (b.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
+            if (b.xmlNode2 == "SKY_CFG_TV_SOUND_MODE")
                 b_L2 = 1;
-            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_OUTPUT_SETTINGS")
+            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
                 b_L2 = 2;
-            else if (b.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_OUTPUT_SETTINGS")
                 b_L2 = 3;
-            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+            else if (b.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 b_L2 = 4;
+            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+                b_L2 = 5;
             
             if (a_L2 > b_L2)
                 return 1;
