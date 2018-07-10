@@ -19,8 +19,8 @@ SettingFiles.prototype.generate = function(chip, model, panel, obj, tmpdir, genF
         write_setting_main_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_setting_guide_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_setting_connect_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
-        write_market_show_configuration_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_setting_general_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
+        write_market_show_configuration_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_ssc_item_xml(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         setting_picture_sound(obj.result, chip, model, panel, tmpdir, genFileCallBack);
         write_panel_common_pq_ini(obj.result, chip, model, panel, tmpdir, genFileCallBack);
@@ -54,7 +54,10 @@ function write_setting_main_xml(sqlresult, chip, model, panel, tmpdir, genFileCa
         }
     }
     
+    fileinfo.sort(sequence_setting_main_xml);
+    
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_main.xml  --> \n');
     fs.appendFileSync(tmpFileName, "<Setting>\n");
     for (let i in fileinfo)
     {
@@ -68,6 +71,16 @@ function write_setting_main_xml(sqlresult, chip, model, panel, tmpdir, genFileCa
     fs.appendFileSync(tmpFileName, "</Setting>\n");
     
     genFileCallBack(tmpFileName, "setting_main.xml", chip, model, panel, "setting_main");
+}
+
+function sequence_setting_main_xml(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
 }
 
 // setting_guide.xml
@@ -95,8 +108,11 @@ function write_setting_guide_xml(sqlresult, chip, model, panel, tmpdir, genFileC
             x++;
         }
     }
+    
+    fileinfo.sort(sequence_setting_guide_xml);
 
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_guide.xml  --> \n');
     fs.appendFileSync(tmpFileName, '<!--  \n');
     fs.appendFileSync(tmpFileName, '作用描述：酷开6.x系统开机引导配置文件setting_guide.xml \n');
     fs.appendFileSync(tmpFileName, '注意： \n');
@@ -137,6 +153,16 @@ function write_setting_guide_xml(sqlresult, chip, model, panel, tmpdir, genFileC
     genFileCallBack(tmpFileName, "setting_guide.xml", chip, model, panel, "setting_guide");
 }
 
+function sequence_setting_guide_xml(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
+}
+
 // setting_connect.xml
 function write_setting_connect_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
@@ -163,7 +189,10 @@ function write_setting_connect_xml(sqlresult, chip, model, panel, tmpdir, genFil
         }
     }
     
+    fileinfo.sort(sequence_setting_connect_xml);
+    
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_connect.xml  --> \n');
     fs.appendFileSync(tmpFileName, "<Setting>\n");
     for (let i in fileinfo)
     {
@@ -179,46 +208,14 @@ function write_setting_connect_xml(sqlresult, chip, model, panel, tmpdir, genFil
     genFileCallBack(tmpFileName, "setting_connect.xml", chip, model, panel, "setting_connect");
 }
 
-// market_show_configuration.xml
-function write_market_show_configuration_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
+function sequence_setting_connect_xml(a, b)
 {
-    var x;
-    var fileinfo = new Array();
-    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-market_show_configuration.xml";
-    
-    writerlog.w("生成临时的 market_show_configuration.xml \n");
-    
-    x = 0;
-    for (let i in sqlresult)
-    {
-        let item = sqlresult[i];
-        
-        //console.log(item);
-        //console.log("AAAAAAAA : " + item.xmlFileName);
-        
-        if (item.xmlFileName == "market_show_configuration.xml")
-        {
-            //console.log(item);
-            //console.log("AAAAAAAA : " + item.xmlFileName);
-            fileinfo[x] = item;
-            x++;
-        }
-    }
-    
-    fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
-    fs.appendFileSync(tmpFileName, "<Config>\n");
-    for (let i in fileinfo)
-    {
-        fs.appendFileSync(tmpFileName, "    ");
-        fs.appendFileSync(tmpFileName, "<!-- ");
-        fs.appendFileSync(tmpFileName, fileinfo[i].descText);
-        fs.appendFileSync(tmpFileName, " -->\n    ");
-        fs.appendFileSync(tmpFileName, fileinfo[i].xmlText);
-        fs.appendFileSync(tmpFileName, "\n");
-    }
-    fs.appendFileSync(tmpFileName, "</Config>\n");
-    
-    genFileCallBack(tmpFileName, "market_show_configuration.xml", chip, model, panel, "market_show_configuration");
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
 }
 
 // setting_general.xml
@@ -247,9 +244,11 @@ function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFil
             x++;
         }
     }
-        
+    
+    fileinfo.sort(sequence_setting_general_xml);
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_general.xml  --> \n');
     fs.appendFileSync(tmpFileName, '<SettingItem name="SKY_CFG_TV_GENERAL_SETTING" type="TYPE_ROOT"> \n\n');
     for (let i in fileinfo)
     {
@@ -275,6 +274,120 @@ function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFil
     genFileCallBack(tmpFileName, "setting_general.xml", chip, model, panel, "setting_general");
 }
 
+
+function sequence_setting_general_xml(a, b)
+{
+    if (a.xmlNode1 == b.xmlNode1)
+    {
+        if (a.orderId > b.orderId)
+            return 1;
+        else if (a.orderId < b.orderId)
+            return -1;
+        else
+            return 0;
+    }
+    
+    ////////////////////////////////////////////
+    var a_level = 0, b_level = 0;
+    if (a.xmlNode1 == "SKY_CFG_TV_PERSONALIZE_SETTING")
+        a_level = 1;
+    else if (a.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
+        a_level = 2;
+    else if (a.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+        a_level = 3;
+    
+    if (b.xmlNode1 == "SKY_CFG_TV_PERSONALIZE_SETTING")
+        b_level = 1;
+    else if (b.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
+        b_level = 2;
+    else if (b.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+        b_level = 3;
+        
+    if (a_level > b_level)
+        return 1;
+    else if (a_level < b_level)
+        return -1;
+    else
+        return 0;
+}
+
+
+// market_show_configuration.xml
+function write_market_show_configuration_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
+{
+    var x;
+    var fileinfo = new Array();
+    var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-market_show_configuration.xml";
+    
+    writerlog.w("生成临时的 market_show_configuration.xml \n");
+    
+    x = 0;
+    for (let i in sqlresult)
+    {
+        let item = sqlresult[i];
+        
+        //console.log(item);
+        //console.log("AAAAAAAA : " + item.xmlFileName);
+        
+        if (item.xmlFileName == "market_show_configuration.xml")
+        {
+            //console.log(item);
+            //console.log("AAAAAAAA : " + item.xmlFileName);
+            fileinfo[x] = item;
+            x++;
+        }
+    }
+    
+    fileinfo.sort(sequence_market_show_configuration_xml);
+    
+    fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  market_show_configuration.xml  --> \n');
+    fs.appendFileSync(tmpFileName, "<Config>\n");
+    for (let i in fileinfo)
+    {
+        fs.appendFileSync(tmpFileName, "    ");
+        fs.appendFileSync(tmpFileName, "<!-- ");
+        fs.appendFileSync(tmpFileName, fileinfo[i].descText);
+        fs.appendFileSync(tmpFileName, " -->\n    ");
+        fs.appendFileSync(tmpFileName, fileinfo[i].xmlText);
+        fs.appendFileSync(tmpFileName, "\n");
+    }
+    fs.appendFileSync(tmpFileName, "</Config>\n");
+    
+    genFileCallBack(tmpFileName, "market_show_configuration.xml", chip, model, panel, "market_show_configuration");
+}
+
+function sequence_market_show_configuration_xml(a, b)
+{
+    if (a.xmlNode2 == b.xmlNode2)
+    {
+        if (a.orderId > b.orderId)
+            return 1;
+        else if (a.orderId < b.orderId)
+            return -1;
+        else
+            return 0;
+    }
+    
+    ////////////////////////////////////////////
+    var a_level2 = 0, b_level2 = 0;
+    if (a.xmlNode2 == "image")
+        a_level2 = 1;
+    else if (a.xmlNode2 == "sound")
+        a_level2 = 2;
+    
+    if (b.xmlNode2 == "image")
+        b_level2 = 1;
+    else if (b.xmlNode2 == "sound")
+        b_level2 = 2;
+        
+    if (a_level2 > b_level2)
+        return 1;
+    else if (a_level2 < b_level2)
+        return -1;
+    else
+        return 0;
+}
 
 // ssc_item.xml
 function write_ssc_item_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
@@ -302,9 +415,11 @@ function write_ssc_item_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBa
             x++;
         }
     }
-        
+       
+    fileinfo.sort(sequence_ssc_item_xml); 
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8" ?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  ssc_item.xml  --> \n');
     fs.appendFileSync(tmpFileName, '<Source> \n\n');
     fs.appendFileSync(tmpFileName, '  <SourceHeader version="1.00" />\n\n');
     for (let i in fileinfo)
@@ -331,6 +446,38 @@ function write_ssc_item_xml(sqlresult, chip, model, panel, tmpdir, genFileCallBa
     genFileCallBack(tmpFileName, "ssc_item.xml", chip, model, panel, "ssc_item");
 }
 
+function sequence_ssc_item_xml(a, b)
+{
+    if (a.xmlNode1 == b.xmlNode1)
+    {
+        if (a.orderId > b.orderId)
+            return 1;
+        else if (a.orderId < b.orderId)
+            return -1;
+        else
+            return 0;
+    }
+    
+    ////////////////////////////////////////////
+    var a_level2 = 0, b_level2 = 0;
+    if (a.xmlNode1 == "source_quick_entry")
+        a_level2 = 1;
+    else if (a.xmlNode1 == "source_setting")
+        a_level2 = 2;
+    
+    if (b.xmlNode1 == "source_quick_entry")
+        b_level2 = 1;
+    else if (b.xmlNode1 == "source_setting")
+        b_level2 = 2;
+        
+    if (a_level2 > b_level2)
+        return 1;
+    else if (a_level2 < b_level2)
+        return -1;
+    else
+        return 0;
+}
+
 // setting_picture_sound.xml
 function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
 {
@@ -340,8 +487,6 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     var curClass1 = "";
     var curClass2 = "";
     var curMainClass = "";
-    var add_SKY_CFG_TV_PICTURE_MODE = false;
-    var add_SKY_CFG_TV_SOUND_MODE = false;
     
     writerlog.w("生成临时的 setting_picture_sound.xml \n");
     
@@ -362,7 +507,10 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
         }
     }
     
+    fileinfo.sort(sequence_setting_picture_sound_xml); 
+    
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8"?>\n');
+    fs.appendFileSync(tmpFileName, '<!--  setting_picture_sound.xml  --> \n');
     fs.appendFileSync(tmpFileName, '<!-- 20171208 新版音画设置 -->  \n');
     fs.appendFileSync(tmpFileName, '<SettingItem name="SKY_CFG_TV_PICTURE_SOUND_SETTING" type="TYPE_ROOT" transparent="true"> \n');
     fs.appendFileSync(tmpFileName, '    <!-- 音画设置 --> \n');
@@ -370,8 +518,7 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     
     
     let j = 0;
-    let class1_cnt = 0;
-    let picture_reset_done = false;                             // 图像设置恢复出厂设置,是否已经写入
+    
     for (let i in fileinfo)
     {
         if (curClass1 != fileinfo[i].xmlNode1)
@@ -381,18 +528,6 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
                 if (j != 0)
                 {
                     fs.appendFileSync(tmpFileName, '            </SettingItem>\n');
-                }
-                
-                if (!picture_reset_done)
-                {
-                    fs.appendFileSync(tmpFileName, '            <!-- 图像恢复默认 -->\n');
-			        fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG"></SettingItem>\n');
-			        picture_reset_done = true;
-                }
-                else
-                {
-                    fs.appendFileSync(tmpFileName, '            <!-- 声音恢复默认 -->\n');
-			        fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_RESET" type="TYPE_DIALOG"></SettingItem>\n');
                 }
                 
                 fs.appendFileSync(tmpFileName, '        </SettingItem>\n\n');
@@ -407,30 +542,10 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
             fs.appendFileSync(tmpFileName, '        <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_GROUP_ROOT" transparent="true">\n');
             curClass1 = fileinfo[i].xmlNode1;
             j = 0;
-            
-            if (class1_cnt == 0)
-                add_SKY_CFG_TV_PICTURE_MODE = true;
-            else
-                add_SKY_CFG_TV_SOUND_MODE = true;
-            class1_cnt++;
         }
             
         if (curClass2 != fileinfo[i].xmlNode2)
         {
-            if (add_SKY_CFG_TV_PICTURE_MODE)
-            {
-                fs.appendFileSync(tmpFileName, '            <!-- 图像模式 -->\n');
-                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_MODE"></SettingItem>\n');
-                add_SKY_CFG_TV_PICTURE_MODE = false;
-            }
-            if (add_SKY_CFG_TV_SOUND_MODE)
-            {
-                fs.appendFileSync(tmpFileName, '            <!-- 声音模式-->\n');
-                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_MODE"></SettingItem>\n');
-                add_SKY_CFG_TV_SOUND_MODE = false;
-            }
-            
-            
             if (j != 0)
             {
                 fs.appendFileSync(tmpFileName, '            </SettingItem>\n');
@@ -448,7 +563,15 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_MOTION_SETTING" type="TYPE_GROUP" transparent="true">\n');
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
-                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG"></SettingItem>\n');
+            {
+                fs.appendFileSync(tmpFileName, '            <!-- 图像恢复默认 -->\n');
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG">\n');
+            }
+            else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
+            {
+                fs.appendFileSync(tmpFileName, '            <!-- 图像模式 -->\n');
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_MODE">\n');
+            }
                 
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_ADJUST_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
@@ -456,12 +579,26 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_OUTPUT_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
+            else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+            {
+                fs.appendFileSync(tmpFileName, '            <!-- 声音恢复默认 -->\n');
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_RESET" type="TYPE_DIALOG">\n');
+            }
+            else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_MODE")
+            {
+                fs.appendFileSync(tmpFileName, '            <!-- 声音模式 -->\n');
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_MODE">\n');
+            }
             else
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="' + fileinfo[i].xmlNode2 + '" type="TYPE_GROUP_ROOT" transparent="true">\n');
             curClass2 = fileinfo[i].xmlNode2;
         }
         
         j++;
+        
+        if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_RESET" || fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_RESET" ||
+            fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_MODE" || fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_MODE")
+            continue;
         
         fs.appendFileSync(tmpFileName, "                ");
         fs.appendFileSync(tmpFileName, "<!-- ");
@@ -472,18 +609,6 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     }
     
     fs.appendFileSync(tmpFileName, '            </SettingItem>   \n');
-    
-    if (!picture_reset_done)
-    {
-        fs.appendFileSync(tmpFileName, '            <!-- 图像恢复默认 -->\n');
-        fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG"></SettingItem>\n');
-        picture_reset_done = true;
-    }
-    else
-    {
-        fs.appendFileSync(tmpFileName, '            <!-- 声音恢复默认 -->\n');
-        fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_RESET" type="TYPE_DIALOG"></SettingItem>\n');
-    }
                 
     fs.appendFileSync(tmpFileName, '        </SettingItem>   \n');
     fs.appendFileSync(tmpFileName, '    </SettingItem>  \n');
@@ -491,6 +616,117 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     
     genFileCallBack(tmpFileName, "setting_picture_sound.xml", chip, model, panel, "setting_picture_sound");
 }
+
+function sequence_setting_picture_sound_xml(a, b)
+{
+    if (a.xmlNode1 == b.xmlNode1)
+    {
+        var a_L2 = 0, b_L2 = 0;
+        
+        if (a.xmlNode2 == b.xmlNode2)
+        {
+            if (a.orderId > b.orderId)
+                return 1;
+            else if (a.orderId < b.orderId)
+                return -1;
+            else
+                return 0;
+        }
+        
+        if (a.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
+        {
+            if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
+                a_L2 = 1;
+            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+                a_L2 = 2;
+            else if (a.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+                a_L2 = 3;
+            else if (a.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+                a_L2 = 4;
+            else if (a.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+                a_L2 = 5;
+            else if (a.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+                a_L2 = 6;
+            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                a_L2 = 7;
+                
+            if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
+                b_L2 = 1;
+            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+                b_L2 = 2;
+            else if (b.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+                b_L2 = 3;
+            else if (b.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+                b_L2 = 4;
+            else if (b.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+                b_L2 = 5;
+            else if (b.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+                b_L2 = 6;
+            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                b_L2 = 7;
+            
+            if (a_L2 > b_L2)
+                return 1;
+            else if (a_L2 < b_L2)
+                return -1;
+            else
+                return 0;
+        }
+        else if (a.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
+        {
+            if (a.xmlNode2 == "SKY_CFG_TV_SOUND_MODE")
+                a_L2 = 1;
+            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
+                a_L2 = 2;
+            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_OUTPUT_SETTINGS")
+                a_L2 = 3;
+            else if (a.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+                a_L2 = 4;
+            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+                a_L2 = 5;
+                
+            if (b.xmlNode2 == "SKY_CFG_TV_SOUND_MODE")
+                b_L2 = 1;
+            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
+                b_L2 = 2;
+            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_OUTPUT_SETTINGS")
+                b_L2 = 3;
+            else if (b.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
+                b_L2 = 4;
+            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+                b_L2 = 5;
+            
+            if (a_L2 > b_L2)
+                return 1;
+            else if (a_L2 < b_L2)
+                return -1;
+            else
+                return 0;
+        }
+        return 0;
+    }
+    
+    ////////////////////////////////////////////
+    var a_L1 = 0, b_L1 = 0;
+    
+    if (a.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
+        a_L1 = 1;
+    else if (a.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
+        a_L1 = 2;
+    
+    if (b.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
+        b_L1 = 1;
+    else if (b.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
+        b_L1 = 2;
+        
+    if (a_L1 > b_L1)
+        return 1;
+    else if (a_L1 < b_L1)
+        return -1;
+    else
+        return 0;
+}
+
 
 // panel_common_pq.ini
 function write_panel_common_pq_ini(sqlresult, chip, model, panel, tmpdir, genFileCallBack)
@@ -518,6 +754,8 @@ function write_panel_common_pq_ini(sqlresult, chip, model, panel, tmpdir, genFil
             x++;
         }
     }
+    
+    fileinfo.sort(sequence_panel_common_pq_ini);
         
     fs.writeFileSync(tmpFileName, ' \n');
     
@@ -535,6 +773,16 @@ function write_panel_common_pq_ini(sqlresult, chip, model, panel, tmpdir, genFil
     }
     
     genFileCallBack(tmpFileName, "panel_common_pq.ini", chip, model, panel, "panel_common_pq");
+}
+
+function sequence_panel_common_pq_ini(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
 }
 
 // panel_common_board.ini
@@ -563,6 +811,8 @@ function write_panel_common_board_ini(sqlresult, chip, model, panel, tmpdir, gen
             x++;
         }
     }
+    
+    fileinfo.sort(sequence_panel_common_board_ini);
         
     fs.writeFileSync(tmpFileName, ' \n');
     
@@ -582,6 +832,15 @@ function write_panel_common_board_ini(sqlresult, chip, model, panel, tmpdir, gen
     genFileCallBack(tmpFileName, "panel_common_board.ini", chip, model, panel, "panel_common_board");
 }
 
+function sequence_panel_common_board_ini(a, b)
+{
+    if (a.orderId > b.orderId)
+        return 1;
+    else if (a.orderId < b.orderId)
+        return -1;
+    else
+        return 0;
+}
 
 
 

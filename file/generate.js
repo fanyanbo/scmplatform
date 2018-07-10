@@ -648,14 +648,23 @@ function generate_files()
         var content3_1 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_main.xml", "utf-8");
         var content3_2 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_guide.xml", "utf-8");
         var content3_3 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_connect.xml", "utf-8");
-        var content3_4 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-market_show_configuration.xml", "utf-8");
-        var content3_5 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_general.xml", "utf-8");
+        var content3_4 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_general.xml", "utf-8");
+        var content3_5 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-market_show_configuration.xml", "utf-8");
         var content3_6 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-ssc_item.xml", "utf-8");
         var content3_7 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-setting_picture_sound.xml", "utf-8");
         var content3_8 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-panel_common_pq.ini", "utf-8");
         var content3_9 = fs.readFileSync(getTmpDir() + allInfos[infoCnt].chip + "_" + allInfos[infoCnt].model + "_" + allInfos[infoCnt].panel + "-panel_common_board.ini", "utf-8");
 
-        var content3 = content3_1 + content3_2 + content3_3 + content3_4 + content3_5 + content3_6 + content3_7 + content3_8 + content3_9;
+        var content3 =  content3_1 + '\n\n\n\n\n' + 
+                        content3_2 + '\n\n\n\n\n' + 
+                        content3_3 + '\n\n\n\n\n' + 
+                        content3_4 + '\n\n\n\n\n' + 
+                        content3_5 + '\n\n\n\n\n' + 
+                        content3_6 + '\n\n\n\n\n' + 
+                        content3_7 + '\n\n\n\n\n' + 
+                        content3_8 + '\n\n\n\n\n' + 
+                        content3_9;
+                        
         if (mod_callback != null)
         {
             var preview_result = new Object;
