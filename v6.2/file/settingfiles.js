@@ -594,7 +594,7 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_MOTION_SETTING" type="TYPE_GROUP" transparent="true">\n');
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
-                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG"></SettingItem>\n');
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG">\n');
                 
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_ADJUST_SETTINGS")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_ADJUST_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
@@ -602,6 +602,8 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_OUTPUT_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
+            else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_RESET" type="TYPE_DIALOG">\n');
             else
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="' + fileinfo[i].xmlNode2 + '" type="TYPE_GROUP_ROOT" transparent="true">\n');
             curClass2 = fileinfo[i].xmlNode2;
