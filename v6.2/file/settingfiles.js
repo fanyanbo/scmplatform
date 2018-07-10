@@ -521,7 +521,7 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     
     let j = 0;
     let class1_cnt = 0;
-    let picture_reset_done = false;                             // 图像设置恢复出厂设置,是否已经写入
+    
     for (let i in fileinfo)
     {
         if (curClass1 != fileinfo[i].xmlNode1)
@@ -531,14 +531,6 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
                 if (j != 0)
                 {
                     fs.appendFileSync(tmpFileName, '            </SettingItem>\n');
-                }
-                
-                if (!picture_reset_done)
-                {
-			        picture_reset_done = true;
-                }
-                else
-                {
                 }
                 
                 fs.appendFileSync(tmpFileName, '        </SettingItem>\n\n');
@@ -611,6 +603,9 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
         
         j++;
         
+        if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_RESET" || fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+            continue;
+        
         fs.appendFileSync(tmpFileName, "                ");
         fs.appendFileSync(tmpFileName, "<!-- ");
         fs.appendFileSync(tmpFileName, fileinfo[i].descText);
@@ -620,18 +615,6 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
     }
     
     fs.appendFileSync(tmpFileName, '            </SettingItem>   \n');
-    
-    if (!picture_reset_done)
-    {
-        //fs.appendFileSync(tmpFileName, '            <!-- 图像恢复默认 -->\n');
-        //fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_RESET" type="TYPE_DIALOG"></SettingItem>\n');
-        picture_reset_done = true;
-    }
-    else
-    {
-        //fs.appendFileSync(tmpFileName, '            <!-- 声音恢复默认 -->\n');
-        //fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_RESET" type="TYPE_DIALOG"></SettingItem>\n');
-    }
                 
     fs.appendFileSync(tmpFileName, '        </SettingItem>   \n');
     fs.appendFileSync(tmpFileName, '    </SettingItem>  \n');
