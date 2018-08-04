@@ -7,8 +7,12 @@ let _schedule;
 exports.startQuerySchedule = function () {
     logger.info('startQuerySchedule...');
     let rule = new schedule.RecurrenceRule();
-    let times = [1,7,13,19];
-    rule.hour = times;
+    let hours = [1,7,13,19];
+    let minutes = [30];
+    let seconds = [30];
+    rule.hour = hours;
+    rule.minute = minutes;
+    rule.second = seconds;
     _schedule = schedule.scheduleJob(rule,function(){
       userModel.query(null, function(err,result){
         if(err) logger.error('计时器查询发生错误');
