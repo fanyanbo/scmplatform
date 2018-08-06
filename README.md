@@ -1,3 +1,5 @@
 ## 酷开系统-软件配置管理平台V3.0
-- 该分支是master分支，请不要提交代码，只能由管理员操作
-- 谁擅自提交代码到该分支，请自觉请大家吃饭
+
+1.cd scmplatform
+2.npm start or forever ./bin/www
+3.visit:http://172.20.5.239:3018/html/login.html
