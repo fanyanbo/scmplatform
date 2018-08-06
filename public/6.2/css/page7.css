@@ -1,0 +1,217 @@
+#page7{
+	min-width: 900px;
+}
+.page7_boxes {
+	display: none;
+}
+.page7_boxes button{
+	font-size: 16px;
+	margin-bottom: 15px;
+}
+
+.page7_tabs{
+	display: inline-table;
+	padding: 0px 5px;
+	border-radius: 6px;
+    background-color: buttonface;
+}
+.page7_tabs:nth-child(1) {
+	/*background-color: antiquewhite;*/
+	/*background-color: aquamarine;*/
+	background-color: darkturquoise;
+}
+.subitem,.subitem2{
+	font-size: 18px;
+	background-color: lavender;
+}
+.subitem2 span{
+	margin-left: 5px;
+}
+.grouptitle{
+	display: inherit;
+	font-size: 20px;
+	/*color: brown;*/
+	/*color: chocolate;*/
+	color: firebrick;
+	/*color: orangered;*/
+	/*color: maroon;*/
+	padding-bottom: 5px;
+}
+#page7 input[type=checkbox], input[type=radio]{
+	height: 15px;
+	width: 15px;
+}
+
+.page7_a{
+	margin-bottom: 5px;
+	display: inline-block;
+}
+
+.modalwidth{
+	position: relative;
+	width: 98%;
+	padding-left: 2%;
+	padding-top: 4%;
+	margin: 0;
+}
+
+/*common*/
+.configlable{
+	width: 40%;
+	margin-bottom: 0px;
+	padding-left: 10%;
+	margin-top: -8%;
+	font-size: 16px;
+	color: #FFFFFF;
+}
+.proplable{
+	width: 60%;
+	margin-bottom: 0px;
+	margin-top: -8%;
+	font-size: 16px;
+	color: #FFFFFF;
+}
+.configinput{
+	display: block;
+	width: 80%;
+	height: 35px;
+	margin:auto;
+	margin-bottom: -8px;
+	font-size: 20px;
+}
+.defaultOption,.defaultOption2{
+	height: 25px;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-right: 0px;
+	border: 0;
+}
+.defaultOption:nth-child(1){
+	margin-left: 10.3%;
+}
+.defaultOption:focus{
+	background-color: red;
+}
+.defaultOption2:nth-child(1){
+	margin-left: 10.3%;
+}
+.defaultOption2:focus{
+	background-color: red;
+}
+.configtextarea{
+	display: block;
+	resize:none;
+	width: 80%;
+	margin: auto;
+	font-size: 16px;
+	padding-top: 5px;
+}
+.tableBox{
+	width: 80%;
+	margin: auto;
+	padding: 1% 2% 1% 2%;
+	margin-bottom: 3%;
+	display: none;
+}
+.ADCSEfficient{
+	height: 96px;
+	overflow-y: auto;
+	font-size: 20px;
+}
+.menuUnitInput,.menuUnitInput2{
+    display: block;
+    float: left;
+    height: 32px;
+    width: 100%;
+    padding-left: 3%;
+}
+.configselect,.moduleSelect,.sysSelect,.propSelect{
+	display: block;
+	width: 80%;
+	height: 35px;
+	margin:auto;
+	font-size: 22px;
+}
+.sysSelect2{
+	display: inline-block;
+    position: relative;
+    float: left;
+    left: 10%;
+    height: 35px;
+    width: 39%;
+    margin-right: 1%;
+    font-size: 22px;
+}
+#selectSecond{
+	display: none;
+}
+
+#page7_config_border,#page7_module_border,#page7_sys_border,#page7_prop_border{
+	background-color: #bcbcbc;
+	height: 100%;
+	width: 60%;
+	min-width: 425px;
+	max-width: 480px;
+	margin: auto;
+}
+#page7_config_border div label:nth-child(2){
+	margin-top: 3%;
+	float: left;
+	margin-bottom: 0;
+}
+#page7_config_border div label:nth-child(3){
+	margin-top: 3%;
+	margin-left: 1%;
+	float: left;
+	margin-bottom: 0;
+}
+#configCName{
+	width: 39%;
+	float: left;
+	margin-left: 10%;
+}
+#configEName{
+	width: 39%;
+	margin-left: 51%;
+}
+#configClose,#moduleClose,#sysClose,#propClose{
+	display: block;
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 35px;
+	width: 45px;
+}
+#configSubmit,#moduleSubmit,#sysSubmit,#propSubmit{
+	display: block;
+	width: 150px;
+	margin:auto;
+	height: 30px;
+	margin-top: 20px;
+	background-color: #FFFFFF;
+}
+#sysSubmit{
+    clear: both;
+    margin-top: 50px;
+}
+#configErrorInfo,#moduleErrorInfo,#sysErrorInfo,#propErrorInfo{
+	text-align: center;
+	color: red;
+	margin-top: 2%;
+	font-size: 20px;
+}
+
+/*module*/
+#page7_module_border label,#page7_sys_border,#page7_prop_border label{
+	margin-left: 10%;
+	font-size: 24px;
+	color: #FFFFFF;
+	margin-bottom: 0px;
+}
+#page7_module_border input,#page7_sys_border,#page7_prop_border input{
+	display: block;
+	width: 80%;
+	height: 35px;
+	margin:auto;
+	font-size: 22px;
+}

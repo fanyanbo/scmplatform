@@ -1,0 +1,117 @@
+body{
+	background-color: #DDDDDF;
+}
+.navbar{
+	margin-bottom: 0;
+	background-color: #0FB3D6;
+}
+.containerp {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.row{
+	background-color: #DDDDDF;
+}
+#homePage{
+	display: none;
+}
+
+#index_leftdiv{
+	height: 826px;
+}
+#accordion{
+	position: absolute;
+	height: 826px;
+	width: 100%;
+}
+#homePage a{
+	color: black;
+	text-decoration: none;
+}
+#homePage .navbar a{
+	color: white;
+}
+#homePage .navbar a :hover{
+	color: black;
+}
+.leftUl{
+	width: 100%;
+}
+.everyList{
+	font-size: 20px;
+	padding-bottom: 5px;
+}
+.everyButton{
+	display: -webkit-inline-box;
+}
+.everyDiv li{
+	margin-left: 30px;
+	margin-top: 3px;
+	font-size: 18px;
+	display: inline;
+	margin-right: 500px;
+}
+.everyDiv li span{
+	margin-right: 5px;
+	color: #0FB3D6;
+}
+.everyDiv li a{
+	display: inline-table;
+}
+#tabs ul li{
+	margin-bottom: 0px;
+}
+.everyButton span:nth-child(1){
+	margin-right: 5px;
+	color: #0FB3D6;
+}
+#indexUserName,#CoocaaVersion{
+	margin-right: 10px;
+}
+.everyButton .email,.everyDiv li .email{
+    top: 10px;
+    left: 5px;
+    display: none;
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    background-color: red;
+}
+.everyDiv li .email{
+    top: 0px;
+}
+
+#homePage .close-tab{
+	right: 3px;
+    top: 3px;
+    padding-left: 0; 
+}
+#ccollapse .dropdown-menu a{
+	color: black;
+}
+#index_branch{
+	float: right;
+}
+#index_branch li{
+	margin-right: 10px;
+    font-size: 18px;
+}
+#index_branch .dropdown-menu li{
+	margin-right: 0px;
+}
+#index_branch li a:hover{
+	background-color: rgba(0,0,0,0);
+}
+#logoImg{
+	position: relative;
+    display: inline-block;
+    height: 25px;
+    float: left;
+    top: 12px;
+    margin-right: 10px;
+}
+#index_branch .dropdown-menu li :hover{
+	background-color: dodgerblue;
+}

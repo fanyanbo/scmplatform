@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<title>版本选择</title>
+		<style>
+			body{
+				background-image: url(../images/bg2.jpg);
+				background-size: 100%;
+				background-repeat: no-repeat;
+			}
+			#versionTitle{
+				/*width: 470px;*/
+			    height: 100px;
+			    margin-top: 85px;
+			    margin-bottom: 15px;
+			    text-align: center;
+			    font-size: 40px;
+			    line-height: 100px;
+			    font-weight: 600;
+			    color: maroon;
+			}
+			.parent {
+			   	width: 980px;
+				height: 250px;
+				margin: 0 auto;
+				text-align: center;
+			}
+			.versionchoose {
+				display: inline-block;
+				width: 280px;
+				height: 250px;
+				line-height: 250px;
+				cursor: pointer;
+				font-size: 40px;
+				border-radius: 40px;
+				margin-left: 20px;
+				background-color: rgba(255,255,255,0.5);
+			}
+			.versionchoose:hover{
+				background-color: rgba(255,255,255,1);
+			}
+			.sky_logo{
+				position: absolute;
+				top: 15px;
+			    left: 10px;
+			    height: 40px;
+			    width: 300px;
+				background-image: url(../images/bg.png);
+				background-repeat: no-repeat;
+				background-size: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="sky_logo"></div>
+		<div id="versionTitle">请选择酷开版本</div>
+		<div class="parent">
+			<div id="versionItem1" class="versionchoose">6.0</div>
+			<div id="versionItem2" class="versionchoose">6.2</div>
+		</div>
+		
+		<script type="text/javascript">
+			$(".versionchoose").click(function() {
+				var _index = $(".versionchoose").index($(this));
+				if (_index == 0) {
+					document.location.href="../6.0/html/index.html";
+				} else if (_index == 1) {
+					document.location.href="../6.2/html/index.html";
+				}
+			});
+		</script>
+	</body>
+
+</html>
+
