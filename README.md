@@ -2,6 +2,8 @@
 
 1.cd scmplatform
 
-2.npm start or forever ./bin/www
+2.npm install
 
-3.visit the website: http://172.20.5.239:3018/html/login.html
+3.npm start or forever ./bin/www
+
+4.visit the website: http://172.20.5.239:3018/html/login.html
