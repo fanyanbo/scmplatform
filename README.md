@@ -1,2 +1,9 @@
-# 软件配置管理平台V3.0 [fyb分支]
-- 该分支是fyb分支，由fanyanbo基于master分支拉取，用于项目前期开发
+## 酷开系统-软件配置管理平台V3.0
+
+1.cd scmplatform
+
+2.npm install
+
+3.npm start or forever ./bin/www
+
+4.visit the website: http://172.20.5.239:3018/html/login.html
