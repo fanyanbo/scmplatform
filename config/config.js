@@ -53,7 +53,7 @@ var config = {
 
   session_secret: 'scmp_ladygaga', // 务必修改
   cookie_name: 'scmp_sid',
-  cookie_maxAge: 24*60*60*1000,     //60分钟
+  cookie_maxAge: 24*60*60*1000,     //1day
 
   log_dir: path.join(__dirname, '../logs'),
 
@@ -68,8 +68,8 @@ var config = {
     host: 'mail.skyworth.com',
     port: 465,
     auth: {
-      user: 'fanyanbo@skyworth.com',
-      pass: 'fyb.1119'
+      user: 'jcfbxt@skyworth.com',
+      pass: 'Acbd..9752++'
     },
     tls: {rejectUnauthorized: false},
     debug:true
