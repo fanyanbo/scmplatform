@@ -182,6 +182,7 @@ function generateFiles(
 	writerlog.checkLogFile();
 	
 	infoTxt = "";
+	tempdir = "";
 	
 	allInfos = new Array();
 	infoTotal = 0;
