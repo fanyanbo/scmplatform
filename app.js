@@ -23,6 +23,7 @@ var index = require('./routes/index');
 var signRouter = require('./routes/sign_router');
 var apiRouterV6_0 = require('./routes/api_router_v6.0');
 var apiRouterV6_2 = require('./routes/api_router_v6.2');
+var apiRouterV7_0 = require('./routes/api_router_v7.0');
 var schedule = require('./common/schedule');
 
 var app = express();
@@ -63,6 +64,7 @@ app.use(session({
 app.use('/', signRouter);
 app.use('/v6.0', apiRouterV6_0);
 app.use('/v6.2', apiRouterV6_2);
+app.use('/v7.0', apiRouterV7_0);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
