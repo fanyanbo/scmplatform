@@ -215,6 +215,8 @@ function generateFiles(
             sql = "call v60_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
         else if (version == "6.2")
             sql = "call v62_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
+        else if (version == "7.0")
+            sql = "call v70_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
         
         console.log("同步临时数据到正式数据");
         writerlog.w("同步临时data到正式data : " + sql + "\n");
@@ -963,6 +965,8 @@ function getGitDir(systemVersion)
             gitdir = os.homedir() + "/scmv3_git/60/Custom/";
         else if (systemVersion == "6.2")
             gitdir = os.homedir() + "/scmv3_git/62/Custom/";
+        else if (systemVersion == "7.0")
+            gitdir = os.homedir() + "/scmv3_git/70/Custom/";
         else
             gitdir = os.homedir() + "/scmv3_git/test/Custom/";
 	}
@@ -983,6 +987,8 @@ function getGitBranch(systemVersion)
             gitbranch = "CCOS/Rel6.0";
     	else if (systemVersion == "6.2")
             gitbranch = "CCOS/Rel6.2";
+        else if (systemVersion == "7.0")
+            gitbranch = "CCOS/Rel7.0";
         else
             gitbranch = "test";
 	}
