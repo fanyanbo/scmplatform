@@ -1,0 +1,457 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>配置文件管理</title>
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/pages.css">
+		<link rel="stylesheet" type="text/css" href="../css/page2.css">
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+	</head>
+	<body>
+		<div id="page2">
+			<fieldset class="inputandselectwidth">
+				<legend>配置文件查询</legend>
+				<div class="row text-right">
+					<div class="col-xs-4 form-group">
+						<label for="page2_chip" class="control-label col-xs-5 text-right">机芯:</label>
+						<input type="text" value="" id="page2_chip" class="col-xs-6 inputstyle" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_chip_auto"></div>
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_model" class="control-label col-xs-5 text-right">机型:</label>
+						<input type="text" value="" id="page2_model" class="col-xs-6 inputstyle" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_model_auto"></div>
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_targetProduct" class="control-label col-xs-5 text-right">TP:</label>
+						<input type="text" id="page2_targetProduct" class="col-xs-6 inputstyle text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_tp_auto"></div>
+					</div>
+				</div>
+				<div class="row text-right">
+					<div class="col-xs-4 form-group">
+						<label for="page2_androidVersion" class="control-label col-xs-5 text-right">安卓版本:</label>
+						<select id="page2_androidVersion" class="col-xs-6 inputstyle">
+							<option value=""></option>
+							<option value="Android4.2">Android4.2</option>
+							<option value="Android4.3">Android4.3</option>
+							<option value="Android4.4">Android4.4</option>
+							<option value="Android5.0">Android5.0</option>
+							<option value="Android5.1">Android5.1</option>
+							<option value="Android6.0">Android6.0</option>
+							<option value="Android8.0">Android8.0</option>
+						</select>
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_chipid" class="control-label col-xs-5 text-right">芯片型号:</label>
+						<input type="text" id="page2_chipid" class="col-xs-6 inputstyle text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+						<div class="auto_hidden" id="page2_soc_auto"></div>
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_EMMC" class="control-label col-xs-5 text-right">EMMC:</label>
+						<select id="page2_EMMC" class="col-xs-6 inputstyle">
+							<option value=""></option>
+							<option value="4G">4G</option>
+							<option value="6G">6G</option>
+							<option value="8G">8G</option>
+							<option value="16G">16G</option>
+							<option value="32G">32G</option>
+							<option value="64G">64G</option>
+							<option value="128G">128G</option>
+						</select>
+					</div>
+				</div>
+				<div class="row text-right">
+					<div class="col-xs-4 form-group">
+						<label for="page2_memory" class="control-label col-xs-5 text-right">内存:</label>
+						<select id="page2_memory" class="col-xs-6 inputstyle">
+							<option value=""></option>
+							<option value="512MB">512MB</option>
+							<option value="768MB">768MB</option>
+							<option value="1GB">1GB</option>
+							<option value="1.5GB">1.5GB</option>
+							<option value="2GB">2GB</option>
+							<option value="4GB">4GB</option>
+							<option value="6GB">6GB</option>
+							<option value="8GB">8GB</option>
+							<option value="16GB">16GB</option>
+						</select>
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_keyword" class="control-label col-xs-5 text-right">模块查询:</label>
+						<input type="text" value="" id="page2_keyword" class="col-xs-6 inputstyle">
+					</div>
+					<div class="col-xs-4 form-group">
+						<label for="page2_gitbranch" class="control-label col-xs-5 text-right">git分支:</label>
+						<input type="text" id="page2_gitbranch" class="col-xs-6 inputstyle text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+					</div>
+				</div>
+				<div class="form-group text-center">
+					<div class="col-sm-offset- col-sm-4"></div>
+					<div class="col-sm-offset- col-sm-2">
+						<button type="submit" class="btn btn-success" id="page2_searchInfo">查询</button>
+					</div>
+					<div class="col-sm-offset- col-sm-2">
+						<button type="reset" class="btn btn-success" id="page2_reset">重置</button>
+					</div>
+					<div class="col-sm-offset- col-sm-4"></div>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>内容列表</legend>
+				<div class="buttonboxes">
+					<button class="mybuttons btn-success" id="page2_add">新增</button>
+					<button class="mybuttons btn-success" id="page2_export">导出</button>
+					<button class="mybuttons btn-success" id="page2_fresh">刷新</button>
+				</div>
+
+				<!-- 表格开始 -->
+				<div id="page2_table"></div>
+				<a id="dlink" style="display:none;"></a>
+				<div id="searchNoInfo">未查询到该条件下的产品</div>
+				<!-- 表格结束 -->
+
+				<!--点击新增、编辑、复制弹出的modal-->
+				<div class="modal fade" id="page2Modal1" tabindex="-1" role="dialog" aria-labelledby="page2Modal1Label">
+					<div class="modalwidth" role="document">
+						<div class="modal-content" style="background-color: lightgray;">
+							<div class="modal-header">
+								<button type="button" class="btn btn-default" aria-label="Close" id="page2Modal1Close" style="float: right; background-color: honeydew;"><span aria-hidden="true">关闭</span></button>
+								<button type="button" class="btn btn-default" id="page2Modal1Submit" style="float: right; background-color: honeydew;"><span aria-hidden="true">提交</span></button>
+								<h4 class="modal-title" id="page2Modal1Label">新增</h4>
+								<h4 id="page2Modal1ErrorInfo" class="myModalErrorInfo"></h4>
+							</div>
+							<div class="modal-body">
+								<table class="table table-bordered " id="page2Modal1Table">
+									<tbody>
+										<tr>
+											<td>
+												<div class="col-xs-4 text-left">
+													<label for="lable2Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
+													<input type="text" value="" id="lable2Chip" name="机芯" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_chip_auto2"></div>
+												</div>
+												<div class="col-xs-4 text-left">
+													<label for="lable2Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
+													<input type="text" value="" id="lable2Model" name="机型" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_model_auto2"></div>
+												</div>
+												<div class="col-xs-4 text-left">
+													<label for="lable2TargetProduct" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TP:</label>
+													<input type="text" value="" id="lable2TargetProduct" name="TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_tp_auto2"></div>
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
+													<select id="lable2AndroidVersion" name="Android版本" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="Android4.2">Android4.2</option>
+														<option value="Android4.3">Android4.3</option>
+														<option value="Android4.4">Android4.4</option>
+														<option value="Android5.0">Android5.0</option>
+														<option value="Android5.1">Android5.1</option>
+														<option value="Android6.0">Android6.0</option>
+														<option value="Android8.0">Android8.0</option>
+													</select>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
+													<input type="text" value="" id="lable2ChipMode" name="芯片型号" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+													<div class="auto_hidden" id="page2_soc_auto2"></div>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Emmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
+													<select id="lable2Emmc" name="EMMC" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="4G">4G</option>
+														<option value="6G">6G</option>
+														<option value="8G">8G</option>
+														<option value="16G">16G</option>
+														<option value="32G">32G</option>
+														<option value="64G">64G</option>
+														<option value="128G">128G</option>
+													</select>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Memory" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">内存&nbsp;:</label>
+													<select id="lable2Memory" name="内存" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="512MB">512MB</option>
+														<option value="768MB">768MB</option>
+														<option value="1GB">1GB</option>
+														<option value="1.5GB">1.5GB</option>
+														<option value="2GB">2GB</option>
+														<option value="4GB">4GB</option>
+														<option value="6GB">6GB</option>
+														<option value="8GB">8GB</option>
+														<option value="16GB">16GB</option>
+													</select>
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
+													<input type="text" value="" name="gitbranch" id="lable2GitBranch" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+												</div>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Platform" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">平台&nbsp;:</label>
+													<select id="lable2Platform" name="平台" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+														<option value="Hisilicon">Hisilicon</option>
+														<option value="Mstar">Mstar</option>
+														<option value="Realtek">Realtek</option>
+														<option value="Amlogic">Amlogic</option>
+														<option value="Novatek">Novatek</option>
+													</select>
+												</div>
+											</td>
+										</tr>
+										<tr id="addSize">
+											<td>
+												<div class="col-xs-4 text-left inputdiv">
+													<label for="lable2Size1" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">尺寸&nbsp;:</label>
+													<input type="text" value="" name="尺寸" id="lable2Size1" class="col-xs-6 col-xs-push-1 inputstyle2 fuzzySearch text-left" onkeyup="value=value.replace(/[^0-9]/g,'') ">
+												</div>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<div class="btn-group">
+													<button class="page2_tabs btn-success" style="color: black;" firstget="false">MK</button>
+													<button class="page2_tabs" firstget="false">Prop</button>
+													<button class="page2_tabs" firstget="false">config文件</button>
+													<button class="page2_tabs" firstget="false">系统设置</button>
+													<button class="page2_tabs" firstget="false">信号源工具箱</button>
+													<button class="page2_tabs" firstget="false">卖场演示</button>
+													<button class="page2_tabs" firstget="false">中间件</button>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myMkBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myPropBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myConfigBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="mySysSettingBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="mySourceBoxBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myMarketShowBox" class="eachpartbox"></div>
+												</div>
+												<div class="col-xs-12 page2_boxes row">
+													<div id="myMiddlewareBox" class="eachpartbox"></div>
+												</div>
+											</td>
+										</tr>
+									</tbody>	
+								</table>
+								<div class="col-xs-10 col-xs-push-1" id="myEditEnsureDiv" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel">
+									<div class="modal-delete" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" aria-label="Close" id="myEditEnsureX"><span aria-hidden="true">×</span></button>
+												<h4 class="modal-title text-left" id="myEditModalLabel">关闭</h4>
+											</div>
+											<div class="modal-body">
+												<span class="changetitle">修改内容</span>
+												<div id="changeContent" style="font-size: 14px;text-align: left;">
+													<span id="txt0">新增特殊尺寸：<span id="txt00"></span><br/></span>
+													<span id="txt1">修改设备信息：<span id="txt11"></span><br/></span>
+													<span id="txt2">新增模块：<span id="txt22"></span><br/></span>
+													<span id="txt3">删除模块：<span id="txt33"></span><br/></span>
+													<span id="txt4">修改配置：<span id="txt44"></span><br/></span>
+													<span id="txt5">修改属性：<span id="txt55"></span><br/></span>
+												</div>
+												<span class="changetitle">修改原因</span><span id="errorChangeInfo">&nbsp;&nbsp;此项不能为空!</span><br/>
+												<textarea id="changeReason"></textarea>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" id="myEditEnsure">确定</button>
+												<button type="button" class="btn btn-default" id="myEditCancle">取消</button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-10 col-xs-push-1" id="myAddEnsureDiv" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel">
+									<div class="modal-delete" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" aria-label="Close" id="myAddEnsureX"><span aria-hidden="true">×</span></button>
+												<h4 class="modal-title text-left" id="myAddModalLabel">关闭</h4>
+											</div>
+											<div class="modal-body">
+												<div id="areYouSure">确定增加此项吗？</div>
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-primary" id="myAddEnsure">确定</button>
+												<button type="button" class="btn btn-default" id="myAddCancle">取消</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer myfooter">
+								<button type="button" class="btn btn-success" id="lable1SubmitTwo" errNum="" existence="true" defaultPage="0">提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- 点击关闭按钮 -->
+				<div class="modal fade" id="myAddCloseDiv" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myEditEnsureModalLabel">
+					<div class="" role="document">
+						<div class="modal-content">
+							<!--modal-content-->
+							<div class="modal-header">
+								<button type="button" class="close" aria-label="Close" id="myEnsureX"><span aria-hidden="true">×</span></button>
+								<h4 class="modal-title text-left" id="myDeleteModalLabel">关闭</h4>
+							</div>
+							<div class="modal-body">
+								<p id="infoEdit" style="font-size: 24px;text-align: center;">确认要关闭吗？</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal" id="myEditEnsureModalEnsure">确定</button>
+								<button type="button" class="btn btn-default" id="myEnsureCancle">取消</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--点击批量删除弹出批量删除的modal-->
+				<div class="modal fade col-xs-8" id="myMoreDeleteModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myMoreDeleteModalLabel">
+					<div class="" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+								<h4 class="modal-title" id="myMoreDeleteModalLabel">系统提示：</h4>
+								<span id="myMDModalErrorInfo" class="myModalErrorInfo"></span>
+							</div>
+							<div class="modal-body">
+								<p style="font-size: 24px;text-align: center;">确认删除吗？确认后可在待审核文件查询。</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" id="myMoreDeleteModalEnsure">确定</button>
+								<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--点击删除弹出删除的modal-->
+				<div class="col-xs-8 col-xs-push-2 col-lg-8 col-lg-push-2 modal fade" id="myDeleteModal" style="padding-top: 350px;" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel">
+					<div class="modal-delete" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+								<h4 class="modal-title" id="myDeleteModalLabel">删除</h4>
+								<h4 id="myDeleteModalErrorInfo" class="myModalErrorInfo"></h4>
+							</div>
+							<div class="modal-body">
+								<div id="deleteInfo" style="font-size: 24px;text-align: center;">确认要删除吗？</div>
+								<span class="changetitle">删除原因</span><span id="errorChangeInfo2">&nbsp;&nbsp;此项不能为空!</span><br/>
+								<textarea id="changeReason2"></textarea>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" id="myDeleteModalEnsure" style="display: block;margin: 0 auto;">确定</button>
+								<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+							</div>
+						</div>
+					</div>
+				</div>
+				<!--请先勾选要删除的项-->
+				<div class="modal fade col-xs-8" id="myDeleteDialogModal" style="padding-right: 0;" tabindex="-1" role="dialog" aria-labelledby="myDeleteDialogModalLabel">
+					<div class="modal-delete" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+								<h4 class="modal-title" id="myDeleteModalLabel">系统提示：</h4>
+							</div>
+							<div class="modal-body">
+								<p style="font-size: 24px;text-align: center;">请先选择要修改或删除的项。</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+								<!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- 点击查看 -->
+				<div class="modal fade col-xs-9 col-lg-9" id="page1_examine" tabindex="-1" role="dialog" aria-labelledby="page1_examineLabel" style="margin: 0 auto; margin-top: 360px;">
+					<div class="" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<span type="button" class="close glyphicon glyphicon-remove" aria-label="Close" id="page1_close1"></span>
+								<h4 class="modal-title text-left right" id="page1_examineLabel">
+									<span><b>机芯：</b></span><span id="page1_check_chip"></span>
+									<span><b>机型：</b></span><span id="page1_check_model"></span>
+									<span><b>尺寸：</b></span><span id="page1_check_panel"></span>
+								</h4>
+							</div>
+							<div class="modal-body">
+								<table class="table table-striped table-bordered table-hover" id="contenttable"></table>
+								<div id="noChangeHistory"></div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" id="page1_close2">关闭</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--点击预览-->
+				<div class="modal fade" id="myPreviewModal" tabindex="-1" role="dialog" aria-labelledby="myPreviewModalLabel">
+					<div class="modalwidth" role="document">
+						<div class="modal-content">
+							<div class="modal-header myheader">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="myCopyModalClose"><span aria-hidden="true">关闭</span></button>
+								<h4 class="modal-title" id="myPreviewModalLabel">预览</h4>
+							</div>
+						
+							<div class="modal-body mybody">
+								<ul class="nav nav-pills nav-justified" role="tablist">
+									<li role="presentation" class="presentation active">
+										<a href="#myPreviewBodyOne" aria-controls="myPreviewBodyOne" role="tab" data-toggle="tab">Config文件</a>
+									</li>
+									<li role="presentation" class="presentation">
+										<a href="#myPreviewBodyTwo" aria-controls="myPreviewBodyTwo" role="tab" data-toggle="tab">MK文件</a>
+									</li>
+									<li role="presentation" class="presentation">
+										<a href="#myPreviewBodyThree" aria-controls="myPreviewBodyThree" role="tab" data-toggle="tab">Settings文件</a>
+									</li>
+									<li role="presentation" class="presentation">
+										<a href="#myPreviewBodyFour" aria-controls="myPreviewBodyFour" role="tab" data-toggle="tab">Prop文件</a>
+									</li>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<textarea wrap="off" role="tabpanel" class="tab-pane active" id="myPreviewBodyOne" disabled></textarea>
+									<textarea wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyTwo" disabled></textarea>
+									<textarea wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyThree" disabled></textarea>
+									<textarea wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyFour" disabled></textarea>
+								</div>
+							</div>
+							<div class="modal-footer myfooter">
+								<button type="button" class="btn btn-success" data-dismiss="modal" id="myCopyModalSubmitTwo">确定</button>
+							</div>
+						</div>
+					</div>
+				</div>	
+				<!--<div id="noList">当前没有符合查询条件的文件！！</div>-->
+			</fieldset>
+		</div>
+
+		<!--loading环-->
+		<!--<div id="loading"><span id="loadingImg">wenjian</span><span id="loadingText">数据加载中...</span></div>-->
+		<script src="../js/jquery.dataTables.min.js" type="text/javascript" charset="utf8"></script>
+		<script src="../js/front-endPage.js"></script>
+		<script src="../js/page2.js"></script>
+	</body>
+
+</html>
+
