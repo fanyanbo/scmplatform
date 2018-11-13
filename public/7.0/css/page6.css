@@ -1,0 +1,239 @@
+.CJJ-Table .clearfix {
+    clear: both;
+}
+
+.CJJ-Table .pagenumberBox {
+    float: left;
+}
+
+.CJJ-Table .pagenumberBox li {
+    float: left;
+    padding: 4px 9px 4px 9px;
+    border: 1px solid #d9d9d9;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+    color: #333;
+}
+
+.CJJ-Table .pagenumberBox li:hover {
+    background: #ff6666 !important;
+    padding: 5px 10px 5px 10px !important;
+    color: white !important;
+    border: none !important;
+}
+
+.CJJ-Table .pagenumberBoxLi {
+    background: #ff6666 !important;
+    padding: 5px 10px 5px 10px !important;
+    color: white !important;
+    border: none !important;
+}
+
+.CJJ-Table tfoot span {
+    padding: 4px 15px 4px 15px;
+    border: 1px solid #d9d9d9;
+    color: #333;
+}
+
+.CJJ-Table tfoot span:hover {
+    background: #ff6666 !important;
+    padding: 5px 16px 5px 16px !important;
+    color: white !important;
+    border: none !important;
+}
+
+.CJJ-Table .tfootRight input {
+    width: 80px;
+    padding-left: 10px;
+    height: 25px;
+    border: 1px solid #d9d9d9;
+    color: #333;
+}
+
+.CJJ-Table .tfootRight button {
+    width: 60px;
+    height: 25px;
+    border: 1px solid #d9d9d9;
+    color: #333;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.CJJ-Table .tfootRight button:hover {
+    background: #ff6666 !important;
+    height: 27px;
+    color: white !important;
+    border: none !important;
+}
+.CJJ-Table {
+    width: 90%;
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.CJJ-Table thead{
+    border-bottom: 1px solid #ccc;
+    background: #f2f2f2;
+}
+
+.CJJ-Table thead th{
+    font-size: 14px;
+    line-height: 40px;
+}
+
+.CJJ-Table tbody td{
+    text-align: center;
+}
+
+.CJJ-Table tbody tr{
+    border-bottom: 1px dashed #d9d9d9;
+}
+
+.CJJ-Table tbody tr:hover{
+    background-color: #d5d5d5;
+}
+.CJJ-Table tfoot select{
+    width: 80px;
+    padding-left: 10px;
+    height: 26px;
+    border: 1px solid #d9d9d9;
+    color: #333;
+}
+
+#page6{
+	min-width: 900px;
+}
+.page6_tab{
+    border-radius: 6px;
+    padding: 0 10px;
+}
+.page6_tab:nth-child(1){
+	background-color: darkturquoise;
+}
+.page6AddBtns{
+	margin-bottom: 2px;
+}
+#page6ModalDiv{
+	background-color: lightgrey;
+	color: crimson;
+}
+#lableText{
+	margin-left: 20%;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: dimgray;
+}
+#page6Container{
+	display: block;
+	width: 60%;
+	height: 35px;
+	margin:auto;
+	font-size: 22px;
+	margin-bottom: 20px;
+}
+#page6ModeClose{
+	display: block;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border-radius: 5px;
+    height: 33px;
+    width: 63px;
+    background-color: ghostwhite;
+}
+#chipMangInfo{
+	text-align: center;
+	color: red;
+	margin-top: 2%;
+	font-size: 20px;
+}
+#page6Submit{
+	display: block;
+    font-size: 16px;
+    padding: 5px 15px;
+    margin: 3px auto;
+    background-color: aliceblue;
+}
+.divitems{
+	padding-bottom: 5px;
+}
+.eachpartbox{
+	position: relative;
+	width: 100%;
+	/*margin-top: 5px;*/
+	clear: both;
+	/*font-size: 18px;*/
+	overflow: auto;
+	padding-bottom: 5px;
+    border-bottom: 1px solid black;
+}
+.grouptitle{
+	display: inherit;
+	font-size: 20px;
+	/*color: brown;*/
+	/*color: chocolate;*/
+	color: firebrick;
+	/*color: orangered;*/
+	/*color: maroon;*/
+	padding-bottom: 5px;
+}
+.modalwidth{
+	width: 730px;
+}
+.myModalErrorInfo{
+    margin-left: 20%;
+    margin-top: -30px;
+    width: 60%;
+    height: 30px;
+    font-size: 24px;
+    overflow: hidden;
+    text-align: center;
+    color: red;
+    line-height: 32px;
+    margin-bottom: 0px;
+    display: none;
+}
+#page6Modal{
+	margin-top: 100px;
+}
+#page6Modal .myheader{
+	border-bottom: 0px solid #e5e5e5;
+}
+#page6Modal .mybody{
+	border-bottom: 0px solid #e5e5e5;
+	padding-bottom: 5px;
+	padding-top: 0px;
+}
+#page6Modal .myfooter{
+	border-bottom: 0px solid #e5e5e5;
+	padding: 5px;
+}
+#editErrorInfo{
+	color: red;
+	display: none;
+}
+#myEditEnsureDiv{
+	position: absolute;
+    top: -32px;
+    padding-right: 0px;
+    display: none;
+    max-height: 350px;
+    overflow: auto;
+    z-index: 9999;
+}
+#myEditEnsureDiv .mybody{
+	font-size: 16px;
+}
+#myEditEnsureDiv .myfooter{
+	font-size: 16px;
+}
+#page6 .modal-footer {
+    text-align: center;
+}
+#productName{
+	text-align: center;
+	font-size: 18px;
+	margin-top: 10px;
+    margin-bottom: 20px;
+}

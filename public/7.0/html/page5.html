@@ -1,0 +1,321 @@
+<!--内容列表-->
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>审核未通过文件</title>
+
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/pages.css">
+		<link rel="stylesheet" type="text/css" href="../css/page5.css">
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+ 		
+	</head>
+
+	<body>
+		<div id="page5">
+			<!-- 表格开始 -->
+			<div id="page5_table"></div>
+			<!-- 表格结束 -->
+			<div id="noList" style="display: none;">当前没有符合查询条件的文件！！</div>
+		</div>
+		<!--点击新增弹出新增的modal-->
+		<div class="modal fade" id="page5Modal1" tabindex="-1" role="dialog" aria-labelledby="page5Modal1Label">
+			<div class="modalwidth" role="document">
+				<div class="modal-content" style="background-color: lightgray;">
+					<div class="modal-header">
+						<button type="button" class="close1 btn btn-default"  aria-label="Close" id="closeReview"><span aria-hidden="true">关闭</span></button> 
+						<button type="button" class="close1 btn btn-default" id="button_submit"><span aria-hidden="true" id="reButton"></span></button>  
+                    	<button type="button" class="close1 btn btn-default "  id="noPassReview" style="display:none"><span aria-hidden="true">审核不通过</span></button>
+                    	<button type="button" class="close1 btn btn-default "  id="ReviewCat" style="display:none"><span aria-hidden="true">预览</span></button>
+						<h3 class="modal-title" id="myAddModalLabel">审核</h3>
+						<h4 id="page5Modal1ErrorInfo" class="myModalErrorInfo"></h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-bordered " id="page5Modal1Table">
+							<tbody>
+								<tr id="page5_firstTr">
+									<td>
+										<div class="col-xs-12" id="changeDescDiv">
+											<div class="col-xs-12 form-group text-left inputdiv" id="reasonBox">
+												<span class="col-xs-12" id="changeDescTitle"><b>当前文件做了如下更改，请注意审核：</b></span>
+												<table class="table-bordered" id="historyTable" style="width: 100%;">
+													<tr><th id="reviewContent0" style="width: 50%;text-align: center;">修改内容</th><th id="reviewReason0" style="width: 50%;text-align: center;">修改原因</th></tr>
+													<tr><td id="reviewContent"></td><td id="reviewReason"></td></tr>
+												</table>
+											</div>
+										</div>
+										<div class="col-xs-12" id="addDescDiv">
+											<div class="col-xs-12 form-group text-left inputdiv">
+												<span id="changeDescTitle"><b>当前文件为新增文件，请注意审核：</b></span>
+											</div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="col-xs-4 text-left">
+											<label for="lable5Chip" class="control-label text-right" title="oChip" style="width: 41.67%;float: left;">机芯&nbsp;:</label>
+											<input type="text" value="" id="lable5Chip" name="机芯" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+											<div class="auto_hidden" id="page5_chip_auto2"></div>
+										</div>
+										<div class="col-xs-4 text-left">
+											<label for="lable5Model" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">机型&nbsp;:</label>
+											<input type="text" value="" id="lable5Model" name="机型" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+											<div class="auto_hidden" id="page5_model_auto2"></div>
+										</div>
+										<div class="col-xs-4 text-left">
+											<label for="lable5TP" class="control-label text-right" title="oTargetProduct" style="width: 41.67%;float: left;">TP:</label>
+											<input type="text" value="" id="lable5TP" name="TargetProduct" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+											<div class="auto_hidden" id="page5_tp_auto2"></div>
+										</div>
+										<div class="col-xs-4 text-left inputdiv">
+											<label for="lable5AndroidVersion" class="control-label text-right" title="AndroidVersion" style="width: 41.67%;float: left;">Android版本&nbsp;:</label>
+											<select id="lable5AndroidVersion" name="Android版本" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+												<option value="Android4.2">Android4.2</option>
+												<option value="Android4.3">Android4.3</option>
+												<option value="Android4.4">Android4.4</option>
+												<option value="Android5.0">Android5.0</option>
+												<option value="Android5.1">Android5.1</option>
+												<option value="Android6.0">Android6.0</option>
+												<option value="Android8.0">Android8.0</option>
+											</select>
+										</div>
+										<div class="col-xs-4 text-left inputdiv">
+											<label for="lable5ChipMode" class="control-label text-right" title="ChipMode" style="width: 41.67%;float: left;">芯片型号&nbsp;:</label>
+											<input type="text" value="" id="lable5ChipMode" name="芯片型号" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+											<div class="auto_hidden" id="page5_soc_auto2"></div>
+										</div>
+										<div class="col-xs-4 text-left inputdiv">
+											<label for="lable5Emmc" class="control-label text-right" title="EMMC" style="width: 41.67%;float: left;">EMMC&nbsp;:</label>
+											<select id="lable5Emmc" name="EMMC" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+												<option value="4G">4G</option>
+												<option value="6G">6G</option>
+												<option value="8G">8G</option>
+												<option value="16G">16G</option>
+												<option value="32G">32G</option>
+												<option value="64G">64G</option>
+												<option value="128G">128G</option>
+											</select>
+										</div>
+										<div class="col-xs-4 text-left inputdiv">
+											<label for="lable5Memory" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">内存&nbsp;:</label>
+											<select id="lable5Memory" name="内存" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+												<option value="512MB">512MB</option>
+												<option value="768MB">768MB</option>
+												<option value="1GB">1GB</option>
+												<option value="1.5GB">1.5GB</option>
+												<option value="2GB">2GB</option>
+												<option value="4GB">4GB</option>
+												<option value="6GB">6GB</option>
+												<option value="8GB">8GB</option>
+												<option value="16GB">16GB</option>
+											</select>
+										</div>
+										<div class="col-xs-4 text-left inputdiv">
+											<label for="lable5GitBranch" class="control-label text-right" title="oModel" style="width: 41.67%;float: left;">gitbranch&nbsp;:</label>
+											<input type="text" value="" name="gitBranch" id="lable5GitBranch" class="col-xs-6 col-xs-push-1 inputstyle fuzzySearch text-left" onkeyup="this.value=this.value.replace(/\s+/g,'')">
+										</div>
+										<div class="col-xs-4 text-left inputdiv">
+											<label for="lable5Platform" class="control-label text-right" title="memory" style="width: 41.67%;float: left;">平台&nbsp;:</label>
+											<select id="lable5Platform" name="平台" class="col-xs-6 col-xs-push-1 inputstyle text-left">
+												<option value="Hisilicon">Hisilicon</option>
+												<option value="Mstar">Mstar</option>
+												<option value="Realtek">Realtek</option>
+												<option value="Amlogic">Amlogic</option>
+												<option value="Novatek">Novatek</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td style="padding: 0;">
+										<div class="btn-group">
+											<button class="page5_tabs btn-success" style="color: black;">MK</button>
+											<button class="page5_tabs">Prop</button>
+											<button class="page5_tabs">config文件</button>
+											<button class="page5_tabs">系统设置</button>
+											<button class="page5_tabs">信号源工具箱</button>
+											<button class="page5_tabs">卖场演示</button>
+											<button class="page5_tabs">中间件</button>
+										</div>
+										<div class="col-xs-12 page5_boxes row">
+											<div id="myMkBox" class="eachpartbox"></div>
+										</div>
+										<div class="col-xs-12 page5_boxes row">
+											<div id="myPropBox" class="eachpartbox"></div>
+										</div>
+										<div class="col-xs-12 page5_boxes row">
+											<div id="myConfigBox" class="eachpartbox"></div>
+										</div>
+										<div class="col-xs-12 page5_boxes row">
+											<div id="mySysSettingBox" class="eachpartbox"></div>
+										</div>
+										<div class="col-xs-12 page5_boxes row">
+											<div id="mySourceBoxBox" class="eachpartbox"></div>
+										</div>
+										<div class="col-xs-12 page5_boxes row">
+											<div id="myMarketShowBox" class="eachpartbox"></div>
+										</div>
+										<div class="col-xs-12 page5_boxes row">
+											<div id="myMiddlewareBox" class="eachpartbox"></div>
+										</div>
+									</td>
+								</tr>
+							</tbody>	
+						</table>
+						<div class="col-xs-11" id="myEditEnsureDiv" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel">
+							<div class="modal-delete" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" aria-label="Close" id="myEditEnsureX"><span aria-hidden="true">×</span></button>
+										<h4 class="modal-title text-left" id="myEditModalLabel">关闭</h4>
+									</div>
+									<div class="modal-body">
+										<span class="changetitle">修改内容</span>
+										<div id="changeContent" style="font-size: 16px;text-align: left;">
+											<span id="txt1">修改设备信息：<span id="txt11"></span><br/></span>
+											<span id="txt2">新增模块：<span id="txt22"></span><br/></span>
+											<span id="txt3">删除模块：<span id="txt33"></span><br/></span>
+											<span id="txt4">修改配置：<span id="txt44"></span><br/></span>
+											<span id="txt5">修改属性：<span id="txt55"></span><br/></span>
+										</div>
+										<span class="changetitle">修改原因</span><span id="errorChangeInfo">&nbsp;&nbsp;此项不能为空!</span>
+										<textarea id="changeReason"></textarea>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" id="myEditEnsure">确定</button>
+										<button type="button" class="btn btn-default" id="myEditCancle">取消</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-10 col-lg-10 col-xs-push-1 col-lg-push-1" id="mydialog" tabindex="-1" role="dialog" aria-labelledby="myDeleteModalLabel">
+							<div class="modal-delete" role="document" id="reviewDialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" aria-label="Close" id="oButtonX"><span aria-hidden="true">×</span></button>
+										<h4 class="modal-title text-left" id="myDeleteModalLabel"></h4>
+									</div>
+									<div class="modal-body">
+										<p style="font-size: 24px;text-align: center;" id="dialogword"></p>
+										<span id="changetitle3" class="changetitle">不通过的原因:</span><span id="errorChangeInfo2">&nbsp;&nbsp;此项不能为空!</span>
+										<textarea id="changeReason3"></textarea>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" id="myDeleteModalEnsure">确定</button>
+										<!--<button type="button" class="btn btn-default" id="oButtonCancle">取消</button>-->
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer myfooter">
+						<button type="button" id="btn_submit" class="btn btn-default"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-xs-10 col-lg-10 col-xs-push-1 col-lg-push-1" id="mydialog2" tabindex="-1" role="dialog">
+			<div class="modal-delete" role="document" id="reviewDialog2">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" aria-label="Close" id="oButtonX2"><span aria-hidden="true">×</span></button>
+						<h4 class="modal-title text-left" id="myDeleteModalLabel2"></h4>
+					</div>
+					<div class="modal-body">
+						<p style="font-size: 24px;text-align: center;" id="dialogword2"></p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" id="myDeleteModalEnsure2">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--点击预览弹出复制的modal-->
+		<div id="myPreviewModal" tabindex="-1" role="dialog" aria-labelledby="myPreviewModalLabel">
+			<div class="modalwidth" role="document">
+				<div class="modal-content">
+					<div class="modal-header myheader">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close" id="myCopyModalClose"><span aria-hidden="true">关闭</span></button>
+						<h4 class="modal-title" id="myPreviewModalLabel">预览</h4>
+					</div>
+				
+					<div class="modal-body mybody">
+						<ul class="nav nav-pills nav-justified" role="tablist">
+							<li role="presentation" class="presentation active">
+								<a href="#myPreviewBodyOne" aria-controls="myPreviewBodyOne" role="tab" data-toggle="tab">MK文件</a>
+							</li>
+							<li role="presentation" class="presentation">
+								<a href="#myPreviewBodyTwo" aria-controls="myPreviewBodyTwo" role="tab" data-toggle="tab">Prop文件</a>
+							</li>
+							<li role="presentation" class="presentation">
+								<a href="#myPreviewBodyThree" aria-controls="myPreviewBodyThree" role="tab" data-toggle="tab">Config文件</a>
+							</li>
+							<li role="presentation" class="presentation">
+								<a href="#myPreviewBodyFour" aria-controls="myPreviewBodyFour" role="tab" data-toggle="tab">Settings文件</a>
+							</li>
+						</ul>
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<textarea wrap="off" role="tabpanel" class="tab-pane active" id="myPreviewBodyOne" disabled></textarea>
+							<textarea wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyTwo" disabled></textarea>
+							<textarea wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyThree" disabled></textarea>
+							<textarea wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyFour" disabled></textarea>
+						</div>
+					</div>
+					<div class="modal-footer myfooter">
+						<button type="button" class="btn btn-default" data-dismiss="modal" id="myCopyModalSubmitTwo">确定</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- 点击查看 -->
+		<div class="modal fade" id="page5_examine" tabindex="-1" role="dialog" aria-labelledby="page5_examineLabel">
+			<div class="" role="document">
+				<div class="modal-content">
+					<!--modal-content-->
+					<div class="modal-header">
+						<span type="button" class="close glyphicon glyphicon-remove" aria-label="Close" id="page5_close1"></span>
+						<h4 class="modal-title text-left right" id="page5_examineLabel">
+							<span><b>机芯：</b></span><span id="page5_check_chip"></span>
+							<span><b>机型：</b></span><span id="page5_check_model"></span>
+							<span><b>尺寸：</b></span><span id="page5_check_size"></span>
+						</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-striped table-bordered table-hover" id="contenttable">
+							<thead>
+								<tr>
+									<th>修改内容</th>
+									<th>修改原因</th>
+									<th>提交时间</th>
+									<th>提交者</th>
+									<th style="min-width: 55px;">状态</th>
+								</tr>
+							</thead>
+							<tbody id="descriptTbody">
+								
+							</tbody>
+						</table>
+						<div id="noChangeHistory"></div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" id="page5_close2">关闭</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--loading环-->
+		<!--<div id="page5_loading"><span id="page5_loadingImg">wenjian</span><span id="page5_loadingText">数据加载中...</span></div>-->
+		<script src="../js/jquery.dataTables.min.js" type="text/javascript" charset="utf8"></script>
+		<script src="../js/front-endPage.js"></script>
+		<script src="../js/page5.js"></script>
+		
+	</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!--内容列表-->
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>目标设备管理</title>
+
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap-responsive.min.css">
+		<link rel="stylesheet" type="text/css" href="../css/pages.css">
+		<link rel="stylesheet" type="text/css" href="../css/page3.css"/>
+		<script src="../js/jquery.min.js"></script>
+		<script src="../js/bootstrap.min.js"></script>
+ 		
+	</head>
+
+	<body>
+		<div id="page3">
+			<fieldset class="inputandselectwidth">
+				<legend>目标设备查询</legend>
+				<!--机芯、机型、Device-->
+				<div class="row" style="padding-left: 50px;">
+					<label for="page3_targetProduct" class="control-label" style="font-size: 22px;padding: 0 3px;">targetProduct</label>
+					<input type="text" id="page3_targetProduct" class="inputstyle">
+					<div class="auto_hidden" id="page3_auto"><!--自动完成 DIV--></div>
+					<button type="submit" class="mybuttons btn-success" id="page3_searchInfo">查询</button>
+					<button type="reset" class="mybuttons btn-success" id="page3_reset" style="margin-left: 5px;">重置</button>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend>内容列表</legend>
+				<button class="mybuttons btn-success" id="page3_add">新增</button>
+				<!-- 表格开始 -->
+				<div id="page3_table"></div>
+				<!-- 表格结束 -->
+				
+				<!--TargetProduct-增加、修改-->
+				<div class="modal fade " id="page3Modal" hasquery="false" tabindex="-1" role="dialog" aria-labelledby="mypage6ModalLabel2">
+					<div class="modalwidth" role="document">
+						<div class="modal-content" id="page6ModalDiv2">
+							<div class="modal-header myheader">
+								<span id="page3_title" style="font-size: 18px;">新增TP的名称</span>&nbsp;<input id="page3_TP" type="text" value="">
+								<h4 id="page3Modal1ErrorInfo" class="myModalErrorInfo"></h4>
+								<button type="button" id="page3_tp_close" class="btn btn-primary" style="position: absolute;right: 10px;top: 9px;">关闭</button>
+								<button type="button" id="page3_tp_submit" class="btn btn-primary" style="position: absolute;right: 70px;top: 9px;">提交</button>
+							</div>
+							<div class="modal-body mybody">
+								<ul class="nav nav-pills nav-justified" role="tablist">
+									<li role="presentation" class="presentation active">
+										<a href="#myPreviewBodyOne" aria-controls="myPreviewBodyOne" role="tab" data-toggle="tab">MK</a>
+									</li>
+									<li role="presentation" class="presentation">
+										<a href="#myPreviewBodyTwo" aria-controls="myPreviewBodyTwo" role="tab" data-toggle="tab">属性</a>
+									</li>
+								</ul>
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div wrap="off" role="tabpanel" class="tab-pane active" id="myPreviewBodyOne">
+										<table class="table table-bordered" id="page6MkTable">
+											<tbody id="page3MkTbody"></tbody>
+										</table>
+									</div>
+									<div wrap="off" role="tabpanel" class="tab-pane" id="myPreviewBodyTwo">
+										<table class="table table-bordered" id="page6PropTable">
+											<tbody id="page3PropTbody"></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer myfooter">
+								<button type="button" id="page3_tp_submit2" class="btn btn-primary">提交</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-xs-10 col-xs-push-1" id="myEditEnsureDiv" tabindex="-1" role="dialog" aria-labelledby="myEditModalLabel">
+						<div class="modal-delete" role="document">
+							<div class="modal-content">
+								<div class="modal-header myheader">
+									<button type="button" class="close" aria-label="Close" id="myEditEnsureX"><span aria-hidden="true">×</span></button>
+									<h4 class="modal-title text-left" id="myAddModalLabel">编辑</h4>
+								</div>
+								<div class="modal-body mybody">
+									<div id="tptochipmodel">此次修改会影响到如下产品，确认要修改吗？该变化不会显示在前端，相关产品不会进入待审核</div>
+									<div id="productName"></div>
+								</div>
+								<div class="modal-footer myfooter">
+									<button type="button" class="btn btn-primary" id="myEditEnsure">确定</button>
+									<button type="button" class="btn btn-default" id="myEditCancle">取消</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!--<div id="noList">当前没有符合查询条件的文件！！</div>-->
+			</fieldset>
+		</div>
+		
+		<!--loading环-->
+		<!--<div id="page3_loading"><span id="page3_loadingImg">wenjian</span><span id="page3_loadingText">数据加载中...</span></div>-->
+		<script src="../js/jquery.dataTables.min.js" type="text/javascript" charset="utf8"></script>
+		<script src="../js/front-endPage.js"></script>
+		<script src="../js/page3.js"></script>
+		
+	</body>
+
+</html>
