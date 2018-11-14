@@ -2,7 +2,7 @@
 // 1. return 的处理
 // 2. 排序
 
-var version = "6.0";
+var version = "6.1";
 var test_flag = 0;
 
 var mysql = require('mysql');
@@ -211,8 +211,8 @@ function generateFiles(
         allInfos[infoTotal] = CreateInfo(chip, model, panel);
         infoTotal++;
         
-        if (version == "6.0")
-            sql = "call v60_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
+        if (version == "6.1")
+            sql = "call v61_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
         else if (version == "6.2")
             sql = "call v62_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
         else if (version == "7.0")
@@ -961,8 +961,8 @@ function getGitDir(systemVersion)
 	}
 	else
 	{
-	    if (systemVersion == "6.0")
-            gitdir = os.homedir() + "/scmv3_git/60/Custom/";
+	    if (systemVersion == "6.1")
+            gitdir = os.homedir() + "/scmv3_git/61/Custom/";
         else if (systemVersion == "6.2")
             gitdir = os.homedir() + "/scmv3_git/62/Custom/";
         else if (systemVersion == "7.0")
@@ -983,8 +983,8 @@ function getGitBranch(systemVersion)
 	}
 	else
 	{
-	    if (systemVersion == "6.0")
-            gitbranch = "CCOS/Rel6.0";
+	    if (systemVersion == "6.1")
+            gitbranch = "CCOS/Rel6.1";
     	else if (systemVersion == "6.2")
             gitbranch = "CCOS/Rel6.2";
         else if (systemVersion == "7.0")
@@ -1099,7 +1099,7 @@ function show_callback(errno, result)
 //generator.generate("8A23", "15A55", 0, show_callback);
 
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b test
-// git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.0
+// git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.1
 // ssh://source.skyworth.com/skyworth/CoocaaOS/Custom
 
 module.exports = generator;
