@@ -4,15 +4,15 @@
  */
 var dbConfig = {
   tables:{
-    settingsdata: "v60_settingsdata",
-    settingsdata_temp: "v60_settingsdata_temp",
-    configdata: "v60_configdata",
-    configdata_temp: "v60_configdata_temp",
-    mkdata: "v60_mkdata",
-    propsdata: "v60_propsdata",
-    modifyhistory: "v60_modifyhistory",
-    products: "v60_products",
-    settings: "v60_settings"
+    settingsdata: "v61_settingsdata",
+    settingsdata_temp: "v61_settingsdata_temp",
+    configdata: "v61_configdata",
+    configdata_temp: "v61_configdata_temp",
+    mkdata: "v61_mkdata",
+    propsdata: "v61_propsdata",
+    modifyhistory: "v61_modifyhistory",
+    products: "v61_products",
+    settings: "v61_settings"
   }
 };
 
