@@ -21,7 +21,7 @@ var requestLog = require('./common/request_log');
 var config = require('./config/config');
 var index = require('./routes/index');
 var signRouter = require('./routes/sign_router');
-var apiRouterV6_0 = require('./routes/api_router_v6.0');
+var apiRouterV6_1 = require('./routes/api_router_v6.1');
 var apiRouterV6_2 = require('./routes/api_router_v6.2');
 var apiRouterV7_0 = require('./routes/api_router_v7.0');
 var schedule = require('./common/schedule');
@@ -62,7 +62,7 @@ app.use(session({
 // app.use('/api/v1', cors(), apiRouterV1);
 
 app.use('/', signRouter);
-app.use('/v6.0', apiRouterV6_0);
+app.use('/v6.1', apiRouterV6_1);
 app.use('/v6.2', apiRouterV6_2);
 app.use('/v7.0', apiRouterV7_0);
 
