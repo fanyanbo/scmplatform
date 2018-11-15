@@ -845,7 +845,9 @@ function copyFileAndCommit_old()
 	    var config_dir_relpath;
 	    var config_file_relpath;
 	    var fileinfo = filelist[i];
+	    var ignore_gitpush;
 	    
+	    ignore_gitpush = false;
 	    shcmd = "";
 	    
 	    if (fileinfo.typeStr == "general_config")
@@ -873,6 +875,9 @@ function copyFileAndCommit_old()
 	        else
 	            config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/" + fileinfo.panel + "/config/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
+    	    
+    	    if (version == "6.1")
+    	        ignore_gitpush = true;
 	    }
 	    commitmsg += "修改" + config_file_relpath + ";\n";
     	
@@ -887,7 +892,8 @@ function copyFileAndCommit_old()
     	shcmd += "echo " + cmd;
     	shcmd += cmd;
     	
-    	cmd = "git add " + config_file_relpath + "\n";
+    	if (!ignore_gitpush)
+    	    cmd = "git add " + config_file_relpath + "\n";
     	shcmd += "echo " + cmd;
     	shcmd += cmd;
     	
