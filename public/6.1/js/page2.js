@@ -30,7 +30,7 @@ var toEmail = "SKY058689@skyworth.com";
 var level = null;
 var loginusername = null;
 
-var coocaaVersion = "/v6.0";
+var coocaaVersion = "/v6.1";
 
 $(function() {
 	fromEmail = parent.loginEmail;

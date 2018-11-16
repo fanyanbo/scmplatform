@@ -2,7 +2,7 @@ document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"ut
 
 var sortCnArray = [];
 var sortEnArray = [];
-var coocaaVersion = "/v6.0";
+var coocaaVersion = "/v6.1";
 
 $(function() {
 	$(".page8_boxes")[0].style.display = "block";
