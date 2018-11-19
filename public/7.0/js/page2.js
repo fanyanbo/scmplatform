@@ -123,7 +123,7 @@ function handleTableData(arr) {
 function pageTableInit(data1) {
 	//前台分页的样子
 	$('#page2_table').CJJTable({
-		'title': ["序号", "机型", "机芯", "尺寸", "TP", "安卓版本", "芯片型号", "EMMC", "内存", "git分支", "修改历史", "操作"], //thead中的标题 必填
+		'title': ["序号", "机型", "机芯", "尺寸", "TP", "安卓版本", "芯片型号", "EMMC", "DDR", "git分支", "修改历史", "操作"], //thead中的标题 必填
 		'body': ["number", "model", "chip", "size", "target_product", "AndroidVersion", "chipmodel", "EMMC", "memory", "gitbranch", "history", "operate"], //tbody td 取值的字段 必填
 		'display': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], //隐藏域，1显示，2隐藏 必填
 		'pageNUmber': 10, //每页显示的条数 选填
