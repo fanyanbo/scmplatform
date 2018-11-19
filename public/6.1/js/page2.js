@@ -1148,7 +1148,7 @@ function page2Export() {
 	_newThead += "</tr></thead>";
 	console.log(_newThead);
 	for(var k = 0; k < _myArray.length; k++) {
-		_newTbodyTr = "<tr><td>" + _myArray[k].model + "</td><td>" + _myArray[k].chip + "</td><td>" + _myArray[k].panel + "</td><td>" + _myArray[k].targetProduct + "</td><td>" + _myArray[k].androidVersion + "</td><td>" + _myArray[k].soc + "</td><td>" + _myArray[k].memorySize + "</td><td>" + _myArray[k].EMMC + "</td><td>" + _myArray[k].gitBranch + "</td><td>" + _myArray[k].operateTime + "</td></tr>";
+		_newTbodyTr = "<tr><td>" + _myArray[k].model + "</td><td>" + _myArray[k].chip + "</td><td>" + _myArray[k].panel + "</td><td>" + _myArray[k].targetProduct + "</td><td>" + _myArray[k].androidVersion + "</td><td>" + _myArray[k].soc + "</td><td>" + _myArray[k].EMMC+ "</td><td>" + _myArray[k].memorySize + "</td><td>" + _myArray[k].gitBranch + "</td><td>" + _myArray[k].operateTime + "</td></tr>";
 		_newTbody += _newTbodyTr;
 	}
 	_newTbody += "</tbody>";
