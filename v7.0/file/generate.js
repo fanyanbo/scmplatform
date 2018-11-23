@@ -295,6 +295,34 @@ function generateFiles(
         targetProductParam = model;
         doit(connection, action_type);
     }
+    else if (action_type == "generate_all")
+    {
+        var result = 0;
+        sql = "select chip, model, panel from " + tab_products + " ;";
+        
+        writerlog.w("开始查询: " + sql + "\n");
+        
+        connection.query(sql, function (err, result) {
+        	if(err){
+        		console.log('[SELECT ERROR] - ', err.message);
+        		writerlog.w("查询出错: " + err.message + "\n");
+        		return;
+        	}
+        
+        	writerlog.w("SQL查询成功 0 \n");
+        	console.log(result);
+        
+            for (var i in result)
+            {
+                var curChip = result[i].chip;
+                var curModel = result[i].model;
+                var curPanel = result[i].panel;
+                allInfos[infoTotal] = CreateInfo(curChip, curModel, curPanel);
+                infoTotal++;
+            }
+            doit(connection, action_type);
+        });
+    }
 }
 
 function doit(connection, callback)
@@ -1064,6 +1092,11 @@ Generator.prototype.generateByChip = function(chip, callback)
 Generator.prototype.generateByModel = function(model, callback)
 {
     generateFiles("", model, 0, "model_only", 0, callback);
+}
+
+Generator.prototype.generateAll = function(callback)
+{
+    generateFiles("", "", 0, "generate_all", 0, callback);
 }
 
 
