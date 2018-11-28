@@ -54,6 +54,7 @@ SettingsModel.prototype.queryCategory = function (callback) {
     {level1:"信号源工具箱", level2:"常用设置", level3:""},
     {level1:"卖场演示", level2:"声音演示", level3:""},
     {level1:"卖场演示", level2:"图像演示", level3:""},
+    {level1:"卖场演示", level2:"功能配置开关", level3:""},
     {level1:"中间件", level2:"PQ", level3:""},
     {level1:"中间件", level2:"Board", level3:""}
   ];
