@@ -293,15 +293,19 @@ function sequence_setting_general_xml(a, b)
         a_level = 1;
     else if (a.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
         a_level = 2;
-    else if (a.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+    else if (a.xmlNode1 == "SKY_CFG_TV_VOICE_MODULE_SETTING")
         a_level = 3;
+    else if (a.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+        a_level = 4;
     
     if (b.xmlNode1 == "SKY_CFG_TV_PERSONALIZE_SETTING")
         b_level = 1;
     else if (b.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
         b_level = 2;
-    else if (b.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+    else if (b.xmlNode1 == "SKY_CFG_TV_VOICE_MODULE_SETTING")
         b_level = 3;
+    else if (b.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+        b_level = 4;
         
     if (a_level > b_level)
         return 1;
