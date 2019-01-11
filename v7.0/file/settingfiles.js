@@ -641,33 +641,37 @@ function sequence_setting_picture_sound_xml(a, b)
         {
             if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
                 a_L2 = 1;
-            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+            else if (a.xmlNode2 == "SKY_CFG_TV_LASER_BRIGHTNESS")
                 a_L2 = 2;
-            else if (a.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 a_L2 = 3;
-            else if (a.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
                 a_L2 = 4;
-            else if (a.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
                 a_L2 = 5;
-            else if (a.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
                 a_L2 = 6;
-            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+            else if (a.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 a_L2 = 7;
+            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                a_L2 = 8;
                 
             if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
                 b_L2 = 1;
-            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+            else if (a.xmlNode2 == "SKY_CFG_TV_LASER_BRIGHTNESS")
                 b_L2 = 2;
-            else if (b.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 b_L2 = 3;
-            else if (b.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
                 b_L2 = 4;
-            else if (b.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
                 b_L2 = 5;
-            else if (b.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
                 b_L2 = 6;
-            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+            else if (b.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 b_L2 = 7;
+            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                b_L2 = 8;
             
             if (a_L2 > b_L2)
                 return 1;
