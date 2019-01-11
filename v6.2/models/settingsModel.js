@@ -40,6 +40,7 @@ SettingsModel.prototype.queryCategory = function (callback) {
     {level1:"系统设置", level2:"通用设置", level3:"语音智控模块设置"},
     {level1:"系统设置", level2:"通用设置", level3:"位置与安全"},
 	{level1:"系统设置", level2:"图像设置", level3:"图像模式"},
+	{level1:"系统设置", level2:"图像设置", level3:"激光电视项目"},
     {level1:"系统设置", level2:"图像设置", level3:"基础设置"},
     {level1:"系统设置", level2:"图像设置", level3:"高级亮度设置"},
     {level1:"系统设置", level2:"图像设置", level3:"彩色设置"},
