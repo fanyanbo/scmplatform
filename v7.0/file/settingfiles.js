@@ -556,7 +556,9 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
             }
             
             //==================================================================================
-            if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+            if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_LASER_BRIGHTNESS")
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_LASER_BRIGHTNESS" type="TYPE_GROUP" transparent="true">\n');
+            else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_ADJUST" type="TYPE_GROUP" transparent="true">\n');
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_BRIGHT_SETTING" type="TYPE_GROUP" transparent="true">\n');
