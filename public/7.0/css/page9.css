@@ -1,0 +1,153 @@
+#page9{
+	min-width: 900px;
+}
+.page9_tables{
+	margin-top: 10px;
+	text-align: center;
+}
+.page9_boxes{
+	display: none;
+	overflow: auto;
+}
+.page9_tabs{
+   	display: inline-table;
+	padding: 0px 5px;
+	border-radius: 6px;
+    background-color: buttonface;
+}
+.page9_tabs:nth-child(1){
+	background-color: darkturquoise;
+}
+
+.page9_boxes button {
+    font-size: 16px;
+    /*margin-bottom: 15px;*/
+}
+.sequence,.sequence_value{
+	width: 12.5%;
+}
+.sequence,.sequence select{
+	background-color: moccasin;
+}
+.sequence_value{
+	color: black;
+	font-size: 13px;
+    background-color: aqua;
+}
+.sequence_select{
+	text-align: center;
+}
+#paged9_inputConfigClose{
+	position: absolute;
+	right: 10px;
+	
+    text-align: center;
+}
+
+#paged9_tableSort{
+	width: 100%;
+	margin-top: 35px;
+	/*min-width: 960px;*/
+}
+#paged9_dialog_box1{
+	margin: auto;
+    position: absolute;
+    width: 96%;
+    z-index: 1051;
+    height: 500px;
+    /*top: 0px;*/
+    font-size: 18px;
+    text-align: center;
+}
+#paged9_myConfigBorder{
+	width: 90%;
+	margin: auto;
+}
+.modal-backdrop.in{
+	opacity: 0.2;
+    margin: 5px;
+    border-radius: 15px;
+}
+#page9Modal{
+	margin-top: 100px;
+}
+#page9ModalDiv{
+	background-color: lightblue;
+}
+#page9ModeClose{
+	display: block;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    border-radius: 5px;
+    height: 33px;
+    width: 63px;
+    background-color: ghostwhite;
+}
+#page9Container{
+	display: block;
+    width: 60%;
+    height: 35px;
+    margin: auto;
+    font-size: 22px;
+    margin-bottom: 14px;
+    margin-top: 5px;
+}
+#page9Submit{
+	display: block;
+    font-size: 16px;
+    padding: 5px 15px;
+    margin: auto;
+    background-color: aliceblue;
+}
+#chipMangInfo{
+	text-align: center;
+	color: red;
+	margin-top: 2%;
+	margin-left: 20%;
+	font-size: 20px;
+}
+.page9_tables thead{
+	 background: #42A3E7;
+}
+.page9_tables thead th{
+    font-size: 14px;
+    line-height: 40px;
+}
+.page9_tables tbody tr:nth-child(even){
+    background-color: #CFEEE9;
+}
+
+.page9_tables tbody tr:hover{
+    background-color: #d5d5d5;
+}
+
+#paged9_tableSort thead th{
+	text-align: center;
+	background-color: #0091E6;
+	color: aliceblue;
+}
+
+#page9Modal .myheader{
+	border-bottom: 0px solid #e5e5e5;
+}
+#page9Modal .mybody{
+	border-bottom: 0px solid #e5e5e5;
+	padding-bottom: 5px;
+}
+#page9Modal .myfooter{
+	border-bottom: 0px solid #e5e5e5;
+}
+
+#newClassify{
+	display: inline-block;
+    position: relative;
+    left: 20%;
+    font-size: 21px;
+}
+
+
+
+
+
+
