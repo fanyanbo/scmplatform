@@ -633,7 +633,7 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
 function sequence_setting_picture_sound_xml(a, b)
 {
 	//console.log("a=" + a.engName + ", " + a.xmlNode1 + ", " + a.xmlNode2);
-	//console.log("a=" + b.engName + ", " + b.xmlNode1 + ", " + b.xmlNode2 + "\n");
+	//console.log("b=" + b.engName + ", " + b.xmlNode1 + ", " + b.xmlNode2 + "\n");
 	
 	var a_L2 = 0, b_L2 = 0;
 	var a_L1 = 0, b_L1 = 0;
@@ -642,6 +642,8 @@ function sequence_setting_picture_sound_xml(a, b)
     {
         if (a.xmlNode2 == b.xmlNode2)
         {
+        	//console.log("a.orderId=" + a.orderId + ", b.orderId=" + b.orderId);
+        	
             if (a.orderId > b.orderId)
                 return 1;
             else if (a.orderId < b.orderId)
@@ -671,7 +673,7 @@ function sequence_setting_picture_sound_xml(a, b)
                 
             if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
                 b_L2 = 1;
-            else if (a.xmlNode2 == "SKY_CFG_TV_LASER_BRIGHTNESS")
+            else if (b.xmlNode2 == "SKY_CFG_TV_LASER_BRIGHTNESS")
                 b_L2 = 2;
             else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 b_L2 = 3;
@@ -685,6 +687,8 @@ function sequence_setting_picture_sound_xml(a, b)
                 b_L2 = 7;
             else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
                 b_L2 = 8;
+            
+            //console.log("a_L2=" + a_L2 + ", b_L2=" + b_L2);
             
             if (a_L2 > b_L2)
                 return 1;
@@ -717,6 +721,8 @@ function sequence_setting_picture_sound_xml(a, b)
             else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
                 b_L2 = 5;
             
+            //console.log("a_L2=" + a_L2 + ", b_L2=" + b_L2);
+            
             if (a_L2 > b_L2)
                 return 1;
             else if (a_L2 < b_L2)
@@ -738,6 +744,8 @@ function sequence_setting_picture_sound_xml(a, b)
 	    else if (b.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
 	        b_L1 = 2;
 	        
+	    //console.log("a_L1=" + a_L1 + ", b_L1=" + b_L1);
+	        
 	    if (a_L1 > b_L1)
 	        return 1;
 	    else if (a_L1 < b_L1)
@@ -745,6 +753,7 @@ function sequence_setting_picture_sound_xml(a, b)
 	    else
 	        return 0;
     }
+    //console.log("return 0;");
     return 0;
 }
 
@@ -870,13 +879,15 @@ function mySort(arr, compare)
 	{
 		for (var j = 0; j < len - 1 - i; j++) 
 		{
-			if (compare != null)
-			if (compare(arr[j], arr[j+1]) > 0) 
+			if (compare != null) 
 			{
-				//相邻元素两两对比
-				var temp = arr[j+1]; //元素交换
-				arr[j+1] = arr[j];
-				arr[j] = temp;
+				if (compare(arr[j], arr[j+1]) > 0) 
+				{
+					//相邻元素两两对比
+					var temp = arr[j+1]; //元素交换
+					arr[j+1] = arr[j];
+					arr[j] = temp;
+				}
 			}
 		}
 	}
