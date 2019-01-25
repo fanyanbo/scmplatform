@@ -377,3 +377,17 @@ function freshModuleAddHtml(num) {
 	    }
 	}
 }
+
+function rebuildGirrit()
+{
+	
+}
+
+
+
+
+
+
+
+
+
