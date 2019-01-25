@@ -17,7 +17,7 @@ var dbparam = {
 var os = require('os');
 var fs = require('fs');
 var writer = require("./writer");
-var git = require("./gitcommit");
+var girret = require("./girret");
 var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 var dbConfig = require('../models/dbConfig');
@@ -835,10 +835,11 @@ function copyFileAndCommit()
     
     writerlog.w("GIT 提交SN为  commit_sn = " + commit_sn + "\n");
     
-    var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限
+    //var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限
+	var commitText = "测试提交";		// 提交到git的文本消息
     var gitbranch = getGitBranch(version);
     
-    git.commit(commit_sn, version, gitdir, gitbranch, filelist, function(err, text){
+    girret.commit(commit_sn, version, commitText, gitbranch, filelist, function(err, text){
         if (mod_callback != null)
 	        mod_callback(0, "产生文件完成.");
     });
@@ -1129,7 +1130,7 @@ function show_callback(errno, result)
 
 //generator.generate("GHD08", "K5S", 0, show_callback);
 
-generator.generate("9H82", "L5S", 0, show_callback);
+generator.generate("VS01", "TEST", 0, show_callback);
 
 //generator.generateAll(show_callback);
 
