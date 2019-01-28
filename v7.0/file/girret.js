@@ -10,11 +10,12 @@ var PORT = 10241;
 
 function GirritCommit(){}
 
-GirritCommit.prototype.commit = function(commit_sn, version, commitText, branch, filelist, callback)
+GirritCommit.prototype.commit = function(tempdir, commit_sn, version, commitText, branch, filelist, callback)
 {
     alldata = "";
     
     alldata += "commit_sn=" + commit_sn + "\n";
+	alldata += "tempdir=" + tempdir + "\n";
     alldata += "version=" + version + "\n";
     alldata += "branch=" + branch + "\n";
     
@@ -50,7 +51,7 @@ GirritCommit.prototype.commit = function(commit_sn, version, commitText, branch,
 	
 	alldata += "commitText=" + commitText + "\n";
 
-	var actionFileName = "/tmp/" + commit_sn + ".txt";
+	var actionFileName = tempdir + "girret_info_" + commit_sn + ".txt";
 	fs.writeFileSync(actionFileName, alldata);
 
 	/*

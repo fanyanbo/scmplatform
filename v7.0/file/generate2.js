@@ -839,7 +839,7 @@ function copyFileAndCommit()
 	var commitText = "测试提交";		// 提交到git的文本消息
     var gitbranch = getGitBranch(version);
     
-    girret.commit(commit_sn, version, commitText, gitbranch, filelist, function(err, text){
+    girret.commit(getTmpDir(), commit_sn, version, commitText, gitbranch, filelist, function(err, text){
         if (mod_callback != null)
 	        mod_callback(0, "产生文件完成.");
     });
@@ -1040,9 +1040,10 @@ function getTmpDir()
 
         console.log(curtimestr + "_" + randValue);
 
-        tempdir = os.tmpdir();
         if (os.platform() == "win32")
         {
+			tempdir = os.tmpdir();
+			
             tempdir += "\\";
             tempdir += curtimestr + "_" + randValue;
 
@@ -1052,7 +1053,9 @@ function getTmpDir()
         }
         else
         {
-            tempdir += "/";
+			tempdir = os.homedir();
+			
+            tempdir += "/scmplatform_v3/temp_dir/";
             tempdir += curtimestr + "_" + randValue;
 
             fs.mkdirSync(tempdir);
