@@ -245,11 +245,17 @@ static int process_cmd(char * str)
 	{
 		std::string dir_relpath;
 		std::string file_relpath;
+		bool ignore_gitpush;
+		
+		ignore_gitpush = false;
 
 		if (allinfo.fileinfo[i].typeStr == "prop")
 		{
 			dir_relpath = "property/";
 			file_relpath = dir_relpath + allinfo.fileinfo[i].finalName;
+			
+			if (allinfo.version == "6.1")
+    	        ignore_gitpush = true;
 		}
 		else if (allinfo.fileinfo[i].typeStr == "mk")
 		{
@@ -268,6 +274,9 @@ static int process_cmd(char * str)
 			else
 				dir_relpath = std::string("pcfg/") + allinfo.fileinfo[i].chip + "_" + allinfo.fileinfo[i].model + "/" + allinfo.fileinfo[i].panel + "/config/";
 			file_relpath = dir_relpath + allinfo.fileinfo[i].finalName;
+			
+			if (allinfo.version == "6.1" && allinfo.fileinfo[i].typeStr != "general_config")
+    	        ignore_gitpush = true;
 		}
 
 		//commitmsg += "修改了 " + file_relpath + ";\n";
@@ -280,8 +289,11 @@ static int process_cmd(char * str)
 
 		cmd = std::string("cp -f ") + allinfo.fileinfo[i].tempName + "  " + file_relpath;
 		exec_cmd(cmd, 1);
-		cmd = std::string("git add ") + file_relpath;
-		exec_cmd(cmd, 1);
+		if (!ignore_gitpush) 
+		{
+			cmd = std::string("git add ") + file_relpath;
+			exec_cmd(cmd, 1);
+		}
 	}
 
 	cmd = std::string("git commit -m  \'") + allinfo.commitText + "\'";
@@ -291,8 +303,8 @@ static int process_cmd(char * str)
 	exec_cmd(cmd, 1);
 
 	// 删除临时文件
-	cmd = "rm -rf " + allinfo.tempdir;
-	exec_cmd(cmd, 1);
+	//cmd = "rm -rf " + allinfo.tempdir;
+	//exec_cmd(cmd, 1);
 
 	return 0;
 }
