@@ -2,7 +2,7 @@
 // 1. return 的处理
 // 2. 排序
 
-var version = "6.2";
+var version = require("./ccosversion");
 var test_flag = 0;
 
 var mysql = require('mysql');
