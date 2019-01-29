@@ -2,7 +2,7 @@
 // 1. return 的处理
 // 2. 排序
 
-var version = require("./ccosversion");
+var version = "7.0";
 var test_flag = 0;
 
 var mysql = require('mysql');
@@ -876,9 +876,7 @@ function copyFileAndCommit_old()
 	    var config_dir_relpath;
 	    var config_file_relpath;
 	    var fileinfo = filelist[i];
-	    var ignore_gitpush;
 	    
-	    ignore_gitpush = false;
 	    shcmd = "";
 	    
 	    if (fileinfo.typeStr == "general_config")
@@ -906,9 +904,6 @@ function copyFileAndCommit_old()
 	        else
 	            config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/" + fileinfo.panel + "/config/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
-    	    
-    	    if (version == "6.1")
-    	        ignore_gitpush = true;
 	    }
 	    commitmsg += "修改" + config_file_relpath + ";\n";
     	
@@ -923,8 +918,7 @@ function copyFileAndCommit_old()
     	shcmd += "echo " + cmd;
     	shcmd += cmd;
     	
-    	if (!ignore_gitpush)
-    	    cmd = "git add " + config_file_relpath + "\n";
+    	cmd = "git add " + config_file_relpath + "\n";
     	shcmd += "echo " + cmd;
     	shcmd += cmd;
     	
@@ -998,8 +992,8 @@ function getGitDir(systemVersion)
 	}
 	else
 	{
-	    if (systemVersion == "6.1")
-            gitdir = os.homedir() + "/scmv3_git/61/Custom/";
+	    if (systemVersion == "6.0")
+            gitdir = os.homedir() + "/scmv3_git/60/Custom/";
         else if (systemVersion == "6.2")
             gitdir = os.homedir() + "/scmv3_git/62/Custom/";
         else if (systemVersion == "7.0")
@@ -1020,8 +1014,8 @@ function getGitBranch(systemVersion)
 	}
 	else
 	{
-	    if (systemVersion == "6.1")
-            gitbranch = "CCOS/Rel6.1";
+	    if (systemVersion == "6.0")
+            gitbranch = "CCOS/Rel6.0";
     	else if (systemVersion == "6.2")
             gitbranch = "CCOS/Rel6.2";
         else if (systemVersion == "7.0")
@@ -1148,7 +1142,7 @@ generator.generate("测试提交2", "VS01", "TEST", 0, show_callback);
 //generator.generateAll("测试提交", show_callback);
 
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b test
-// git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.1
+// git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.0
 // ssh://source.skyworth.com/skyworth/CoocaaOS/Custom
 
 module.exports = generator;

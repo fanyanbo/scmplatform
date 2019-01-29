@@ -17,7 +17,7 @@ var dbparam = {
 var os = require('os');
 var fs = require('fs');
 var writer = require("./writer");
-var git = require("./gitcommit");
+var girret = require("./girret");
 var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 var dbConfig = require('../models/dbConfig');
@@ -46,6 +46,7 @@ var tab_settings;                       // 数据库中,设置表名
 
 var infoTxt = "";
 var sql = ";";
+var commitText = "";					// 提交给girret时的注释
 
 var filelist;                           // 产生的文件列表
 var filetotal = 0;                      // 产生的文件列表数量计数
@@ -144,6 +145,7 @@ function CreateFileInfo(tempName, finalName, chip, model, panel, typeStr)
 }
 
 function generateFiles( 
+						commitTxt,		// 提交girret时的记录
                         chip,		    // 机芯
                         model,          // 机型
                         panel,          // 屏幕尺寸
@@ -183,6 +185,7 @@ function generateFiles(
 	
 	infoTxt = "";
 	tempdir = "";
+	commitText = commitTxt;
 	
 	allInfos = new Array();
 	infoTotal = 0;
@@ -294,6 +297,34 @@ function generateFiles(
         console.log("only targetProduct");
         targetProductParam = model;
         doit(connection, action_type);
+    }
+    else if (action_type == "generate_all")
+    {
+        var result = 0;
+        sql = "select chip, model, panel from " + tab_products + " ;";
+        
+        writerlog.w("开始查询: " + sql + "\n");
+        
+        connection.query(sql, function (err, result) {
+        	if(err){
+        		console.log('[SELECT ERROR] - ', err.message);
+        		writerlog.w("查询出错: " + err.message + "\n");
+        		return;
+        	}
+        
+        	writerlog.w("SQL查询成功 0 \n");
+        	console.log(result);
+        
+            for (var i in result)
+            {
+                var curChip = result[i].chip;
+                var curModel = result[i].model;
+                var curPanel = result[i].panel;
+                allInfos[infoTotal] = CreateInfo(curChip, curModel, curPanel);
+                infoTotal++;
+            }
+            doit(connection, action_type);
+        });
     }
 }
 
@@ -807,10 +838,10 @@ function copyFileAndCommit()
     
     writerlog.w("GIT 提交SN为  commit_sn = " + commit_sn + "\n");
     
-    var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限
+    //var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限
     var gitbranch = getGitBranch(version);
     
-    git.commit(commit_sn, version, gitdir, gitbranch, filelist, function(err, text){
+    girret.commit(getTmpDir(), commit_sn, version, commitText, gitbranch, filelist, function(err, text){
         if (mod_callback != null)
 	        mod_callback(0, "产生文件完成.");
     });
@@ -1005,21 +1036,32 @@ function getTmpDir()
 {
     if (tempdir == "")
     {
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth()+1;
-        let day = date.getDate();
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        let second = date.getSeconds();
-        let curtimestr = "scmplatform_" + year + "" + month + "" + day + "-" + hour + "" + minute + "" + second;
-        let randValue = Math.ceil(1000 * Math.random());
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hour = date.getHours();
+        var minute = date.getMinutes();
+        var second = date.getSeconds();
+		if (month < 10)
+			month = String("0" + month);
+		if (day < 10)
+			day = String("0" + day);
+		if (hour < 10)
+			hour = String("0" + hour);
+		if (minute < 10)
+			minute = String("0" + minute);
+		if (second < 10)
+			second = String("0" + second);
+        var curtimestr = "a_" + year + "" + month + "" + day + "-" + hour + "" + minute + "" + second;
+        var randValue = Math.ceil(1000 * Math.random());
 
         console.log(curtimestr + "_" + randValue);
 
-        tempdir = os.tmpdir();
         if (os.platform() == "win32")
         {
+			tempdir = os.tmpdir();
+			
             tempdir += "\\";
             tempdir += curtimestr + "_" + randValue;
 
@@ -1029,7 +1071,9 @@ function getTmpDir()
         }
         else
         {
-            tempdir += "/";
+			tempdir = os.homedir();
+			
+            tempdir += "/.scm/";
             tempdir += curtimestr + "_" + randValue;
 
             fs.mkdirSync(tempdir);
@@ -1047,29 +1091,34 @@ function getTmpDir()
 //////////////////////////////////////////                    //////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Generator.prototype.generate = function(chip, model, panel, callback)
+Generator.prototype.generate = function(commitTxt, chip, model, panel, callback)
 {
-    generateFiles(chip, model, panel, "chip_and_model", 0, callback);
+    generateFiles(commitTxt, chip, model, panel, "chip_and_model", 0, callback);
 }
 
 Generator.prototype.preview = function(chip, model, panel, tempflag, callback)
 {
-	generateFiles(chip, model, panel, "preview", tempflag, callback);
+	generateFiles("", chip, model, panel, "preview", tempflag, callback);
 }
 
-Generator.prototype.generateByTargetProduct = function(targetProduct, callback)
+Generator.prototype.generateByTargetProduct = function(commitTxt, targetProduct, callback)
 {
-    generateFiles("", targetProduct, 0, "targetProduct", 0, callback);
+    generateFiles(commitTxt, "", targetProduct, 0, "targetProduct", 0, callback);
 }
 
-Generator.prototype.generateByChip = function(chip, callback)
+Generator.prototype.generateByChip = function(commitTxt, chip, callback)
 {
-    generateFiles(chip, "", 0, "chip_only", 0, callback);
+    generateFiles(commitTxt, chip, "", 0, "chip_only", 0, callback);
 }
 
-Generator.prototype.generateByModel = function(model, callback)
+Generator.prototype.generateByModel = function(commitTxt, model, callback)
 {
-    generateFiles("", model, 0, "model_only", 0, callback);
+    generateFiles(commitTxt, "", model, 0, "model_only", 0, callback);
+}
+
+Generator.prototype.generateAll = function(commitTxt, callback)
+{
+    generateFiles(commitTxt, "", "", 0, "generate_all", 0, callback);
 }
 
 
@@ -1087,22 +1136,16 @@ function show_callback(errno, result)
     console.log("$$$$$$$$$$$$$$$$$$$$");
     console.log("$$$$$$$$$$$$$$$$$$$$");
     console.log("$$$$$$$$$$$$$$$$$$$$");
-    console.log("$$$$$$$$$$$$$$$$$$$$");
-    console.log("$$$$$$$$$$$$$$$$$$$$");
-    console.log("$$$$$$$$$$$$$$$$$$$$");
-    console.log("$$$$$$$$$$$$$$$$$$$$");
-    console.log("$$$$$$$$$$$$$$$$$$$$");
 }
 
-//generator.generate("6S57", "K5S",  null);
-//generator.generateByModel("E6000", null);
+
+//generator.generateByModel("测试提交", "E6000", null);
 //generator.preview("8N01", "G730S", 0, 0, show_preview_text_test);
-//generator.generate("5S02a", "15U", 0, show_callback);
-//generator.generateByTargetProduct("p201", show_callback);
+//generator.generateByTargetProduct("测试提交", "p201", show_callback);
 
-//generator.generate("GHD08", "K5S", 0, show_callback);
+//generator.generate("测试提交2", "VS01", "TEST", 0, show_callback);
 
-//generator.generate("8A23", "15A55", 0, show_callback);
+//generator.generateAll("测试提交", show_callback);
 
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b test
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.1

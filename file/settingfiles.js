@@ -511,7 +511,14 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
         }
     }
     
-    fileinfo.sort(sequence_setting_picture_sound_xml); 
+    //console.log("排序前:\n");
+    //console.log(fileinfo);
+    
+    mySort(fileinfo, sequence_setting_picture_sound_xml);
+    //fileinfo.sort(sequence_setting_picture_sound_xml); 
+    
+    //console.log("排序后:\n\n");
+    //console.log(fileinfo);
     
     fs.writeFileSync(tmpFileName, '<?xml version="1.0" encoding="utf-8"?>\n');
     fs.appendFileSync(tmpFileName, '<!--  setting_picture_sound.xml  --> \n');
@@ -556,7 +563,9 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
             }
             
             //==================================================================================
-            if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+            if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_LASER_BRIGHTNESS")
+                fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_LASER_BRIGHTNESS" type="TYPE_GROUP" transparent="true">\n');
+            else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_PICTURE_ADJUST" type="TYPE_GROUP" transparent="true">\n');
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_BRIGHT_SETTING" type="TYPE_GROUP" transparent="true">\n');
@@ -623,12 +632,18 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
 
 function sequence_setting_picture_sound_xml(a, b)
 {
+	//console.log("a=" + a.engName + ", " + a.xmlNode1 + ", " + a.xmlNode2);
+	//console.log("b=" + b.engName + ", " + b.xmlNode1 + ", " + b.xmlNode2 + "\n");
+	
+	var a_L2 = 0, b_L2 = 0;
+	var a_L1 = 0, b_L1 = 0;
+	
     if (a.xmlNode1 == b.xmlNode1)
     {
-        var a_L2 = 0, b_L2 = 0;
-        
         if (a.xmlNode2 == b.xmlNode2)
         {
+        	//console.log("a.orderId=" + a.orderId + ", b.orderId=" + b.orderId);
+        	
             if (a.orderId > b.orderId)
                 return 1;
             else if (a.orderId < b.orderId)
@@ -641,33 +656,39 @@ function sequence_setting_picture_sound_xml(a, b)
         {
             if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
                 a_L2 = 1;
-            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+            else if (a.xmlNode2 == "SKY_CFG_TV_LASER_BRIGHTNESS")
                 a_L2 = 2;
-            else if (a.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 a_L2 = 3;
-            else if (a.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
                 a_L2 = 4;
-            else if (a.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
                 a_L2 = 5;
-            else if (a.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+            else if (a.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
                 a_L2 = 6;
-            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+            else if (a.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 a_L2 = 7;
+            else if (a.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                a_L2 = 8;
                 
             if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_MODE")
                 b_L2 = 1;
-            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
+            else if (b.xmlNode2 == "SKY_CFG_TV_LASER_BRIGHTNESS")
                 b_L2 = 2;
-            else if (b.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_ADJUST")
                 b_L2 = 3;
-            else if (b.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_BRIGHT_SETTING")
                 b_L2 = 4;
-            else if (b.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_COLOR_SETTING")
                 b_L2 = 5;
-            else if (b.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
+            else if (b.xmlNode2 == "SKY_CFG_TV_SHARPNESS_SETTING")
                 b_L2 = 6;
-            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+            else if (b.xmlNode2 == "SKY_CFG_TV_MOTION_SETTING")
                 b_L2 = 7;
+            else if (b.xmlNode2 == "SKY_CFG_TV_PICTURE_RESET")
+                b_L2 = 8;
+            
+            //console.log("a_L2=" + a_L2 + ", b_L2=" + b_L2);
             
             if (a_L2 > b_L2)
                 return 1;
@@ -700,6 +721,8 @@ function sequence_setting_picture_sound_xml(a, b)
             else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
                 b_L2 = 5;
             
+            //console.log("a_L2=" + a_L2 + ", b_L2=" + b_L2);
+            
             if (a_L2 > b_L2)
                 return 1;
             else if (a_L2 < b_L2)
@@ -709,26 +732,29 @@ function sequence_setting_picture_sound_xml(a, b)
         }
         return 0;
     }
-    
-    ////////////////////////////////////////////
-    var a_L1 = 0, b_L1 = 0;
-    
-    if (a.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
-        a_L1 = 1;
-    else if (a.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
-        a_L1 = 2;
-    
-    if (b.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
-        b_L1 = 1;
-    else if (b.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
-        b_L1 = 2;
-        
-    if (a_L1 > b_L1)
-        return 1;
-    else if (a_L1 < b_L1)
-        return -1;
-    else
-        return 0;
+    else 			// (a.xmlNode1 != b.xmlNode1)
+    {
+	    if (a.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
+	        a_L1 = 1;
+	    else if (a.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
+	        a_L1 = 2;
+	    
+	    if (b.xmlNode1 == "SKY_CFG_TV_PICTURE_SETTING")
+	        b_L1 = 1;
+	    else if (b.xmlNode1 == "SKY_CFG_TV_SOUND_SETTING")
+	        b_L1 = 2;
+	        
+	    //console.log("a_L1=" + a_L1 + ", b_L1=" + b_L1);
+	        
+	    if (a_L1 > b_L1)
+	        return 1;
+	    else if (a_L1 < b_L1)
+	        return -1;
+	    else
+	        return 0;
+    }
+    //console.log("return 0;");
+    return 0;
 }
 
 
@@ -846,7 +872,27 @@ function sequence_panel_common_board_ini(a, b)
         return 0;
 }
 
-
+function mySort(arr, compare) 
+{
+	var len = arr.length;
+	for (var i = 0; i < len; i++) 
+	{
+		for (var j = 0; j < len - 1 - i; j++) 
+		{
+			if (compare != null) 
+			{
+				if (compare(arr[j], arr[j+1]) > 0) 
+				{
+					//相邻元素两两对比
+					var temp = arr[j+1]; //元素交换
+					arr[j+1] = arr[j];
+					arr[j] = temp;
+				}
+			}
+		}
+	}
+	return arr;
+}
 
 
 var settingfiles = new SettingFiles();

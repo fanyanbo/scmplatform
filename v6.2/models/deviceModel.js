@@ -78,7 +78,7 @@ DeviceModel.prototype.updateChip = function (newValue, oldValue, callback) {
         logger.error("更新机芯，修改产品表的机芯值报错：" + err);
         return callback(err);
       }
-      generator.generateByChip(newValue, function(err,result){
+      generator.generateByChip("modify_commit", newValue, function(err,result){
         if(err){
           logger.error("generateByChip" + err);
           return callback(err);
@@ -130,7 +130,7 @@ DeviceModel.prototype.updateModel = function (newValue, oldValue, callback) {
         logger.error("更新机型，修改产品表的机型值报错：" + err);
         return callback(err);
       }
-      generator.generateByModel(newValue, function(err,result){
+      generator.generateByModel("modify_commit", newValue, function(err,result){
         if(err){
           logger.error("generateByModel" + err);
           return callback(err);
@@ -242,7 +242,7 @@ DeviceModel.prototype.updateTargetProduct = function (data, callback) {
   ep.after('insert_result', mkArr.length + propsArr.length , function (list) {
       console.log(list);
       // 这个接口可能有问题
-      generator.generateByTargetProduct(name, function(err,result){
+      generator.generateByTargetProduct("modify_commit", name, function(err,result){
         if(err){
           logger.error("generateByTargetProduct错误：" + err);
           return callback(err);
@@ -312,7 +312,7 @@ DeviceModel.prototype.updateTargetProductName = function (data, callback) {
 
   ep.after('update_result', 3, function (list) {
       console.log(list);
-      generator.generateByTargetProduct(name, function(err,result){
+      generator.generateByTargetProduct("modify_commit", name, function(err,result){
         if(err){
           logger.error("updateTargetProductName" + err);
           return callback(err);

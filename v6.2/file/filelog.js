@@ -39,13 +39,13 @@ function getLogFileName()
 {
     if (os.platform() == "win32")
     {
-        return "D:\\scmplatform_file_writer_log.txt";
+        return "D:\\scm_log_for_generate.log";
     }
     else
     {
         var dir = os.homedir();
         //console.log("########################################################  " + dir);
-        return dir + "/scmplatform_file_writer_log.txt";
+        return dir + "/scm_log_for_generate.log";
     }
 }
 
