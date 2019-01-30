@@ -273,12 +273,14 @@ function generateFiles(
 					commitText += "【解决问题】：" + reason + "\n\n";
 				else
 					commitText += "【解决问题】：" + "配置平台修改配置,机芯机型: " + chip + "_" + model + ", 屏幕尺寸: " + panelText + "\n\n";;
-				commitText += "【测试注意】：setting固化\n";
+				commitText += "【测试注意】：setting\n";
 				commitText += "【测试结果】：未测试\n";
 				commitText += "【BUG_ID】：no\n";
-				commitText += "【操作类型】：\n";
+				commitText += "【操作类型】：";
 				if (content != "")
 					commitText += parseModifyContent(content);
+				else 
+					commitText += "无\n";
 				commitText += "【重要程度】：重要\n";
 				commitText += "【影响产品】：" + chip + "_" + model + ", 屏幕尺寸: " + panelText + "\n\n";
 				
@@ -291,7 +293,7 @@ function generateFiles(
         var result = 0;
 		
 		commitText += "【解决问题】：" + "修改了机芯，生成该机芯的所有机型的配置文件: " + chip + "\n\n";
-		commitText += "【测试注意】：setting固化\n";
+		commitText += "【测试注意】：setting\n";
 		commitText += "【测试结果】：未测试\n";
 		commitText += "【BUG_ID】：no\n";
 		commitText += "【操作类型】：修改了机芯\n";
@@ -328,7 +330,7 @@ function generateFiles(
         var result = 0;
 		
 		commitText += "【解决问题】：" + "修改了机型，不管什么机芯，该机型的所有机型的配置文件都生成: " + model + "\n\n";
-		commitText += "【测试注意】：setting固化\n";
+		commitText += "【测试注意】：setting\n";
 		commitText += "【测试结果】：未测试\n";
 		commitText += "【BUG_ID】：no\n";
 		commitText += "【操作类型】：修改了机型\n";
@@ -365,7 +367,7 @@ function generateFiles(
         console.log("only targetProduct");
 		
 		commitText += "【解决问题】：" + "修改了targetProduct，所有\"" + model + "\"的机芯机型的配置文件都生成\n\n";
-		commitText += "【测试注意】：setting固化\n";
+		commitText += "【测试注意】：setting\n";
 		commitText += "【测试结果】：未测试\n";
 		commitText += "【BUG_ID】：no\n";
 		commitText += "【操作类型】：修改了targetProduct\n";
@@ -380,7 +382,7 @@ function generateFiles(
         var result = 0;
 		
 		commitText += "【解决问题】：" + "全部机芯机型的配置文件重新生成\n\n";
-		commitText += "【测试注意】：setting固化\n";
+		commitText += "【测试注意】：setting\n";
 		commitText += "【测试结果】：未测试\n";
 		commitText += "【BUG_ID】：no\n";
 		commitText += "【操作类型】：全部机芯机型的配置文件重新生成\n";
@@ -1173,20 +1175,33 @@ function getTmpDir()
 
 function parseModifyContent(content)
 {
-	var text1 = "";
+	var alltext = "";
+	var text1 = new Array();
+	var textcnt = 0;
 	var r1 = JSON.parse(content);
 	
-	if (r1.changeDev != null && r1.changeDev != "")
-		text1 += "            修改设备: " + r1.changeDev + "\n";
-	if (r1.changeAdd != null && r1.changeAdd != "")
-		text1 += "            新增模块: " + r1.changeAdd + "\n";
-	if (r1.changeReduce != null && r1.changeReduce != "")
-		text1 += "            删除模块: " + r1.changeReduce + "\n";
-	if (r1.changeConf != null && r1.changeConf != "")
-		text1 += "            修改配置: " + r1.changeConf + "\n";
-	if (r1.changeProp != null && r1.changeProp != "")
-		text1 += "            修改属性: " + r1.changeProp + "\n";
-	return text1;
+	if (r1.changeDev != null && r1.changeDev != "") {
+		text1[textcnt++] = "修改设备: " + r1.changeDev;
+	}
+	if (r1.changeAdd != null && r1.changeAdd != "") {
+		text1[textcnt++] = "新增模块: " + r1.changeAdd;
+	}
+	if (r1.changeReduce != null && r1.changeReduce != "") {
+		text1[textcnt++] = "删除模块: " + r1.changeReduce;
+	}
+	if (r1.changeConf != null && r1.changeConf != "") {
+		text1[textcnt++] = "修改配置: " + r1.changeConf;
+	}
+	if (r1.changeProp != null && r1.changeProp != "") {
+		text1[textcnt++] = "修改属性: " + r1.changeProp;
+	}
+	
+	for (var n in text1) {
+		if (n > 0 || text1.length > 1)
+			alltext += "              ";
+		alltext += text1[n] + "\n";
+	}
+	return alltext;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
