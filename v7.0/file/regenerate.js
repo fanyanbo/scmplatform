@@ -217,13 +217,7 @@ function generateFiles(
         allInfos[infoTotal] = CreateInfo(chip, model, panel);
         infoTotal++;
 		
-		commitText = "修改机芯机型: " + chip + "_" + model + ", 屏幕尺寸: ";
-		if (panel == 0)
-			commitText += "默认";
-		else
-			commitText += (panel + "寸");
-        
-        if (version == "6.0")
+        if (version == "6.1")
             sql = "select current_time;";//"call v60_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
         else if (version == "6.2")
             sql = "select current_time;";//"call v62_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
@@ -261,13 +255,32 @@ function generateFiles(
 				writerlog.w("SQL查询成功  \n");
 				console.log(result);
 				
+				var reason = "";
+				var content = "";
+				var panelText = "";
+				if (panel == 0)
+					panelText = "所有";
+				else
+					panelText = String(panel + "寸");
+				
 				for (var i in result)
 				{
-					var reason = result[i].reason;
-					var content = result[i].content;
-					commitText += "\n\n详细内容:\n\n【修改理由】:\n" + reason + "\n【具体动作】:\n" + parseModifyContent(content) + "\n";
+					reason = result[i].reason;
+					content = result[i].content;
 					break;
 				}
+				if (reason != "")
+					commitText += "【解决问题】：" + reason + "\n\n";
+				else
+					commitText += "【解决问题】：" + "配置平台修改配置,机芯机型: " + chip + "_" + model + ", 屏幕尺寸: " + panelText + "\n\n";;
+				commitText += "【测试注意】：升级功能\n";
+				commitText += "【测试结果】：未测试\n";
+				commitText += "【BUG_ID】：no\n";
+				commitText += "【操作类型】：\n";
+				if (content != "")
+					commitText += parseModifyContent(content);
+				commitText += "【重要程度】：重要\n";
+				commitText += "【影响产品】：" + chip + "_" + model + ", 屏幕尺寸: " + panelText + "\n\n";
 				
 				doit(connection, action_type);
 			});
@@ -277,8 +290,14 @@ function generateFiles(
     {
         var result = 0;
 		
-		commitText = "修改机芯: " + chip;
-		
+		commitText += "【解决问题】：" + "修改了机芯，生成该机芯的所有机型的配置文件: " + chip + "\n\n";
+		commitText += "【测试注意】：升级功能\n";
+		commitText += "【测试结果】：未测试\n";
+		commitText += "【BUG_ID】：no\n";
+		commitText += "【操作类型】：修改了机芯\n";
+		commitText += "【重要程度】：重要\n";
+		commitText += "【影响产品】：" + "所有机芯为\"" + chip + "\"的机型都受影响\n\n";
+				
         sql = "select model, panel from " + tab_products + " where chip=\"" +
         			chip + "\";";
         
@@ -308,7 +327,13 @@ function generateFiles(
     {
         var result = 0;
 		
-		commitText = "修改机型: " + model;
+		commitText += "【解决问题】：" + "修改了机型，不管什么机芯，该机型的所有机型的配置文件都生成: " + model + "\n\n";
+		commitText += "【测试注意】：升级功能\n";
+		commitText += "【测试结果】：未测试\n";
+		commitText += "【BUG_ID】：no\n";
+		commitText += "【操作类型】：修改了机型\n";
+		commitText += "【重要程度】：重要\n";
+		commitText += "【影响产品】：" + "所有机型为\"" + model + "\"的都受影响\n\n";
 		
         sql = "select chip, panel from " + tab_products + " where model=\"" +
         			model + "\";";
@@ -338,7 +363,14 @@ function generateFiles(
     else if (action_type == "targetProduct")
     {
         console.log("only targetProduct");
-		commitText = "修改targetProduct: " + model;
+		
+		commitText += "【解决问题】：" + "修改了targetProduct，所有\"" + model + "\"的机芯机型的配置文件都生成\n\n";
+		commitText += "【测试注意】：升级功能\n";
+		commitText += "【测试结果】：未测试\n";
+		commitText += "【BUG_ID】：no\n";
+		commitText += "【操作类型】：修改了targetProduct\n";
+		commitText += "【重要程度】：重要\n";
+		commitText += "【影响产品】：" + "所有targetProduct为\"" + model + "\"的机芯机型都受影响\n\n";
 		
         targetProductParam = model;
         doit(connection, action_type);
@@ -347,7 +379,13 @@ function generateFiles(
     {
         var result = 0;
 		
-		commitText = "全部机芯机型重新生成";
+		commitText += "【解决问题】：" + "全部机芯机型的配置文件重新生成\n\n";
+		commitText += "【测试注意】：升级功能\n";
+		commitText += "【测试结果】：未测试\n";
+		commitText += "【BUG_ID】：no\n";
+		commitText += "【操作类型】：全部机芯机型的配置文件重新生成\n";
+		commitText += "【重要程度】：重要\n";
+		commitText += "【影响产品】：" + "所有机芯机型都受影响\n\n";
 		
         sql = "select chip, model, panel from " + tab_products + " ;";
         
@@ -1139,15 +1177,15 @@ function parseModifyContent(content)
 	var r1 = JSON.parse(content);
 	
 	if (r1.changeDev != null && r1.changeDev != "")
-		text1 += "修改设备: " + r1.changeDev + "\n";
+		text1 += "            修改设备: " + r1.changeDev + "\n";
 	if (r1.changeAdd != null && r1.changeAdd != "")
-		text1 += "新增模块: " + r1.changeAdd + "\n";
+		text1 += "            新增模块: " + r1.changeAdd + "\n";
 	if (r1.changeReduce != null && r1.changeReduce != "")
-		text1 += "删除模块: " + r1.changeReduce + "\n";
+		text1 += "            删除模块: " + r1.changeReduce + "\n";
 	if (r1.changeConf != null && r1.changeConf != "")
-		text1 += "修改配置: " + r1.changeConf + "\n";
+		text1 += "            修改配置: " + r1.changeConf + "\n";
 	if (r1.changeProp != null && r1.changeProp != "")
-		text1 += "修改属性: " + r1.changeProp + "\n";
+		text1 += "            修改属性: " + r1.changeProp + "\n";
 	return text1;
 }
 
