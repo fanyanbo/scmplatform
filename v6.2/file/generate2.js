@@ -1135,8 +1135,20 @@ function getTmpDir()
 
 function parseModifyContent(content)
 {
-	var text = "";
-	return content;
+	var text1 = "";
+	var r1 = JSON.parse(content);
+	
+	if (r1.changeDev != null && r1.changeDev != "")
+		text1 += "修改设备: " + r1.changeDev + "\n";
+	if (r1.changeAdd != null && r1.changeAdd != "")
+		text1 += "新增模块: " + r1.changeAdd + "\n";
+	if (r1.changeReduce != null && r1.changeReduce != "")
+		text1 += "删除模块: " + r1.changeReduce + "\n";
+	if (r1.changeConf != null && r1.changeConf != "")
+		text1 += "修改配置: " + r1.changeConf + "\n";
+	if (r1.changeProp != null && r1.changeProp != "")
+		text1 += "修改属性: " + r1.changeProp + "\n";
+	return text1;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
