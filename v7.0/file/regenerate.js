@@ -1197,7 +1197,7 @@ function parseModifyContent(content)
 	}
 	
 	for (var n in text1) {
-		if (n > 0 || text1.length > 1)
+		if (n > 0)
 			alltext += "              ";
 		alltext += text1[n] + "\n";
 	}
