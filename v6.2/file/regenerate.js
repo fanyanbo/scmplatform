@@ -273,7 +273,7 @@ function generateFiles(
 					commitText += "【解决问题】：" + reason + "\n\n";
 				else
 					commitText += "【解决问题】：" + "配置平台修改配置,机芯机型: " + chip + "_" + model + ", 屏幕尺寸: " + panelText + "\n\n";;
-				commitText += "【测试注意】：升级功能\n";
+				commitText += "【测试注意】：setting固化\n";
 				commitText += "【测试结果】：未测试\n";
 				commitText += "【BUG_ID】：no\n";
 				commitText += "【操作类型】：\n";
@@ -291,7 +291,7 @@ function generateFiles(
         var result = 0;
 		
 		commitText += "【解决问题】：" + "修改了机芯，生成该机芯的所有机型的配置文件: " + chip + "\n\n";
-		commitText += "【测试注意】：升级功能\n";
+		commitText += "【测试注意】：setting固化\n";
 		commitText += "【测试结果】：未测试\n";
 		commitText += "【BUG_ID】：no\n";
 		commitText += "【操作类型】：修改了机芯\n";
@@ -328,7 +328,7 @@ function generateFiles(
         var result = 0;
 		
 		commitText += "【解决问题】：" + "修改了机型，不管什么机芯，该机型的所有机型的配置文件都生成: " + model + "\n\n";
-		commitText += "【测试注意】：升级功能\n";
+		commitText += "【测试注意】：setting固化\n";
 		commitText += "【测试结果】：未测试\n";
 		commitText += "【BUG_ID】：no\n";
 		commitText += "【操作类型】：修改了机型\n";
@@ -365,7 +365,7 @@ function generateFiles(
         console.log("only targetProduct");
 		
 		commitText += "【解决问题】：" + "修改了targetProduct，所有\"" + model + "\"的机芯机型的配置文件都生成\n\n";
-		commitText += "【测试注意】：升级功能\n";
+		commitText += "【测试注意】：setting固化\n";
 		commitText += "【测试结果】：未测试\n";
 		commitText += "【BUG_ID】：no\n";
 		commitText += "【操作类型】：修改了targetProduct\n";
@@ -380,7 +380,7 @@ function generateFiles(
         var result = 0;
 		
 		commitText += "【解决问题】：" + "全部机芯机型的配置文件重新生成\n\n";
-		commitText += "【测试注意】：升级功能\n";
+		commitText += "【测试注意】：setting固化\n";
 		commitText += "【测试结果】：未测试\n";
 		commitText += "【BUG_ID】：no\n";
 		commitText += "【操作类型】：全部机芯机型的配置文件重新生成\n";
