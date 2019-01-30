@@ -530,7 +530,7 @@ ProductModel.prototype.review = function (data, callback) {
             console.log("===>chip = " + chip);
             console.log("===>model = " + model);
             console.log("===>panel = " + panel);
-            generator.generate("modify_commit", chip, model, panel, function(err,result){
+            generator.generate(chip, model, panel, function(err,result){
               if(err) {
                 logger.debug("在审核生成文件时出错：" + err);
                 return callback(err);

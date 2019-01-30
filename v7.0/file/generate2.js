@@ -43,6 +43,7 @@ var tab_settingsdata;                   // 数据库中,设置数据表名
 var tab_propsdata;                      // 数据库中,属性数据表名
 var tab_mkdata;                         // 数据库中,mk数据表名
 var tab_settings;                       // 数据库中,设置表名
+var tab_modifyhistory;					// 数据库中,修改历史表
 
 var infoTxt = "";
 var sql = ";";
@@ -145,7 +146,6 @@ function CreateFileInfo(tempName, finalName, chip, model, panel, typeStr)
 }
 
 function generateFiles( 
-						commitTxt,		// 提交girret时的记录
                         chip,		    // 机芯
                         model,          // 机型
                         panel,          // 屏幕尺寸
@@ -179,13 +179,14 @@ function generateFiles(
         tab_settings = dbConfig.tables.settings;
     }
     tab_mkdata = dbConfig.tables.mkdata;
+	tab_modifyhistory = dbConfig.tables.modifyhistory;
 
 	infoTxt = "";
 	writerlog.checkLogFile();
 	
 	infoTxt = "";
 	tempdir = "";
-	commitText = commitTxt;
+	commitText = "";
 	
 	allInfos = new Array();
 	infoTotal = 0;
@@ -200,6 +201,8 @@ function generateFiles(
     product_maps = new Array();
     maps_total = 0;
 
+	writerlog.w("=============================================================================\n");
+	
     connection = mysql.createConnection(dbparam);
 	connection.connect();
 	
@@ -213,6 +216,12 @@ function generateFiles(
     {
         allInfos[infoTotal] = CreateInfo(chip, model, panel);
         infoTotal++;
+		
+		commitText = "修改机芯机型: " + chip + "_" + model + ", 屏幕尺寸: ";
+		if (panel == 0)
+			commitText += "默认";
+		else
+			commitText += (panel + "寸");
         
         if (version == "6.0")
             sql = "select current_time;";//"call v60_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
@@ -233,12 +242,43 @@ function generateFiles(
         
         	writerlog.w("SQL查询成功  \n");
         	console.log(result);
-            doit(connection, action_type);
+			
+			// 查修改记录信息
+			sql = 'select reason,content from ' + tab_modifyhistory + 
+					' where chip="' + chip + 
+					'" and model="' + model + 
+					'" and panel=' + panel + 
+					' order by modifyTime desc limit 1;' ;
+					
+			console.log("查询修改记录表,用于查找修改信息");
+			writerlog.w("查询修改记录表,用于查找修改信息,语句 : " + sql + "\n");
+			connection.query(sql, function (err, result) {
+				if(err){
+					console.log('[SELECT ERROR] - ', err.message);
+					writerlog.w("查询出错: " + err.message + "\n");
+					return;
+				}	
+				writerlog.w("SQL查询成功  \n");
+				console.log(result);
+				
+				for (var i in result)
+				{
+					var reason = result[i].reason;
+					var content = result[i].content;
+					commitText += "\n\n详细内容:\n" + reason + "\n" + content + "\n";
+					break;
+				}
+				
+				doit(connection, action_type);
+			});
         });
     }
     else if (action_type == "chip_only")
     {
         var result = 0;
+		
+		commitText = "修改机芯: " + chip;
+		
         sql = "select model, panel from " + tab_products + " where chip=\"" +
         			chip + "\";";
         
@@ -267,6 +307,9 @@ function generateFiles(
     else if (action_type == "model_only")
     {
         var result = 0;
+		
+		commitText = "修改机型: " + model;
+		
         sql = "select chip, panel from " + tab_products + " where model=\"" +
         			model + "\";";
         
@@ -295,12 +338,17 @@ function generateFiles(
     else if (action_type == "targetProduct")
     {
         console.log("only targetProduct");
+		commitText = "修改targetProduct: " + model;
+		
         targetProductParam = model;
         doit(connection, action_type);
     }
     else if (action_type == "generate_all")
     {
         var result = 0;
+		
+		commitText = "全部机芯机型重新生成";
+		
         sql = "select chip, model, panel from " + tab_products + " ;";
         
         writerlog.w("开始查询: " + sql + "\n");
@@ -1091,34 +1139,34 @@ function getTmpDir()
 //////////////////////////////////////////                    //////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Generator.prototype.generate = function(commitTxt, chip, model, panel, callback)
+Generator.prototype.generate = function(chip, model, panel, callback)
 {
-    generateFiles(commitTxt, chip, model, panel, "chip_and_model", 0, callback);
+    generateFiles(chip, model, panel, "chip_and_model", 0, callback);
 }
 
 Generator.prototype.preview = function(chip, model, panel, tempflag, callback)
 {
-	generateFiles("", chip, model, panel, "preview", tempflag, callback);
+	generateFiles(chip, model, panel, "preview", tempflag, callback);
 }
 
-Generator.prototype.generateByTargetProduct = function(commitTxt, targetProduct, callback)
+Generator.prototype.generateByTargetProduct = function(targetProduct, callback)
 {
-    generateFiles(commitTxt, "", targetProduct, 0, "targetProduct", 0, callback);
+    generateFiles("", targetProduct, 0, "targetProduct", 0, callback);
 }
 
-Generator.prototype.generateByChip = function(commitTxt, chip, callback)
+Generator.prototype.generateByChip = function(chip, callback)
 {
-    generateFiles(commitTxt, chip, "", 0, "chip_only", 0, callback);
+    generateFiles(chip, "", 0, "chip_only", 0, callback);
 }
 
-Generator.prototype.generateByModel = function(commitTxt, model, callback)
+Generator.prototype.generateByModel = function(model, callback)
 {
-    generateFiles(commitTxt, "", model, 0, "model_only", 0, callback);
+    generateFiles("", model, 0, "model_only", 0, callback);
 }
 
-Generator.prototype.generateAll = function(commitTxt, callback)
+Generator.prototype.generateAll = function(callback)
 {
-    generateFiles(commitTxt, "", "", 0, "generate_all", 0, callback);
+    generateFiles("", "", 0, "generate_all", 0, callback);
 }
 
 
@@ -1139,13 +1187,13 @@ function show_callback(errno, result)
 }
 
 
-//generator.generateByModel("测试提交", "E6000", null);
+//generator.generateByModel("E6000", null);
 //generator.preview("8N01", "G730S", 0, 0, show_preview_text_test);
-//generator.generateByTargetProduct("测试提交", "p201", show_callback);
+//generator.generateByTargetProduct("p201", show_callback);
 
-generator.generate("测试提交2", "VS01", "TEST", 0, show_callback);
+generator.generate("VS01", "TEST", 0, show_callback);
 
-//generator.generateAll("测试提交", show_callback);
+//generator.generateAll(show_callback);
 
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b test
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.1
