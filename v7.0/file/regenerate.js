@@ -265,7 +265,7 @@ function generateFiles(
 				{
 					var reason = result[i].reason;
 					var content = result[i].content;
-					commitText += "\n\n详细内容:\n" + reason + "\n" + content + "\n";
+					commitText += "\n\n详细内容:\n\n【修改理由】:\n" + reason + "\n【具体动作】:\n" + parseModifyContent(content) + "\n";
 					break;
 				}
 				
@@ -1131,6 +1131,12 @@ function getTmpDir()
         writerlog.w("临时存放文件夹为 " + tempdir + "\n");
     }
 	return tempdir;
+}
+
+function parseModifyContent(content)
+{
+	var text = "";
+	return content;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
