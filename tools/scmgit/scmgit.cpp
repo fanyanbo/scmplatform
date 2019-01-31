@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/time.h>
+#include <dirent.h>
 #include <pthread.h>
 #include <errno.h>
 #include <string>
@@ -45,6 +46,7 @@ struct fileinfo_t
 struct allinfo_t
 {
 	std::string					tempdir;
+	std::string					gitpath;
 	std::string					commit_sn;
 	std::string					version;
 	std::string					commitText;
@@ -56,8 +58,6 @@ char * home;												// HOME目录
 const char * logName = "scm_log_for_girret.log";
 char logFileName[256];
 FILE * fplog = NULL;
-
-std::string gitpath;
 
 char * pdata = NULL;
 unsigned pdatasize = 0;
@@ -178,68 +178,98 @@ static int process_cmd(char * str)
 	size_t i;
 	allinfo_t  allinfo;
 	int ret;
+	std::string gitCustomDir;
+	DIR* dir1;
 	std::string cmd;
 
 	parse_cmd(str, allinfo);
 
 	printlog("tempdir : %s\n", allinfo.tempdir.c_str());
+	printlog("gitpath : %s\n", allinfo.gitpath.c_str());
 	printlog("commit_sn : %s\n", allinfo.commit_sn.c_str());
 	printlog("branch : %s\n", allinfo.branch.c_str());
 	printlog("version : %s\n", allinfo.version.c_str());
 	printlog("commitText : %s\n", allinfo.commitText.c_str());
 	//////////////////////////////////////////////////////
 
-	// 新建git仓库存放路径
-	gitpath = allinfo.tempdir;
-	gitpath += "git/";
-	cmd = std::string("mkdir -p ") + gitpath;
-	exec_cmd(cmd, 1);
+	// 仓库存放路径
+	gitCustomDir = allinfo.gitpath + "Custom";
 	
-	// 进去
-	ret = chdir(gitpath.c_str());
-	if (ret != 0)
+	// 如果仓库不存在,建立仓库并下载仓库
+	dir1 = opendir(gitCustomDir.c_str());
+	if (dir1 == NULL) 
 	{
-		printlog("cddir error.\n");
-		return -1;
+		printlog("仓库不存在,先建立仓库 \n");
+		cmd = std::string("mkdir -p ") + allinfo.gitpath;
+		exec_cmd(cmd, 1);
+		
+		// 进去
+		ret = chdir(allinfo.gitpath.c_str());
+		if (ret != 0)
+		{
+			printlog("cddir error.\n");
+			return -1;
+		}
+		else
+		{
+			char curdir[256];
+			printlog("cddir OK.\n");
+			memset(curdir, 0, sizeof(curdir));
+			getcwd(curdir, sizeof(curdir) - 1);
+			printlog("current dir is : %s\n", curdir);
+		}
+		
+		// 执行git clone
+		cmd = "git clone ssh://source.skyworth.com/skyworth/CoocaaOS/Custom -b ";
+		cmd += allinfo.branch;
+		exec_cmd(cmd, 1);
+		
+		// 进去
+		ret = chdir(gitCustomDir.c_str());
+		if (ret != 0)
+		{
+			printlog("cddir error.\n");
+			return -1;
+		}
+		else
+		{
+			char curdir[256];
+			printlog("cddir OK.\n");
+			memset(curdir, 0, sizeof(curdir));
+			getcwd(curdir, sizeof(curdir) - 1);
+			printlog("current dir is : %s\n", curdir);
+		}
+		
+		// 写入commit-msg文件
+		printlog("生成一个commit-msg文件\n");
+		write_commit_msg_file();
+		cmd = "chmod 777 .git/hooks/commit-msg";
+		exec_cmd(cmd, 1);
 	}
-	else
-	{
-		char curdir[256];
-		printlog("cddir OK.\n");
-		memset(curdir, 0, sizeof(curdir));
-		getcwd(curdir, sizeof(curdir) - 1);
-		printlog("current dir is : %s\n", curdir);
+	else {
+		closedir(dir1);
+		
+		printlog("仓库已经存在,直接使用 \n");
+		
+		// 进去
+		ret = chdir(gitCustomDir.c_str());
+		if (ret != 0)
+		{
+			printlog("cddir error.\n");
+			return -1;
+		}
+		else
+		{
+			char curdir[256];
+			printlog("cddir OK.\n");
+			memset(curdir, 0, sizeof(curdir));
+			getcwd(curdir, sizeof(curdir) - 1);
+			printlog("current dir is : %s\n", curdir);
+		}
 	}
 	
-	// 执行git clone
-	cmd = "git clone ssh://source.skyworth.com/skyworth/CoocaaOS/Custom -b ";
-	cmd += allinfo.branch;
-	exec_cmd(cmd, 1);
-	
-	// 进去
-	gitpath += "Custom/";
-	ret = chdir(gitpath.c_str());
-	if (ret != 0)
-	{
-		printlog("cddir error.\n");
-		return -1;
-	}
-	else
-	{
-		char curdir[256];
-		printlog("cddir OK.\n");
-		memset(curdir, 0, sizeof(curdir));
-		getcwd(curdir, sizeof(curdir) - 1);
-		printlog("current dir is : %s\n", curdir);
-	}
-	
-	// 写入commit-msg文件
-	printlog("生成一个commit-msg文件\n");
-	write_commit_msg_file();
-	cmd = "chmod 777 .git/hooks/commit-msg";
-	exec_cmd(cmd, 1);
 	cmd = "";
-
+	
 	// 复制并添加文件
 	for (i = 0; i < allinfo.fileinfo.size(); i++)
 	{
@@ -386,6 +416,10 @@ void parse_line(char * linedata, allinfo_t & allinfo)
 			else if (0 == strcmp(linedata, "tempdir"))
 			{
 				allinfo.tempdir = rdata;
+			}
+			else if (0 == strcmp(linedata, "gitpath"))
+			{
+				allinfo.gitpath = rdata;
 			}
 			else if (0 == strcmp(linedata, "branch"))
 			{

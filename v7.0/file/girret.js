@@ -6,7 +6,7 @@ var alldata = "";
 
 function GirritCommit(){}
 
-GirritCommit.prototype.commit = function(tempdir, commit_sn, version, commitText, branch, filelist, callback)
+GirritCommit.prototype.commit = function(tempdir, gitpath, commit_sn, version, commitText, branch, filelist, callback)
 {
 	infoText = "";
     alldata = "";
@@ -15,6 +15,7 @@ GirritCommit.prototype.commit = function(tempdir, commit_sn, version, commitText
 	alldata += "tempdir=" + tempdir + "\n";
     alldata += "version=" + version + "\n";
     alldata += "branch=" + branch + "\n";
+	alldata += "gitpath=" + gitpath + "\n";
     
     for (var i in filelist)
     {

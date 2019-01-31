@@ -926,10 +926,10 @@ function copyFileAndCommit()
     
     writerlog.w("GIT 提交SN为  commit_sn = " + commit_sn + "\n");
     
-    //var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限
+    var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限
     var gitbranch = getGitBranch(version);
     
-    girret.commit(getTmpDir(), commit_sn, version, commitText, gitbranch, filelist, function(err, text){
+    girret.commit(getTmpDir(), gitdir, commit_sn, version, commitText, gitbranch, filelist, function(err, text){
         if (mod_callback != null)
 	        mod_callback(0, "产生文件完成.");
     });
@@ -1082,18 +1082,18 @@ function getGitDir(systemVersion)
 	var gitdir;
 	if (test_flag)
 	{
-	    gitdir = os.homedir() + "/scmv3_git/test/Custom/";
+	    gitdir = os.homedir() + "/scmplatform_v3/git/test/";
 	}
 	else
 	{
 	    if (systemVersion == "6.1")
-            gitdir = os.homedir() + "/scmv3_git/61/Custom/";
+            gitdir = os.homedir() + "/scmplatform_v3/git/6.1/";
         else if (systemVersion == "6.2")
-            gitdir = os.homedir() + "/scmv3_git/62/Custom/";
+            gitdir = os.homedir() + "/scmplatform_v3/git/6.2/";
         else if (systemVersion == "7.0")
-            gitdir = os.homedir() + "/scmv3_git/70/Custom/";
+            gitdir = os.homedir() + "/scmplatform_v3/git/7.0/";
         else
-            gitdir = os.homedir() + "/scmv3_git/test/Custom/";
+            gitdir = os.homedir() + "/scmplatform_v3/git/test/";
 	}
 	return gitdir;
 }
@@ -1161,10 +1161,12 @@ function getTmpDir()
         {
 			tempdir = os.homedir();
 			
-            tempdir += "/.scm/";
+            tempdir += "/scmplatform_v3/temp_dir/";
+			fs.mkdirSync(tempdir);
+			
             tempdir += curtimestr + "_" + randValue;
-
             fs.mkdirSync(tempdir);
+			
             tempdir += "/";
         }
 
