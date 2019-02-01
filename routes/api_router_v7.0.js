@@ -16,7 +16,7 @@ var props = require(prefixPath + '/controllers/propManager');
 var product = require(prefixPath + '/controllers/productManager');
 var home = require(prefixPath + '/controllers/home');
 var device = require(prefixPath + '/controllers/deviceManager');
-var girret = require(prefixPath + '/controllers/girretManager');
+var gerrit = require(prefixPath + '/controllers/gerritManager');
 
 var router = express.Router();
 
@@ -102,13 +102,13 @@ router.post('/settings/queryCategory', settings.queryCategory);
 router.post('/settings/updateItemsOrderId', settings.updateItemsOrderId);
 router.post('/settings/queryByCategory', settings.queryItemsByCategory);
 
-// girret重新生成文件并提交接口
-router.post('/girret/ReGenerateByChipAndModel', girret.ReGenerateByChipAndModel);
-router.post('/girret/ReGenerateByChip', girret.ReGenerateByChip);
-router.post('/girret/ReGenerateByModel', girret.ReGenerateByModel);
-router.post('/girret/ReGenerateByTargetProduct', girret.ReGenerateByTargetProduct);
-router.post('/girret/ReGenerateAll', girret.ReGenerateAll);
-router.post('/girret/reset', girret.resetDepository);
+// gerrit重新生成文件并提交接口
+router.post('/gerrit/ReGenerateByChipAndModel', gerrit.ReGenerateByChipAndModel);
+router.post('/gerrit/ReGenerateByChip', gerrit.ReGenerateByChip);
+router.post('/gerrit/ReGenerateByModel', gerrit.ReGenerateByModel);
+router.post('/gerrit/ReGenerateByTargetProduct', gerrit.ReGenerateByTargetProduct);
+router.post('/gerrit/ReGenerateAll', gerrit.ReGenerateAll);
+router.post('/gerrit/reset', gerrit.resetDepository);
 
 
 // 操作记录管理

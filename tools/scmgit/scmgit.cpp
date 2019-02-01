@@ -55,7 +55,7 @@ struct allinfo_t
 };
 
 char * home;												// HOME目录
-const char * logName = "scm_log_for_girret.log";
+const char * logName = "scm_log_for_gerrit.log";
 char logFileName[256];
 FILE * fplog = NULL;
 

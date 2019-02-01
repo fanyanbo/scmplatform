@@ -1,7 +1,7 @@
 var config = require('../config/config');
 var logger = require('../common/logger');
 var output = require('../common/output');
-var girretModel = require('../models/girretModel');
+var gerritModel = require('../models/gerritModel');
 
 //删除左右两端的空格
 function trim(str)
@@ -19,7 +19,7 @@ exports.ReGenerateByChipAndModel = function (req, res, next) {
 	if (panel == "")
 		panel = "0";
 	
-	girretModel.ReGenerateByChipAndModel(chip, model, panel, function(err, results) {
+	gerritModel.ReGenerateByChipAndModel(chip, model, panel, function(err, results) {
 		if(err) {
 			return output.error(req, res, err);
 		}
@@ -31,7 +31,7 @@ exports.ReGenerateByChip = function (req, res, next) {
 	var chip = req.body.chip;
 	chip = trim(chip);
 	
-	girretModel.ReGenerateByChip(chip, function(err, results) {
+	gerritModel.ReGenerateByChip(chip, function(err, results) {
 		if(err) {
 			return output.error(req, res, err);
 		}
@@ -43,7 +43,7 @@ exports.ReGenerateByModel = function (req, res, next) {
     var model = req.body.model;
 	model = trim(model);
 	
-	girretModel.ReGenerateByModel(model, function(err, results) {
+	gerritModel.ReGenerateByModel(model, function(err, results) {
 		if(err) {
 			return output.error(req, res, err);
 		}
@@ -55,7 +55,7 @@ exports.ReGenerateByTargetProduct = function (req, res, next) {
 	var targetProduct = req.body.targetProduct;
 	targetProduct = trim(targetProduct);
 	
-	girretModel.ReGenerateByTargetProduct(targetProduct, function(err, results) {
+	gerritModel.ReGenerateByTargetProduct(targetProduct, function(err, results) {
 		if(err) {
 			return output.error(req, res, err);
 		}
@@ -64,7 +64,7 @@ exports.ReGenerateByTargetProduct = function (req, res, next) {
 }
 
 exports.ReGenerateAll = function (req, res, next) {
-	girretModel.ReGenerateAll(function(err, results) {
+	gerritModel.ReGenerateAll(function(err, results) {
 		if(err) {
 			return output.error(req, res, err);
 		}
@@ -73,7 +73,7 @@ exports.ReGenerateAll = function (req, res, next) {
 }
 
 exports.resetDepository = function (req, res, next) {
-	girretModel.resetDepository(function(err, results) {
+	gerritModel.resetDepository(function(err, results) {
 		if(err) {
 			return output.error(req, res, err);
 		}

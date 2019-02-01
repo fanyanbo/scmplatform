@@ -1,9 +1,9 @@
 var logger = require('../common/logger');
 var regenerator = require('../file/regenerate');
 
-var GirretModel = function() {};
+var GerritModel = function() {};
 
-GirretModel.prototype.ReGenerateByChipAndModel = function (chip, model, panel, callback) {
+GerritModel.prototype.ReGenerateByChipAndModel = function (chip, model, panel, callback) {
 	regenerator.generate(chip, model, panel, function(err, result) {
 		if(err){
 			logger.error("ReGenerateByChipAndModel err=" + err);
@@ -13,7 +13,7 @@ GirretModel.prototype.ReGenerateByChipAndModel = function (chip, model, panel, c
 	});
 }
 
-GirretModel.prototype.ReGenerateByChip = function (chip, callback) {
+GerritModel.prototype.ReGenerateByChip = function (chip, callback) {
 	regenerator.generateByChip(chip, function(err, result) {
 		if(err){
 			logger.error("ReGenerateByChip err=" + err);
@@ -23,7 +23,7 @@ GirretModel.prototype.ReGenerateByChip = function (chip, callback) {
 	});
 }
 
-GirretModel.prototype.ReGenerateByModel = function (model, callback) {
+GerritModel.prototype.ReGenerateByModel = function (model, callback) {
 	regenerator.generateByModel(model, function(err, result) {
 		if(err){
 			logger.error("ReGenerateByModel err=" + err);
@@ -33,7 +33,7 @@ GirretModel.prototype.ReGenerateByModel = function (model, callback) {
 	});
 }
 
-GirretModel.prototype.ReGenerateByTargetProduct = function (targetProduct, callback) {
+GerritModel.prototype.ReGenerateByTargetProduct = function (targetProduct, callback) {
 	regenerator.generateByTargetProduct(targetProduct, function(err, result) {
 		if(err){
 			logger.error("ReGenerateByTargetProduct err=" + err);
@@ -43,7 +43,7 @@ GirretModel.prototype.ReGenerateByTargetProduct = function (targetProduct, callb
 	});
 }
 
-GirretModel.prototype.ReGenerateAll = function (callback) {
+GerritModel.prototype.ReGenerateAll = function (callback) {
 	regenerator.generateAll(function(err, result) {
 		if(err){
 			logger.error("ReGenerateAll err=" + err);
@@ -53,7 +53,7 @@ GirretModel.prototype.ReGenerateAll = function (callback) {
 	});
 }
 
-GirretModel.prototype.resetDepository = function (callback) {
+GerritModel.prototype.resetDepository = function (callback) {
 	
 	var shcmd = "";
 	
@@ -84,8 +84,8 @@ GirretModel.prototype.resetDepository = function (callback) {
     });
 }
 
-var girretModel = new GirretModel();
+var gerritModel = new GerritModel();
 
-module.exports = girretModel;
+module.exports = gerritModel;
 
 
