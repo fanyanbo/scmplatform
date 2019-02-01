@@ -146,6 +146,32 @@
     font-size: 21px;
 }
 
+.myedit1 {
+	border-bottom:1px solid #ff0000;
+	border-top-width:0; 
+	border-left-width:0; 
+	border-right-width:0; 
+	padding:5px;
+}
+
+.mybutton1 {
+	width: 270px; /* 宽度 */
+	height: 40px; /* 高度 */
+	border-width: 0px; /* 边框宽度 */
+	border-radius: 3px; /* 边框半径 */
+	background: #1E90FF; /* 背景颜色 */
+	cursor: pointer; /* 鼠标移入按钮范围时出现手势 */
+	outline: none; /* 不显示轮廓线 */
+	font-family: Microsoft YaHei; /* 设置字体 */
+	color: white; /* 字体颜色 */
+	font-size: 17px; /* 字体大小 */
+}
+.mybutton1:hover {
+	background: #5599FF;	/* 鼠标移入按钮范围时改变颜色 */	
+}
+
+
+
 
 
 
