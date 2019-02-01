@@ -4,9 +4,9 @@ var writerlog = require("./filelog");
 var infoText = "";
 var alldata = "";
 
-function GirritCommit(){}
+function GerritCommit(){}
 
-GirritCommit.prototype.commit = function(tempdir, gitpath, commit_sn, version, commitText, branch, filelist, callback)
+GerritCommit.prototype.commit = function(tempdir, gitpath, commit_sn, version, commitText, branch, filelist, callback)
 {
 	infoText = "";
     alldata = "";
@@ -88,7 +88,7 @@ function PrefixInteger(num, n)
     return (Array(n).join(0) + num).slice(-n);
 }
 
-var girritcommit = new GirritCommit();
+var gerritcommit = new GerritCommit();
 
-module.exports = girritcommit;
+module.exports = gerritcommit;
 
