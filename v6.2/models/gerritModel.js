@@ -57,7 +57,7 @@ GerritModel.prototype.resetDepository = function (callback) {
 	
 	var shcmd = "";
 	
-	shcmd += "rm -rf ~/scmplatform_v3/temp_dir ; ";
+	shcmd += "rm -rf ~/scmplatform_v3/temp_dir/* ; ";
 	shcmd += "rm -rf ~/scmplatform_v3/git/* ; ";
 	
 	var spawn = require('child_process').spawn;

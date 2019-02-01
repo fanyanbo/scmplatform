@@ -5,7 +5,7 @@ var sortEnArray = [];
 var coocaaVersion = "/v7.0";
 
 $(function() {
-	$(".page9_boxes")[0].style.display = "block";
+	//$(".page9_boxes")[0].style.display = "block";
 	$("#tabClickIndex").attr("curId","0");
 	
 	buttonInitBefore();
@@ -384,12 +384,19 @@ function rebuildResult(){
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				//$(".headtr")[0].innerHTML = " ";
-				//$(".bodytr")[0].innerHTML = " ";
-				//sortCnArray = []; 
-				//sortEnArray = [];
-				//creatTableByData(data);
-				//$("#paged9_dialog_box1").modal("toggle");
+				alert("已经重新生成文件并提交gerrit");
+			}
+		}
+	}
+}
+
+function resetResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				alert("本地仓库清理复位修复成功");
 			}
 		}
 	}
@@ -407,15 +414,82 @@ function rebuildGerritByChipModel()
 	console.log("chip=" + _chip + ", model=" + _model + ", panel=" + _panel);
 	
 	_node = '{"chip":"' + _chip + '", "model":"' + _model + '", "panel":"' + _panel + '"}' ;
-	_ajaxUrl = coocaaVersion+"/gerrit/ReGenerateByChipAndModel";
+	_ajaxUrl = coocaaVersion + "/gerrit/ReGenerateByChipAndModel";
 	console.log("call: " + _ajaxUrl);
 	console.log(_node);
 	sendHTTPRequest(_ajaxUrl, _node, rebuildResult);
 }
 
 
+function rebuildGerritByChip()
+{
+	var _ajaxUrl = "";
+	var _node = "{}";
+	
+	var param = document.getElementById ("re2_chip").value;
+	
+	console.log("chip=" + param);
+	
+	_node = '{"chip":"' + param + '"}';
+	_ajaxUrl = coocaaVersion + "/gerrit/ReGenerateByChip";
+	console.log("call: " + _ajaxUrl);
+	console.log(_node);
+	sendHTTPRequest(_ajaxUrl, _node, rebuildResult);
+}
 
 
+function rebuildGerritByModel()
+{
+	var _ajaxUrl = "";
+	var _node = "{}";
+	
+	var param = document.getElementById ("re3_model").value;
+	
+	console.log("model=" + param);
+	
+	_node = '{"model":"' + param + '"}';
+	_ajaxUrl = coocaaVersion + "/gerrit/ReGenerateByModel";
+	console.log("call: " + _ajaxUrl);
+	console.log(_node);
+	sendHTTPRequest(_ajaxUrl, _node, rebuildResult);
+}
 
+function rebuildGerritTargetProduct()
+{
+	var _ajaxUrl = "";
+	var _node = "{}";
+	
+	var param = document.getElementById ("re4_tp").value;
+	
+	console.log("targetProduct=" + param);
+	
+	_node = '{"targetProduct":"' + param + '"}';
+	_ajaxUrl = coocaaVersion + "/gerrit/ReGenerateByTargetProduct";
+	console.log("call: " + _ajaxUrl);
+	console.log(_node);
+	sendHTTPRequest(_ajaxUrl, _node, rebuildResult);
+}
+
+function rebuildGerritALL()
+{
+	var _ajaxUrl = "";
+	var _node = "{}";
+
+	_ajaxUrl = coocaaVersion + "/gerrit/ReGenerateAll";
+	console.log("call: " + _ajaxUrl);
+	console.log(_node);
+	sendHTTPRequest(_ajaxUrl, _node, rebuildResult);
+}
+
+function rebuildGerritReset()
+{
+	var _ajaxUrl = "";
+	var _node = "{}";
+
+	_ajaxUrl = coocaaVersion + "/gerrit/reset";
+	console.log("call: " + _ajaxUrl);
+	console.log(_node);
+	sendHTTPRequest(_ajaxUrl, _node, resetResult);
+}
 
 
