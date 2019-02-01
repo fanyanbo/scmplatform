@@ -16,6 +16,7 @@ var props = require(prefixPath + '/controllers/propManager');
 var product = require(prefixPath + '/controllers/productManager');
 var home = require(prefixPath + '/controllers/home');
 var device = require(prefixPath + '/controllers/deviceManager');
+var girret = require(prefixPath + '/controllers/girretManager');
 
 var router = express.Router();
 
@@ -100,6 +101,15 @@ router.post('/settings/update', settings.update);
 router.post('/settings/queryCategory', settings.queryCategory);
 router.post('/settings/updateItemsOrderId', settings.updateItemsOrderId);
 router.post('/settings/queryByCategory', settings.queryItemsByCategory);
+
+// girret重新生成文件并提交接口
+router.post('/girret/ReGenerateByChipAndModel', girret.ReGenerateByChipAndModel);
+router.post('/girret/ReGenerateByChip', girret.ReGenerateByChip);
+router.post('/girret/ReGenerateByModel', girret.ReGenerateByModel);
+router.post('/girret/ReGenerateByTargetProduct', girret.ReGenerateByTargetProduct);
+router.post('/girret/ReGenerateAll', girret.ReGenerateAll);
+router.post('/girret/reset', girret.resetDepository);
+
 
 // 操作记录管理
 router.post('/home/getSummary',function(req,res,next){
