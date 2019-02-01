@@ -378,6 +378,23 @@ function freshModuleAddHtml(num) {
 	}
 }
 
+function rebuildResult(){
+	if(this.readyState == 4) {
+		if(this.status == 200) {
+			var data = JSON.parse(this.responseText);
+			console.log(data);
+			if(data.resultCode == "0") {
+				//$(".headtr")[0].innerHTML = " ";
+				//$(".bodytr")[0].innerHTML = " ";
+				//sortCnArray = []; 
+				//sortEnArray = [];
+				//creatTableByData(data);
+				//$("#paged9_dialog_box1").modal("toggle");
+			}
+		}
+	}
+}
+
 function rebuildGerritByChipModel()
 {
 	var _ajaxUrl = "";
@@ -390,16 +407,13 @@ function rebuildGerritByChipModel()
 	console.log("chip=" + _chip + ", model=" + _model + ", panel=" + _panel);
 	
 	_node = '{"chip":"' + _chip + '", "model":"' + _model + '", "panel":"' + _panel + '"}' ;
-	_ajaxUrl = coocaaVersion+"/module/queryByCategory";
+	_ajaxUrl = coocaaVersion+"/gerrit/ReGenerateByChipAndModel";
+	console.log("call: " + _ajaxUrl);
 	console.log(_node);
-	sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
+	sendHTTPRequest(_ajaxUrl, _node, rebuildResult);
 }
 
 
-
-	var chip = req.body.chip;
-    var model = req.body.model;
-	var panel = req.body.panel;
 
 
 
