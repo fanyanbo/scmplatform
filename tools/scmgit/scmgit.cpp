@@ -64,7 +64,7 @@ unsigned pdatasize = 0;
 extern unsigned char CommitMsgRawData[4328];
 
 static void initLogFile();
-static int loadGirretInfoFile(const char * infoFileName);
+static int loadGerritInfoFile(const char * infoFileName);
 static int process_cmd(char * str);
 static int process_cmd(char * str);
 static int parse_cmd(char * str, allinfo_t & allinfo);
@@ -92,7 +92,7 @@ int main(int argc, char** argv)
 	printlog("\n");
 	
 	// 加载提交命令文件
-	loadGirretInfoFile(argv[1]);
+	loadGerritInfoFile(argv[1]);
 	
 	// 执行文件内容
 	process_cmd(pdata);
@@ -142,7 +142,7 @@ static void initLogFile()
 	}
 }
 
-static int loadGirretInfoFile(const char * infoFileName)
+static int loadGerritInfoFile(const char * infoFileName)
 {
 	FILE * srcfp;
 	unsigned filesize;
