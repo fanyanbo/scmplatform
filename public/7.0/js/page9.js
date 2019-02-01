@@ -378,14 +378,28 @@ function freshModuleAddHtml(num) {
 	}
 }
 
-function rebuildGirrit()
+function rebuildGerritByChipModel()
 {
+	var _ajaxUrl = "";
+	var _node = "{}";
 	
+	var _chip = document.getElementById ("re1_chip").value;
+	var _model = document.getElementById ("re1_model").value;
+	var _panel = document.getElementById ("re1_panel").value;
+	
+	console.log("chip=" + _chip + ", model=" + _model + ", panel=" + _panel);
+	
+	_node = '{"chip":"' + _chip + '", "model":"' + _model + '", "panel":"' + _panel + '"}' ;
+	_ajaxUrl = coocaaVersion+"/module/queryByCategory";
+	console.log(_node);
+	sendHTTPRequest(_ajaxUrl, _node, queryByCategoryResult);
 }
 
 
 
-
+	var chip = req.body.chip;
+    var model = req.body.model;
+	var panel = req.body.panel;
 
 
 
