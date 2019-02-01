@@ -49,10 +49,10 @@ GerritCommit.prototype.commit = function(tempdir, gitpath, commit_sn, version, c
 	
 	alldata += "commitText=" + commitText + "\n";
 
-	var actionFileName = tempdir + "girret_info_" + commit_sn + ".txt";
+	var actionFileName = tempdir + "gerrit_info_" + commit_sn + ".txt";
 	fs.writeFileSync(actionFileName, alldata);
 	
-	// 执行提交girret命令	
+	// 执行提交gerrit命令	
 	var spawn = require('child_process').spawn;
     var free = spawn('scmgit', [actionFileName]);
     

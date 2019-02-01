@@ -17,7 +17,7 @@ var dbparam = {
 var os = require('os');
 var fs = require('fs');
 var writer = require("./writer");
-var girret = require("./girret");
+var gerrit = require("./gerrit");
 var settingfiles = require("./settingfiles");
 var writerlog = require("./filelog");
 var dbConfig = require('../models/dbConfig');
@@ -47,7 +47,7 @@ var tab_modifyhistory;					// 数据库中,修改历史表
 
 var infoTxt = "";
 var sql = ";";
-var commitText = "";					// 提交给girret时的注释
+var commitText = "";					// 提交给gerrit时的注释
 
 var filelist;                           // 产生的文件列表
 var filetotal = 0;                      // 产生的文件列表数量计数
@@ -929,7 +929,7 @@ function copyFileAndCommit()
     var gitdir = getGitDir(version);	// 把git仓库下载到这里,并且要加上commit-msg脚本,并且设置可执行的权限
     var gitbranch = getGitBranch(version);
     
-    girret.commit(getTmpDir(), gitdir, commit_sn, version, commitText, gitbranch, filelist, function(err, text){
+    gerrit.commit(getTmpDir(), gitdir, commit_sn, version, commitText, gitbranch, filelist, function(err, text){
         if (mod_callback != null)
 	        mod_callback(0, "产生文件完成.");
     });
