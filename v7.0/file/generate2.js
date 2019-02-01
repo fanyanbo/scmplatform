@@ -1162,7 +1162,7 @@ function getTmpDir()
 			tempdir = os.homedir();
 			
             tempdir += "/scmplatform_v3/temp_dir/";
-			fs.mkdirSync(tempdir);
+			//fs.mkdirSync(tempdir);
 			
             tempdir += curtimestr + "_" + randValue;
             fs.mkdirSync(tempdir);
