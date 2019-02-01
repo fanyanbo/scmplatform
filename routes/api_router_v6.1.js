@@ -16,6 +16,7 @@ var product = require('../controllers/productManager');
 var home = require('../controllers/home');
 var device = require('../controllers/deviceManager');
 var output = require('../common/output');
+var gerrit = require('../controllers/gerritManager');
 
 var router = express.Router();
 
@@ -126,6 +127,14 @@ router.post('/prop/query', props.query);
 router.post('/prop/update', props.update);
 router.post('/prop/queryCategory', props.queryCategory);
 router.post('/prop/addCategory', props.addCategory);
+
+// gerrit重新生成文件并提交接口
+router.post('/gerrit/ReGenerateByChipAndModel', gerrit.ReGenerateByChipAndModel);
+router.post('/gerrit/ReGenerateByChip', gerrit.ReGenerateByChip);
+router.post('/gerrit/ReGenerateByModel', gerrit.ReGenerateByModel);
+router.post('/gerrit/ReGenerateByTargetProduct', gerrit.ReGenerateByTargetProduct);
+router.post('/gerrit/ReGenerateAll', gerrit.ReGenerateAll);
+router.post('/gerrit/reset', gerrit.resetDepository);
 
 // 操作记录管理
 router.post('/home/getSummary',function(req,res,next){
