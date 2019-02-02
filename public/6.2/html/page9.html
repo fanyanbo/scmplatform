@@ -20,48 +20,50 @@
 					<legend style="margin-bottom: 0;">
 						<span class="page9_tabs" hasvalue="false">按机芯、机型重新生成</span>
 					</legend>
-					机芯：<input type="text" id="re1_chip" class="myedit1" />
-    				机型：<input type="text" id="re1_model" class="myedit1" />
-					屏幕尺寸：<input type="text" value="0" id="re1_panel" class="myedit1" /> (0表示所有尺寸都生效) &nbsp;&nbsp;
-    				<button type="button" id="rebuild1" onclick="rebuildGerritByChipModel()" class="mybutton1" >重新生成并提交gerrit</button>
+					机芯：<input type="text" id="re1_chip" class="myedit1 commonEdit" />
+    				机型：<input type="text" id="re1_model" class="myedit1 commonEdit" />
+					屏幕尺寸：<input type="text" value="0" id="re1_panel" class="myedit1 commonEdit" /> (0为所有尺寸) &nbsp;&nbsp;&nbsp;&nbsp;
+    				<button type="button" id="rebuild1" onclick="rebuildGerritByChipModel()" class="mybutton1" >重新生成提交gerrit💪</button>
 				</fieldset>
 				
 				<fieldset>
 					<legend style="margin-bottom: 0;">
 						<span class="page9_tabs" hasvalue="false">按机芯重新生成</span>
 					</legend>
-					机芯：<input type="text" id="re2_chip" class="myedit1" />
-    				<button type="button" id="rebuild2" onclick="rebuildGerritByChip()" class="mybutton1" >重新生成并提交gerrit</button>
+					机芯：<input type="text" id="re2_chip" class="myedit1 commonEdit" />  &nbsp;&nbsp;&nbsp;&nbsp;
+    				<button type="button" id="rebuild2" onclick="rebuildGerritByChip()" class="mybutton1" >重新生成提交gerrit💪</button>
 				</fieldset>
 				
 				<fieldset>
 					<legend style="margin-bottom: 0;">
 						<span class="page9_tabs" hasvalue="false">按机型重新生成</span>
 					</legend>
-					机型：<input type="text" id="re3_model" class="myedit1" />
-    				<button type="button" id="rebuild3" onclick="rebuildGerritByModel()" class="mybutton1" >重新生成并提交gerrit</button>
+					机型：<input type="text" id="re3_model" class="myedit1 commonEdit" />  &nbsp;&nbsp;&nbsp;&nbsp;
+    				<button type="button" id="rebuild3" onclick="rebuildGerritByModel()" class="mybutton1" >重新生成提交gerrit💪</button>
 				</fieldset>
 				
 				<fieldset>
 					<legend style="margin-bottom: 0;">
 						<span class="page9_tabs" hasvalue="false">按TargetProduct重新生成</span>
 					</legend>
-					TargetProduct：<input type="text" id="re4_tp" class="myedit1" />
-    				<button type="button" id="rebuild4" onclick="rebuildGerritTargetProduct()" class="mybutton1" >重新生成并提交gerrit</button>
+					TargetProduct：<input type="text" id="re4_tp" class="myedit1 targetProductEdit" />  &nbsp;&nbsp;&nbsp;&nbsp;
+    				<button type="button" id="rebuild4" onclick="rebuildGerritTargetProduct()" class="mybutton1" >重新生成提交gerrit💪</button>
 				</fieldset>
 				
 				<fieldset>
 					<legend style="margin-bottom: 0;">
 						<span class="page9_tabs" hasvalue="false">全部机芯机型重新生成</span>
 					</legend>
-    				<button type="button" id="rebuild5" onclick="rebuildGerritALL()" class="mybutton1" >全部重新生成提交gerrit</button>
+    				<button type="button" id="rebuild5" onclick="rebuildGerritALL()" class="mybutton1" >重新生成提交gerrit💪</button>
 				</fieldset>
 				
 				<fieldset>
 					<legend style="margin-bottom: 0;">
 						<span class="page9_tabs" hasvalue="false">本地仓库清理复位修复</span>
 					</legend>
-    				<button type="button" id="rebuild6" onclick="rebuildGerritReset()" class="mybutton1" >本地仓库清理复位修复</button>
+    				<button type="button" id="rebuild6" onclick="rebuildGerritReset()" class="mybutton1" >本地仓库清理复位修复👌</button>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					(当gerrit发生冲突、无法提交的时候，使用该功能清理一下再重新生成提交) 👍👍👍👍👍👍
 				</fieldset>
 				
 			</div>

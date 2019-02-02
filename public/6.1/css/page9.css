@@ -153,6 +153,12 @@
 	border-right-width:0; 
 	padding:5px;
 }
+.myedit1.commonEdit {
+	width: 120px;
+}
+.myedit1.targetProductEdit {
+	width: 250px;
+}
 
 .mybutton1 {
 	width: 190px; /* 宽度 */
