@@ -384,7 +384,7 @@ function rebuildResult(){
 			var data = JSON.parse(this.responseText);
 			console.log(data);
 			if(data.resultCode == "0") {
-				alert("已经重新生成文件并提交gerrit");
+				alert("已经重新生成文件并开始提交gerrit.\n过几分钟再上gerrit上面查看提交结果\n如果提交不上去，可以考虑使用\"本地仓库清理复位修复\"");
 			}
 		}
 	}
