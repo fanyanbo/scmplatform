@@ -1177,10 +1177,18 @@ function getTmpDir()
 
 function parseModifyContent(content)
 {
+	var r1;
 	var alltext = "";
 	var text1 = new Array();
 	var textcnt = 0;
-	var r1 = JSON.parse(content);
+	
+	try {
+		r1 = JSON.parse(content);
+	}
+	catch (err) {
+		alltext = content + "\n";
+		return alltext;
+	}
 	
 	if (r1.changeDev != null && r1.changeDev != "") {
 		text1[textcnt++] = "修改设备: " + r1.changeDev;
