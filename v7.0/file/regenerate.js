@@ -257,6 +257,7 @@ function generateFiles(
 				
 				var reason = "";
 				var content = "";
+				var userName = "";
 				var panelText = "";
 				if (panel == 0)
 					panelText = "所有";
@@ -267,12 +268,15 @@ function generateFiles(
 				{
 					reason = result[i].reason;
 					content = result[i].content;
+					userName = result[i].userName;
 					break;
 				}
+				
 				if (reason != "")
 					commitText += "【解决问题】：" + reason + "\n\n";
 				else
 					commitText += "【解决问题】：" + "配置平台修改配置,机芯机型: " + chip + "_" + model + ", 屏幕尺寸: " + panelText + "\n\n";;
+				commitText += "【操作员】：" + userName + "\n";
 				commitText += "【测试注意】：setting\n";
 				commitText += "【测试结果】：未测试\n";
 				commitText += "【BUG_ID】：no\n";
