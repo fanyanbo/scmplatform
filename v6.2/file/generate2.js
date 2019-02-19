@@ -238,7 +238,7 @@ function generateFiles(
         	console.log(result);
 			
 			// 查修改记录信息
-			sql = 'select reason,content from ' + tab_modifyhistory + 
+			sql = 'select reason,content,userName from ' + tab_modifyhistory + 
 					' where chip="' + chip + 
 					'" and model="' + model + 
 					'" and panel=' + panel + 
