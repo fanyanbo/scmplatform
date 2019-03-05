@@ -184,6 +184,7 @@ ProductModel.prototype.queryAll = function (callback) {
         {level1:"系统设置", level2:"开机引导", level3:""},
         {level1:"系统设置", level2:"网络与连接", level3:""},
         {level1:"系统设置", level2:"通用设置", level3:"个性化设置"},
+        {level1:"系统设置", level2:"通用设置", level3:"智能摄像头"},
         {level1:"系统设置", level2:"通用设置", level3:"系统设置"},
         {level1:"系统设置", level2:"通用设置", level3:"位置与安全"},
 		{level1:"系统设置", level2:"图像设置", level3:"图像模式"},
