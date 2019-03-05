@@ -291,21 +291,25 @@ function sequence_setting_general_xml(a, b)
     var a_level = 0, b_level = 0;
     if (a.xmlNode1 == "SKY_CFG_TV_PERSONALIZE_SETTING")
         a_level = 1;
-    else if (a.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
+    else if (a.xmlNode1 == "SKY_CFG_TV_SMART_CAMERA")
         a_level = 2;
-    else if (a.xmlNode1 == "SKY_CFG_TV_VOICE_MODULE_SETTING")
+    else if (a.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
         a_level = 3;
-    else if (a.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+    else if (a.xmlNode1 == "SKY_CFG_TV_VOICE_MODULE_SETTING")
         a_level = 4;
+    else if (a.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+        a_level = 5;
     
     if (b.xmlNode1 == "SKY_CFG_TV_PERSONALIZE_SETTING")
         b_level = 1;
-    else if (b.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
+    else if (b.xmlNode1 == "SKY_CFG_TV_SMART_CAMERA")
         b_level = 2;
-    else if (b.xmlNode1 == "SKY_CFG_TV_VOICE_MODULE_SETTING")
+    else if (b.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
         b_level = 3;
-    else if (b.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+    else if (b.xmlNode1 == "SKY_CFG_TV_VOICE_MODULE_SETTING")
         b_level = 4;
+    else if (b.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
+        b_level = 5;
         
     if (a_level > b_level)
         return 1;
