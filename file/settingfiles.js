@@ -258,7 +258,12 @@ function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFil
             {
                 fs.appendFileSync(tmpFileName, '    </SettingItem>\n\n');
             }
-            fs.appendFileSync(tmpFileName, '    <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_TITLE">  \n');
+			
+			if (fileinfo[i].xmlNode1 == 'SKY_CFG_TV_SMART_CAMERA')
+				fs.appendFileSync(tmpFileName, '    <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_CONTAINER">  \n');
+			else
+				fs.appendFileSync(tmpFileName, '    <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_TITLE">  \n');
+			
             curClass = fileinfo[i].xmlNode1;
         }
         fs.appendFileSync(tmpFileName, "        ");
