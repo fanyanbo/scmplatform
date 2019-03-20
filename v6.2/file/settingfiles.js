@@ -629,6 +629,8 @@ function setting_picture_sound(sqlresult, chip, model, panel, tmpdir, genFileCal
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_SOUND_OUTPUT_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS" type="TYPE_GROUP" transparent="true">\n');
+			else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_WIRELESS_BASS")
+				fs.appendFileSync(tmpFileName, '            <SettingItem name="SKY_CFG_TV_WIRELESS_BASS" type="TYPE_CONTAINER" transparent="true">\n');
             else if (fileinfo[i].xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
             {
                 fs.appendFileSync(tmpFileName, '            <!-- 声音恢复默认 -->\n');
@@ -744,8 +746,10 @@ function sequence_setting_picture_sound_xml(a, b)
                 a_L2 = 3;
             else if (a.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 a_L2 = 4;
-            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+			else if (a.xmlNode2 == "SKY_CFG_TV_WIRELESS_BASS")
                 a_L2 = 5;
+            else if (a.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+                a_L2 = 6;
                 
             if (b.xmlNode2 == "SKY_CFG_TV_SOUND_MODE")
                 b_L2 = 1;
@@ -755,8 +759,10 @@ function sequence_setting_picture_sound_xml(a, b)
                 b_L2 = 3;
             else if (b.xmlNode2 == "SKY_CFG_TV_ATMOS_PROFESSIONAL_SETTINGS")
                 b_L2 = 4;
-            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+			else if (b.xmlNode2 == "SKY_CFG_TV_WIRELESS_BASS")
                 b_L2 = 5;
+            else if (b.xmlNode2 == "SKY_CFG_TV_SOUND_RESET")
+                b_L2 = 6;
             
             //console.log("a_L2=" + a_L2 + ", b_L2=" + b_L2);
             

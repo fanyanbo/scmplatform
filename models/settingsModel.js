@@ -50,6 +50,7 @@ SettingsModel.prototype.queryCategory = function (callback) {
     {level1:"系统设置", level2:"声音设置", level3:"基础设置"},
     {level1:"系统设置", level2:"声音设置", level3:"声音输出设置"},
     {level1:"系统设置", level2:"声音设置", level3:"ATMOS专业音效设置"},
+	{level1:"系统设置", level2:"声音设置", level3:"重低音音箱设置"},
     {level1:"系统设置", level2:"声音设置", level3:"恢复默认值"},
     {level1:"信号源工具箱", level2:"快捷功能", level3:""},
     {level1:"信号源工具箱", level2:"常用设置", level3:""},
