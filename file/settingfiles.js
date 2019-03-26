@@ -227,9 +227,6 @@ function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFil
     var tmpFileName = tmpdir + chip + "_" + model + "_" + panel + "-setting_general.xml";
     
     writerlog.w("生成临时的 setting_general.xml \n");
-	
-	var useSmartCamera = false;				// 使用存在智能摄像头（内嵌，下一级，处理起来很麻烦）
-	var smartCameraText = "\n";				// 智能摄像头设置项的文本
     
     x = 0;
     for (let i in sqlresult)
@@ -259,46 +256,20 @@ function write_setting_general_xml(sqlresult, chip, model, panel, tmpdir, genFil
         {
             if (i != 0)
             {
-				if (curClass == 'SKY_CFG_TV_SMART_CAMERA')					// 上一个大类是SKY_CFG_TV_SMART_CAMERA的话，记录到smartCameraText
-					smartCameraText += '        </SettingItem>\n\n';
-				else
-					fs.appendFileSync(tmpFileName, '    </SettingItem>\n\n');
+				fs.appendFileSync(tmpFileName, '    </SettingItem>\n\n');
             }
 			
-			if (fileinfo[i].xmlNode1 == 'SKY_CFG_TV_SMART_CAMERA') {
-				useSmartCamera = true;
-				smartCameraText += '        <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_CONTAINER">  \n';
-			}
-			else
-				fs.appendFileSync(tmpFileName, '    <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_TITLE">  \n');
-			
-			
-			if (fileinfo[i].xmlNode1 == 'SKY_CFG_TV_LOCATION_SECURITY')			// 将智能摄像头XML部分嵌入到SKY_CFG_TV_LOCATION_SECURITY中
-			{
-				fs.appendFileSync(tmpFileName, smartCameraText);
-			}
+			fs.appendFileSync(tmpFileName, '    <SettingItem name="' + fileinfo[i].xmlNode1 + '" type="TYPE_TITLE">  \n');
 			
             curClass = fileinfo[i].xmlNode1;
         }
 		
-		if (fileinfo[i].xmlNode1 == 'SKY_CFG_TV_SMART_CAMERA') 
-		{
-			smartCameraText +=  "            ";
-			smartCameraText +=  "<!-- ";
-			smartCameraText +=  fileinfo[i].descText;
-			smartCameraText +=  " -->\n            ";
-			smartCameraText +=  fileinfo[i].xmlText;
-			smartCameraText +=  "\n";
-		}
-		else
-		{
-			fs.appendFileSync(tmpFileName, "        ");
-			fs.appendFileSync(tmpFileName, "<!-- ");
-			fs.appendFileSync(tmpFileName, fileinfo[i].descText);
-			fs.appendFileSync(tmpFileName, " -->\n        ");
-			fs.appendFileSync(tmpFileName, fileinfo[i].xmlText);
-			fs.appendFileSync(tmpFileName, "\n");
-		}
+		fs.appendFileSync(tmpFileName, "        ");
+		fs.appendFileSync(tmpFileName, "<!-- ");
+		fs.appendFileSync(tmpFileName, fileinfo[i].descText);
+		fs.appendFileSync(tmpFileName, " -->\n        ");
+		fs.appendFileSync(tmpFileName, fileinfo[i].xmlText);
+		fs.appendFileSync(tmpFileName, "\n");
         
     }
     fs.appendFileSync(tmpFileName, "    </SettingItem>\n");
@@ -324,25 +295,21 @@ function sequence_setting_general_xml(a, b)
     var a_level = 0, b_level = 0;
     if (a.xmlNode1 == "SKY_CFG_TV_PERSONALIZE_SETTING")
         a_level = 1;
-    else if (a.xmlNode1 == "SKY_CFG_TV_SMART_CAMERA")
-        a_level = 2;
     else if (a.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
-        a_level = 3;
+        a_level = 2;
     else if (a.xmlNode1 == "SKY_CFG_TV_VOICE_MODULE_SETTING")
-        a_level = 4;
+        a_level = 3;
     else if (a.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
-        a_level = 5;
+        a_level = 4;
     
     if (b.xmlNode1 == "SKY_CFG_TV_PERSONALIZE_SETTING")
         b_level = 1;
-    else if (b.xmlNode1 == "SKY_CFG_TV_SMART_CAMERA")
-        b_level = 2;
     else if (b.xmlNode1 == "SKY_CFG_TV_SYSTEM_SETTING")
-        b_level = 3;
+        b_level = 2;
     else if (b.xmlNode1 == "SKY_CFG_TV_VOICE_MODULE_SETTING")
-        b_level = 4;
+        b_level = 3;
     else if (b.xmlNode1 == "SKY_CFG_TV_LOCATION_SECURITY")
-        b_level = 5;
+        b_level = 4;
         
     if (a_level > b_level)
         return 1;
