@@ -268,6 +268,9 @@ static int process_cmd(char * str)
 		}
 	}
 	
+	cmd = std::string("git pull");;
+	exec_cmd(cmd, 1);
+	
 	cmd = "";
 	
 	// 复制并添加文件
