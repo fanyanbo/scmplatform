@@ -36,9 +36,10 @@ Writer.prototype.writeAndroidmkStart = function(mkFileName, playerType)
 		playerTypeStr = "null";
 	
 	str += "#路径定义，sky_def.mk处理  \n";
+	str += "ABS_TOP=$(shell cd $(TOP); pwd)\n";
 	str += "COOCAAOS_PATH := $(RELEASE_PATH)\n";
 	str += "$(shell rm $(TOP)/packages/sky_def.mk)\n";
-	str += "$(shell ln -s $(ANDROID_BUILD_TOP)/$(COOCAAOS_PATH)/Framework/sky_def.mk $(TOP)/packages/sky_def.mk)\n";
+	str += "$(shell ln -s $(ABS_TOP)/$(COOCAAOS_PATH)/Framework/sky_def.mk $(TOP)/packages/sky_def.mk)\n";
 	str += "\n";
 	str += "#北京播放器选择(北京播放器的类型是自动化平台根据配置值生成)   \n";
 	str += "BJ_PLAYER := " + playerTypeStr + "\n";
