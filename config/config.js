@@ -27,10 +27,10 @@ var config = {
   mongodb: 'mongodb://127.0.0.1/scmplatform',
 
   mysql: {
-    user: 'scmplatform', // 用户名
-    password: 'scmplatform', // 密码
-    database: 'scm', // 数据库
-    host: '172.20.5.239', // host
+    user: 'admin',  		//user: 'scmplatform', // 用户名
+    password: 'xtrjs', 		//password: 'scmplatform', // 密码
+    database: 'scmv3', 		//database: 'scm', // 数据库
+    host:'172.20.217.11',	//host: '172.20.5.239', // host
     port: 3306, // 端口
     checkExpirationInterval: 24*60*60*1000, // How frequently expired sessions will be cleared; milliseconds
     connectionLimit: 1, // 连接池的连接个数，默认为 1
