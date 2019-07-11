@@ -88,7 +88,7 @@ static void backup_mysql(int year, int month, int mday, int hour, int min, int s
 		year, month, mday, hour, min, sec);
 	basefname[sizeof(basefname) - 1] = 0;
 
-	snprintf(command, sizeof(command) - 1, "mysqldump -uscmplatform -pscmplatform scm > ~/%s/%s", savedir, basefname);
+	snprintf(command, sizeof(command) - 1, "mysqldump -uadmin -pxtrjs scmv3 > ~/%s/%s", savedir, basefname);
 	command[sizeof(command) - 1] = 0;
 	
 	argv[0] = "sh";
