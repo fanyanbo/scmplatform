@@ -7,11 +7,11 @@ var test_flag = 0;
 
 var mysql = require('mysql');
 var dbparam = {
-		host     : '172.20.5.239',
-		user     : 'scmplatform',
-		password : 'scmplatform',
+		host     : '172.20.217.11',
+		user     : 'admin',
+		password : 'xtrjs',
 		port: '3306',
-		database: 'scm_test',
+		database: 'scmv3_test',
 	};
 
 var os = require('os');
@@ -158,9 +158,9 @@ function generateFiles(
 	mod_callback = callback;
 
     if (test_flag)
-        dbparam.database = "scm_test";
+        dbparam.database = "scmv3_test";
     else
-        dbparam.database = "scm";
+        dbparam.database = "scmv3";
         
     //dbparam.host = config.mysql.host;
 

@@ -6,7 +6,7 @@ var tools = require('../common/tools');
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   // res.send(tools.formatDate(new Date(),false));
-  res.redirect('http://172.20.5.239:3018/html/login.html');
+  res.redirect('http://172.20.217.11:3018/html/login.html');
 });
 
 router.post('/login', sign.login);
