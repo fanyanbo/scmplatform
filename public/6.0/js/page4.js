@@ -981,7 +981,7 @@ function MKDataInsert2(type, arr){
 		document.getElementsByClassName("mkradio")[j].removeAttribute('checked');
 	}
 	for (var i=0; i<arr.length; i++) {
-		console.log('engName = ' + arr[i].engName);
+		//console.log('engName = ' + arr[i].engName);
 		document.getElementById(arr[i].engName).setAttribute('checked', '');
 		document.getElementById(arr[i].engName).checked = true;
 	}

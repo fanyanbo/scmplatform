@@ -1113,7 +1113,7 @@ function getGitBranch(systemVersion)
 	else
 	{
 	    if (systemVersion == "6.0")
-            gitbranch = "CCOS/scm2";
+            gitbranch = "scm2";
     	else if (systemVersion == "6.2")
             gitbranch = "CCOS/Rel6.2";
         else if (systemVersion == "7.0")
