@@ -287,7 +287,7 @@ static int process_cmd(char * str)
 			dir_relpath = "property/";
 			file_relpath = dir_relpath + allinfo.fileinfo[i].finalName;
 			
-			if (allinfo.version == "6.1")
+			if (allinfo.version == "6.0")
     	        ignore_gitpush = true;
 		}
 		else if (allinfo.fileinfo[i].typeStr == "mk")
@@ -308,7 +308,7 @@ static int process_cmd(char * str)
 				dir_relpath = std::string("pcfg/") + allinfo.fileinfo[i].chip + "_" + allinfo.fileinfo[i].model + "/" + allinfo.fileinfo[i].panel + "/config/";
 			file_relpath = dir_relpath + allinfo.fileinfo[i].finalName;
 			
-			if (allinfo.version == "6.1" && allinfo.fileinfo[i].typeStr != "general_config")
+			if (allinfo.version == "6.0" && allinfo.fileinfo[i].typeStr != "general_config")
     	        ignore_gitpush = true;
 		}
 

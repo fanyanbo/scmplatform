@@ -1281,7 +1281,7 @@ generator.generate("VS01", "TEST", 0, show_callback);
 //generator.generateAll(show_callback);
 
 // git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b test
-// git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.1
+// git clone ssh://172.20.5.240/skyworth/CoocaaOS/Custom -b CCOS/Rel6.0
 // ssh://source.skyworth.com/skyworth/CoocaaOS/Custom
 
 module.exports = generator;

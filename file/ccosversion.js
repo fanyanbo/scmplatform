@@ -1,5 +1,5 @@
 
-var ccosversion = "6.1";
+var ccosversion = "6.0";
 
 module.exports = ccosversion;
 
