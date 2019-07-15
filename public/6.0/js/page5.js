@@ -26,7 +26,7 @@ var recoverChip = null;
 var recoverModel = null;
 var recoverSize = null;
 
-var coocaaVersion = "/v6.1";
+var coocaaVersion = "/v6.0";
 
 $(function() {
 	level = parent.loginlevel;

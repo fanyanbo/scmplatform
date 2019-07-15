@@ -1,6 +1,6 @@
 document.write("<script language=javascript src='../js/sentHTTP.js' charset=\"utf-8\"></script>");
 
-var coocaaVersion = "/v6.1";
+var coocaaVersion = "/v6.0";
 var autoDataArray1 = new Array();
 var autoDataArray2 = new Array();
 var autoDataArray3 = new Array();

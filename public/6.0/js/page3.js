@@ -10,7 +10,7 @@ var changeProp = new Array();
 
 var oldRadioName = "";
 var radioNameTemp = "";
-var coocaaVersion = "/v6.1";
+var coocaaVersion = "/v6.0";
 
 $(function() {
 	var node = '{}';
