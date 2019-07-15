@@ -1,7 +1,7 @@
 
 // 转换mongodb数据为SQL
 var dbname = "fybv3";
-var url = 'mongodb://172.20.132.225:27017/';
+var url = 'mongodb://172.20.217.11:27018/';
 var sqlname = "a.sql";
 
 var fs = require('fs');
