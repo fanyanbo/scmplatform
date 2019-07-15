@@ -217,7 +217,7 @@ function generateFiles(
         allInfos[infoTotal] = CreateInfo(chip, model, panel);
         infoTotal++;
 		
-        if (version == "6.1")
+        if (version == "6.0")
             sql = "call v61_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
         else if (version == "6.2")
             sql = "call v62_copy_temp_to_data(\"" + chip + "\", \"" + model + "\", " + panel + ");";
@@ -999,7 +999,7 @@ function copyFileAndCommit_old()
 	            config_dir_relpath = "pcfg/" + fileinfo.chip + "_" + fileinfo.model + "/" + fileinfo.panel + "/config/";
     	    config_file_relpath = config_dir_relpath + fileinfo.finalName;
     	    
-    	    if (version == "6.1")
+    	    if (version == "6.0")
     	        ignore_gitpush = true;
 	    }
 	    commitmsg += "修改" + config_file_relpath + ";\n";
@@ -1090,8 +1090,8 @@ function getGitDir(systemVersion)
 	}
 	else
 	{
-	    if (systemVersion == "6.1")
-            gitdir = os.homedir() + "/scmplatform_v3/git/6.1/";
+	    if (systemVersion == "6.0")
+            gitdir = os.homedir() + "/scmplatform_v3/git/scm2/";
         else if (systemVersion == "6.2")
             gitdir = os.homedir() + "/scmplatform_v3/git/6.2/";
         else if (systemVersion == "7.0")
@@ -1112,8 +1112,8 @@ function getGitBranch(systemVersion)
 	}
 	else
 	{
-	    if (systemVersion == "6.1")
-            gitbranch = "CCOS/Rel6.1";
+	    if (systemVersion == "6.0")
+            gitbranch = "CCOS/scm2";
     	else if (systemVersion == "6.2")
             gitbranch = "CCOS/Rel6.2";
         else if (systemVersion == "7.0")
