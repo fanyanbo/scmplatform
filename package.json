@@ -35,7 +35,7 @@
     "response-time": "^2.3.2",
     "serve-favicon": "~2.4.5",
     "utility": "^1.13.1",
-    "validator": "^9.4.1"
+    "validator": "^13.7.0"
   },
   "devDependencies": {
     "assert": "^1.4.1",
